@@ -10,9 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_28_215031) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_28_215428) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "applications", force: :cascade do |t|
+    t.string "ats_type"
+    t.datetime "created_at", null: false
+    t.bigint "lead_id", null: false
+    t.integer "status"
+    t.datetime "updated_at", null: false
+    t.index ["lead_id"], name: "index_applications_on_lead_id"
+  end
+
+  create_table "lead_events", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "from_stage"
+    t.bigint "lead_id", null: false
+    t.string "to_stage"
+    t.string "trigger"
+    t.datetime "updated_at", null: false
+    t.index ["lead_id"], name: "index_lead_events_on_lead_id"
+  end
 
   create_table "leads", force: :cascade do |t|
     t.string "ats_type"
@@ -51,6 +70,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_28_215031) do
     t.index ["profile_id"], name: "index_matching_criterions_on_profile_id"
   end
 
+  create_table "notes", force: :cascade do |t|
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.bigint "lead_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lead_id"], name: "index_notes_on_lead_id"
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.jsonb "common_answers", default: {}
     t.text "cover_letter_template"
@@ -75,7 +102,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_28_215031) do
     t.index ["profile_id"], name: "index_search_queries_on_profile_id"
   end
 
+  add_foreign_key "applications", "leads"
+  add_foreign_key "lead_events", "leads"
   add_foreign_key "leads", "profiles"
   add_foreign_key "matching_criterions", "profiles"
+  add_foreign_key "notes", "leads"
   add_foreign_key "search_queries", "profiles"
 end
