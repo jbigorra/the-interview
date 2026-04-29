@@ -1,0 +1,120 @@
+<% content_for :title, "Dashboard" %>
+
+<div class="min-h-screen bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 py-8">
+
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900">Job Search Dashboard</h1>
+      <p class="mt-1 text-sm text-gray-500">Welcome, <%= @profile.full_name %></p>
+    </div>
+
+    <%# Summary stats %>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <% total_leads = @leads_by_stage.values.sum %>
+      <div class="bg-white rounded-lg shadow-sm p-5 border border-gray-200">
+        <p class="text-sm text-gray-500">Total Leads</p>
+        <p class="text-2xl font-bold text-gray-900"><%= total_leads %></p>
+      </div>
+      <% Lead.stages.each_key do |stage_name| %>
+        <% count = @leads_by_stage[Lead.stages[stage_name]] || 0 %>
+        <% next if count.zero? %>
+        <div class="bg-white rounded-lg shadow-sm p-5 border border-gray-200">
+          <p class="text-sm text-gray-500"><%= stage_name.humanize %></p>
+          <p class="text-2xl font-bold text-gray-900"><%= count %></p>
+        </div>
+      <% end %>
+    </div>
+
+    <%# Search Queries section %>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-8">
+      <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-gray-900">Search Queries</h2>
+        <%= link_to "Add new query", new_search_query_path,
+              class: "inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700" %>
+      </div>
+
+      <% if @search_queries.any? %>
+        <ul class="divide-y divide-gray-200">
+          <% @search_queries.each do |query| %>
+            <li class="px-6 py-4 flex items-center justify-between">
+              <div>
+                <p class="font-medium text-gray-900"><%= query.title %></p>
+                <p class="text-sm text-gray-500">
+                  Portal: <span class="font-mono"><%= query.portal %></span>
+                  <% if query.additional_filters.present? %>
+                    &mdash; <span class="italic"><%= query.additional_filters %></span>
+                  <% end %>
+                </p>
+                <p class="text-xs text-gray-400 mt-1">
+                  <% if query.last_run_at.present? %>
+                    Last run: <%= query.last_run_at.strftime("%b %d, %Y %H:%M") %>
+                    &bull; Run count: <%= query.run_count %>
+                  <% else %>
+                    Never run
+                  <% end %>
+                </p>
+              </div>
+              <div class="flex items-center gap-2">
+                <%= button_to "Run", run_search_query_path(query),
+                      method: :post,
+                      class: "inline-flex items-center px-3 py-1.5 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700" %>
+                <%= link_to "Edit", edit_search_query_path(query),
+                      class: "inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50" %>
+                <%= button_to "Delete", search_query_path(query),
+                      method: :delete,
+                      data: { turbo_confirm: "Delete this search query?" },
+                      class: "inline-flex items-center px-3 py-1.5 text-sm font-medium text-red-700 bg-white border border-red-300 rounded-md hover:bg-red-50" %>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <div class="px-6 py-12 text-center text-gray-500">
+          <p>No search queries yet.</p>
+          <%= link_to "Add your first query", new_search_query_path, class: "mt-2 text-indigo-600 hover:underline" %>
+        </div>
+      <% end %>
+    </div>
+
+    <%# Recent leads section %>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+      <div class="px-6 py-4 border-b border-gray-200">
+        <h2 class="text-lg font-semibold text-gray-900">Recent Leads</h2>
+      </div>
+
+      <% if @recent_leads.any? %>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Title</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Company</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stage</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Created</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <% @recent_leads.each do |lead| %>
+                <tr>
+                  <td class="px-6 py-4 text-sm font-medium text-gray-900"><%= lead.title %></td>
+                  <td class="px-6 py-4 text-sm text-gray-500"><%= lead.company %></td>
+                  <td class="px-6 py-4 text-sm text-gray-500">
+                    <span class="inline-flex px-2 py-0.5 text-xs rounded-full bg-gray-100 text-gray-700">
+                      <%= lead.stage.humanize %>
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 text-sm text-gray-400"><%= lead.created_at.strftime("%b %d") %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <div class="px-6 py-12 text-center text-gray-500">
+          <p>No leads discovered yet. Run a search query to get started.</p>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>
