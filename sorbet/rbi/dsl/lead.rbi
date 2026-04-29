@@ -18,7 +18,7 @@ class Lead
   def to_ary; end
 
   class << self
-    sig { returns(T::Hash[T.any(String, Symbol), Integer]) }
+    sig { returns(T::Hash[T.any(String, Symbol), String]) }
     def match_recommendations; end
 
     sig { params(attributes: T.untyped, block: T.nilable(T.proc.params(object: ::Lead).void)).returns(::Lead) }

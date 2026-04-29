@@ -18,9 +18,9 @@ class Lead < ApplicationRecord
   }, default: :fresh, validate: true
 
   enum :match_recommendation, {
-    apply: 0,
-    maybe: 1,
-    skip:  2
+    apply: "apply",
+    maybe: "maybe",
+    skip:  "skip"
   }, validate: { allow_nil: true }
 
   validates :url, presence: true

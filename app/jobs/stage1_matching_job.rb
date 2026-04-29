@@ -38,6 +38,7 @@ class Stage1MatchingJob < ApplicationJob
     if result[:response][:passed]
       lead.update!(stage: :reviewed)
       Rails.logger.info("Stage1MatchingJob: lead #{lead.id} passed Stage 1 — moved to reviewed")
+      Stage2MatchingJob.perform_later(lead)
     else
       lead.update!(stage: :skipped, match_reasoning: result[:response][:reason])
       Rails.logger.info("Stage1MatchingJob: lead #{lead.id} failed Stage 1 — #{result[:response][:reason]}")
