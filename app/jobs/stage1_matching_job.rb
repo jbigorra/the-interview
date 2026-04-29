@@ -5,7 +5,8 @@
 #
 # Passing leads are moved to :reviewed stage (pending LLM evaluation).
 # Failing leads are moved to :skipped with the rejection reason stored
-# in match_reasoning. Leads without any matching criterion pass by default.
+# in match_reasoning. Leads without any matching criterion auto-pass to :reviewed.
+# Leads that have already been evaluated (evaluated_at present) are skipped.
 class Stage1MatchingJob < ApplicationJob
   queue_as :matching
 
@@ -14,17 +15,23 @@ class Stage1MatchingJob < ApplicationJob
   # @param lead [Lead] the lead record to evaluate
   # @return [void]
   def perform(lead)
+    if lead.evaluated_at.present?
+      Rails.logger.info("Stage1MatchingJob: lead #{lead.id} already evaluated — skipping")
+      return
+    end
+
     criterion = lead.profile.matching_criterion
 
     unless criterion
-      Rails.logger.info("Stage1MatchingJob: no matching criteria set for profile #{lead.profile_id} — skipping evaluation")
+      Rails.logger.info("Stage1MatchingJob: no matching criteria for profile #{lead.profile_id} — auto-passing lead #{lead.id}")
+      lead.update!(stage: :reviewed)
       return
     end
 
     result = Matching::KeywordEvaluator.call(lead: lead, criterion: criterion)
 
     unless result[:success]
-      Rails.logger.error("KeywordEvaluator failed for lead #{lead.id}: #{result[:response]}")
+      Rails.logger.error("Stage1MatchingJob: KeywordEvaluator failed for lead #{lead.id}: #{result[:response]}")
       return
     end
 

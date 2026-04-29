@@ -7,7 +7,9 @@ RSpec.describe Stage1MatchingJob, type: :job do
   let(:lead) { create(:lead, profile: profile, stage: :fresh, description: "Rails Ruby PostgreSQL remote role") }
 
   describe "#perform" do
-    context "when the profile has no matching criterion" do
+    context "when the lead has already been evaluated" do
+      let(:lead) { create(:lead, profile: profile, stage: :reviewed, evaluated_at: 1.hour.ago) }
+
       it "does not call KeywordEvaluator" do
         expect(Matching::KeywordEvaluator).not_to receive(:call)
         described_class.new.perform(lead)
@@ -16,6 +18,18 @@ RSpec.describe Stage1MatchingJob, type: :job do
       it "does not change the lead stage" do
         expect { described_class.new.perform(lead) }
           .not_to change { lead.reload.stage }
+      end
+    end
+
+    context "when the profile has no matching criterion" do
+      it "does not call KeywordEvaluator" do
+        expect(Matching::KeywordEvaluator).not_to receive(:call)
+        described_class.new.perform(lead)
+      end
+
+      it "moves the lead to :reviewed stage (auto-pass)" do
+        described_class.new.perform(lead)
+        expect(lead.reload.stage).to eq("reviewed")
       end
     end
 
