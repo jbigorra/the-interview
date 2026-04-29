@@ -20,12 +20,12 @@ module Discovery
     #   on success, or { success: false, response: { error: { message: String } } } on failure
     def self.call(url:, ats_type:)
       adapter = case ats_type
-                when "greenhouse" then GreenhouseFetcher
-                when "lever"      then LeverFetcher
-                when "ashby"      then AshbyFetcher
-                else
+      when "greenhouse" then GreenhouseFetcher
+      when "lever"      then LeverFetcher
+      when "ashby"      then AshbyFetcher
+      else
                   return { success: false, response: { error: { message: "Unsupported ATS type: #{ats_type}" } } }
-                end
+      end
 
       adapter.call(url)
     rescue => e
