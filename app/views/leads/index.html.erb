@@ -1,0 +1,26 @@
+<% content_for :title, "Pipeline" %>
+
+<div id="flash"></div>
+
+<div class="p-6">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold text-gray-900">Pipeline</h1>
+    <%= link_to "Dashboard", root_path, class: "text-sm text-indigo-600 hover:underline" %>
+  </div>
+
+  <div class="flex gap-4 overflow-x-auto pb-4" data-controller="kanban">
+    <% Lead.stages.each_key do |stage| %>
+      <div class="flex-shrink-0 w-72 bg-gray-100 rounded-lg p-3"
+           data-stage="<%= Lead.stages[stage] %>"
+           data-kanban-target="column">
+        <h2 class="font-semibold text-sm uppercase text-gray-600 mb-3">
+          <%= stage.to_s.humanize %>
+          <span class="text-gray-400">(<%= (@leads_by_stage[stage] || []).size %>)</span>
+        </h2>
+        <div class="space-y-2 min-h-[100px]" data-stage-value="<%= Lead.stages[stage] %>">
+          <%= render partial: "leads/card", collection: (@leads_by_stage[stage] || []), as: :lead %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

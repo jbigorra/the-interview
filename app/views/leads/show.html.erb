@@ -1,0 +1,41 @@
+<% content_for :title, @lead.title %>
+
+<div class="max-w-3xl mx-auto p-6">
+  <%= link_to "← Back to Pipeline", leads_path, class: "text-blue-600 hover:underline mb-4 inline-block" %>
+
+  <div class="bg-white rounded-lg shadow p-6 mb-6">
+    <h1 class="text-xl font-bold"><%= @lead.title %></h1>
+    <p class="text-gray-600"><%= @lead.company %> • <%= @lead.location %></p>
+    <% if @lead.url.present? %>
+      <p class="text-sm text-gray-400 mt-1">
+        <%= link_to @lead.url, @lead.url, target: "_blank", rel: "noopener", class: "hover:underline" %>
+      </p>
+    <% end %>
+
+    <div class="mt-4 flex flex-wrap gap-2">
+      <span class="px-2 py-1 bg-gray-100 rounded text-sm"><%= @lead.stage.to_s.humanize %></span>
+      <% if @lead.match_score %>
+        <span class="px-2 py-1 bg-gray-100 rounded text-sm">Score: <%= @lead.match_score %>%</span>
+      <% end %>
+      <% if @lead.match_recommendation %>
+        <span class="px-2 py-1 bg-gray-100 rounded text-sm"><%= @lead.match_recommendation.to_s.humanize %></span>
+      <% end %>
+    </div>
+
+    <% if @lead.description.present? %>
+      <div class="mt-4 prose prose-sm max-w-none">
+        <%= simple_format(@lead.description) %>
+      </div>
+    <% end %>
+  </div>
+
+  <div id="notes" class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-lg font-semibold mb-4">Notes</h2>
+    <div id="notes_list">
+      <%= render @notes %>
+    </div>
+    <div id="new_note">
+      <%= render partial: "notes/form", locals: { note: @note, lead: @lead } %>
+    </div>
+  </div>
+</div>

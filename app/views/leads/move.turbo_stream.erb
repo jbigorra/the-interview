@@ -1,0 +1,2 @@
+<%= turbo_stream.replace "lead_#{@lead.id}", partial: "leads/card", locals: { lead: @lead } %>
+<%= turbo_stream.append "flash", partial: "shared/notice", locals: { message: "Lead moved to #{@lead.stage.to_s.humanize}" } %>

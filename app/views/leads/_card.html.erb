@@ -1,0 +1,22 @@
+<div class="bg-white rounded shadow p-3 cursor-move hover:shadow-md transition"
+     data-lead-id="<%= lead.id %>"
+     id="lead_<%= lead.id %>">
+  <h3 class="font-medium text-sm truncate"><%= lead.title %></h3>
+  <p class="text-xs text-gray-500 truncate"><%= lead.company %></p>
+  <% if lead.match_score %>
+    <div class="mt-2 flex items-center gap-1">
+      <span class="text-xs font-medium <%= lead.match_score >= 70 ? 'text-green-600' : lead.match_score >= 50 ? 'text-yellow-600' : 'text-red-600' %>">
+        <%= lead.match_score %>%
+      </span>
+      <% if lead.match_recommendation %>
+        <span class="text-xs text-gray-400">• <%= lead.match_recommendation.to_s.humanize %></span>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="mt-2 flex justify-between items-center">
+    <%= link_to "View", lead_path(lead), class: "text-xs text-blue-600 hover:underline" %>
+    <%= button_to "Delete", lead_path(lead), method: :delete,
+          class: "text-xs text-red-400 hover:text-red-600",
+          form: { data: { turbo_confirm: "Delete this lead?" } } %>
+  </div>
+</div>

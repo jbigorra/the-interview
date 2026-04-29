@@ -1,0 +1,7 @@
+<%= form_with model: @note, url: lead_notes_path(@lead), class: "mt-4" do |f| %>
+  <div class="flex gap-2">
+    <%= f.text_area :body, rows: 2, placeholder: "Add a note...",
+          class: "flex-1 border rounded p-2 text-sm" %>
+    <%= f.submit "Add", class: "px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700" %>
+  </div>
+<% end %>
