@@ -1,12 +1,9 @@
 # the-interview — Makefile
 #
-# Usage: make <target> [ENV=production]
+# Usage: make <target>
 #
-# Environment:
-#   ENV        Rails environment (default: development)
-
-ENV ?= development
-export RAILS_ENV := $(ENV)
+# For non-test targets, RAILS_ENV defaults to development.
+# Test targets always force RAILS_ENV=test.
 
 # ============================================================================
 # Setup & Installation
@@ -20,6 +17,8 @@ setup install: ## Install dependencies, create database, run migrations
 	bin/rails db:create
 	@echo "==> Running migrations..."
 	bin/rails db:migrate
+	@echo "==> Preparing test database..."
+	RAILS_ENV=test bin/rails db:create db:migrate
 	@echo "==> Seeding database..."
 	bin/rails db:seed || true
 	@echo "==> Setup complete."
@@ -94,21 +93,21 @@ console-prod: ## Open production Rails console
 
 .PHONY: test test-fast test-coverage test-failed
 test: ## Run full test suite with coverage
-	bin/rails db:test:prepare
-	bin/rspec --format progress
+	RAILS_ENV=test bin/rails db:test:prepare
+	RAILS_ENV=test bin/rspec --format progress
 
 test-fast: ## Run tests without coverage overhead
-	bin/rails db:test:prepare
-	SIMPLECOV=off bin/rspec --format progress
+	RAILS_ENV=test bin/rails db:test:prepare
+	RAILS_ENV=test SIMPLECOV=off bin/rspec --format progress
 
 test-coverage: ## Run tests and open coverage report
-	bin/rails db:test:prepare
-	bin/rspec --format progress
+	RAILS_ENV=test bin/rails db:test:prepare
+	RAILS_ENV=test bin/rspec --format progress
 	@echo "==> Coverage report: coverage/index.html"
 	open coverage/index.html 2>/dev/null || true
 
 test-failed: ## Rerun previously failed tests
-	bin/rspec --only-failures --format progress
+	RAILS_ENV=test bin/rspec --only-failures --format progress
 
 # ============================================================================
 # Code Quality — Linting & Formatting
@@ -154,7 +153,8 @@ quality check: ## Run lint + security + tests
 	bin/bundler-audit --update
 	bin/importmap audit
 	@echo "==> Running tests..."
-	bin/rspec --format progress
+	RAILS_ENV=test bin/rails db:test:prepare
+	RAILS_ENV=test bin/rspec --format progress
 	@echo "==> All checks passed."
 
 # ============================================================================
@@ -195,9 +195,10 @@ ci: ## Run full CI pipeline locally
 	bin/bundler-audit --update
 	bin/importmap audit
 	@echo "==> Tests..."
-	bin/rspec --format progress --format RspecJunitFormatter --out tmp/rspec.xml
+	RAILS_ENV=test bin/rails db:test:prepare
+	RAILS_ENV=test bin/rspec --format progress --format RspecJunitFormatter --out tmp/rspec.xml
 	@echo "==> Type check..."
-	bundle exec srb tc || echo "⚠️  Sorbet has errors (expected during gradual adoption)"
+	bundle exec srb tc || echo "Sorbet has errors (expected during gradual adoption)"
 	@echo "==> CI complete."
 
 # ============================================================================
