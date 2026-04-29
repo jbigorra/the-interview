@@ -27,6 +27,7 @@ RSpec.describe Matching::LlmEvaluator, type: :service do
   before do
     allow(RubyLLM).to receive(:chat).with(model: Matching::LlmEvaluator::MODEL).and_return(mock_chat)
     allow(mock_chat).to receive(:with_instructions).and_return(mock_chat)
+    allow(mock_chat).to receive(:with_schema).and_return(mock_chat)
     allow(mock_chat).to receive(:ask).and_return(mock_message)
   end
 

@@ -1,10 +1,12 @@
 # Matching Services
 
-Covers the two-stage lead matching pipeline: Stage 1 keyword-based filtering and Stage 2 LLM-based scoring.
+Covers the two-stage lead matching pipeline: Stage 1 keyword-based filtering and Stage 2 LLM-based scoring with Claude Haiku.
 
 ## KeywordEvaluator
 
-**Purpose:** Stage 1 filter — evaluates whether a lead passes excluded/required keyword criteria.
+**Status:** ✅ Implemented
+
+**Purpose:** Stage 1 filter — evaluates whether a lead passes excluded/required keyword criteria. Checks lead title + description against the user's matching criterion.
 
 **Inputs:** `lead: [Lead]`, `criterion: [MatchingCriterion, nil]`
 
@@ -17,10 +19,12 @@ Always returns `success: true` — use `response[:passed]` to determine the outc
 
 ## LlmEvaluator
 
-**Purpose:** Stage 2 scorer — evaluates a lead against the user's profile criteria using an LLM (Claude Haiku via ruby_llm). **Stub — not yet implemented.**
+**Status:** ✅ Implemented
 
-**Inputs:** `lead: [Lead]`, `criterion: [MatchingCriterion]`
+**Purpose:** Stage 2 scorer — evaluates a lead against the user's profile criteria using Claude Haiku via ruby_llm. Uses structured JSON schema output for reliable parsing.
 
-**Success:** `{ success: true, response: { score: Integer, recommendation: String, reasoning: String } }` *(when implemented)*
+**Inputs:** `lead: [Lead]`, `criterion: [MatchingCriterion, nil]`
 
-**Failure:** `{ success: false, response: { error: { message: String } } }`
+**Success:** `{ success: true, response: { score: Integer, recommendation: String, reasoning: String, strengths: Array, concerns: Array } }`
+
+**Failure:** `{ success: false, response: { error: { message: String } } }` — raised on RubyLLM::Error or JSON parse failure.

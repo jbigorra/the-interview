@@ -144,7 +144,7 @@ RSpec.describe "Profiles", type: :request do
 
       it "returns unprocessable_entity status" do
         patch profile_path, params: invalid_params
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
 
       it "re-renders the show page" do
@@ -165,7 +165,7 @@ RSpec.describe "Profiles", type: :request do
 
       it "returns unprocessable_entity status" do
         patch profile_path, params: invalid_params
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
   end

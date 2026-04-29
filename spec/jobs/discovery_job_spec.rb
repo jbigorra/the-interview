@@ -63,14 +63,15 @@ RSpec.describe DiscoveryJob, type: :job do
         )
       end
 
-      it "does not call ResultParser" do
-        described_class.new.perform(search_query)
-        expect(Discovery::ResultParser).not_to have_received(:call)
+      it "raises an error for Active Job retry" do
+        expect { described_class.new.perform(search_query) }
+          .to raise_error(RuntimeError, /QueryExecutor failed/)
       end
 
-      it "does not create any leads" do
+      it "does not call ResultParser" do
         expect { described_class.new.perform(search_query) }
-          .not_to change(Lead, :count)
+          .to raise_error(RuntimeError)
+        expect(Discovery::ResultParser).not_to have_received(:call)
       end
     end
 
@@ -81,9 +82,9 @@ RSpec.describe DiscoveryJob, type: :job do
         )
       end
 
-      it "does not create any leads" do
+      it "raises an error for Active Job retry" do
         expect { described_class.new.perform(search_query) }
-          .not_to change(Lead, :count)
+          .to raise_error(RuntimeError, /ResultParser failed/)
       end
     end
 

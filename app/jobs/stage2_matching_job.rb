@@ -12,6 +12,11 @@
 class Stage2MatchingJob < ApplicationJob
   queue_as :matching
 
+  # Throttle LLM calls to avoid Claude API rate limits
+  limits_concurrency to: 5,
+    key: ->(lead) { "stage2_#{lead.profile_id}" },
+    duration: 1.minute
+
   retry_on StandardError, wait: :exponentially_longer, attempts: 3
 
   discard_on RubyLLM::Error do |job, error|

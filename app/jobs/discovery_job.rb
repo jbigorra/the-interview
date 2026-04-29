@@ -20,16 +20,10 @@ class DiscoveryJob < ApplicationJob
     return if search_query.recently_run?
 
     result = Discovery::QueryExecutor.call(search_query)
-    unless result[:success]
-      Rails.logger.error("QueryExecutor failed: #{result[:response]}")
-      return
-    end
+    raise "QueryExecutor failed: #{result[:response]}" unless result[:success]
 
     parsed = Discovery::ResultParser.call(result[:response][:results], profile: search_query.profile)
-    unless parsed[:success]
-      Rails.logger.error("ResultParser failed: #{parsed[:response]}")
-      return
-    end
+    raise "ResultParser failed: #{parsed[:response]}" unless parsed[:success]
 
     created = 0
     skipped = 0

@@ -97,7 +97,7 @@ module Matching
     def self.chat_with_llm(prompt)
       chat = RubyLLM.chat(model: MODEL)
       chat.with_instructions("You are a job matching assistant. Always respond with valid JSON only.")
-      response = chat.ask(prompt)
+      response = chat.with_schema(RESPONSE_SCHEMA).ask(prompt)
       response.content
     end
     private_class_method :chat_with_llm

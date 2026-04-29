@@ -34,7 +34,7 @@ RSpec.describe "SearchQueries", type: :request do
 
       it "renders new with unprocessable_entity" do
         post search_queries_path, params: invalid_params
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
   end
@@ -64,7 +64,7 @@ RSpec.describe "SearchQueries", type: :request do
     context "with invalid params" do
       it "renders edit with unprocessable_entity" do
         put search_query_path(query), params: { search_query: { title: "", portal: "" } }
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
   end
