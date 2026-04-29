@@ -1,0 +1,64 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://serpapi.com/search?api_key=test-api-key&engine=google&num=100&q=site:jobs.lever.co%20%22Senior%20Software%20Engineer%22%20%22remote%22&source=serpapi-ruby:1.0.3
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      Connection:
+      - Keep-Alive
+      Host:
+      - serpapi.com
+      User-Agent:
+      - http.rb/5.3.1
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Wed, 29 Apr 2026 06:45:24 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - ae23eea5-1066-4ddb-ab07-9a6b49cbb900
+      X-Runtime:
+      - '0.004476'
+      Vary:
+      - accept-encoding
+      Cf-Cache-Status:
+      - MISS
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9f3c57fcd98950f9-CDG
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "error": "Invalid API key. Your API key should be here: https://serpapi.com/manage-api-key"
+        }
+  recorded_at: Wed, 29 Apr 2026 06:45:24 GMT
+recorded_with: VCR 6.4.0

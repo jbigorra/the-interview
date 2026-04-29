@@ -1,0 +1,35 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://serpapi.com/search
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Connection:
+      - close
+      Host:
+      - serpapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"search_metadata":{"id":"abc123","status":"Success","created_at":"2026-04-29
+        00:00:00 UTC","processed_at":"2026-04-29 00:00:01 UTC","total_time_taken":1.23},"search_parameters":{"engine":"google","q":"site:jobs.lever.co
+        \"Senior Software Engineer\" \"remote\"","num":"100"},"organic_results":[{"position":1,"title":"Acme
+        Corp - Senior Software Engineer","link":"https://jobs.lever.co/acme/abc-123","snippet":"Acme
+        Corp is hiring a Senior Software Engineer. Remote. Work from anywhere."},{"position":2,"title":"Beta
+        Inc | Senior Software Engineer","link":"https://jobs.lever.co/beta/def-456","snippet":"Beta
+        Inc is looking for a Senior Software Engineer to join our remote team."}]}'
+  recorded_at: '2026-04-29T00:00:00.000Z'
+recorded_with: VCR 6.3.1
