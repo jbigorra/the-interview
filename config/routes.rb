@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root "dashboard#show"
 
+  resource :profile, only: %i[show update]
+
   resources :leads, only: %i[index show destroy] do
     member do
       patch :move

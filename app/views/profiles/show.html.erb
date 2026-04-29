@@ -1,0 +1,88 @@
+<% content_for :title, "Profile & Criteria" %>
+
+<div class="max-w-3xl mx-auto p-6">
+  <h1 class="text-2xl font-bold mb-6">Profile & Matching Criteria</h1>
+
+  <%= form_with model: @profile, url: profile_path, method: :patch, class: "space-y-8" do |f| %>
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="text-lg font-semibold mb-4">Personal Info</h2>
+      <div class="space-y-4">
+        <div>
+          <%= f.label :full_name, class: "block text-sm font-medium text-gray-700" %>
+          <%= f.text_field :full_name, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+        </div>
+        <div>
+          <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
+          <%= f.email_field :email, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="text-lg font-semibold mb-4">Application Materials</h2>
+      <div class="space-y-4">
+        <div>
+          <%= f.label :resume_text, class: "block text-sm font-medium text-gray-700" %>
+          <%= f.text_area :resume_text, rows: 6, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+        </div>
+        <div>
+          <%= f.label :cover_letter_template, class: "block text-sm font-medium text-gray-700" %>
+          <%= f.text_area :cover_letter_template, rows: 6, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+        </div>
+      </div>
+    </div>
+
+    <%= f.fields_for :matching_criterion, @criterion do |mc| %>
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-lg font-semibold mb-4">Matching Criteria</h2>
+        <div class="space-y-4">
+          <div>
+            <%= mc.label :required_keywords, "Required Keywords (comma-separated)", class: "block text-sm font-medium text-gray-700" %>
+            <%= mc.text_field :required_keywords,
+                  value: mc.object.required_keywords&.join(", "),
+                  class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm",
+                  placeholder: "Ruby, Rails, PostgreSQL" %>
+          </div>
+          <div>
+            <%= mc.label :excluded_keywords, "Excluded Keywords (comma-separated)", class: "block text-sm font-medium text-gray-700" %>
+            <%= mc.text_field :excluded_keywords,
+                  value: mc.object.excluded_keywords&.join(", "),
+                  class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm",
+                  placeholder: "intern, junior, internship" %>
+          </div>
+          <div>
+            <%= mc.label :min_salary, class: "block text-sm font-medium text-gray-700" %>
+            <%= mc.number_field :min_salary,
+                  class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm",
+                  placeholder: "120000" %>
+          </div>
+          <div>
+            <%= mc.label :preferred_locations, "Preferred Locations (comma-separated)", class: "block text-sm font-medium text-gray-700" %>
+            <%= mc.text_field :preferred_locations,
+                  value: mc.object.preferred_locations&.join(", "),
+                  class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm",
+                  placeholder: "US, Remote, Latin America" %>
+          </div>
+          <div>
+            <%= mc.label :work_mode, class: "block text-sm font-medium text-gray-700" %>
+            <%= mc.select :work_mode,
+                  [["Remote", "remote"], ["Hybrid", "hybrid"], ["On-site", "onsite"]],
+                  {},
+                  class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+          </div>
+          <div>
+            <%= mc.label :llm_threshold, "LLM Match Threshold (%)", class: "block text-sm font-medium text-gray-700" %>
+            <%= mc.number_field :llm_threshold,
+                  min: 0, max: 100,
+                  class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+            <p class="text-xs text-gray-500 mt-1">Jobs scoring below this threshold will be skipped.</p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="flex justify-end">
+      <%= f.submit "Save Profile", class: "px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" %>
+    </div>
+  <% end %>
+</div>

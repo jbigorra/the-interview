@@ -7,4 +7,6 @@ class Profile < ApplicationRecord
 
   validates :full_name, presence: true
   validates :email, presence: true
+
+  accepts_nested_attributes_for :matching_criterion, allow_destroy: false
 end

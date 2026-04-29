@@ -390,6 +390,9 @@ class Profile
     sig { params(value: T.nilable(::MatchingCriterion)).void }
     def matching_criterion=(value); end
 
+    sig { params(attributes: T.untyped).returns(T.untyped) }
+    def matching_criterion_attributes=(attributes); end
+
     sig { returns(T.nilable(::MatchingCriterion)) }
     def reload_matching_criterion; end
 

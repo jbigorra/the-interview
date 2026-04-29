@@ -34,6 +34,9 @@ module GeneratedPathHelpersModule
   def new_search_query_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def profile_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def rails_blob_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
