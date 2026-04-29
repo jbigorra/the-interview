@@ -20,8 +20,6 @@ class HTTP::Client
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/http_rb/client.rb:7
   def perform(request, options); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/http_rb/client.rb:13
   def webmock_enabled?; end
 end
@@ -56,16 +54,12 @@ end
 
 # pkg:gem/webmock#lib/webmock/http_lib_adapters/http_rb/streamer.rb:5
 class HTTP::Response::Streamer
-  # @return [Streamer] a new instance of Streamer
-  #
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/http_rb/streamer.rb:6
   def initialize(str, encoding: T.unsafe(nil)); end
 
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/http_rb/streamer.rb:31
   def close; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/http_rb/streamer.rb:35
   def finished_request?; end
 
@@ -78,8 +72,6 @@ end
 
 # pkg:gem/webmock#lib/webmock/http_lib_adapters/http_rb/webmock.rb:4
 class HTTP::WebMockPerform
-  # @return [WebMockPerform] a new instance of WebMockPerform
-  #
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/http_rb/webmock.rb:5
   def initialize(request, options, &perform); end
 
@@ -100,8 +92,6 @@ class HTTP::WebMockPerform
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/http_rb/webmock.rb:58
   def perform; end
 
-  # @raise [Errno::ETIMEDOUT]
-  #
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/http_rb/webmock.rb:53
   def raise_timeout_error; end
 
@@ -123,58 +113,36 @@ end
 
 # pkg:gem/webmock#lib/webmock/http_lib_adapters/net_http.rb:224
 class StubSocket
-  # @return [StubSocket] a new instance of StubSocket
-  #
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/net_http.rb:228
   def initialize(*args); end
 
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/net_http.rb:236
   def close; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/net_http.rb:232
   def closed?; end
 
-  # Returns the value of attribute continue_timeout.
-  #
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/net_http.rb:226
   def continue_timeout; end
 
-  # Sets the attribute continue_timeout
-  #
-  # @param value the value to set the attribute continue_timeout to.
-  #
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/net_http.rb:226
   def continue_timeout=(_arg0); end
 
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/net_http.rb:244
   def io; end
 
-  # Returns the value of attribute read_timeout.
-  #
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/net_http.rb:226
   def read_timeout; end
 
-  # Sets the attribute read_timeout
-  #
-  # @param value the value to set the attribute read_timeout to.
-  #
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/net_http.rb:226
   def read_timeout=(_arg0); end
 
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/net_http.rb:241
   def readuntil(*args); end
 
-  # Returns the value of attribute write_timeout.
-  #
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/net_http.rb:226
   def write_timeout; end
 
-  # Sets the attribute write_timeout
-  #
-  # @param value the value to set the attribute write_timeout to.
-  #
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/net_http.rb:226
   def write_timeout=(_arg0); end
 end
@@ -197,6 +165,14 @@ class StubSocket::StubIO
   def ssl_version; end
 end
 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
 # pkg:gem/webmock#lib/webmock/deprecation.rb:3
 module WebMock
   include ::WebMock::API
@@ -254,31 +230,21 @@ module WebMock
     # pkg:gem/webmock#lib/webmock/webmock.rb:117
     def hide_stubbing_instructions!; end
 
-    # @private
-    #
     # pkg:gem/webmock#lib/webmock/webmock.rb:5
     def included(clazz); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/webmock#lib/webmock/webmock.rb:63
     def net_connect_allowed?(uri = T.unsafe(nil)); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/webmock#lib/webmock/webmock.rb:85
     def net_connect_explicit_allowed?(allowed, uri = T.unsafe(nil)); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/webmock#lib/webmock/webmock.rb:75
     def net_http_connect_on_start?(uri); end
 
     # pkg:gem/webmock#lib/webmock/webmock.rb:151
     def print_executed_requests; end
 
-    # @return [Boolean]
-    #
     # pkg:gem/webmock#lib/webmock/webmock.rb:147
     def registered_request?(request_signature); end
 
@@ -297,16 +263,12 @@ module WebMock
     # pkg:gem/webmock#lib/webmock/webmock.rb:105
     def show_body_diff!; end
 
-    # @return [Boolean]
-    #
     # pkg:gem/webmock#lib/webmock/webmock.rb:113
     def show_body_diff?; end
 
     # pkg:gem/webmock#lib/webmock/webmock.rb:121
     def show_stubbing_instructions!; end
 
-    # @return [Boolean]
-    #
     # pkg:gem/webmock#lib/webmock/webmock.rb:125
     def show_stubbing_instructions?; end
 
@@ -385,20 +347,12 @@ end
 # pkg:gem/webmock#lib/webmock/assertion_failure.rb:4
 class WebMock::AssertionFailure
   class << self
-    # Returns the value of attribute error_class.
-    #
     # pkg:gem/webmock#lib/webmock/assertion_failure.rb:7
     def error_class; end
 
-    # Sets the attribute error_class
-    #
-    # @param value the value to set the attribute error_class to.
-    #
     # pkg:gem/webmock#lib/webmock/assertion_failure.rb:7
     def error_class=(_arg0); end
 
-    # @raise [@error_class]
-    #
     # pkg:gem/webmock#lib/webmock/assertion_failure.rb:8
     def failure(message); end
   end
@@ -408,18 +362,12 @@ end
 class WebMock::BodyPattern
   include ::WebMock::RSpecMatcherDetector
 
-  # @return [BodyPattern] a new instance of BodyPattern
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:273
   def initialize(pattern); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:283
   def matches?(body, content_type = T.unsafe(nil)); end
 
-  # Returns the value of attribute pattern.
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:271
   def pattern; end
 
@@ -437,13 +385,9 @@ class WebMock::BodyPattern
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:319
   def body_format(content_type); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:383
   def empty_string?(string); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:363
   def matching_body_array?(query_parameters, pattern, content_type); end
 
@@ -462,10 +406,12 @@ class WebMock::BodyPattern
   #
   #     {a: {b: 'wow'}} and {a: {b: 'wow'}}
   #
-  # @param pattern [Hash] which contains keys with a string, hash or
-  #   regular expression value to use for comparison.
-  # @param query_parameters [Hash] typically the result of parsing
+  # @param [Hash] query_parameters typically the result of parsing
   #   JSON, XML or URL encoded parameters.
+  #
+  # @param [Hash] pattern which contains keys with a string, hash or
+  #   regular expression value to use for comparison.
+  #
   # @return [Boolean] true if the paramaters match the comparison
   #   hash, false if not.
   #
@@ -478,8 +424,6 @@ class WebMock::BodyPattern
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:387
   def normalize_hash(hash); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:391
   def url_encoded_body?(content_type); end
 end
@@ -493,8 +437,6 @@ class WebMock::CallbackRegistry
     # pkg:gem/webmock#lib/webmock/callback_registry.rb:7
     def add_callback(options, block); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/webmock#lib/webmock/callback_registry.rb:32
     def any_callbacks?; end
 
@@ -515,92 +457,48 @@ class WebMock::Config
   include ::Singleton
   extend ::Singleton::SingletonClassMethods
 
-  # @return [Config] a new instance of Config
-  #
   # pkg:gem/webmock#lib/webmock/config.rb:7
   def initialize; end
 
-  # Returns the value of attribute allow.
-  #
   # pkg:gem/webmock#lib/webmock/config.rb:14
   def allow; end
 
-  # Sets the attribute allow
-  #
-  # @param value the value to set the attribute allow to.
-  #
   # pkg:gem/webmock#lib/webmock/config.rb:14
   def allow=(_arg0); end
 
-  # Returns the value of attribute allow_localhost.
-  #
   # pkg:gem/webmock#lib/webmock/config.rb:13
   def allow_localhost; end
 
-  # Sets the attribute allow_localhost
-  #
-  # @param value the value to set the attribute allow_localhost to.
-  #
   # pkg:gem/webmock#lib/webmock/config.rb:13
   def allow_localhost=(_arg0); end
 
-  # Returns the value of attribute allow_net_connect.
-  #
   # pkg:gem/webmock#lib/webmock/config.rb:12
   def allow_net_connect; end
 
-  # Sets the attribute allow_net_connect
-  #
-  # @param value the value to set the attribute allow_net_connect to.
-  #
   # pkg:gem/webmock#lib/webmock/config.rb:12
   def allow_net_connect=(_arg0); end
 
-  # Returns the value of attribute net_http_connect_on_start.
-  #
   # pkg:gem/webmock#lib/webmock/config.rb:15
   def net_http_connect_on_start; end
 
-  # Sets the attribute net_http_connect_on_start
-  #
-  # @param value the value to set the attribute net_http_connect_on_start to.
-  #
   # pkg:gem/webmock#lib/webmock/config.rb:15
   def net_http_connect_on_start=(_arg0); end
 
-  # Returns the value of attribute query_values_notation.
-  #
   # pkg:gem/webmock#lib/webmock/config.rb:17
   def query_values_notation; end
 
-  # Sets the attribute query_values_notation
-  #
-  # @param value the value to set the attribute query_values_notation to.
-  #
   # pkg:gem/webmock#lib/webmock/config.rb:17
   def query_values_notation=(_arg0); end
 
-  # Returns the value of attribute show_body_diff.
-  #
   # pkg:gem/webmock#lib/webmock/config.rb:18
   def show_body_diff; end
 
-  # Sets the attribute show_body_diff
-  #
-  # @param value the value to set the attribute show_body_diff to.
-  #
   # pkg:gem/webmock#lib/webmock/config.rb:18
   def show_body_diff=(_arg0); end
 
-  # Returns the value of attribute show_stubbing_instructions.
-  #
   # pkg:gem/webmock#lib/webmock/config.rb:16
   def show_stubbing_instructions; end
 
-  # Sets the attribute show_stubbing_instructions
-  #
-  # @param value the value to set the attribute show_stubbing_instructions to.
-  #
   # pkg:gem/webmock#lib/webmock/config.rb:16
   def show_stubbing_instructions=(_arg0); end
 
@@ -625,31 +523,21 @@ end
 
 # pkg:gem/webmock#lib/webmock/response.rb:149
 class WebMock::DynamicResponse < ::WebMock::Response
-  # @return [DynamicResponse] a new instance of DynamicResponse
-  #
   # pkg:gem/webmock#lib/webmock/response.rb:152
   def initialize(responder); end
 
   # pkg:gem/webmock#lib/webmock/response.rb:156
   def evaluate(request_signature); end
 
-  # Returns the value of attribute responder.
-  #
   # pkg:gem/webmock#lib/webmock/response.rb:150
   def responder; end
 
-  # Sets the attribute responder
-  #
-  # @param value the value to set the attribute responder to.
-  #
   # pkg:gem/webmock#lib/webmock/response.rb:150
   def responder=(_arg0); end
 end
 
 # pkg:gem/webmock#lib/webmock/util/hash_validator.rb:4
 class WebMock::HashValidator
-  # @return [HashValidator] a new instance of HashValidator
-  #
   # pkg:gem/webmock#lib/webmock/util/hash_validator.rb:5
   def initialize(hash); end
 
@@ -661,13 +549,9 @@ end
 
 # pkg:gem/webmock#lib/webmock/request_pattern.rb:396
 class WebMock::HeadersPattern
-  # @return [HeadersPattern] a new instance of HeadersPattern
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:397
   def initialize(pattern); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:401
   def matches?(headers); end
 
@@ -679,8 +563,6 @@ class WebMock::HeadersPattern
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:423
   def empty_headers?(headers); end
 end
@@ -699,23 +581,15 @@ class WebMock::HttpLibAdapterRegistry
   include ::Singleton
   extend ::Singleton::SingletonClassMethods
 
-  # @return [HttpLibAdapterRegistry] a new instance of HttpLibAdapterRegistry
-  #
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/http_lib_adapter_registry.rb:9
   def initialize; end
 
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/http_lib_adapter_registry.rb:17
   def each_adapter(&block); end
 
-  # Returns the value of attribute http_lib_adapters.
-  #
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/http_lib_adapter_registry.rb:7
   def http_lib_adapters; end
 
-  # Sets the attribute http_lib_adapters
-  #
-  # @param value the value to set the attribute http_lib_adapters to.
-  #
   # pkg:gem/webmock#lib/webmock/http_lib_adapters/http_lib_adapter_registry.rb:7
   def http_lib_adapters=(_arg0); end
 
@@ -745,8 +619,6 @@ class WebMock::HttpLibAdapters::HttpRbAdapter < ::WebMock::HttpLibAdapter
     # pkg:gem/webmock#lib/webmock/http_lib_adapters/http_rb_adapter.rb:18
     def enable!; end
 
-    # @return [Boolean]
-    #
     # pkg:gem/webmock#lib/webmock/http_lib_adapters/http_rb_adapter.rb:26
     def enabled?; end
   end
@@ -781,8 +653,6 @@ module WebMock::Matchers; end
 #
 # pkg:gem/webmock#lib/webmock/matchers/any_arg_matcher.rb:6
 class WebMock::Matchers::AnyArgMatcher
-  # @return [AnyArgMatcher] a new instance of AnyArgMatcher
-  #
   # pkg:gem/webmock#lib/webmock/matchers/any_arg_matcher.rb:7
   def initialize(ignore); end
 
@@ -795,8 +665,6 @@ end
 #
 # pkg:gem/webmock#lib/webmock/matchers/hash_argument_matcher.rb:7
 class WebMock::Matchers::HashArgumentMatcher
-  # @return [HashArgumentMatcher] a new instance of HashArgumentMatcher
-  #
   # pkg:gem/webmock#lib/webmock/matchers/hash_argument_matcher.rb:8
   def initialize(expected); end
 
@@ -835,13 +703,9 @@ end
 
 # pkg:gem/webmock#lib/webmock/request_pattern.rb:98
 class WebMock::MethodPattern
-  # @return [MethodPattern] a new instance of MethodPattern
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:99
   def initialize(pattern); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:103
   def matches?(method); end
 
@@ -851,8 +715,6 @@ end
 
 # pkg:gem/webmock#lib/webmock/errors.rb:5
 class WebMock::NetConnectNotAllowedError < ::Exception
-  # @return [NetConnectNotAllowedError] a new instance of NetConnectNotAllowedError
-  #
   # pkg:gem/webmock#lib/webmock/errors.rb:6
   def initialize(request_signature); end
 end
@@ -876,21 +738,15 @@ end
 
 # pkg:gem/webmock#lib/webmock/request_pattern.rb:5
 module WebMock::RSpecMatcherDetector
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:10
   def rSpecHashExcludingMatcher?(matcher); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:6
   def rSpecHashIncludingMatcher?(matcher); end
 end
 
 # pkg:gem/webmock#lib/webmock/rack_response.rb:4
 class WebMock::RackResponse < ::WebMock::Response
-  # @return [RackResponse] a new instance of RackResponse
-  #
   # pkg:gem/webmock#lib/webmock/rack_response.rb:5
   def initialize(app); end
 
@@ -912,8 +768,6 @@ end
 
 # pkg:gem/webmock#lib/webmock/request_body_diff.rb:7
 class WebMock::RequestBodyDiff
-  # @return [RequestBodyDiff] a new instance of RequestBodyDiff
-  #
   # pkg:gem/webmock#lib/webmock/request_body_diff.rb:9
   def initialize(request_signature, request_stub); end
 
@@ -922,31 +776,21 @@ class WebMock::RequestBodyDiff
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_body_diff.rb:57
   def parseable_json?(body_pattern); end
 
-  # Returns the value of attribute request_signature.
-  #
   # pkg:gem/webmock#lib/webmock/request_body_diff.rb:20
   def request_signature; end
 
   # pkg:gem/webmock#lib/webmock/request_body_diff.rb:33
   def request_signature_body_hash; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_body_diff.rb:25
   def request_signature_diffable?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_body_diff.rb:49
   def request_signature_parseable_json?; end
 
-  # Returns the value of attribute request_stub.
-  #
   # pkg:gem/webmock#lib/webmock/request_body_diff.rb:20
   def request_stub; end
 
@@ -956,65 +800,39 @@ class WebMock::RequestBodyDiff
   # pkg:gem/webmock#lib/webmock/request_body_diff.rb:37
   def request_stub_body_hash; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_body_diff.rb:29
   def request_stub_diffable?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_body_diff.rb:53
   def request_stub_parseable_json?; end
 end
 
 # pkg:gem/webmock#lib/webmock/request_execution_verifier.rb:4
 class WebMock::RequestExecutionVerifier
-  # @return [RequestExecutionVerifier] a new instance of RequestExecutionVerifier
-  #
   # pkg:gem/webmock#lib/webmock/request_execution_verifier.rb:8
   def initialize(request_pattern = T.unsafe(nil), expected_times_executed = T.unsafe(nil), at_least_times_executed = T.unsafe(nil), at_most_times_executed = T.unsafe(nil)); end
 
-  # Returns the value of attribute at_least_times_executed.
-  #
   # pkg:gem/webmock#lib/webmock/request_execution_verifier.rb:6
   def at_least_times_executed; end
 
-  # Sets the attribute at_least_times_executed
-  #
-  # @param value the value to set the attribute at_least_times_executed to.
-  #
   # pkg:gem/webmock#lib/webmock/request_execution_verifier.rb:6
   def at_least_times_executed=(_arg0); end
 
-  # Returns the value of attribute at_most_times_executed.
-  #
   # pkg:gem/webmock#lib/webmock/request_execution_verifier.rb:6
   def at_most_times_executed; end
 
-  # Sets the attribute at_most_times_executed
-  #
-  # @param value the value to set the attribute at_most_times_executed to.
-  #
   # pkg:gem/webmock#lib/webmock/request_execution_verifier.rb:6
   def at_most_times_executed=(_arg0); end
 
   # pkg:gem/webmock#lib/webmock/request_execution_verifier.rb:38
   def description; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_execution_verifier.rb:28
   def does_not_match?; end
 
-  # Returns the value of attribute expected_times_executed.
-  #
   # pkg:gem/webmock#lib/webmock/request_execution_verifier.rb:6
   def expected_times_executed; end
 
-  # Sets the attribute expected_times_executed
-  #
-  # @param value the value to set the attribute expected_times_executed to.
-  #
   # pkg:gem/webmock#lib/webmock/request_execution_verifier.rb:6
   def expected_times_executed=(_arg0); end
 
@@ -1024,32 +842,18 @@ class WebMock::RequestExecutionVerifier
   # pkg:gem/webmock#lib/webmock/request_execution_verifier.rb:46
   def failure_message_when_negated; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_execution_verifier.rb:15
   def matches?; end
 
-  # Returns the value of attribute request_pattern.
-  #
   # pkg:gem/webmock#lib/webmock/request_execution_verifier.rb:6
   def request_pattern; end
 
-  # Sets the attribute request_pattern
-  #
-  # @param value the value to set the attribute request_pattern to.
-  #
   # pkg:gem/webmock#lib/webmock/request_execution_verifier.rb:6
   def request_pattern=(_arg0); end
 
-  # Returns the value of attribute times_executed.
-  #
   # pkg:gem/webmock#lib/webmock/request_execution_verifier.rb:6
   def times_executed; end
 
-  # Sets the attribute times_executed
-  #
-  # @param value the value to set the attribute times_executed to.
-  #
   # pkg:gem/webmock#lib/webmock/request_execution_verifier.rb:6
   def times_executed=(_arg0); end
 
@@ -1072,41 +876,27 @@ end
 
 # pkg:gem/webmock#lib/webmock/request_pattern.rb:15
 class WebMock::RequestPattern
-  # @return [RequestPattern] a new instance of RequestPattern
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:19
   def initialize(method, uri, options = T.unsafe(nil)); end
 
-  # Returns the value of attribute body_pattern.
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:17
   def body_pattern; end
 
-  # Returns the value of attribute headers_pattern.
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:17
   def headers_pattern; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:35
   def matches?(request_signature); end
 
-  # Returns the value of attribute method_pattern.
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:17
   def method_pattern; end
 
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:45
   def to_s; end
 
-  # Returns the value of attribute uri_pattern.
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:17
   def uri_pattern; end
 
-  # @raise [ArgumentError]
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:28
   def with(options = T.unsafe(nil), &block); end
 
@@ -1131,20 +921,12 @@ class WebMock::RequestRegistry
   include ::Singleton
   extend ::Singleton::SingletonClassMethods
 
-  # @return [RequestRegistry] a new instance of RequestRegistry
-  #
   # pkg:gem/webmock#lib/webmock/request_registry.rb:10
   def initialize; end
 
-  # Returns the value of attribute requested_signatures.
-  #
   # pkg:gem/webmock#lib/webmock/request_registry.rb:8
   def requested_signatures; end
 
-  # Sets the attribute requested_signatures
-  #
-  # @param value the value to set the attribute requested_signatures to.
-  #
   # pkg:gem/webmock#lib/webmock/request_registry.rb:8
   def requested_signatures=(_arg0); end
 
@@ -1170,78 +952,48 @@ end
 
 # pkg:gem/webmock#lib/webmock/request_signature.rb:5
 class WebMock::RequestSignature
-  # @return [RequestSignature] a new instance of RequestSignature
-  #
   # pkg:gem/webmock#lib/webmock/request_signature.rb:10
   def initialize(method, uri, options = T.unsafe(nil)); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_signature.rb:37
   def ==(other); end
 
-  # Returns the value of attribute body.
-  #
   # pkg:gem/webmock#lib/webmock/request_signature.rb:7
   def body; end
 
-  # Sets the attribute body
-  #
-  # @param value the value to set the attribute body to.
-  #
   # pkg:gem/webmock#lib/webmock/request_signature.rb:7
   def body=(_arg0); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_signature.rb:34
   def eql?(other); end
 
   # pkg:gem/webmock#lib/webmock/request_signature.rb:30
   def hash; end
 
-  # Returns the value of attribute headers.
-  #
   # pkg:gem/webmock#lib/webmock/request_signature.rb:8
   def headers; end
 
   # pkg:gem/webmock#lib/webmock/request_signature.rb:26
   def headers=(headers); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_signature.rb:43
   def json_headers?; end
 
-  # Returns the value of attribute method.
-  #
   # pkg:gem/webmock#lib/webmock/request_signature.rb:7
   def method; end
 
-  # Sets the attribute method
-  #
-  # @param value the value to set the attribute method to.
-  #
   # pkg:gem/webmock#lib/webmock/request_signature.rb:7
   def method=(_arg0); end
 
   # pkg:gem/webmock#lib/webmock/request_signature.rb:16
   def to_s; end
 
-  # Returns the value of attribute uri.
-  #
   # pkg:gem/webmock#lib/webmock/request_signature.rb:7
   def uri; end
 
-  # Sets the attribute uri
-  #
-  # @param value the value to set the attribute uri to.
-  #
   # pkg:gem/webmock#lib/webmock/request_signature.rb:7
   def uri=(_arg0); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_signature.rb:39
   def url_encoded?; end
 
@@ -1253,18 +1005,12 @@ end
 
 # pkg:gem/webmock#lib/webmock/request_signature_snippet.rb:6
 class WebMock::RequestSignatureSnippet
-  # @return [RequestSignatureSnippet] a new instance of RequestSignatureSnippet
-  #
   # pkg:gem/webmock#lib/webmock/request_signature_snippet.rb:10
   def initialize(request_signature); end
 
-  # Returns the value of attribute request_signature.
-  #
   # pkg:gem/webmock#lib/webmock/request_signature_snippet.rb:8
   def request_signature; end
 
-  # Returns the value of attribute request_stub.
-  #
   # pkg:gem/webmock#lib/webmock/request_signature_snippet.rb:8
   def request_stub; end
 
@@ -1291,8 +1037,6 @@ end
 
 # pkg:gem/webmock#lib/webmock/request_stub.rb:4
 class WebMock::RequestStub
-  # @return [RequestStub] a new instance of RequestStub
-  #
   # pkg:gem/webmock#lib/webmock/request_stub.rb:8
   def initialize(method, uri); end
 
@@ -1302,33 +1046,21 @@ class WebMock::RequestStub
   # pkg:gem/webmock#lib/webmock/request_stub.rb:27
   def and_return(*response_hashes, &block); end
 
-  # @raise [ArgumentError]
-  #
   # pkg:gem/webmock#lib/webmock/request_stub.rb:59
   def and_return_json(*response_hashes); end
 
   # pkg:gem/webmock#lib/webmock/request_stub.rb:77
   def and_timeout; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_stub.rb:90
   def has_responses?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_stub.rb:108
   def matches?(request_signature); end
 
-  # Returns the value of attribute request_pattern.
-  #
   # pkg:gem/webmock#lib/webmock/request_stub.rb:6
   def request_pattern; end
 
-  # Sets the attribute request_pattern
-  #
-  # @param value the value to set the attribute request_pattern to.
-  #
   # pkg:gem/webmock#lib/webmock/request_stub.rb:6
   def request_pattern=(_arg0); end
 
@@ -1350,8 +1082,6 @@ class WebMock::RequestStub
   # pkg:gem/webmock#lib/webmock/request_stub.rb:19
   def to_return(*response_hashes, &block); end
 
-  # @raise [ArgumentError]
-  #
   # pkg:gem/webmock#lib/webmock/request_stub.rb:29
   def to_return_json(*response_hashes); end
 
@@ -1372,8 +1102,6 @@ end
 
 # pkg:gem/webmock#lib/webmock/response.rb:17
 class WebMock::Response
-  # @return [Response] a new instance of Response
-  #
   # pkg:gem/webmock#lib/webmock/response.rb:18
   def initialize(options = T.unsafe(nil)); end
 
@@ -1404,8 +1132,6 @@ class WebMock::Response
   # pkg:gem/webmock#lib/webmock/response.rb:78
   def options=(options); end
 
-  # @raise [@exception]
-  #
   # pkg:gem/webmock#lib/webmock/response.rb:70
   def raise_error_if_any; end
 
@@ -1443,28 +1169,18 @@ end
 
 # pkg:gem/webmock#lib/webmock/responses_sequence.rb:5
 class WebMock::ResponsesSequence
-  # @return [ResponsesSequence] a new instance of ResponsesSequence
-  #
   # pkg:gem/webmock#lib/webmock/responses_sequence.rb:9
   def initialize(responses); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/responses_sequence.rb:15
   def end?; end
 
   # pkg:gem/webmock#lib/webmock/responses_sequence.rb:19
   def next_response; end
 
-  # Returns the value of attribute times_to_repeat.
-  #
   # pkg:gem/webmock#lib/webmock/responses_sequence.rb:7
   def times_to_repeat; end
 
-  # Sets the attribute times_to_repeat
-  #
-  # @param value the value to set the attribute times_to_repeat to.
-  #
   # pkg:gem/webmock#lib/webmock/responses_sequence.rb:7
   def times_to_repeat=(_arg0); end
 
@@ -1480,8 +1196,6 @@ class WebMock::StubRegistry
   include ::Singleton
   extend ::Singleton::SingletonClassMethods
 
-  # @return [StubRegistry] a new instance of StubRegistry
-  #
   # pkg:gem/webmock#lib/webmock/stub_registry.rb:10
   def initialize; end
 
@@ -1494,23 +1208,15 @@ class WebMock::StubRegistry
   # pkg:gem/webmock#lib/webmock/stub_registry.rb:50
   def register_request_stub(stub); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/stub_registry.rb:61
   def registered_request?(request_signature); end
 
   # pkg:gem/webmock#lib/webmock/stub_registry.rb:55
   def remove_request_stub(stub); end
 
-  # Returns the value of attribute request_stubs.
-  #
   # pkg:gem/webmock#lib/webmock/stub_registry.rb:8
   def request_stubs; end
 
-  # Sets the attribute request_stubs
-  #
-  # @param value the value to set the attribute request_stubs to.
-  #
   # pkg:gem/webmock#lib/webmock/stub_registry.rb:8
   def request_stubs=(_arg0); end
 
@@ -1541,8 +1247,6 @@ end
 
 # pkg:gem/webmock#lib/webmock/stub_request_snippet.rb:4
 class WebMock::StubRequestSnippet
-  # @return [StubRequestSnippet] a new instance of StubRequestSnippet
-  #
   # pkg:gem/webmock#lib/webmock/stub_request_snippet.rb:5
   def initialize(request_stub); end
 
@@ -1560,21 +1264,15 @@ class WebMock::URIAddressablePattern < ::WebMock::URIPattern
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:206
   def matches_with_variations?(uri); end
 
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:202
   def pattern_inspect; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:192
   def pattern_matches?(uri); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:218
   def template_matches_uri?(template, uri); end
 end
@@ -1583,8 +1281,6 @@ end
 class WebMock::URICallablePattern < ::WebMock::URIPattern
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:167
   def pattern_matches?(uri); end
 end
@@ -1593,16 +1289,12 @@ end
 class WebMock::URIPattern
   include ::WebMock::RSpecMatcherDetector
 
-  # @return [URIPattern] a new instance of URIPattern
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:116
   def initialize(pattern); end
 
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:128
   def add_query_params(query_params); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:143
   def matches?(uri); end
 
@@ -1614,8 +1306,6 @@ class WebMock::URIPattern
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:155
   def pattern_inspect; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:159
   def query_params_matches?(uri); end
 end
@@ -1624,8 +1314,6 @@ end
 class WebMock::URIRegexpPattern < ::WebMock::URIPattern
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:175
   def pattern_matches?(uri); end
 end
@@ -1640,8 +1328,6 @@ class WebMock::URIStringPattern < ::WebMock::URIPattern
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:249
   def pattern_inspect; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/request_pattern.rb:237
   def pattern_matches?(uri); end
 end
@@ -1651,8 +1337,6 @@ module WebMock::Util; end
 
 # pkg:gem/webmock#lib/webmock/util/hash_counter.rb:7
 class WebMock::Util::HashCounter
-  # @return [HashCounter] a new instance of HashCounter
-  #
   # pkg:gem/webmock#lib/webmock/util/hash_counter.rb:10
   def initialize; end
 
@@ -1662,15 +1346,9 @@ class WebMock::Util::HashCounter
   # pkg:gem/webmock#lib/webmock/util/hash_counter.rb:24
   def get(key); end
 
-  # Returns the value of attribute hash.
-  #
   # pkg:gem/webmock#lib/webmock/util/hash_counter.rb:8
   def hash; end
 
-  # Sets the attribute hash
-  #
-  # @param value the value to set the attribute hash to.
-  #
   # pkg:gem/webmock#lib/webmock/util/hash_counter.rb:8
   def hash=(_arg0); end
 
@@ -1780,33 +1458,37 @@ class WebMock::Util::QueryMapper
 
     # Converts the query component to a Hash value.
     #
+    # @option [Symbol] notation
+    #   May be one of <code>:flat</code>, <code>:dot</code>, or
+    #   <code>:subscript</code>. The <code>:dot</code> notation is not
+    #   supported for assignment. Default value is <code>:subscript</code>.
+    #
+    # @return [Hash, Array] The query string parsed as a Hash or Array object.
+    #
     # @example
     #   WebMock::Util::QueryMapper.query_to_values("?one=1&two=2&three=3")
     #   #=> {"one" => "1", "two" => "2", "three" => "3"}
     #   WebMock::Util::QueryMapper("?one[two][three]=four").query_values
     #   #=> {"one" => {"two" => {"three" => "four"}}}
     #   WebMock::Util::QueryMapper.query_to_values("?one.two.three=four",
-    #   :notation => :dot
+    #     :notation => :dot
     #   )
     #   #=> {"one" => {"two" => {"three" => "four"}}}
     #   WebMock::Util::QueryMapper.query_to_values("?one[two][three]=four",
-    #   :notation => :flat
+    #     :notation => :flat
     #   )
     #   #=> {"one[two][three]" => "four"}
     #   WebMock::Util::QueryMapper.query_to_values("?one.two.three=four",
-    #   :notation => :flat
+    #     :notation => :flat
     #   )
     #   #=> {"one.two.three" => "four"}
     #   WebMock::Util::QueryMapper(
-    #   "?one[two][three][]=four&one[two][three][]=five"
+    #     "?one[two][three][]=four&one[two][three][]=five"
     #   )
     #   #=> {"one" => {"two" => {"three" => ["four", "five"]}}}
     #   WebMock::Util::QueryMapper.query_to_values(
-    #   "?one=two&one=three").query_values(:notation => :flat_array)
+    #     "?one=two&one=three").query_values(:notation => :flat_array)
     #   #=> [['one', 'two'], ['one', 'three']]
-    # @option [Symbol]
-    # @param [Symbol] [Hash] a customizable set of options
-    # @return [Hash, Array] The query string parsed as a Hash or Array object.
     #
     # pkg:gem/webmock#lib/webmock/util/query_mapper.rb:42
     def query_to_values(query, options = T.unsafe(nil)); end
@@ -1820,7 +1502,7 @@ class WebMock::Util::QueryMapper
     # This method produces a query string using the :subscript notation.
     # An empty Hash will result in a nil query.
     #
-    # @param new_query_values [Hash, #to_hash, Array] The new query values.
+    # @param [Hash, #to_hash, Array] new_query_values The new query values.
     #
     # pkg:gem/webmock#lib/webmock/util/query_mapper.rb:179
     def values_to_query(new_query_values, options = T.unsafe(nil)); end
@@ -1836,8 +1518,6 @@ class WebMock::Util::URI
     # pkg:gem/webmock#lib/webmock/util/uri.rb:28
     def heuristic_parse(uri); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/webmock#lib/webmock/util/uri.rb:71
     def is_uri_localhost?(uri); end
 
@@ -1892,8 +1572,6 @@ WebMock::VERSION = T.let(T.unsafe(nil), String)
 
 # pkg:gem/webmock#lib/webmock/util/version_checker.rb:28
 class WebMock::VersionChecker
-  # @return [VersionChecker] a new instance of VersionChecker
-  #
   # pkg:gem/webmock#lib/webmock/util/version_checker.rb:29
   def initialize(library_name, library_version, min_patch_level, max_minor_version = T.unsafe(nil), unsupported_versions = T.unsafe(nil)); end
 
@@ -1911,18 +1589,12 @@ class WebMock::VersionChecker
   # pkg:gem/webmock#lib/webmock/util/version_checker.rb:105
   def parse_version(version); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/util/version_checker.rb:57
   def too_high?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/util/version_checker.rb:53
   def too_low?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/webmock#lib/webmock/util/version_checker.rb:61
   def unsupported_version?; end
 

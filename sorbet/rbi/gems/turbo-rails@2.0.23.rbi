@@ -71,10 +71,6 @@ module Turbo
     # pkg:gem/turbo-rails#lib/turbo-rails.rb:18
     def signed_stream_verifier_key; end
 
-    # Sets the attribute signed_stream_verifier_key
-    #
-    # @param value the value to set the attribute signed_stream_verifier_key to.
-    #
     # pkg:gem/turbo-rails#lib/turbo-rails.rb:12
     def signed_stream_verifier_key=(_arg0); end
 

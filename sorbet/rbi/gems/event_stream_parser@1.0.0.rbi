@@ -17,8 +17,6 @@ module EventStreamParser; end
 #
 # pkg:gem/event_stream_parser#lib/event_stream_parser.rb:14
 class EventStreamParser::Parser
-  # @return [Parser] a new instance of Parser
-  #
   # pkg:gem/event_stream_parser#lib/event_stream_parser.rb:15
   def initialize; end
 
@@ -30,8 +28,6 @@ class EventStreamParser::Parser
 
   private
 
-  # @yield [type, data, id, @reconnection_time]
-  #
   # pkg:gem/event_stream_parser#lib/event_stream_parser.rb:165
   def dispatch_event; end
 

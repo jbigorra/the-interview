@@ -37,21 +37,57 @@ module Faraday::Retry; end
 class Faraday::Retry::Middleware < ::Faraday::Middleware
   include ::Faraday::Retryable
 
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
   # @param app [#call]
   # @param options [Hash]
-  # @return [Middleware] a new instance of Middleware
+  # @option options [Integer] :max (2) Maximum number of retries
+  # @option options [Integer] :interval (0) Pause in seconds between retries
+  # @option options [Integer] :interval_randomness (0) The maximum random
+  #   interval amount expressed as a float between
+  #   0 and 1 to use in addition to the interval.
+  # @option options [Integer] :max_interval (Float::MAX) An upper limit
+  #   for the interval
+  # @option options [Integer] :backoff_factor (1) The amount to multiply
+  #   each successive retry's interval amount by in order to provide backoff
+  # @option options [Array] :exceptions ([ Errno::ETIMEDOUT,
+  #   'Timeout::Error', Faraday::TimeoutError, Faraday::RetriableResponse])
+  #   The list of exceptions to handle. Exceptions can be given as
+  #   Class, Module, or String.
+  # @option options [Array<Symbol>] :methods (the idempotent HTTP methods
+  #   in IDEMPOTENT_METHODS) A list of HTTP methods, as symbols, to retry without
+  #   calling retry_if. Pass an empty Array to call retry_if
+  #   for all exceptions.
+  # @option options [Block] :retry_if (false) block that will receive
+  #   the env object and the exception raised
+  #   and should decide if the code should retry still the action or
+  #   not independent of the retry count. This would be useful
+  #   if the exception produced is non-recoverable or if the
+  #   the HTTP method called is not idempotent.
+  # @option options [Block] :retry_block block that is executed before
+  #   every retry. The block will be yielded keyword arguments:
+  #     * env [Faraday::Env]: Request environment
+  #     * options [Faraday::Options]: middleware options
+  #     * retry_count [Integer]: how many retries have already occured (starts at 0)
+  #     * exception [Exception]: exception that triggered the retry,
+  #       will be the synthetic `Faraday::RetriableResponse` if the
+  #       retry was triggered by something other than an exception.
+  #     * will_retry_in [Float]: retry_block is called *before* the retry
+  #       delay, actual retry will happen in will_retry_in number of
+  #       seconds.
+  # @option options [Array] :retry_statuses Array of Integer HTTP status
+  #   codes or a single Integer value that determines whether to raise
+  #   a Faraday::RetriableResponse exception based on the HTTP status code
+  #   of an HTTP response.
+  # @option options [Block] :header_parser_block block that will receive
+  #   the the value of the retry header and should return the number of
+  #   seconds to wait before retrying the request. This is useful if the
+  #   value of the header is not a number of seconds or a RFC 2822 formatted date.
+  # @option options [Block] :exhausted_retries_block block will receive
+  #   when all attempts are exhausted. The block will be yielded keyword arguments:
+  #     * env [Faraday::Env]: Request environment
+  #     * exception [Exception]: exception that triggered the retry,
+  #       will be the synthetic `Faraday::RetriableResponse` if the
+  #       retry was triggered by something other than an exception.
+  #     * options [Faraday::Options]: middleware options
   #
   # pkg:gem/faraday-retry#lib/faraday/retry/middleware.rb:143
   def initialize(app, options = T.unsafe(nil)); end
@@ -59,8 +95,8 @@ class Faraday::Retry::Middleware < ::Faraday::Middleware
   # An exception matcher for the rescue clause can usually be any object
   # that responds to `===`, but for Ruby 1.8 it has to be a Class or Module.
   #
-  # @api private
   # @param exceptions [Array]
+  # @api private
   # @return [Module] an exception matcher
   #
   # pkg:gem/faraday-retry#lib/faraday/retry/middleware.rb:183
@@ -94,8 +130,6 @@ class Faraday::Retry::Middleware < ::Faraday::Middleware
   # pkg:gem/faraday-retry#lib/faraday/retry/middleware.rb:243
   def parse_retry_header(env, header); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/faraday-retry#lib/faraday/retry/middleware.rb:204
   def retry_request?(env, exception); end
 
@@ -170,8 +204,6 @@ module Faraday::Retryable
   # pkg:gem/faraday-retry#lib/faraday/retry/retryable.rb:38
   def exhausted_retries(options, env, exception); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/faraday-retry#lib/faraday/retry/retryable.rb:34
   def retries_zero?(retries, env, exception); end
 end

@@ -29,8 +29,6 @@ end
 
 # pkg:gem/importmap-rails#lib/importmap/map.rb:3
 class Importmap::Map
-  # @return [Map] a new instance of Map
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:14
   def initialize; end
 
@@ -53,8 +51,6 @@ class Importmap::Map
   # pkg:gem/importmap-rails#lib/importmap/map.rb:178
   def digest(resolver:); end
 
-  # Returns the value of attribute directories.
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:4
   def directories; end
 
@@ -97,8 +93,6 @@ class Importmap::Map
   # pkg:gem/importmap-rails#lib/importmap/map.rb:67
   def enable_integrity!; end
 
-  # Returns the value of attribute packages.
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:4
   def packages; end
 
@@ -211,8 +205,6 @@ class Importmap::Map
   # pkg:gem/importmap-rails#lib/importmap/map.rb:308
   def module_path_from(filename, mapping); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:212
   def rescuable_asset_error?(error); end
 
@@ -236,78 +228,33 @@ class Importmap::Map::InvalidFile < ::StandardError; end
 
 # pkg:gem/importmap-rails#lib/importmap/map.rb:197
 class Importmap::Map::MappedDir < ::Struct
-  # Returns the value of attribute dir
-  #
-  # @return [Object] the current value of dir
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:197
   def dir; end
 
-  # Sets the attribute dir
-  #
-  # @param value [Object] the value to set the attribute dir to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:197
   def dir=(_); end
 
-  # Returns the value of attribute integrity
-  #
-  # @return [Object] the current value of integrity
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:197
   def integrity; end
 
-  # Sets the attribute integrity
-  #
-  # @param value [Object] the value to set the attribute integrity to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:197
   def integrity=(_); end
 
-  # Returns the value of attribute path
-  #
-  # @return [Object] the current value of path
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:197
   def path; end
 
-  # Sets the attribute path
-  #
-  # @param value [Object] the value to set the attribute path to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:197
   def path=(_); end
 
-  # Returns the value of attribute preload
-  #
-  # @return [Object] the current value of preload
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:197
   def preload; end
 
-  # Sets the attribute preload
-  #
-  # @param value [Object] the value to set the attribute preload to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:197
   def preload=(_); end
 
-  # Returns the value of attribute under
-  #
-  # @return [Object] the current value of under
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:197
   def under; end
 
-  # Sets the attribute under
-  #
-  # @param value [Object] the value to set the attribute under to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:197
   def under=(_); end
 
@@ -331,63 +278,27 @@ end
 
 # pkg:gem/importmap-rails#lib/importmap/map.rb:198
 class Importmap::Map::MappedFile < ::Struct
-  # Returns the value of attribute integrity
-  #
-  # @return [Object] the current value of integrity
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:198
   def integrity; end
 
-  # Sets the attribute integrity
-  #
-  # @param value [Object] the value to set the attribute integrity to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:198
   def integrity=(_); end
 
-  # Returns the value of attribute name
-  #
-  # @return [Object] the current value of name
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:198
   def name; end
 
-  # Sets the attribute name
-  #
-  # @param value [Object] the value to set the attribute name to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:198
   def name=(_); end
 
-  # Returns the value of attribute path
-  #
-  # @return [Object] the current value of path
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:198
   def path; end
 
-  # Sets the attribute path
-  #
-  # @param value [Object] the value to set the attribute path to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:198
   def path=(_); end
 
-  # Returns the value of attribute preload
-  #
-  # @return [Object] the current value of preload
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:198
   def preload; end
 
-  # Sets the attribute preload
-  #
-  # @param value [Object] the value to set the attribute preload to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/importmap-rails#lib/importmap/map.rb:198
   def preload=(_); end
 

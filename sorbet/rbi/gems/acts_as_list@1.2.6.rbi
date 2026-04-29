@@ -76,13 +76,9 @@ module ActiveRecord::Acts::List::InstanceMethods
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/list.rb:212
   def default_position; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/list.rb:216
   def default_position?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/list.rb:159
   def first?; end
 
@@ -98,8 +94,6 @@ module ActiveRecord::Acts::List::InstanceMethods
   def higher_items(limit = T.unsafe(nil)); end
 
   # Test if this record is in a list
-  #
-  # @return [Boolean]
   #
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/list.rb:204
   def in_list?; end
@@ -117,8 +111,6 @@ module ActiveRecord::Acts::List::InstanceMethods
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/list.rb:86
   def insert_at!(position = T.unsafe(nil)); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/list.rb:164
   def last?; end
 
@@ -161,8 +153,6 @@ module ActiveRecord::Acts::List::InstanceMethods
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/list.rb:142
   def move_within_scope(scope_id); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/list.rb:208
   def not_in_list?; end
 
@@ -178,8 +168,6 @@ module ActiveRecord::Acts::List::InstanceMethods
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/list.rb:487
   def active_record_version_is?(version_requirement); end
 
@@ -194,8 +182,6 @@ module ActiveRecord::Acts::List::InstanceMethods
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/list.rb:290
   def assume_bottom_position; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/list.rb:262
   def assume_default_position?; end
 
@@ -255,21 +241,15 @@ module ActiveRecord::Acts::List::InstanceMethods
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/list.rb:306
   def increment_positions_on_lower_items(position, avoid_id = T.unsafe(nil)); end
 
-  # @raise [ArgumentError]
-  #
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/list.rb:389
   def insert_at_position(position, raise_exception_if_save_fails = T.unsafe(nil)); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/list.rb:437
   def internal_scope_changed?; end
 
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/list.rb:429
   def position_before_save; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/list.rb:421
   def position_before_save_changed?; end
 
@@ -314,22 +294,16 @@ end
 module ActiveRecord::Acts::List::NoUpdate
   mixes_in_class_methods ::ActiveRecord::Acts::List::NoUpdate::ClassMethods
 
-  # @return [Boolean]
-  #
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/no_update.rb:119
   def act_as_list_no_update?; end
 
   class << self
-    # @return [Boolean]
-    #
     # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/no_update.rb:98
     def applied_to?(klass); end
 
     # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/no_update.rb:91
     def apply_to(klasses); end
 
-    # @private
-    #
     # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/no_update.rb:8
     def included(base); end
 
@@ -348,8 +322,6 @@ end
 
 # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/no_update.rb:12
 class ActiveRecord::Acts::List::NoUpdate::ArrayTypeError < ::ArgumentError
-  # @return [ArrayTypeError] a new instance of ArrayTypeError
-  #
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/no_update.rb:13
   def initialize; end
 end
@@ -409,16 +381,12 @@ module ActiveRecord::Acts::List::NoUpdate::ClassMethods
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/no_update.rb:85
   def active_record_objects?(extra_classes); end
 end
 
 # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/no_update.rb:18
 class ActiveRecord::Acts::List::NoUpdate::DisparityClassesError < ::ArgumentError
-  # @return [DisparityClassesError] a new instance of DisparityClassesError
-  #
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/no_update.rb:19
   def initialize; end
 end
@@ -435,8 +403,6 @@ module ActiveRecord::Acts::List::PositionColumnMethodDefiner
     # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/position_column_method_definer.rb:62
     def define_instance_methods(caller_class, position_column); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/position_column_method_definer.rb:99
     def mass_assignment_protection_was_used_by_user?(caller_class); end
 
@@ -474,16 +440,12 @@ end
 
 # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/with_connection.rb:6
 class ActiveRecord::Acts::List::WithConnection
-  # @return [WithConnection] a new instance of WithConnection
-  #
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/with_connection.rb:7
   def initialize(recipient); end
 
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/with_connection.rb:13
   def call; end
 
-  # Returns the value of attribute recipient.
-  #
   # pkg:gem/acts_as_list#lib/acts_as_list/active_record/acts/with_connection.rb:11
   def recipient; end
 end

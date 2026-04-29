@@ -6,7 +6,6 @@
 
 
 # http gem namespace.
-#
 # @see https://github.com/httprb/http
 #
 # pkg:gem/http-form_data#lib/http/form_data/readable.rb:3
@@ -21,8 +20,8 @@ end
 # @example Usage
 #
 #   form = FormData.create({
-#   :username     => "ixti",
-#   :avatar_file  => FormData::File.new("/home/ixti/avatar.png")
+#     :username     => "ixti",
+#     :avatar_file  => FormData::File.new("/home/ixti/avatar.png")
 #   })
 #
 #   # Assuming socket is an open socket to some HTTP server
@@ -39,7 +38,7 @@ module HTTP::FormData
     # FormData factory. Automatically selects best type depending on given
     # `data` Hash.
     #
-    # @param data [#to_h, Hash]
+    # @param [#to_h, Hash] data
     # @return [Multipart] if any of values is a {FormData::File}
     # @return [Urlencoded] otherwise
     #
@@ -59,7 +58,7 @@ module HTTP::FormData
 
     # Tells whenever data contains multipart data or not.
     #
-    # @param data [Hash]
+    # @param [Hash] data
     # @return [Boolean]
     #
     # pkg:gem/http-form_data#lib/http/form_data.rb:74
@@ -76,16 +75,16 @@ HTTP::FormData::CRLF = T.let(T.unsafe(nil), String)
 #
 # pkg:gem/http-form_data#lib/http/form_data/composite_io.rb:8
 class HTTP::FormData::CompositeIO
-  # @param ios [Array<IO>] Array of IO objects
-  # @return [CompositeIO] a new instance of CompositeIO
+  # @param [Array<IO>] ios Array of IO objects
   #
   # pkg:gem/http-form_data#lib/http/form_data/composite_io.rb:10
   def initialize(ios); end
 
   # Reads and returns partial content acrosss multiple IO objects.
   #
-  # @param length [Integer] Number of bytes to retrieve
-  # @param outbuf [String] String to be replaced with retrieved data
+  # @param [Integer] length Number of bytes to retrieve
+  # @param [String] outbuf String to be replaced with retrieved data
+  #
   # @return [String, nil]
   #
   # pkg:gem/http-form_data#lib/http/form_data/composite_io.rb:31
@@ -131,27 +130,31 @@ class HTTP::FormData::Error < ::StandardError; end
 
 # Represents file form param.
 #
-# @example Usage with IO
-#
-#   File.open "/home/ixti/avatar.png" do |io|
-#   FormData::File.new io
-#   end
 # @example Usage with StringIO
 #
-#   io = StringIO.new "foo bar baz"
-#   FormData::File.new io, :filename => "foobar.txt"
+#  io = StringIO.new "foo bar baz"
+#  FormData::File.new io, :filename => "foobar.txt"
+#
+# @example Usage with IO
+#
+#  File.open "/home/ixti/avatar.png" do |io|
+#    FormData::File.new io
+#  end
+#
 # @example Usage with pathname
 #
-#   FormData::File.new "/home/ixti/avatar.png"
+#  FormData::File.new "/home/ixti/avatar.png"
 #
 # pkg:gem/http-form_data#lib/http/form_data/file.rb:21
 class HTTP::FormData::File < ::HTTP::FormData::Part
-  # @option opts
-  # @option opts
-  # @param opts [#to_h]
-  # @param path_or_io [String, Pathname, IO] Filename or IO instance.
-  # @return [File] a new instance of File
   # @see DEFAULT_MIME
+  # @param [String, Pathname, IO] path_or_io Filename or IO instance.
+  # @param [#to_h] opts
+  # @option opts [#to_s] :content_type (DEFAULT_MIME)
+  #   Value of Content-Type header
+  # @option opts [#to_s] :filename
+  #   When `path_or_io` is a String, Pathname or File, defaults to basename.
+  #   When `path_or_io` is a IO, defaults to `"stream-{object_id}"`.
   #
   # pkg:gem/http-form_data#lib/http/form_data/file.rb:36
   def initialize(path_or_io, opts = T.unsafe(nil)); end
@@ -181,14 +184,11 @@ HTTP::FormData::File::DEFAULT_MIME = T.let(T.unsafe(nil), String)
 class HTTP::FormData::Multipart
   include ::HTTP::FormData::Readable
 
-  # @param data [#to_h, Hash] form data key-value Hash
-  # @return [Multipart] a new instance of Multipart
+  # @param [#to_h, Hash] data form data key-value Hash
   #
   # pkg:gem/http-form_data#lib/http/form_data/multipart.rb:18
   def initialize(data, boundary: T.unsafe(nil)); end
 
-  # Returns the value of attribute boundary.
-  #
   # pkg:gem/http-form_data#lib/http/form_data/multipart.rb:15
   def boundary; end
 
@@ -238,20 +238,22 @@ class HTTP::FormData::Multipart::Param
 
   # Initializes body part with headers and data.
   #
-  # @example With non-{FormData::File} value
-  #
-  #   Content-Disposition: form-data; name="username"
-  #
-  #   ixti
   # @example With {FormData::File} value
   #
   #   Content-Disposition: form-data; name="avatar"; filename="avatar.png"
   #   Content-Type: application/octet-stream
   #
   #   ...data of avatar.png...
-  # @param name [#to_s]
-  # @param value [FormData::File, FormData::Part, #to_s]
+  #
+  # @example With non-{FormData::File} value
+  #
+  #   Content-Disposition: form-data; name="username"
+  #
+  #   ixti
+  #
   # @return [String]
+  # @param [#to_s] name
+  # @param [FormData::File, FormData::Part, #to_s] value
   #
   # pkg:gem/http-form_data#lib/http/form_data/multipart/param.rb:31
   def initialize(name, value); end
@@ -278,7 +280,7 @@ class HTTP::FormData::Multipart::Param
     # Nested array are unwinded.
     # Behavior is similar to `URL.encode_www_form`.
     #
-    # @param data [Hash]
+    # @param [Hash] data
     # @return [Array<FormData::MultiPart::Param>]
     #
     # pkg:gem/http-form_data#lib/http/form_data/multipart/param.rb:50
@@ -290,28 +292,23 @@ end
 #
 # @example Usage with String
 #
-#   body = "Message"
-#   FormData::Part.new body, :content_type => 'foobar.txt; charset="UTF-8"'
+#  body = "Message"
+#  FormData::Part.new body, :content_type => 'foobar.txt; charset="UTF-8"'
 #
 # pkg:gem/http-form_data#lib/http/form_data/part.rb:15
 class HTTP::FormData::Part
   include ::HTTP::FormData::Readable
 
-  # @param body [#to_s]
-  # @param content_type [String] Value of Content-Type header
-  # @param filename [String] Value of filename parameter
-  # @return [Part] a new instance of Part
+  # @param [#to_s] body
+  # @param [String] content_type Value of Content-Type header
+  # @param [String] filename     Value of filename parameter
   #
   # pkg:gem/http-form_data#lib/http/form_data/part.rb:23
   def initialize(body, content_type: T.unsafe(nil), filename: T.unsafe(nil)); end
 
-  # Returns the value of attribute content_type.
-  #
   # pkg:gem/http-form_data#lib/http/form_data/part.rb:18
   def content_type; end
 
-  # Returns the value of attribute filename.
-  #
   # pkg:gem/http-form_data#lib/http/form_data/part.rb:18
   def filename; end
 end
@@ -322,8 +319,9 @@ end
 module HTTP::FormData::Readable
   # Reads and returns part of IO content.
   #
-  # @param length [Integer] Number of bytes to retrieve
-  # @param outbuf [String] String to be replaced with retrieved data
+  # @param [Integer] length Number of bytes to retrieve
+  # @param [String] outbuf String to be replaced with retrieved data
+  #
   # @return [String, nil]
   #
   # pkg:gem/http-form_data#lib/http/form_data/readable.rb:23
@@ -355,8 +353,7 @@ end
 class HTTP::FormData::Urlencoded
   include ::HTTP::FormData::Readable
 
-  # @param data [#to_h, Hash] form data key-value Hash
-  # @return [Urlencoded] a new instance of Urlencoded
+  # @param [#to_h, Hash] data form data key-value Hash
   #
   # pkg:gem/http-form_data#lib/http/form_data/urlencoded.rb:66
   def initialize(data, encoder: T.unsafe(nil)); end
@@ -380,8 +377,8 @@ class HTTP::FormData::Urlencoded
     # Returns form data encoder implementation.
     # Default: `URI.encode_www_form`.
     #
-    # @return [#call]
     # @see .encoder=
+    # @return [#call]
     #
     # pkg:gem/http-form_data#lib/http/form_data/urlencoded.rb:60
     def encoder; end
@@ -390,35 +387,36 @@ class HTTP::FormData::Urlencoded
     #
     # @example
     #
-    #   module CustomFormDataEncoder
-    #   UNESCAPED_CHARS = /[^a-z0-9\-\.\_\~]/i
+    #     module CustomFormDataEncoder
+    #       UNESCAPED_CHARS = /[^a-z0-9\-\.\_\~]/i
     #
-    #   def self.escape(s)
-    #   ::URI::DEFAULT_PARSER.escape(s.to_s, UNESCAPED_CHARS)
-    #   end
+    #       def self.escape(s)
+    #         ::URI::DEFAULT_PARSER.escape(s.to_s, UNESCAPED_CHARS)
+    #       end
     #
-    #   def self.call(data)
-    #   parts = []
+    #       def self.call(data)
+    #         parts = []
     #
-    #   data.each do |k, v|
-    #   k = escape(k)
+    #         data.each do |k, v|
+    #           k = escape(k)
     #
-    #   if v.nil?
-    #   parts << k
-    #   elsif v.respond_to?(:to_ary)
-    #   v.to_ary.each { |vv| parts << "#{k}=#{escape vv}" }
-    #   else
-    #   parts << "#{k}=#{escape v}"
-    #   end
-    #   end
+    #           if v.nil?
+    #             parts << k
+    #           elsif v.respond_to?(:to_ary)
+    #             v.to_ary.each { |vv| parts << "#{k}=#{escape vv}" }
+    #           else
+    #             parts << "#{k}=#{escape v}"
+    #           end
+    #         end
     #
-    #   parts.join("&")
-    #   end
-    #   end
+    #         parts.join("&")
+    #       end
+    #     end
     #
-    #   HTTP::FormData::Urlencoded.encoder = CustomFormDataEncoder
-    # @param implementation [#call]
+    #     HTTP::FormData::Urlencoded.encoder = CustomFormDataEncoder
+    #
     # @raise [ArgumentError] if implementation deos not responds to `#call`.
+    # @param implementation [#call]
     # @return [void]
     #
     # pkg:gem/http-form_data#lib/http/form_data/urlencoded.rb:50

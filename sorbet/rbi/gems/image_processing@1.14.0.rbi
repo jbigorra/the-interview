@@ -12,8 +12,6 @@ module ImageProcessing; end
 class ImageProcessing::Builder
   include ::ImageProcessing::Chainable
 
-  # @return [Builder] a new instance of Builder
-  #
   # pkg:gem/image_processing#lib/image_processing/builder.rb:7
   def initialize(options); end
 
@@ -22,8 +20,6 @@ class ImageProcessing::Builder
   # pkg:gem/image_processing#lib/image_processing/builder.rb:12
   def call!(**call_options); end
 
-  # Returns the value of attribute options.
-  #
   # pkg:gem/image_processing#lib/image_processing/builder.rb:5
   def options; end
 
@@ -117,8 +113,6 @@ module ImageProcessing::MiniMagick
 
     # Returns whether the given image file is processable.
     #
-    # @return [Boolean]
-    #
     # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:17
     def valid_image?(file); end
   end
@@ -134,8 +128,6 @@ class ImageProcessing::MiniMagick::Processor < ::ImageProcessing::Processor
   # Overlays the specified image over the current one. Supports specifying
   # an additional mask, composite mode, direction or offset of the overlay
   # image.
-  #
-  # @yield [magick]
   #
   # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:123
   def composite(overlay = T.unsafe(nil), mask: T.unsafe(nil), mode: T.unsafe(nil), gravity: T.unsafe(nil), offset: T.unsafe(nil), args: T.unsafe(nil), **options, &block); end
@@ -200,8 +192,6 @@ class ImageProcessing::MiniMagick::Processor < ::ImageProcessing::Processor
   # Converts the given color value into an identifier ImageMagick understands.
   # This supports specifying RGB(A) values with arrays, which mainly exists
   # for compatibility with the libvips implementation.
-  #
-  # @raise [ArgumentError]
   #
   # pkg:gem/image_processing#lib/image_processing/mini_magick.rb:180
   def color(value); end
@@ -287,8 +277,6 @@ end
 class ImageProcessing::Pipeline
   # Initializes the pipeline with all the processing options.
   #
-  # @return [Pipeline] a new instance of Pipeline
-  #
   # pkg:gem/image_processing#lib/image_processing/pipeline.rb:10
   def initialize(options); end
 
@@ -297,8 +285,6 @@ class ImageProcessing::Pipeline
   # pkg:gem/image_processing#lib/image_processing/pipeline.rb:19
   def call(save: T.unsafe(nil)); end
 
-  # Returns the value of attribute destination.
-  #
   # pkg:gem/image_processing#lib/image_processing/pipeline.rb:7
   def destination; end
 
@@ -307,28 +293,18 @@ class ImageProcessing::Pipeline
   # pkg:gem/image_processing#lib/image_processing/pipeline.rb:39
   def destination_format; end
 
-  # Returns the value of attribute format.
-  #
   # pkg:gem/image_processing#lib/image_processing/pipeline.rb:7
   def format; end
 
-  # Returns the value of attribute loader.
-  #
   # pkg:gem/image_processing#lib/image_processing/pipeline.rb:7
   def loader; end
 
-  # Returns the value of attribute operations.
-  #
   # pkg:gem/image_processing#lib/image_processing/pipeline.rb:7
   def operations; end
 
-  # Returns the value of attribute processor.
-  #
   # pkg:gem/image_processing#lib/image_processing/pipeline.rb:7
   def processor; end
 
-  # Returns the value of attribute saver.
-  #
   # pkg:gem/image_processing#lib/image_processing/pipeline.rb:7
   def saver; end
 
@@ -371,8 +347,6 @@ ImageProcessing::Pipeline::DEFAULT_FORMAT = T.let(T.unsafe(nil), String)
 #
 # pkg:gem/image_processing#lib/image_processing/processor.rb:3
 class ImageProcessing::Processor
-  # @return [Processor] a new instance of Processor
-  #
   # pkg:gem/image_processing#lib/image_processing/processor.rb:47
   def initialize(accumulator = T.unsafe(nil)); end
 
@@ -406,8 +380,6 @@ class ImageProcessing::Processor
     def call(source:, loader:, operations:, saver:, destination: T.unsafe(nil)); end
 
     # Whether the processor supports resizing the image upon loading.
-    #
-    # @return [Boolean]
     #
     # pkg:gem/image_processing#lib/image_processing/processor.rb:43
     def supports_resize_on_load?; end

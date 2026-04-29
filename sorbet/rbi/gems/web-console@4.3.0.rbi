@@ -22,8 +22,6 @@ end
 #
 # pkg:gem/web-console#lib/web_console/context.rb:5
 class WebConsole::Context
-  # @return [Context] a new instance of Context
-  #
   # pkg:gem/web-console#lib/web_console/context.rb:6
   def initialize(binding); end
 
@@ -69,8 +67,6 @@ class WebConsole::Error < ::StandardError; end
 #
 # pkg:gem/web-console#lib/web_console/evaluator.rb:9
 class WebConsole::Evaluator
-  # @return [Evaluator] a new instance of Evaluator
-  #
   # pkg:gem/web-console#lib/web_console/evaluator.rb:17
   def initialize(binding = T.unsafe(nil)); end
 
@@ -93,16 +89,12 @@ end
 
 # pkg:gem/web-console#lib/web_console/exception_mapper.rb:4
 class WebConsole::ExceptionMapper
-  # @return [ExceptionMapper] a new instance of ExceptionMapper
-  #
   # pkg:gem/web-console#lib/web_console/exception_mapper.rb:23
   def initialize(exception); end
 
   # pkg:gem/web-console#lib/web_console/exception_mapper.rb:33
   def [](index); end
 
-  # Returns the value of attribute exc.
-  #
   # pkg:gem/web-console#lib/web_console/exception_mapper.rb:5
   def exc; end
 
@@ -130,8 +122,6 @@ end
 #
 # pkg:gem/web-console#lib/web_console/injector.rb:5
 class WebConsole::Injector
-  # @return [Injector] a new instance of Injector
-  #
   # pkg:gem/web-console#lib/web_console/injector.rb:6
   def initialize(body, headers); end
 
@@ -149,8 +139,6 @@ end
 
 # pkg:gem/web-console#lib/web_console/middleware.rb:6
 class WebConsole::Middleware
-  # @return [Middleware] a new instance of Middleware
-  #
   # pkg:gem/web-console#lib/web_console/middleware.rb:12
   def initialize(app); end
 
@@ -171,8 +159,6 @@ class WebConsole::Middleware
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/web-console#lib/web_console/middleware.rb:54
   def acceptable_content_type?(headers); end
 
@@ -235,13 +221,9 @@ WebConsole::Middleware::TEMPLATES_PATH = T.let(T.unsafe(nil), String)
 
 # pkg:gem/web-console#lib/web_console/permissions.rb:6
 class WebConsole::Permissions
-  # @return [Permissions] a new instance of Permissions
-  #
   # pkg:gem/web-console#lib/web_console/permissions.rb:10
   def initialize(networks = T.unsafe(nil)); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/web-console#lib/web_console/permissions.rb:14
   def include?(network); end
 
@@ -279,8 +261,6 @@ class WebConsole::Request < ::ActionDispatch::Request
   # pkg:gem/web-console#lib/web_console/request.rb:5
   def permissions=(val); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/web-console#lib/web_console/request.rb:7
   def permitted?; end
 
@@ -298,8 +278,6 @@ end
 
 # pkg:gem/web-console#lib/web_console/request.rb:19
 class WebConsole::Request::GetSecureIp < ::ActionDispatch::RemoteIp::GetIp
-  # @return [GetSecureIp] a new instance of GetSecureIp
-  #
   # pkg:gem/web-console#lib/web_console/request.rb:20
   def initialize(req, proxies); end
 
@@ -326,8 +304,6 @@ end
 #
 # pkg:gem/web-console#lib/web_console/session.rb:13
 class WebConsole::Session
-  # @return [Session] a new instance of Session
-  #
   # pkg:gem/web-console#lib/web_console/session.rb:44
   def initialize(exception_mappers); end
 
@@ -390,8 +366,6 @@ end
 
 # pkg:gem/web-console#lib/web_console/source_location.rb:4
 class WebConsole::SourceLocation
-  # @return [SourceLocation] a new instance of SourceLocation
-  #
   # pkg:gem/web-console#lib/web_console/source_location.rb:5
   def initialize(binding); end
 
@@ -409,8 +383,6 @@ end
 #
 # pkg:gem/web-console#lib/web_console/template.rb:8
 class WebConsole::Template
-  # @return [Template] a new instance of Template
-  #
   # pkg:gem/web-console#lib/web_console/template.rb:12
   def initialize(env, session); end
 
@@ -491,8 +463,6 @@ end
 #
 # pkg:gem/web-console#lib/web_console/whiny_request.rb:8
 class WebConsole::WhinyRequest < ::SimpleDelegator
-  # @return [Boolean]
-  #
   # pkg:gem/web-console#lib/web_console/whiny_request.rb:9
   def permitted?; end
 

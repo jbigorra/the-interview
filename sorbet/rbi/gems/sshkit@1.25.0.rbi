@@ -53,15 +53,9 @@ module SSHKit
     # pkg:gem/sshkit#lib/sshkit.rb:14
     def config; end
 
-    # Sets the attribute config
-    #
-    # @param value the value to set the attribute config to.
-    #
     # pkg:gem/sshkit#lib/sshkit.rb:7
     def config=(_arg0); end
 
-    # @yield [config]
-    #
     # pkg:gem/sshkit#lib/sshkit.rb:9
     def configure; end
 
@@ -91,8 +85,6 @@ end
 class SSHKit::Backend::Abstract
   extend ::Forwardable
 
-  # @return [Abstract] a new instance of Abstract
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/abstract.rb:36
   def initialize(host, &block); end
 
@@ -108,8 +100,6 @@ class SSHKit::Backend::Abstract
   # pkg:gem/sshkit#lib/sshkit/backends/abstract.rb:25
   def debug(*args, **_arg1, &block); end
 
-  # @raise [MethodUnavailableError]
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/abstract.rb:137
   def download!(_remote, _local = T.unsafe(nil), _options = T.unsafe(nil)); end
 
@@ -122,8 +112,6 @@ class SSHKit::Backend::Abstract
   # pkg:gem/sshkit#lib/sshkit/backends/abstract.rb:25
   def fatal(*args, **_arg1, &block); end
 
-  # Returns the value of attribute host.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/abstract.rb:27
   def host; end
 
@@ -139,8 +127,6 @@ class SSHKit::Backend::Abstract
   # pkg:gem/sshkit#lib/sshkit/backends/abstract.rb:55
   def rake(commands = T.unsafe(nil)); end
 
-  # Used in execute_command to hide redact() args a user passes in
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/abstract.rb:47
   def redact(arg); end
 
@@ -151,8 +137,6 @@ class SSHKit::Backend::Abstract
   def test(*args); end
 
   # Backends which extend the Abstract backend should implement the following methods:
-  #
-  # @raise [MethodUnavailableError]
   #
   # pkg:gem/sshkit#lib/sshkit/backends/abstract.rb:136
   def upload!(_local, _remote, _options = T.unsafe(nil)); end
@@ -174,8 +158,6 @@ class SSHKit::Backend::Abstract
   # pkg:gem/sshkit#lib/sshkit/backends/abstract.rb:146
   def create_command_and_execute(args, options); end
 
-  # @raise [MethodUnavailableError]
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/abstract.rb:138
   def execute_command(_cmd); end
 
@@ -189,8 +171,6 @@ class SSHKit::Backend::Abstract
     # pkg:gem/sshkit#lib/sshkit/backends/abstract.rb:126
     def config; end
 
-    # @yield [config]
-    #
     # pkg:gem/sshkit#lib/sshkit/backends/abstract.rb:130
     def configure; end
   end
@@ -217,8 +197,6 @@ end
 #
 # pkg:gem/sshkit#lib/sshkit/backends/connection_pool.rb:40
 class SSHKit::Backend::ConnectionPool
-  # @return [ConnectionPool] a new instance of ConnectionPool
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool.rb:43
   def initialize(idle_timeout = T.unsafe(nil)); end
 
@@ -233,15 +211,9 @@ class SSHKit::Backend::ConnectionPool
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool.rb:74
   def flush_connections; end
 
-  # Returns the value of attribute idle_timeout.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool.rb:41
   def idle_timeout; end
 
-  # Sets the attribute idle_timeout
-  #
-  # @param value the value to set the attribute idle_timeout to.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool.rb:41
   def idle_timeout=(_arg0); end
 
@@ -255,20 +227,14 @@ class SSHKit::Backend::ConnectionPool
 
   protected
 
-  # Returns the value of attribute caches.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool.rb:89
   def caches; end
 
-  # Returns the value of attribute timed_out_connections.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool.rb:89
   def timed_out_connections; end
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool.rb:97
   def cache_enabled?; end
 
@@ -323,8 +289,6 @@ end
 #
 # pkg:gem/sshkit#lib/sshkit/backends/connection_pool/cache.rb:3
 class SSHKit::Backend::ConnectionPool::Cache
-  # @return [Cache] a new instance of Cache
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool/cache.rb:6
   def initialize(key, idle_timeout, closer); end
 
@@ -339,15 +303,9 @@ class SSHKit::Backend::ConnectionPool::Cache
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool/cache.rb:36
   def evict; end
 
-  # Returns the value of attribute key.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool/cache.rb:4
   def key; end
 
-  # Sets the attribute key
-  #
-  # @param value the value to set the attribute key to.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool/cache.rb:4
   def key=(_arg0); end
 
@@ -362,58 +320,34 @@ class SSHKit::Backend::ConnectionPool::Cache
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool/cache.rb:25
   def push(conn); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool/cache.rb:59
   def same_key?(other_key); end
 
   protected
 
-  # Returns the value of attribute closer.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool/cache.rb:65
   def closer; end
 
-  # Returns the value of attribute connections.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool/cache.rb:65
   def connections; end
 
-  # Returns the value of attribute idle_timeout.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool/cache.rb:65
   def idle_timeout; end
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool/cache.rb:73
   def closed?(conn); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool/cache.rb:69
   def fresh?(expires_at); end
 end
 
-# A cache that holds no connections. Any connection provided to this cache
-# is simply closed.
-#
 # pkg:gem/sshkit#lib/sshkit/backends/connection_pool/nil_cache.rb:3
 class SSHKit::Backend::ConnectionPool::NilCache < ::Struct
-  # Returns the value of attribute closer
-  #
-  # @return [Object] the current value of closer
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool/nil_cache.rb:3
   def closer; end
 
-  # Sets the attribute closer
-  #
-  # @param value [Object] the value to set the attribute closer to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool/nil_cache.rb:3
   def closer=(_); end
 
@@ -423,8 +357,6 @@ class SSHKit::Backend::ConnectionPool::NilCache < ::Struct
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool/nil_cache.rb:8
   def push(conn); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/connection_pool/nil_cache.rb:12
   def same_key?(_key); end
 
@@ -448,8 +380,6 @@ end
 
 # pkg:gem/sshkit#lib/sshkit/backends/local.rb:7
 class SSHKit::Backend::Local < ::SSHKit::Backend::Abstract
-  # @return [Local] a new instance of Local
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/local.rb:9
   def initialize(_ = T.unsafe(nil), &block); end
 
@@ -494,28 +424,18 @@ class SSHKit::Backend::Netssh < ::SSHKit::Backend::Abstract
   def with_transfer(summarizer); end
 
   class << self
-    # @raise [ArgumentError]
-    #
     # pkg:gem/sshkit#lib/sshkit/backends/netssh.rb:24
     def assert_valid_transfer_method!(method); end
 
     # pkg:gem/sshkit#lib/sshkit/backends/netssh.rb:109
     def config; end
 
-    # @yield [config]
-    #
     # pkg:gem/sshkit#lib/sshkit/backends/netssh.rb:105
     def configure(&block); end
 
-    # Returns the value of attribute pool.
-    #
     # pkg:gem/sshkit#lib/sshkit/backends/netssh.rb:103
     def pool; end
 
-    # Sets the attribute pool
-    #
-    # @param value the value to set the attribute pool to.
-    #
     # pkg:gem/sshkit#lib/sshkit/backends/netssh.rb:103
     def pool=(_arg0); end
   end
@@ -523,47 +443,27 @@ end
 
 # pkg:gem/sshkit#lib/sshkit/backends/netssh.rb:30
 class SSHKit::Backend::Netssh::Configuration
-  # @return [Configuration] a new instance of Configuration
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/netssh.rb:35
   def initialize; end
 
-  # Returns the value of attribute connection_timeout.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/netssh.rb:31
   def connection_timeout; end
 
-  # Sets the attribute connection_timeout
-  #
-  # @param value the value to set the attribute connection_timeout to.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/netssh.rb:31
   def connection_timeout=(_arg0); end
 
-  # Returns the value of attribute pty.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/netssh.rb:31
   def pty; end
 
-  # Sets the attribute pty
-  #
-  # @param value the value to set the attribute pty to.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/netssh.rb:31
   def pty=(_arg0); end
 
   # pkg:gem/sshkit#lib/sshkit/backends/netssh.rb:45
   def ssh_options; end
 
-  # Sets the attribute ssh_options
-  #
-  # @param value the value to set the attribute ssh_options to.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/netssh.rb:33
   def ssh_options=(_arg0); end
 
-  # Returns the value of attribute transfer_method.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/netssh.rb:32
   def transfer_method; end
 
@@ -583,8 +483,6 @@ end
 
 # pkg:gem/sshkit#lib/sshkit/backends/netssh/known_hosts.rb:113
 class SSHKit::Backend::Netssh::KnownHosts
-  # @return [KnownHosts] a new instance of KnownHosts
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/netssh/known_hosts.rb:114
   def initialize; end
 
@@ -602,8 +500,6 @@ end
 
 # pkg:gem/sshkit#lib/sshkit/backends/netssh/known_hosts.rb:9
 class SSHKit::Backend::Netssh::KnownHostsKeys
-  # @return [KnownHostsKeys] a new instance of KnownHostsKeys
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/netssh/known_hosts.rb:10
   def initialize(path); end
 
@@ -612,32 +508,18 @@ class SSHKit::Backend::Netssh::KnownHostsKeys
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/netssh/known_hosts.rb:92
   def empty_line?(scanner); end
 
-  # Returns the value of attribute hosts_hashes.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/netssh/known_hosts.rb:41
   def hosts_hashes; end
 
-  # Sets the attribute hosts_hashes
-  #
-  # @param value the value to set the attribute hosts_hashes to.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/netssh/known_hosts.rb:41
   def hosts_hashes=(_arg0); end
 
-  # Returns the value of attribute hosts_keys.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/netssh/known_hosts.rb:41
   def hosts_keys; end
 
-  # Sets the attribute hosts_keys
-  #
-  # @param value the value to set the attribute hosts_keys to.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/netssh/known_hosts.rb:41
   def hosts_keys=(_arg0); end
 
@@ -656,16 +538,12 @@ class SSHKit::Backend::Netssh::KnownHostsKeys
   # pkg:gem/sshkit#lib/sshkit/backends/netssh/known_hosts.rb:71
   def parse_line(scanner, hosts_keys, hosts_hashes); end
 
-  # Returns the value of attribute path.
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/netssh/known_hosts.rb:40
   def path; end
 
   # pkg:gem/sshkit#lib/sshkit/backends/netssh/known_hosts.rb:43
   def sha1; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/netssh/known_hosts.rb:102
   def supported_type?(scanner); end
 end
@@ -689,8 +567,6 @@ end
 
 # pkg:gem/sshkit#lib/sshkit/backends/skipper.rb:4
 class SSHKit::Backend::Skipper < ::SSHKit::Backend::Abstract
-  # @return [Skipper] a new instance of Skipper
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/skipper.rb:6
   def initialize(&block); end
 
@@ -712,8 +588,6 @@ class SSHKit::Backend::Skipper < ::SSHKit::Backend::Abstract
   # pkg:gem/sshkit#lib/sshkit/backends/skipper.rb:17
   def info(_messages); end
 
-  # suppress all messages except `warn`
-  #
   # pkg:gem/sshkit#lib/sshkit/backends/skipper.rb:20
   def log(_messages); end
 
@@ -730,8 +604,6 @@ end
 #
 # pkg:gem/sshkit#lib/sshkit/color.rb:6
 class SSHKit::Color
-  # @return [Color] a new instance of Color
-  #
   # pkg:gem/sshkit#lib/sshkit/color.rb:26
   def initialize(output, env = T.unsafe(nil)); end
 
@@ -752,8 +624,6 @@ class SSHKit::Color
   # Returns `true` if the underlying output is a tty, or if the SSHKIT_COLOR
   # environment variable is set.
   #
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/color.rb:54
   def colorize?; end
 end
@@ -767,28 +637,20 @@ SSHKit::Color::COLOR_CODES = T.let(T.unsafe(nil), Hash)
 class SSHKit::Command
   # Initialize a new Command object
   #
+  # @param  [Array] A list of arguments, the first is considered to be the
   # command name, with optional variadaric args
-  # nothing in stdin or stdout
-  #
-  # @param A [Array] list of arguments, the first is considered to be the
-  # @raise [ArgumentError]
   # @return [Command] An un-started command object with no exit staus, and
+  # nothing in stdin or stdout
   #
   # pkg:gem/sshkit#lib/sshkit/command.rb:22
   def initialize(*args); end
 
-  # Returns the value of attribute args.
-  #
   # pkg:gem/sshkit#lib/sshkit/command.rb:13
   def args; end
 
-  # Returns the value of attribute command.
-  #
   # pkg:gem/sshkit#lib/sshkit/command.rb:13
   def command; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/command.rb:32
   def complete?; end
 
@@ -798,36 +660,24 @@ class SSHKit::Command
   # pkg:gem/sshkit#lib/sshkit/command.rb:153
   def environment_string; end
 
-  # Returns the value of attribute exit_status.
-  #
   # pkg:gem/sshkit#lib/sshkit/command.rb:13
   def exit_status; end
 
   # pkg:gem/sshkit#lib/sshkit/command.rb:88
   def exit_status=(new_exit_status); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/command.rb:54
   def failed?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/command.rb:51
   def failure?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/command.rb:35
   def finished?; end
 
-  # Returns the value of attribute full_stderr.
-  #
   # pkg:gem/sshkit#lib/sshkit/command.rb:13
   def full_stderr; end
 
-  # Returns the value of attribute full_stdout.
-  #
   # pkg:gem/sshkit#lib/sshkit/command.rb:13
   def full_stdout; end
 
@@ -846,34 +696,24 @@ class SSHKit::Command
   # pkg:gem/sshkit#lib/sshkit/command.rb:76
   def on_stdout(channel, data); end
 
-  # Returns the value of attribute options.
-  #
   # pkg:gem/sshkit#lib/sshkit/command.rb:13
   def options; end
 
   # pkg:gem/sshkit#lib/sshkit/command.rb:101
   def runtime; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/command.rb:140
   def should_map?; end
 
-  # Returns the value of attribute started.
-  #
   # pkg:gem/sshkit#lib/sshkit/command.rb:13
   def started; end
 
   # pkg:gem/sshkit#lib/sshkit/command.rb:41
   def started=(new_started); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/command.rb:37
   def started?; end
 
-  # Returns the value of attribute started_at.
-  #
   # pkg:gem/sshkit#lib/sshkit/command.rb:13
   def started_at; end
 
@@ -889,13 +729,9 @@ class SSHKit::Command
   # pkg:gem/sshkit#lib/sshkit/command.rb:61
   def stdout=(new_value); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/command.rb:46
   def success?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/command.rb:49
   def successful?; end
 
@@ -914,8 +750,6 @@ class SSHKit::Command
   # pkg:gem/sshkit#lib/sshkit/command.rb:167
   def user(&_block); end
 
-  # Returns the value of attribute uuid.
-  #
   # pkg:gem/sshkit#lib/sshkit/command.rb:13
   def uuid; end
 
@@ -961,8 +795,6 @@ class SSHKit::Command::Failed < ::SSHKit::StandardError; end
 
 # pkg:gem/sshkit#lib/sshkit/command_map.rb:2
 class SSHKit::CommandMap
-  # @return [CommandMap] a new instance of CommandMap
-  #
   # pkg:gem/sshkit#lib/sshkit/command_map.rb:36
   def initialize(value = T.unsafe(nil)); end
 
@@ -984,8 +816,6 @@ end
 
 # pkg:gem/sshkit#lib/sshkit/command_map.rb:3
 class SSHKit::CommandMap::CommandHash
-  # @return [CommandHash] a new instance of CommandHash
-  #
   # pkg:gem/sshkit#lib/sshkit/command_map.rb:4
   def initialize(defaults = T.unsafe(nil)); end
 
@@ -1003,8 +833,6 @@ end
 
 # pkg:gem/sshkit#lib/sshkit/command_map.rb:24
 class SSHKit::CommandMap::PrefixProvider
-  # @return [PrefixProvider] a new instance of PrefixProvider
-  #
   # pkg:gem/sshkit#lib/sshkit/command_map.rb:25
   def initialize; end
 
@@ -1020,10 +848,6 @@ class SSHKit::Configuration
   # pkg:gem/sshkit#lib/sshkit/configuration.rb:42
   def backend; end
 
-  # Sets the attribute backend
-  #
-  # @param value the value to set the attribute backend to.
-  #
   # pkg:gem/sshkit#lib/sshkit/configuration.rb:6
   def backend=(_arg0); end
 
@@ -1036,20 +860,12 @@ class SSHKit::Configuration
   # pkg:gem/sshkit#lib/sshkit/configuration.rb:24
   def default_env; end
 
-  # Sets the attribute default_env
-  #
-  # @param value the value to set the attribute default_env to.
-  #
   # pkg:gem/sshkit#lib/sshkit/configuration.rb:6
   def default_env=(_arg0); end
 
   # pkg:gem/sshkit#lib/sshkit/configuration.rb:28
   def default_runner; end
 
-  # Sets the attribute default_runner
-  #
-  # @param value the value to set the attribute default_runner to.
-  #
   # pkg:gem/sshkit#lib/sshkit/configuration.rb:6
   def default_runner=(_arg0); end
 
@@ -1073,10 +889,6 @@ class SSHKit::Configuration
   # pkg:gem/sshkit#lib/sshkit/configuration.rb:8
   def output; end
 
-  # Sets the attribute output
-  #
-  # @param value the value to set the attribute output to.
-  #
   # pkg:gem/sshkit#lib/sshkit/configuration.rb:6
   def output=(_arg0); end
 
@@ -1086,15 +898,9 @@ class SSHKit::Configuration
   # pkg:gem/sshkit#lib/sshkit/configuration.rb:50
   def output_verbosity=(verbosity); end
 
-  # Returns the value of attribute umask.
-  #
   # pkg:gem/sshkit#lib/sshkit/configuration.rb:5
   def umask; end
 
-  # Sets the attribute umask
-  #
-  # @param value the value to set the attribute umask to.
-  #
   # pkg:gem/sshkit#lib/sshkit/configuration.rb:5
   def umask=(_arg0); end
 
@@ -1127,23 +933,15 @@ end
 
 # pkg:gem/sshkit#lib/sshkit/coordinator.rb:3
 class SSHKit::Coordinator
-  # @return [Coordinator] a new instance of Coordinator
-  #
   # pkg:gem/sshkit#lib/sshkit/coordinator.rb:7
   def initialize(raw_hosts); end
 
   # pkg:gem/sshkit#lib/sshkit/coordinator.rb:12
   def each(options = T.unsafe(nil), &block); end
 
-  # Returns the value of attribute hosts.
-  #
   # pkg:gem/sshkit#lib/sshkit/coordinator.rb:5
   def hosts; end
 
-  # Sets the attribute hosts
-  #
-  # @param value the value to set the attribute hosts to.
-  #
   # pkg:gem/sshkit#lib/sshkit/coordinator.rb:5
   def hosts=(_arg0); end
 
@@ -1167,8 +965,6 @@ end
 
 # pkg:gem/sshkit#lib/sshkit/deprecation_logger.rb:4
 class SSHKit::DeprecationLogger
-  # @return [DeprecationLogger] a new instance of DeprecationLogger
-  #
   # pkg:gem/sshkit#lib/sshkit/deprecation_logger.rb:5
   def initialize(out); end
 
@@ -1183,8 +979,6 @@ module SSHKit::Formatter; end
 class SSHKit::Formatter::Abstract
   extend ::Forwardable
 
-  # @return [Abstract] a new instance of Abstract
-  #
   # pkg:gem/sshkit#lib/sshkit/formatters/abstract.rb:14
   def initialize(output, options = T.unsafe(nil)); end
 
@@ -1218,13 +1012,9 @@ class SSHKit::Formatter::Abstract
   # pkg:gem/sshkit#lib/sshkit/formatters/abstract.rb:27
   def log_command_start(command); end
 
-  # Returns the value of attribute options.
-  #
   # pkg:gem/sshkit#lib/sshkit/formatters/abstract.rb:10
   def options; end
 
-  # Returns the value of attribute original_output.
-  #
   # pkg:gem/sshkit#lib/sshkit/formatters/abstract.rb:10
   def original_output; end
 
@@ -1300,23 +1090,15 @@ end
 
 # pkg:gem/sshkit#lib/sshkit/host.rb:8
 class SSHKit::Host
-  # @return [Host] a new instance of Host
-  #
   # pkg:gem/sshkit#lib/sshkit/host.rb:25
   def initialize(host_string_or_options_hash); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/host.rb:67
   def ==(other_host); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/host.rb:64
   def eql?(other_host); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/host.rb:68
   def equal?(other_host); end
 
@@ -1326,15 +1108,9 @@ class SSHKit::Host
   # pkg:gem/sshkit#lib/sshkit/host.rb:56
   def hash; end
 
-  # Returns the value of attribute hostname.
-  #
   # pkg:gem/sshkit#lib/sshkit/host.rb:10
   def hostname; end
 
-  # Sets the attribute hostname
-  #
-  # @param value the value to set the attribute hostname to.
-  #
   # pkg:gem/sshkit#lib/sshkit/host.rb:10
   def hostname=(_arg0); end
 
@@ -1347,73 +1123,45 @@ class SSHKit::Host
   # pkg:gem/sshkit#lib/sshkit/host.rb:17
   def keys=(new_keys); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/sshkit#lib/sshkit/host.rb:52
   def local?; end
 
   # pkg:gem/sshkit#lib/sshkit/host.rb:74
   def netssh_options; end
 
-  # Returns the value of attribute password.
-  #
   # pkg:gem/sshkit#lib/sshkit/host.rb:10
   def password; end
 
-  # Sets the attribute password
-  #
-  # @param value the value to set the attribute password to.
-  #
   # pkg:gem/sshkit#lib/sshkit/host.rb:10
   def password=(_arg0); end
 
-  # Returns the value of attribute port.
-  #
   # pkg:gem/sshkit#lib/sshkit/host.rb:10
   def port; end
 
-  # Sets the attribute port
-  #
-  # @param value the value to set the attribute port to.
-  #
   # pkg:gem/sshkit#lib/sshkit/host.rb:10
   def port=(_arg0); end
 
   # pkg:gem/sshkit#lib/sshkit/host.rb:85
   def properties; end
 
-  # Returns the value of attribute ssh_options.
-  #
   # pkg:gem/sshkit#lib/sshkit/host.rb:10
   def ssh_options; end
 
-  # Sets the attribute ssh_options
-  #
-  # @param value the value to set the attribute ssh_options to.
-  #
   # pkg:gem/sshkit#lib/sshkit/host.rb:10
   def ssh_options=(_arg0); end
 
   # pkg:gem/sshkit#lib/sshkit/host.rb:70
   def to_s; end
 
-  # Returns the value of attribute transfer_method.
-  #
   # pkg:gem/sshkit#lib/sshkit/host.rb:11
   def transfer_method; end
 
   # pkg:gem/sshkit#lib/sshkit/host.rb:46
   def transfer_method=(method); end
 
-  # Returns the value of attribute user.
-  #
   # pkg:gem/sshkit#lib/sshkit/host.rb:10
   def user; end
 
-  # Sets the attribute user
-  #
-  # @param value the value to set the attribute user to.
-  #
   # pkg:gem/sshkit#lib/sshkit/host.rb:10
   def user=(_arg0); end
 
@@ -1430,8 +1178,6 @@ class SSHKit::HostWithPortParser < ::SSHKit::SimpleHostParser
   def port; end
 
   class << self
-    # @return [Boolean]
-    #
     # pkg:gem/sshkit#lib/sshkit/host.rb:144
     def suitable?(host_string); end
   end
@@ -1451,8 +1197,6 @@ class SSHKit::HostWithUsernameAndPortParser < ::SSHKit::SimpleHostParser
   def username; end
 
   class << self
-    # @return [Boolean]
-    #
     # pkg:gem/sshkit#lib/sshkit/host.rb:161
     def suitable?(host_string); end
   end
@@ -1469,8 +1213,6 @@ class SSHKit::HostWithUsernameParser < ::SSHKit::SimpleHostParser
   def username; end
 
   class << self
-    # @return [Boolean]
-    #
     # pkg:gem/sshkit#lib/sshkit/host.rb:199
     def suitable?(host_string); end
   end
@@ -1487,8 +1229,6 @@ class SSHKit::IPv6HostParser < ::SSHKit::SimpleHostParser
   def port; end
 
   class << self
-    # @return [Boolean]
-    #
     # pkg:gem/sshkit#lib/sshkit/host.rb:129
     def suitable?(host_string); end
   end
@@ -1505,8 +1245,6 @@ class SSHKit::IPv6HostWithPortParser < ::SSHKit::SimpleHostParser
   def port; end
 
   class << self
-    # @return [Boolean]
-    #
     # pkg:gem/sshkit#lib/sshkit/host.rb:180
     def suitable?(host_string); end
   end
@@ -1517,21 +1255,15 @@ SSHKit::IPv6HostWithPortParser::IPV6_REGEX = T.let(T.unsafe(nil), Regexp)
 
 # pkg:gem/sshkit#lib/sshkit/log_message.rb:3
 class SSHKit::LogMessage
-  # @return [LogMessage] a new instance of LogMessage
-  #
   # pkg:gem/sshkit#lib/sshkit/log_message.rb:5
   def initialize(verbosity, message); end
 
-  # Returns the value of attribute message.
-  #
   # pkg:gem/sshkit#lib/sshkit/log_message.rb:4
   def message; end
 
   # pkg:gem/sshkit#lib/sshkit/log_message.rb:8
   def to_s; end
 
-  # Returns the value of attribute verbosity.
-  #
   # pkg:gem/sshkit#lib/sshkit/log_message.rb:4
   def verbosity; end
 end
@@ -1556,8 +1288,6 @@ SSHKit::Logger::WARN = T.let(T.unsafe(nil), Integer)
 
 # pkg:gem/sshkit#lib/sshkit/mapping_interaction_handler.rb:3
 class SSHKit::MappingInteractionHandler
-  # @return [MappingInteractionHandler] a new instance of MappingInteractionHandler
-  #
   # pkg:gem/sshkit#lib/sshkit/mapping_interaction_handler.rb:5
   def initialize(mapping, log_level = T.unsafe(nil)); end
 
@@ -1583,23 +1313,15 @@ module SSHKit::Runner; end
 
 # pkg:gem/sshkit#lib/sshkit/runners/abstract.rb:5
 class SSHKit::Runner::Abstract
-  # @return [Abstract] a new instance of Abstract
-  #
   # pkg:gem/sshkit#lib/sshkit/runners/abstract.rb:9
   def initialize(hosts, options = T.unsafe(nil), &block); end
 
-  # Returns the value of attribute block.
-  #
   # pkg:gem/sshkit#lib/sshkit/runners/abstract.rb:7
   def block; end
 
-  # Returns the value of attribute hosts.
-  #
   # pkg:gem/sshkit#lib/sshkit/runners/abstract.rb:7
   def hosts; end
 
-  # Returns the value of attribute options.
-  #
   # pkg:gem/sshkit#lib/sshkit/runners/abstract.rb:7
   def options; end
 
@@ -1611,36 +1333,24 @@ end
 
 # pkg:gem/sshkit#lib/sshkit/exception.rb:5
 class SSHKit::Runner::ExecuteError < ::SSHKit::StandardError
-  # @return [ExecuteError] a new instance of ExecuteError
-  #
   # pkg:gem/sshkit#lib/sshkit/exception.rb:8
   def initialize(cause); end
 
-  # Returns the value of attribute cause.
-  #
   # pkg:gem/sshkit#lib/sshkit/exception.rb:6
   def cause; end
 end
 
 # pkg:gem/sshkit#lib/sshkit/runners/group.rb:5
 class SSHKit::Runner::Group < ::SSHKit::Runner::Sequential
-  # @return [Group] a new instance of Group
-  #
   # pkg:gem/sshkit#lib/sshkit/runners/group.rb:8
   def initialize(hosts, options = T.unsafe(nil), &block); end
 
   # pkg:gem/sshkit#lib/sshkit/runners/group.rb:13
   def execute; end
 
-  # Returns the value of attribute group_size.
-  #
   # pkg:gem/sshkit#lib/sshkit/runners/group.rb:6
   def group_size; end
 
-  # Sets the attribute group_size
-  #
-  # @param value the value to set the attribute group_size to.
-  #
   # pkg:gem/sshkit#lib/sshkit/runners/group.rb:6
   def group_size=(_arg0); end
 end
@@ -1659,23 +1369,15 @@ end
 
 # pkg:gem/sshkit#lib/sshkit/runners/sequential.rb:5
 class SSHKit::Runner::Sequential < ::SSHKit::Runner::Abstract
-  # @return [Sequential] a new instance of Sequential
-  #
   # pkg:gem/sshkit#lib/sshkit/runners/sequential.rb:8
   def initialize(hosts, options = T.unsafe(nil), &block); end
 
   # pkg:gem/sshkit#lib/sshkit/runners/sequential.rb:13
   def execute; end
 
-  # Returns the value of attribute wait_interval.
-  #
   # pkg:gem/sshkit#lib/sshkit/runners/sequential.rb:6
   def wait_interval; end
 
-  # Sets the attribute wait_interval
-  #
-  # @param value the value to set the attribute wait_interval to.
-  #
   # pkg:gem/sshkit#lib/sshkit/runners/sequential.rb:6
   def wait_interval=(_arg0); end
 
@@ -1689,8 +1391,6 @@ end
 #
 # pkg:gem/sshkit#lib/sshkit/host.rb:98
 class SSHKit::SimpleHostParser
-  # @return [SimpleHostParser] a new instance of SimpleHostParser
-  #
   # pkg:gem/sshkit#lib/sshkit/host.rb:104
   def initialize(host_string); end
 
@@ -1707,8 +1407,6 @@ class SSHKit::SimpleHostParser
   def username; end
 
   class << self
-    # @return [Boolean]
-    #
     # pkg:gem/sshkit#lib/sshkit/host.rb:100
     def suitable?(host_string); end
   end

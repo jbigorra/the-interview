@@ -1,9 +1,11 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-require "simplecov"
-SimpleCov.start "rails" do
-  add_filter "/spec/"
-  add_filter "/db/migrate/"
-  add_filter "/sorbet/"
+unless ENV["SIMPLECOV"] == "off"
+  require "simplecov"
+  SimpleCov.start "rails" do
+    add_filter "/spec/"
+    add_filter "/db/migrate/"
+    add_filter "/sorbet/"
+  end
 end
 
 require 'spec_helper'
@@ -16,6 +18,9 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 # return unless Rails.env.test?
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
+
+# Use test adapter for ActiveJob matcher assertions
+ActiveJob::Base.queue_adapter = :test
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

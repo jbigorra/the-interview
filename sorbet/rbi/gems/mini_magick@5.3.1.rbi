@@ -108,11 +108,11 @@ module MiniMagick::Configuration
   # pkg:gem/mini_magick#lib/mini_magick/configuration.rb:23
   def cli_prefix=(_arg0); end
 
+  # @yield [self]
   # @example
   #   MiniMagick.configure do |config|
-  #   config.timeout = 5
+  #     config.timeout = 5
   #   end
-  # @yield [self]
   #
   # pkg:gem/mini_magick#lib/mini_magick/configuration.rb:97
   def configure; end
@@ -230,8 +230,6 @@ module MiniMagick::Configuration
   def warnings=(_arg0); end
 
   class << self
-    # @private
-    #
     # pkg:gem/mini_magick#lib/mini_magick/configuration.rb:80
     def extended(base); end
   end
@@ -249,7 +247,6 @@ class MiniMagick::Image
   # which creates a temporary file for you and protects your original.
   #
   # @param input_path [String, Pathname] The location of an image file
-  # @return [Image] a new instance of Image
   # @yield [MiniMagick::Tool] If block is given, {#combine_options}
   #   is called.
   #
@@ -262,11 +259,12 @@ class MiniMagick::Image
   # Use this method if you want to access raw Identify's format API.
   #
   # @example
-  #   image["%w %h"]       #=> "250 450"
-  #   image["%r"]          #=> "DirectClass sRGB"
+  #    image["%w %h"]       #=> "250 450"
+  #    image["%r"]          #=> "DirectClass sRGB"
+  #
   # @param value [String]
-  # @return [String]
   # @see http://www.imagemagick.org/script/escape.php
+  # @return [String]
   #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:279
   def [](value); end
@@ -280,8 +278,6 @@ class MiniMagick::Image
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:532
   def collapse!(frame = T.unsafe(nil)); end
 
-  # @return [String]
-  #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:119
   def colorspace(*args); end
 
@@ -290,34 +286,32 @@ class MiniMagick::Image
   #
   # @example
   #   image.combine_options do |c|
-  #   c.draw "image Over 0,0 10,10 '#{MINUS_IMAGE_PATH}'"
-  #   c.thumbnail "300x500>"
-  #   c.background "blue"
+  #     c.draw "image Over 0,0 10,10 '#{MINUS_IMAGE_PATH}'"
+  #     c.thumbnail "300x500>"
+  #     c.background "blue"
   #   end
-  # @return [self]
-  # @see http://www.imagemagick.org/script/mogrify.php
+  #
   # @yield [MiniMagick::Command]
+  # @see http://www.imagemagick.org/script/mogrify.php
+  # @return [self]
   #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:451
   def combine_options(&block); end
 
   # @example
-  #   first_image = MiniMagick::Image.open "first.jpg"
-  #   second_image = MiniMagick::Image.open "second.jpg"
-  #   result = first_image.composite(second_image) do |c|
-  #   c.compose "Over" # OverCompositeOp
-  #   c.geometry "+20+20" # copy second_image onto first_image from (20, 20)
-  #   end
-  #   result.write "output.jpg"
+  #  first_image = MiniMagick::Image.open "first.jpg"
+  #  second_image = MiniMagick::Image.open "second.jpg"
+  #  result = first_image.composite(second_image) do |c|
+  #    c.compose "Over" # OverCompositeOp
+  #    c.geometry "+20+20" # copy second_image onto first_image from (20, 20)
+  #  end
+  #  result.write "output.jpg"
+  #
   # @see http://www.imagemagick.org/script/composite.php
   #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:511
   def composite(other_image, output_extension = T.unsafe(nil), mask = T.unsafe(nil)); end
 
-  # Returns the result of converting the image to JSON format.
-  #
-  # @return [Hash]
-  #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:119
   def data(*args); end
 
@@ -326,16 +320,12 @@ class MiniMagick::Image
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:539
   def destroy!; end
 
-  # @return [Array<Integer>]
-  #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:119
   def dimensions(*args); end
 
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:159
   def eql?(other); end
 
-  # @return [Hash]
-  #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:119
   def exif(*args); end
 
@@ -361,23 +351,13 @@ class MiniMagick::Image
   #   will convert all pages.
   # @param read_opts [Hash] Any read options to be passed to ImageMagick
   #   for example: image.format('jpg', page, {density: '300'})
-  # @return [self]
   # @yield [MiniMagick::Tool] It optionally yields the command,
   #   if you want to add something.
+  # @return [self]
   #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:400
   def format(format, page = T.unsafe(nil), read_opts = T.unsafe(nil)); end
 
-  # Returns layers of the image. For example, JPEGs are 1-layered, but
-  # formats like PSDs, GIFs and PDFs can have multiple layers/frames/pages.
-  #
-  # @example
-  #   image = MiniMagick::Image.new("document.pdf")
-  #   image.pages.each_with_index do |page, idx|
-  #   page.write("page#{idx}.pdf")
-  #   end
-  # @return [Array<MiniMagick::Image>]
-  #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:302
   def frames; end
 
@@ -388,26 +368,28 @@ class MiniMagick::Image
   # 2) one for each column of pixels
   # 3) three or four elements in the range 0-255, one for each of the RGB(A) color channels
   #
-  # It can also be called after applying transformations:
-  #
-  # In this example, all pixels in pix should now have equal R, G, and B values.
-  #
   # @example
   #   img = MiniMagick::Image.open 'image.jpg'
   #   pixels = img.get_pixels
   #   pixels[3][2][1] # the green channel value from the 4th-row, 3rd-column pixel
+  #
   # @example
   #   img = MiniMagick::Image.open 'image.jpg'
   #   pixels = img.get_pixels("RGBA")
   #   pixels[3][2][3] # the alpha channel value from the 4th-row, 3rd-column pixel
+  #
+  # It can also be called after applying transformations:
+  #
   # @example
   #   img = MiniMagick::Image.open 'image.jpg'
   #   img.crop '20x30+10+5'
   #   img.colorspace 'Gray'
   #   pixels = img.get_pixels
+  #
+  # In this example, all pixels in pix should now have equal R, G, and B values.
+  #
   # @param map [String] A code for the mapping of the pixel data. Must be either
   #   'RGB' or 'RGBA'. Default to 'RGB'
-  # @raise [ArgumentError]
   # @return [Array] Matrix of each color of each pixel
   #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:335
@@ -416,15 +398,9 @@ class MiniMagick::Image
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:161
   def hash; end
 
-  # @return [Integer]
-  #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:119
   def height(*args); end
 
-  # Returns the file size in a human readable format.
-  #
-  # @return [String]
-  #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:119
   def human_size(*args); end
 
@@ -434,7 +410,7 @@ class MiniMagick::Image
   # @example
   #   image = MiniMagick::Image.open("image.jpg")
   #   image.identify do |b|
-  #   b.verbose
+  #     b.verbose
   #   end # runs `identify -verbose image.jpg`
   # @return [String] Output from `identify`
   # @yield [MiniMagick::Tool]
@@ -442,15 +418,6 @@ class MiniMagick::Image
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:558
   def identify; end
 
-  # Use this method if you want to access raw Identify's format API.
-  #
-  # @example
-  #   image["%w %h"]       #=> "250 450"
-  #   image["%r"]          #=> "DirectClass sRGB"
-  # @param value [String]
-  # @return [String]
-  # @see http://www.imagemagick.org/script/escape.php
-  #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:282
   def info(value); end
 
@@ -458,14 +425,11 @@ class MiniMagick::Image
   # is greater than height
   # ============
   # ============
-  #
   # @return [Boolean]
   #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:591
   def landscape?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:579
   def layer?; end
 
@@ -475,7 +439,7 @@ class MiniMagick::Image
   # @example
   #   image = MiniMagick::Image.new("document.pdf")
   #   image.pages.each_with_index do |page, idx|
-  #   page.write("page#{idx}.pdf")
+  #     page.write("page#{idx}.pdf")
   #   end
   # @return [Array<MiniMagick::Image>]
   #
@@ -485,8 +449,8 @@ class MiniMagick::Image
   # If an unknown method is called then it is sent through the mogrify
   # program.
   #
-  # @return [self]
   # @see http://www.imagemagick.org/script/mogrify.php
+  # @return [self]
   #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:462
   def method_missing(name, *args); end
@@ -494,16 +458,6 @@ class MiniMagick::Image
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:565
   def mogrify(page = T.unsafe(nil)); end
 
-  # Returns layers of the image. For example, JPEGs are 1-layered, but
-  # formats like PSDs, GIFs and PDFs can have multiple layers/frames/pages.
-  #
-  # @example
-  #   image = MiniMagick::Image.new("document.pdf")
-  #   image.pages.each_with_index do |page, idx|
-  #   page.write("page#{idx}.pdf")
-  #   end
-  # @return [Array<MiniMagick::Image>]
-  #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:301
   def pages; end
 
@@ -516,40 +470,17 @@ class MiniMagick::Image
   # is greater than width
   # ======
   # ======
-  #
   # @return [Boolean]
   #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:605
   def portrait?; end
 
-  # Returns the resolution of the photo. You can optionally specify the
-  # units measurement.
-  #
-  # @example
-  #   image.resolution("PixelsPerInch") #=> [250, 250]
-  # @return [Array<Integer>]
-  # @see http://www.imagemagick.org/script/command-line-options.php#units
-  #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:119
   def resolution(*args); end
 
-  # Returns the message digest of this image as a SHA-256, hexadecimal
-  # encoded string. This signature uniquely identifies the image and is
-  # convenient for determining if an image has been modified or whether two
-  # images are identical.
-  #
-  # @example
-  #   image.signature #=> "60a7848c4ca6e36b8e2c5dea632ecdc29e9637791d2c59ebf7a54c0c6a74ef7e"
-  # @return [String]
-  # @see http://www.imagemagick.org/api/signature.php
-  #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:119
   def signature(*args); end
 
-  # Returns the file size of the image (in bytes).
-  #
-  # @return [Integer]
-  #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:119
   def size(*args); end
 
@@ -565,10 +496,6 @@ class MiniMagick::Image
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:170
   def to_blob; end
 
-  # Returns the image format (e.g. "JPEG", "GIF").
-  #
-  # @return [String]
-  #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:119
   def type(*args); end
 
@@ -591,8 +518,6 @@ class MiniMagick::Image
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:196
   def validate!; end
 
-  # @return [Integer]
-  #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:119
   def width(*args); end
 
@@ -611,13 +536,13 @@ class MiniMagick::Image
   # Prevents ruby from calling `#to_ary` on the image when checking if it's a
   # splattable data structure in certain cases.
   #
-  # @return [Boolean]
-  #
   # pkg:gem/mini_magick#lib/mini_magick/image.rb:471
   def respond_to_missing?(name, include_all); end
 
   class << self
     # @private
+    # @!macro [attach] attribute
+    #   @!attribute [r] $1
     #
     # pkg:gem/mini_magick#lib/mini_magick/image.rb:118
     def attribute(name, key = T.unsafe(nil)); end
@@ -630,9 +555,9 @@ class MiniMagick::Image
     # we have a good tempfile.
     #
     # @param ext [String] Specify the extension you want to read it as
-    # @return [MiniMagick::Image] The created image
     # @yield [Tempfile] You can #write bits to this object to create the new
     #   Image
+    # @return [MiniMagick::Image] The created image
     #
     # pkg:gem/mini_magick#lib/mini_magick/image.rb:107
     def create(ext = T.unsafe(nil), &block); end
@@ -653,16 +578,15 @@ class MiniMagick::Image
     # Creates an image object from a binary string blob which contains raw
     # pixel data (i.e. no header data).
     #
-    # Defaults to 'png'.
-    #
     # @param blob [String] Binary string blob containing raw pixel data.
     # @param columns [Integer] Number of columns.
+    # @param rows [Integer] Number of rows.
     # @param depth [Integer] Bit depth of the encoded pixel data.
-    # @param format [String] The file extension of the image format to be
-    #   used when creating the image object.
     # @param map [String] A code for the mapping of the pixel data. Example:
     #   'gray' or 'rgb'.
-    # @param rows [Integer] Number of rows.
+    # @param format [String] The file extension of the image format to be
+    #   used when creating the image object.
+    # Defaults to 'png'.
     # @return [MiniMagick::Image] The loaded image.
     #
     # pkg:gem/mini_magick#lib/mini_magick/image.rb:52
@@ -674,10 +598,10 @@ class MiniMagick::Image
     # Extension is either guessed from the path or you can specify it as a
     # second parameter.
     #
-    # @param ext [String] Specify the extension you want to read it as
-    # @param options [Hash] Specify options for the open method
     # @param path_or_url [String] Either a local file path or a URL that
     #   open-uri can read
+    # @param ext [String] Specify the extension you want to read it as
+    # @param options [Hash] Specify options for the open method
     # @return [MiniMagick::Image] The loaded image
     #
     # pkg:gem/mini_magick#lib/mini_magick/image.rb:82
@@ -692,10 +616,10 @@ class MiniMagick::Image
     # Probably easier to use the {.open} method if you want to open a file or a
     # URL.
     #
-    # @param ext [String] A manual extension to use for reading the file. Not
-    #   required, but if you are having issues, give this a try.
     # @param stream [#read, String] Some kind of stream object that needs
     #   to be read or is a binary String blob
+    # @param ext [String] A manual extension to use for reading the file. Not
+    #   required, but if you are having issues, give this a try.
     # @return [MiniMagick::Image]
     #
     # pkg:gem/mini_magick#lib/mini_magick/image.rb:29
@@ -707,8 +631,6 @@ end
 #
 # pkg:gem/mini_magick#lib/mini_magick/image/info.rb:6
 class MiniMagick::Image::Info
-  # @return [Info] a new instance of Info
-  #
   # pkg:gem/mini_magick#lib/mini_magick/image/info.rb:9
   def initialize(path); end
 
@@ -733,8 +655,6 @@ class MiniMagick::Image::Info
   # pkg:gem/mini_magick#lib/mini_magick/image/info.rb:129
   def identify; end
 
-  # @raise [TypeError]
-  #
   # pkg:gem/mini_magick#lib/mini_magick/image/info.rb:61
   def parse_warnings(raw_info); end
 
@@ -792,22 +712,22 @@ class MiniMagick::TimeoutError < ::MiniMagick::Error; end
 #
 # @example
 #   MiniMagick.mogrify do |mogrify|
-#   mogrify.resize "500x500"
-#   mogrify << "path/to/image.jpg"
+#     mogrify.resize "500x500"
+#     mogrify << "path/to/image.jpg"
 #   end
 #
 # pkg:gem/mini_magick#lib/mini_magick/tool.rb:14
 class MiniMagick::Tool
-  # @example
-  #   MiniMagick.identify(errors: false) do |identify|
-  #   identify.help # returns exit status 1, which would otherwise throw an error
-  #   end
-  # @option options
-  # @option options
-  # @option options
   # @param name [String]
   # @param options [Hash]
-  # @return [Tool] a new instance of Tool
+  # @option options [Boolean] :errors Whether to raise errors on non-zero
+  #   exit codes.
+  # @option options [Boolean] :warnings Whether to print warnings to stderrr.
+  # @option options [String] :stdin Content to send to standard input stream.
+  # @example
+  #   MiniMagick.identify(errors: false) do |identify|
+  #     identify.help # returns exit status 1, which would otherwise throw an error
+  #   end
   #
   # pkg:gem/mini_magick#lib/mini_magick/tool.rb:54
   def initialize(name, **options); end
@@ -816,10 +736,11 @@ class MiniMagick::Tool
   #
   # @example
   #   MiniMagick.mogrify do |mogrify|
-  #   mogrify.antialias.+
-  #   mogrify.distort.+("Perspective", "0,0,4,5 89,0,45,46")
+  #     mogrify.antialias.+
+  #     mogrify.distort.+("Perspective", "0,0,4,5 89,0,45,46")
   #   end
   #   # executes `mogrify +antialias +distort Perspective '0,0,4,5 89,0,45,46'`
+  #
   # @return [self]
   #
   # pkg:gem/mini_magick#lib/mini_magick/tool.rb:162
@@ -844,14 +765,17 @@ class MiniMagick::Tool
   #   mogrify.resize("500x500")
   #   mogrify << "path/to/image.jpg"
   #   mogrify.call # executes `mogrify -resize 500x500 path/to/image.jpg`
+  #
   # @example
   #   mogrify = MiniMagick.mogrify
   #   # build the command
   #   mogrify.call do |stdout, stderr, status|
-  #   # ...
+  #     # ...
   #   end
-  # @return [String] Returns the output of the command
+  #
   # @yield [Array] Optionally yields stdout, stderr, and exit status
+  #
+  # @return [String] Returns the output of the command
   #
   # pkg:gem/mini_magick#lib/mini_magick/tool.rb:80
   def call(**options); end
@@ -867,12 +791,13 @@ class MiniMagick::Tool
 
   # The currently built-up command.
   #
+  # @return [Array<String>]
+  #
   # @example
   #   mogrify = MiniMagick.mogrify
   #   mogrify.resize "500x500"
   #   mogrify.contrast
   #   mogrify.command #=> ["mogrify", "-resize", "500x500", "-contrast"]
-  # @return [Array<String>]
   #
   # pkg:gem/mini_magick#lib/mini_magick/tool.rb:102
   def command; end
@@ -880,16 +805,18 @@ class MiniMagick::Tool
   # The executable used for this tool. Respects
   # {MiniMagick::Configuration#cli_prefix}.
   #
+  # @return [Array<String>]
+  #
   # @example
   #   identify = MiniMagick.identify
   #   identify.executable #=> ["magick", "identify"]
+  #
   # @example
   #   MiniMagick.configure do |config|
-  #   config.cli_prefix = ['firejail', '--force']
+  #     config.cli_prefix = ['firejail', '--force']
   #   end
   #   identify = MiniMagick.identify
   #   identify.executable #=> ["firejail", "--force", "magick", "identify"]
-  # @return [Array<String>]
   #
   # pkg:gem/mini_magick#lib/mini_magick/tool.rb:123
   def executable; end
@@ -942,17 +869,15 @@ class MiniMagick::Tool
   #
   # @example
   #   MiniMagick.convert do |convert|
-  #   convert << "wand.gif"
-  #   convert.stack do |stack|
-  #   stack << "wand.gif"
-  #   stack.rotate(30)
-  #   end
-  #   convert.append.+
-  #   convert << "images.gif"
+  #     convert << "wand.gif"
+  #     convert.stack do |stack|
+  #       stack << "wand.gif"
+  #       stack.rotate(30)
+  #     end
+  #     convert.append.+
+  #     convert << "images.gif"
   #   end
   #   # executes `convert wand.gif \( wizard.gif -rotate 30 \) +append images.gif`
-  # @yield [_self]
-  # @yieldparam _self [MiniMagick::Tool] the object that the method was called on
   #
   # pkg:gem/mini_magick#lib/mini_magick/tool.rb:183
   def stack(*args); end
@@ -972,9 +897,9 @@ class MiniMagick::Tool
   #
   # @example
   #   content = MiniMagick.convert do |convert|
-  #   convert << "input.jpg"
-  #   convert.auto_orient
-  #   convert.stdout
+  #     convert << "input.jpg"
+  #     convert.auto_orient
+  #     convert.stdout
   #   end
   #   # executes `convert input.jpg -auto-orient -` which returns file contents
   #
@@ -993,6 +918,7 @@ class MiniMagick::Tool
     #
     # @example
     #   puts MiniMagick.identify(&:version)
+    #
     # @return [MiniMagick::Tool, String] If no block is given, returns an
     #   instance of the tool, if block is given, returns the output of the
     #   command.
@@ -1095,8 +1021,6 @@ module MiniMagick::Utilities
   def which(cmd); end
 
   class << self
-    # @yield [tempfile]
-    #
     # pkg:gem/mini_magick#lib/mini_magick/utilities.rb:26
     def tempfile(extension); end
 

@@ -17,6 +17,8 @@ Faraday::CompositeReadIO = Faraday::Multipart::CompositeReadIO
 Faraday::FilePart = Multipart::Post::UploadIO
 
 # Main Faraday::Multipart module.
+# Rubocop doesn't seem to understand that this is an extension to the
+# Multipart module, so let's add a nodoc
 #
 # pkg:gem/faraday-multipart#lib/faraday/multipart/version.rb:5
 module Faraday::Multipart
@@ -32,8 +34,6 @@ end
 #
 # pkg:gem/faraday-multipart#lib/faraday/multipart/file_part.rb:67
 class Faraday::Multipart::CompositeReadIO
-  # @return [CompositeReadIO] a new instance of CompositeReadIO
-  #
   # pkg:gem/faraday-multipart#lib/faraday/multipart/file_part.rb:68
   def initialize(*parts); end
 
@@ -83,8 +83,6 @@ Faraday::Multipart::FilePart = Multipart::Post::UploadIO
 #
 # pkg:gem/faraday-multipart#lib/faraday/multipart/middleware.rb:8
 class Faraday::Multipart::Middleware < ::Faraday::Middleware
-  # @return [Middleware] a new instance of Middleware
-  #
   # pkg:gem/faraday-multipart#lib/faraday/multipart/middleware.rb:12
   def initialize(app = T.unsafe(nil), options = T.unsafe(nil)); end
 
@@ -128,19 +126,19 @@ class Faraday::Multipart::Middleware < ::Faraday::Middleware
   def part(boundary, key, value); end
 
   # @param params [Hash]
-  # @param pieces [Array]
   # @param prefix [String]
+  # @param pieces [Array]
   #
   # pkg:gem/faraday-multipart#lib/faraday/multipart/middleware.rb:104
   def process_params(params, prefix = T.unsafe(nil), pieces = T.unsafe(nil), &block); end
 
   # @param env [Faraday::Env]
-  # @return [Boolean]
   #
   # pkg:gem/faraday-multipart#lib/faraday/multipart/middleware.rb:44
   def process_request?(env); end
 
   # @param env [Faraday::Env]
+  #
   # @return [String]
   #
   # pkg:gem/faraday-multipart#lib/faraday/multipart/middleware.rb:55
@@ -162,9 +160,10 @@ Faraday::Multipart::Middleware::DEFAULT_BOUNDARY_PREFIX = T.let(T.unsafe(nil), S
 #
 # pkg:gem/faraday-multipart#lib/faraday/multipart/param_part.rb:6
 class Faraday::Multipart::ParamPart
-  # @param content_id [String] Optional String of this value's Content-ID.
-  # @param content_type [String] String content type of the value.
   # @param value [String] Uploaded content as a String.
+  # @param content_type [String] String content type of the value.
+  # @param content_id [String] Optional String of this value's Content-ID.
+  #
   # @return [Faraday::ParamPart]
   #
   # pkg:gem/faraday-multipart#lib/faraday/multipart/param_part.rb:12
@@ -196,6 +195,7 @@ class Faraday::Multipart::ParamPart
   # @param boundary [String] String multipart boundary that must not exist in
   #   the content exactly.
   # @param key [String] String key name for this value.
+  #
   # @return [Faraday::Parts::Part]
   #
   # pkg:gem/faraday-multipart#lib/faraday/multipart/param_part.rb:25

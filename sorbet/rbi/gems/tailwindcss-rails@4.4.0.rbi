@@ -17,8 +17,6 @@ module Tailwindcss::Commands
     # pkg:gem/tailwindcss-rails#lib/tailwindcss/commands.rb:6
     def compile_command(debug: T.unsafe(nil), **kwargs); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/tailwindcss-rails#lib/tailwindcss/commands.rb:37
     def rails_css_compressor?; end
 

@@ -16,13 +16,9 @@ module RubyLLM
     # pkg:gem/ruby_llm#lib/ruby_llm.rb:82
     def config; end
 
-    # @yield [config]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm.rb:78
     def configure; end
 
-    # @yield [context_config]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm.rb:44
     def context; end
 
@@ -174,8 +170,6 @@ module RubyLLM::ActiveRecord::ChatLegacyMethods
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/active_record/acts_as_legacy.rb:278
   def append_instructions?(append:, replace:); end
 
@@ -188,8 +182,6 @@ module RubyLLM::ActiveRecord::ChatLegacyMethods
   # pkg:gem/ruby_llm#lib/ruby_llm/active_record/acts_as_legacy.rb:245
   def cleanup_orphaned_tool_results; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/active_record/acts_as_legacy.rb:417
   def content_like?(object); end
 
@@ -257,30 +249,18 @@ module RubyLLM::ActiveRecord::ChatMethods
   # pkg:gem/ruby_llm#lib/ruby_llm/active_record/chat_methods.rb:215
   def ask(message = T.unsafe(nil), with: T.unsafe(nil), &_arg2); end
 
-  # Returns the value of attribute assume_model_exists.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/active_record/chat_methods.rb:13
   def assume_model_exists; end
 
-  # Sets the attribute assume_model_exists
-  #
-  # @param value the value to set the attribute assume_model_exists to.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/active_record/chat_methods.rb:13
   def assume_model_exists=(_arg0); end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/active_record/chat_methods.rb:222
   def complete(*_arg0, **_arg1, &_arg2); end
 
-  # Returns the value of attribute context.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/active_record/chat_methods.rb:13
   def context; end
 
-  # Sets the attribute context
-  #
-  # @param value the value to set the attribute context to.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/active_record/chat_methods.rb:13
   def context=(_arg0); end
 
@@ -352,8 +332,6 @@ module RubyLLM::ActiveRecord::ChatMethods
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/active_record/chat_methods.rb:281
   def append_instructions?(append:, replace:); end
 
@@ -366,8 +344,6 @@ module RubyLLM::ActiveRecord::ChatMethods
   # pkg:gem/ruby_llm#lib/ruby_llm/active_record/chat_methods.rb:237
   def cleanup_orphaned_tool_results; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/active_record/chat_methods.rb:443
   def content_like?(object); end
 
@@ -632,8 +608,6 @@ class RubyLLM::Agent
   include ::Enumerable
   extend ::Forwardable
 
-  # @return [Agent] a new instance of Agent
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/agent.rb:351
   def initialize(chat: T.unsafe(nil), inputs: T.unsafe(nil), persist_instructions: T.unsafe(nil), **kwargs); end
 
@@ -643,8 +617,6 @@ class RubyLLM::Agent
   # pkg:gem/ruby_llm#lib/ruby_llm/agent.rb:360
   def ask(*args, **_arg1, &block); end
 
-  # Returns the value of attribute chat.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/agent.rb:358
   def chat; end
 
@@ -736,16 +708,12 @@ class RubyLLM::Agent
     # pkg:gem/ruby_llm#lib/ruby_llm/agent.rb:114
     def create!(**kwargs); end
 
-    # @raise [ArgumentError]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/agent.rb:118
     def find(id, **kwargs); end
 
     # pkg:gem/ruby_llm#lib/ruby_llm/agent.rb:68
     def headers(**headers, &block); end
 
-    # @private
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/agent.rb:15
     def inherited(subclass); end
 
@@ -767,8 +735,6 @@ class RubyLLM::Agent
     # pkg:gem/ruby_llm#lib/ruby_llm/agent.rb:74
     def schema(value = T.unsafe(nil), &block); end
 
-    # @raise [ArgumentError]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/agent.rb:128
     def sync_instructions!(chat_or_id, **kwargs); end
 
@@ -828,8 +794,6 @@ class RubyLLM::Agent
     # pkg:gem/ruby_llm#lib/ruby_llm/agent.rb:324
     def prompt_agent_path; end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/agent.rb:258
     def prompt_instruction?(value); end
 
@@ -857,13 +821,9 @@ class RubyLLM::Agent
     # pkg:gem/ruby_llm#lib/ruby_llm/agent.rb:270
     def runtime_instruction_target(chat_object); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/agent.rb:276
     def use_runtime_instructions?(target, persist:); end
 
-    # @raise [ArgumentError]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/agent.rb:155
     def with_rails_chat_record(method_name, **kwargs); end
   end
@@ -895,18 +855,12 @@ end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/attachment.rb:8
 class RubyLLM::Attachment
-  # @return [Attachment] a new instance of Attachment
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/attachment.rb:11
   def initialize(source, filename: T.unsafe(nil)); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/attachment.rb:31
   def active_storage?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/attachment.rb:97
   def audio?; end
 
@@ -916,8 +870,6 @@ class RubyLLM::Attachment
   # pkg:gem/ruby_llm#lib/ruby_llm/attachment.rb:58
   def encoded; end
 
-  # Returns the value of attribute filename.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/attachment.rb:9
   def filename; end
 
@@ -927,41 +879,27 @@ class RubyLLM::Attachment
   # pkg:gem/ruby_llm#lib/ruby_llm/attachment.rb:101
   def format; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/attachment.rb:89
   def image?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/attachment.rb:27
   def io_like?; end
 
-  # Returns the value of attribute mime_type.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/attachment.rb:9
   def mime_type; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/attachment.rb:23
   def path?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/attachment.rb:112
   def pdf?; end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/attachment.rb:62
   def save(path); end
 
-  # Returns the value of attribute source.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/attachment.rb:9
   def source; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/attachment.rb:116
   def text?; end
 
@@ -971,13 +909,9 @@ class RubyLLM::Attachment
   # pkg:gem/ruby_llm#lib/ruby_llm/attachment.rb:79
   def type; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/attachment.rb:19
   def url?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/attachment.rb:93
   def video?; end
 
@@ -1025,8 +959,6 @@ class RubyLLM::BadRequestError < ::RubyLLM::Error; end
 class RubyLLM::Chat
   include ::Enumerable
 
-  # @return [Chat] a new instance of Chat
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/chat.rb:10
   def initialize(model: T.unsafe(nil), provider: T.unsafe(nil), assume_model_exists: T.unsafe(nil), context: T.unsafe(nil)); end
 
@@ -1042,21 +974,15 @@ class RubyLLM::Chat
   # pkg:gem/ruby_llm#lib/ruby_llm/chat.rb:135
   def each(&_arg0); end
 
-  # Returns the value of attribute headers.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/chat.rb:8
   def headers; end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/chat.rb:183
   def instance_variables; end
 
-  # Returns the value of attribute messages.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/chat.rb:8
   def messages; end
 
-  # Returns the value of attribute model.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/chat.rb:8
   def model; end
 
@@ -1072,8 +998,6 @@ class RubyLLM::Chat
   # pkg:gem/ruby_llm#lib/ruby_llm/chat.rb:130
   def on_tool_result(&block); end
 
-  # Returns the value of attribute params.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/chat.rb:8
   def params; end
 
@@ -1083,18 +1007,12 @@ class RubyLLM::Chat
   # pkg:gem/ruby_llm#lib/ruby_llm/chat.rb:40
   def say(message = T.unsafe(nil), with: T.unsafe(nil), &_arg2); end
 
-  # Returns the value of attribute schema.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/chat.rb:8
   def schema; end
 
-  # Returns the value of attribute tool_prefs.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/chat.rb:8
   def tool_prefs; end
 
-  # Returns the value of attribute tools.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/chat.rb:8
   def tools; end
 
@@ -1119,8 +1037,6 @@ class RubyLLM::Chat
   # pkg:gem/ruby_llm#lib/ruby_llm/chat.rb:76
   def with_temperature(temperature); end
 
-  # @raise [ArgumentError]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/chat.rb:81
   def with_thinking(effort: T.unsafe(nil), budget: T.unsafe(nil)); end
 
@@ -1144,8 +1060,6 @@ class RubyLLM::Chat
   # pkg:gem/ruby_llm#lib/ruby_llm/chat.rb:307
   def classify_tool_name(class_name); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/chat.rb:328
   def content_like?(object); end
 
@@ -1158,8 +1072,6 @@ class RubyLLM::Chat
   # pkg:gem/ruby_llm#lib/ruby_llm/chat.rb:203
   def extract_schema_strict(schema, schema_def); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/chat.rb:314
   def forced_tool_choice?; end
 
@@ -1201,8 +1113,6 @@ class RubyLLM::Chunk < ::RubyLLM::Message; end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/configuration.rb:5
 class RubyLLM::Configuration
-  # @return [Configuration] a new instance of Configuration
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/configuration.rb:59
   def initialize; end
 
@@ -1534,18 +1444,12 @@ class RubyLLM::ConfigurationError < ::StandardError; end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/connection.rb:5
 class RubyLLM::Connection
-  # @return [Connection] a new instance of Connection
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/connection.rb:21
   def initialize(provider, config); end
 
-  # Returns the value of attribute config.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/connection.rb:6
   def config; end
 
-  # Returns the value of attribute connection.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/connection.rb:6
   def connection; end
 
@@ -1558,15 +1462,11 @@ class RubyLLM::Connection
   # pkg:gem/ruby_llm#lib/ruby_llm/connection.rb:35
   def post(url, payload, &_arg2); end
 
-  # Returns the value of attribute provider.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/connection.rb:6
   def provider; end
 
   private
 
-  # @raise [ConfigurationError]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/connection.rb:116
   def ensure_configured!; end
 
@@ -1601,25 +1501,18 @@ end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/content.rb:5
 class RubyLLM::Content
-  # @raise [ArgumentError]
-  # @return [Content] a new instance of Content
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/content.rb:8
   def initialize(text = T.unsafe(nil), attachments = T.unsafe(nil)); end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/content.rb:16
   def add_attachment(source, filename: T.unsafe(nil)); end
 
-  # Returns the value of attribute attachments.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/content.rb:6
   def attachments; end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/content.rb:21
   def format; end
 
-  # Returns the value of attribute text.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/content.rb:6
   def text; end
 
@@ -1630,8 +1523,6 @@ class RubyLLM::Content
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/content.rb:44
   def blank_attachment_entry?(file); end
 
@@ -1646,9 +1537,6 @@ end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/content.rb:59
 class RubyLLM::Content::Raw
-  # @raise [ArgumentError]
-  # @return [Raw] a new instance of Raw
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/content.rb:62
   def initialize(value); end
 
@@ -1658,8 +1546,6 @@ class RubyLLM::Content::Raw
   # pkg:gem/ruby_llm#lib/ruby_llm/content.rb:72
   def to_h; end
 
-  # Returns the value of attribute value.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/content.rb:60
   def value; end
 end
@@ -1668,16 +1554,12 @@ end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/context.rb:5
 class RubyLLM::Context
-  # @return [Context] a new instance of Context
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/context.rb:8
   def initialize(config); end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/context.rb:13
   def chat(*args, **kwargs, &_arg2); end
 
-  # Returns the value of attribute config.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/context.rb:6
   def config; end
 
@@ -1698,23 +1580,15 @@ class RubyLLM::ContextLengthExceededError < ::RubyLLM::Error; end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/embedding.rb:5
 class RubyLLM::Embedding
-  # @return [Embedding] a new instance of Embedding
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/embedding.rb:8
   def initialize(vectors:, model:, input_tokens: T.unsafe(nil)); end
 
-  # Returns the value of attribute input_tokens.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/embedding.rb:6
   def input_tokens; end
 
-  # Returns the value of attribute model.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/embedding.rb:6
   def model; end
 
-  # Returns the value of attribute vectors.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/embedding.rb:6
   def vectors; end
 
@@ -1729,13 +1603,9 @@ end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/error.rb:6
 class RubyLLM::Error < ::StandardError
-  # @return [Error] a new instance of Error
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/error.rb:9
   def initialize(response = T.unsafe(nil), message = T.unsafe(nil)); end
 
-  # Returns the value of attribute response.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/error.rb:7
   def response; end
 end
@@ -1744,8 +1614,6 @@ end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/error.rb:40
 class RubyLLM::ErrorMiddleware < ::Faraday::Middleware
-  # @return [ErrorMiddleware] a new instance of ErrorMiddleware
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/error.rb:41
   def initialize(app, options = T.unsafe(nil)); end
 
@@ -1758,8 +1626,6 @@ class RubyLLM::ErrorMiddleware < ::Faraday::Middleware
 
     private
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/error.rb:103
     def context_length_exceeded?(message); end
   end
@@ -1772,33 +1638,21 @@ class RubyLLM::ForbiddenError < ::RubyLLM::Error; end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/image.rb:5
 class RubyLLM::Image
-  # @return [Image] a new instance of Image
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/image.rb:8
   def initialize(url: T.unsafe(nil), data: T.unsafe(nil), mime_type: T.unsafe(nil), revised_prompt: T.unsafe(nil), model_id: T.unsafe(nil)); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/image.rb:16
   def base64?; end
 
-  # Returns the value of attribute data.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/image.rb:6
   def data; end
 
-  # Returns the value of attribute mime_type.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/image.rb:6
   def mime_type; end
 
-  # Returns the value of attribute model_id.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/image.rb:6
   def model_id; end
 
-  # Returns the value of attribute revised_prompt.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/image.rb:6
   def revised_prompt; end
 
@@ -1808,8 +1662,6 @@ class RubyLLM::Image
   # pkg:gem/ruby_llm#lib/ruby_llm/image.rb:20
   def to_blob; end
 
-  # Returns the value of attribute url.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/image.rb:6
   def url; end
 
@@ -1829,8 +1681,6 @@ class RubyLLM::InvalidToolChoiceError < ::StandardError; end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/message.rb:5
 class RubyLLM::Message
-  # @return [Message] a new instance of Message
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/message.rb:11
   def initialize(options = T.unsafe(nil)); end
 
@@ -1843,10 +1693,6 @@ class RubyLLM::Message
   # pkg:gem/ruby_llm#lib/ruby_llm/message.rb:31
   def content; end
 
-  # Sets the attribute content
-  #
-  # @param value the value to set the attribute content to.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/message.rb:9
   def content=(_arg0); end
 
@@ -1856,29 +1702,21 @@ class RubyLLM::Message
   # pkg:gem/ruby_llm#lib/ruby_llm/message.rb:87
   def instance_variables; end
 
-  # Returns the value of attribute model_id.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/message.rb:8
   def model_id; end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/message.rb:55
   def output_tokens; end
 
-  # Returns the value of attribute raw.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/message.rb:8
   def raw; end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/message.rb:71
   def reasoning_tokens; end
 
-  # Returns the value of attribute role.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/message.rb:8
   def role; end
 
-  # Returns the value of attribute thinking.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/message.rb:8
   def thinking; end
 
@@ -1888,28 +1726,18 @@ class RubyLLM::Message
   # pkg:gem/ruby_llm#lib/ruby_llm/message.rb:75
   def to_h; end
 
-  # Returns the value of attribute tokens.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/message.rb:8
   def tokens; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/message.rb:39
   def tool_call?; end
 
-  # Returns the value of attribute tool_call_id.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/message.rb:8
   def tool_call_id; end
 
-  # Returns the value of attribute tool_calls.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/message.rb:8
   def tool_calls; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/message.rb:43
   def tool_result?; end
 
@@ -1918,8 +1746,6 @@ class RubyLLM::Message
 
   private
 
-  # @raise [InvalidRoleError]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/message.rb:103
   def ensure_valid_role; end
 
@@ -1955,31 +1781,21 @@ module RubyLLM::MimeType
   def video?(type); end
 
   class << self
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/mime_type.rb:22
     def audio?(type); end
 
     # pkg:gem/ruby_llm#lib/ruby_llm/mime_type.rb:10
     def for(*_arg0, **_arg1, &_arg2); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/mime_type.rb:14
     def image?(type); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/mime_type.rb:26
     def pdf?(type); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/mime_type.rb:30
     def text?(type); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/mime_type.rb:18
     def video?(type); end
   end
@@ -2004,92 +1820,66 @@ module RubyLLM::Model; end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:6
 class RubyLLM::Model::Info
-  # @return [Info] a new instance of Info
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:22
   def initialize(data); end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:42
   def batch?; end
 
-  # Returns the value of attribute capabilities.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:7
   def capabilities; end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:42
   def citations?; end
 
-  # Returns the value of attribute context_window.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:7
   def context_window; end
 
-  # Returns the value of attribute created_at.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:7
   def created_at; end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:47
   def display_name; end
 
-  # Returns the value of attribute family.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:7
   def family; end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:42
   def function_calling?; end
 
-  # Returns the value of attribute id.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:7
   def id; end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:72
   def input_price_per_million; end
 
-  # Returns the value of attribute knowledge_cutoff.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:7
   def knowledge_cutoff; end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:51
   def label; end
 
-  # Returns the value of attribute max_output_tokens.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:7
   def max_output_tokens; end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:56
   def max_tokens; end
 
-  # Returns the value of attribute metadata.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:7
   def metadata; end
 
-  # Returns the value of attribute modalities.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:7
   def modalities; end
 
-  # Returns the value of attribute name.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:7
   def name; end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:76
   def output_price_per_million; end
 
-  # Returns the value of attribute pricing.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:7
   def pricing; end
 
-  # Returns the value of attribute provider.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:7
   def provider; end
 
@@ -2105,23 +1895,15 @@ class RubyLLM::Model::Info
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:42
   def structured_output?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:37
   def supports?(capability); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:68
   def supports_functions?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:64
   def supports_video?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/info.rb:60
   def supports_vision?; end
 
@@ -2143,18 +1925,12 @@ end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/model/modalities.rb:6
 class RubyLLM::Model::Modalities
-  # @return [Modalities] a new instance of Modalities
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/modalities.rb:9
   def initialize(data); end
 
-  # Returns the value of attribute input.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/modalities.rb:7
   def input; end
 
-  # Returns the value of attribute output.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/modalities.rb:7
   def output; end
 
@@ -2166,8 +1942,6 @@ end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/model/pricing.rb:6
 class RubyLLM::Model::Pricing
-  # @return [Pricing] a new instance of Pricing
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/pricing.rb:7
   def initialize(data); end
 
@@ -2179,13 +1953,9 @@ class RubyLLM::Model::Pricing
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/pricing.rb:33
   def empty_pricing?(data); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/pricing.rb:23
   def respond_to_missing?(method, include_private = T.unsafe(nil)); end
 end
@@ -2194,16 +1964,12 @@ end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/model/pricing_category.rb:6
 class RubyLLM::Model::PricingCategory
-  # @return [PricingCategory] a new instance of PricingCategory
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/pricing_category.rb:9
   def initialize(data = T.unsafe(nil)); end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/model/pricing_category.rb:26
   def [](key); end
 
-  # Returns the value of attribute batch.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/pricing_category.rb:7
   def batch; end
 
@@ -2216,8 +1982,6 @@ class RubyLLM::Model::PricingCategory
   # pkg:gem/ruby_llm#lib/ruby_llm/model/pricing_category.rb:18
   def output; end
 
-  # Returns the value of attribute standard.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/pricing_category.rb:7
   def standard; end
 
@@ -2226,8 +1990,6 @@ class RubyLLM::Model::PricingCategory
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/pricing_category.rb:39
   def empty_tier?(tier_data); end
 end
@@ -2236,8 +1998,6 @@ end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/model/pricing_tier.rb:6
 class RubyLLM::Model::PricingTier
-  # @return [PricingTier] a new instance of PricingTier
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/pricing_tier.rb:7
   def initialize(data = T.unsafe(nil)); end
 
@@ -2249,8 +2009,6 @@ class RubyLLM::Model::PricingTier
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/model/pricing_tier.rb:24
   def respond_to_missing?(method, include_private = T.unsafe(nil)); end
 end
@@ -2264,8 +2022,6 @@ class RubyLLM::ModelNotFoundError < ::StandardError; end
 class RubyLLM::Models
   include ::Enumerable
 
-  # @return [Models] a new instance of Models
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/models.rb:410
   def initialize(models = T.unsafe(nil)); end
 
@@ -2313,8 +2069,6 @@ class RubyLLM::Models
   # pkg:gem/ruby_llm#lib/ruby_llm/models.rb:472
   def find_with_provider(model_id, provider); end
 
-  # @raise [ModelNotFoundError]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/models.rb:494
   def find_without_provider(model_id); end
 
@@ -2328,8 +2082,6 @@ class RubyLLM::Models
     # pkg:gem/ruby_llm#lib/ruby_llm/models.rb:281
     def add_provider_metadata(models_dev_model, provider_model); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/models.rb:305
     def blank_value?(value); end
 
@@ -2407,8 +2159,6 @@ class RubyLLM::Models
     # pkg:gem/ruby_llm#lib/ruby_llm/models.rb:106
     def resolve(model_id, provider: T.unsafe(nil), assume_exists: T.unsafe(nil), config: T.unsafe(nil)); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/models.rb:147
     def respond_to_missing?(method, include_private = T.unsafe(nil)); end
 
@@ -2428,8 +2178,6 @@ RubyLLM::Models::PROVIDER_PREFERENCE = T.let(T.unsafe(nil), Array)
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/moderation.rb:6
 class RubyLLM::Moderation
-  # @return [Moderation] a new instance of Moderation
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/moderation.rb:9
   def initialize(id:, model:, results:); end
 
@@ -2450,8 +2198,6 @@ class RubyLLM::Moderation
 
   # Check if any content was flagged
   #
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/moderation.rb:35
   def flagged?; end
 
@@ -2460,18 +2206,12 @@ class RubyLLM::Moderation
   # pkg:gem/ruby_llm#lib/ruby_llm/moderation.rb:40
   def flagged_categories; end
 
-  # Returns the value of attribute id.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/moderation.rb:7
   def id; end
 
-  # Returns the value of attribute model.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/moderation.rb:7
   def model; end
 
-  # Returns the value of attribute results.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/moderation.rb:7
   def results; end
 
@@ -2488,28 +2228,18 @@ class RubyLLM::OverloadedError < ::RubyLLM::Error; end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/tool.rb:7
 class RubyLLM::Parameter
-  # @return [Parameter] a new instance of Parameter
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tool.rb:10
   def initialize(name, type: T.unsafe(nil), desc: T.unsafe(nil), required: T.unsafe(nil)); end
 
-  # Returns the value of attribute description.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tool.rb:8
   def description; end
 
-  # Returns the value of attribute name.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tool.rb:8
   def name; end
 
-  # Returns the value of attribute required.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tool.rb:8
   def required; end
 
-  # Returns the value of attribute type.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tool.rb:8
   def type; end
 end
@@ -2526,18 +2256,12 @@ class RubyLLM::PromptNotFoundError < ::StandardError; end
 class RubyLLM::Provider
   include ::RubyLLM::Streaming
 
-  # @return [Provider] a new instance of Provider
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:10
   def initialize(config); end
 
-  # @raise [NotImplementedError]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:16
   def api_base; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:109
   def assume_models_exist?; end
 
@@ -2547,21 +2271,15 @@ class RubyLLM::Provider
   # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:41
   def complete(messages, tools:, temperature:, model:, params: T.unsafe(nil), headers: T.unsafe(nil), schema: T.unsafe(nil), thinking: T.unsafe(nil), tool_prefs: T.unsafe(nil), &_arg9); end
 
-  # Returns the value of attribute config.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:8
   def config; end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:36
   def configuration_requirements; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:97
   def configured?; end
 
-  # Returns the value of attribute connection.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:8
   def connection; end
 
@@ -2580,8 +2298,6 @@ class RubyLLM::Provider
   # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:67
   def list_models; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:101
   def local?; end
 
@@ -2600,8 +2316,6 @@ class RubyLLM::Provider
   # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:146
   def parse_tool_calls(_tool_calls); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:105
   def remote?; end
 
@@ -2616,8 +2330,6 @@ class RubyLLM::Provider
   # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:228
   def build_audio_file_part(file_path); end
 
-  # @raise [ConfigurationError]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:247
   def ensure_configured!; end
 
@@ -2631,8 +2343,6 @@ class RubyLLM::Provider
   def try_parse_json(maybe_json); end
 
   class << self
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:179
     def assume_models_exist?; end
 
@@ -2645,8 +2355,6 @@ class RubyLLM::Provider
     # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:163
     def configuration_requirements; end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:183
     def configured?(config); end
 
@@ -2659,8 +2367,6 @@ class RubyLLM::Provider
     # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:196
     def for(model); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:171
     def local?; end
 
@@ -2676,8 +2382,6 @@ class RubyLLM::Provider
     # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:187
     def register(name, provider_class); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/provider.rb:175
     def remote?; end
 
@@ -2737,13 +2441,9 @@ module RubyLLM::Providers::Anthropic::Capabilities
   def supports_tool_parallel_control?(_model_id); end
 
   class << self
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/anthropic/capabilities.rb:10
     def supports_tool_choice?(_model_id); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/anthropic/capabilities.rb:14
     def supports_tool_parallel_control?(_model_id); end
   end
@@ -2840,8 +2540,6 @@ module RubyLLM::Providers::Anthropic::Chat
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/anthropic/chat.rb:205
     def build_thinking_block(thinking); end
 
-    # @raise [ArgumentError]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/anthropic/chat.rb:238
     def build_thinking_payload(thinking); end
 
@@ -2899,8 +2597,6 @@ class RubyLLM::Providers::Anthropic::Content
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/anthropic/content.rb:35
     def determine_cache_control(cache_control, cache_flag); end
 
-    # @raise [ArgumentError]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/anthropic/content.rb:23
     def resolve_payload(text:, parts:, cache:, cache_control:, extras:); end
   end
@@ -3033,8 +2729,6 @@ module RubyLLM::Providers::Anthropic::Streaming
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/anthropic/streaming.rb:39
   def extract_thinking_delta(data, delta_type); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/anthropic/streaming.rb:51
   def json_delta?(data); end
 
@@ -3129,13 +2823,9 @@ class RubyLLM::Providers::Azure < ::RubyLLM::Providers::OpenAI
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/azure.rb:31
   def azure_endpoint(kind); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/azure.rb:27
   def configured?; end
 
-  # @raise [ConfigurationError]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/azure.rb:65
   def ensure_configured!; end
 
@@ -3165,8 +2855,6 @@ class RubyLLM::Providers::Azure < ::RubyLLM::Providers::OpenAI
   class << self
     # Azure works with deployment names, instead of model names
     #
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/azure.rb:60
     def assume_models_exist?; end
 
@@ -3176,8 +2864,6 @@ class RubyLLM::Providers::Azure < ::RubyLLM::Providers::OpenAI
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/azure.rb:51
     def configuration_requirements; end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/azure.rb:55
     def configured?(config); end
   end
@@ -3286,8 +2972,6 @@ class RubyLLM::Providers::Bedrock < ::RubyLLM::Provider
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/bedrock.rb:67
   def bedrock_region; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/bedrock.rb:88
   def model_supports_top_k?(model); end
 
@@ -3518,8 +3202,6 @@ module RubyLLM::Providers::Bedrock::Chat
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/bedrock/chat.rb:137
     def sanitize_non_assistant_raw_blocks(blocks); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/bedrock/chat.rb:189
     def tool_result_content_block?(block); end
   end
@@ -3559,8 +3241,6 @@ module RubyLLM::Providers::Bedrock::Media
   def unique_document_name(base_name, used_names); end
 
   class << self
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/bedrock/media.rb:19
     def empty_content?(content); end
 
@@ -3670,24 +3350,18 @@ module RubyLLM::Providers::Bedrock::Models
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/bedrock/models.rb:20
     def parse_list_models_response(response, slug, _capabilities); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/bedrock/models.rb:123
     def reasoning_embedded?(model); end
 
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/bedrock/models.rb:75
     def region_prefix(region); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/bedrock/models.rb:81
     def region_prefixed?(model_id); end
 
     # Structured output supported on Claude 4.5+ and assumed for future major versions.
     # Bedrock IDs look like: us.anthropic.claude-haiku-4-5-20251001-v1:0
     # Must handle optional region prefix (us./eu./global.) and anthropic. prefix.
-    #
-    # @return [Boolean]
     #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/bedrock/models.rb:111
     def supports_structured_output?(model_id); end
@@ -3778,8 +3452,6 @@ module RubyLLM::Providers::Bedrock::Streaming
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/bedrock/streaming.rb:88
   def raise_streaming_chunk_error(payload); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/bedrock/streaming.rb:182
   def stream_error_event?(event); end
 
@@ -3789,13 +3461,9 @@ module RubyLLM::Providers::Bedrock::Streaming
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/bedrock/streaming.rb:10
   def stream_url; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/bedrock/streaming.rb:271
   def tool_call_delta_event?(event); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/bedrock/streaming.rb:267
   def tool_call_start_event?(event); end
 end
@@ -3837,13 +3505,9 @@ module RubyLLM::Providers::DeepSeek::Capabilities
   def supports_tool_parallel_control?(_model_id); end
 
   class << self
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/deepseek/capabilities.rb:10
     def supports_tool_choice?(_model_id); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/deepseek/capabilities.rb:14
     def supports_tool_parallel_control?(_model_id); end
   end
@@ -3888,8 +3552,6 @@ class RubyLLM::Providers::GPUStack < ::RubyLLM::Providers::OpenAI
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/gpustack.rb:32
     def configuration_requirements; end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/gpustack.rb:28
     def local?; end
   end
@@ -3908,13 +3570,9 @@ module RubyLLM::Providers::GPUStack::Capabilities
   def supports_tool_parallel_control?(_model_id); end
 
   class << self
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/gpustack/capabilities.rb:10
     def supports_tool_choice?(_model_id); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/gpustack/capabilities.rb:14
     def supports_tool_parallel_control?(_model_id); end
   end
@@ -4095,13 +3753,9 @@ module RubyLLM::Providers::Gemini::Capabilities
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/capabilities.rb:90
     def supports_structured_output?(model_id); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/capabilities.rb:23
     def supports_tool_choice?(_model_id); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/capabilities.rb:27
     def supports_tool_parallel_control?(_model_id); end
 
@@ -4216,8 +3870,6 @@ end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/chat.rb:332
 class RubyLLM::Providers::Gemini::Chat::GeminiSchema
-  # @return [GeminiSchema] a new instance of GeminiSchema
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/chat.rb:333
   def initialize(schema); end
 
@@ -4247,13 +3899,9 @@ class RubyLLM::Providers::Gemini::Chat::GeminiSchema
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/chat.rb:529
   def default_string_schema; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/chat.rb:372
   def definition_key?(key); end
 
-  # Returns the value of attribute definitions.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/chat.rb:347
   def definitions; end
 
@@ -4283,8 +3931,6 @@ end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/chat.rb:257
 class RubyLLM::Providers::Gemini::Chat::MessageFormatter
-  # @return [MessageFormatter] a new instance of MessageFormatter
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/chat.rb:258
   def initialize(messages, format_role:, format_parts:, format_tool_result:); end
 
@@ -4311,8 +3957,6 @@ class RubyLLM::Providers::Gemini::Chat::MessageFormatter
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/chat.rb:313
   def remember_tool_calls; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/chat.rb:291
   def tool_message?(message); end
 end
@@ -4476,8 +4120,6 @@ module RubyLLM::Providers::Gemini::Tools
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/tools.rb:120
   def convert_property(property_schema); end
 
-  # @raise [ArgumentError]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/tools.rb:106
   def convert_tool_schema_to_gemini(schema); end
 
@@ -4487,8 +4129,6 @@ module RubyLLM::Providers::Gemini::Tools
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/tools.rb:155
   def copy_tool_attributes(target, source, attributes); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/tools.rb:220
   def forced_tool_choice?(tool_choice); end
 
@@ -4507,8 +4147,6 @@ module RubyLLM::Providers::Gemini::Tools
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/tools.rb:185
   def schema_value(source, attribute); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/tools.rb:224
   def specific_tool_choice?(tool_choice); end
 end
@@ -4540,8 +4178,6 @@ module RubyLLM::Providers::Gemini::Transcription
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/transcription.rb:75
   def parse_transcription_response(response, model:); end
 
-  # @raise [UnsupportedAttachmentError]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/gemini/transcription.rb:23
   def render_transcription_payload(attachment, language:, **options); end
 
@@ -4654,33 +4290,21 @@ module RubyLLM::Providers::Mistral::Capabilities
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/mistral/capabilities.rb:121
     def release_date_for(model_id); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/mistral/capabilities.rb:30
     def supports_json_mode?(model_id); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/mistral/capabilities.rb:10
     def supports_streaming?(model_id); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/mistral/capabilities.rb:18
     def supports_tool_choice?(_model_id); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/mistral/capabilities.rb:22
     def supports_tool_parallel_control?(_model_id); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/mistral/capabilities.rb:14
     def supports_tools?(model_id); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/mistral/capabilities.rb:26
     def supports_vision?(model_id); end
   end
@@ -4815,8 +4439,6 @@ class RubyLLM::Providers::Ollama < ::RubyLLM::Providers::OpenAI
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/ollama.rb:26
     def configuration_requirements; end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/ollama.rb:30
     def local?; end
   end
@@ -4835,13 +4457,9 @@ module RubyLLM::Providers::Ollama::Capabilities
   def supports_tool_parallel_control?(_model_id); end
 
   class << self
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/ollama/capabilities.rb:10
     def supports_tool_choice?(_model_id); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/ollama/capabilities.rb:14
     def supports_tool_parallel_control?(_model_id); end
   end
@@ -5019,13 +4637,9 @@ module RubyLLM::Providers::OpenAI::Capabilities
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/openai/capabilities.rb:168
     def supports_structured_output?(model_id); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/openai/capabilities.rb:80
     def supports_tool_choice?(_model_id); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/openai/capabilities.rb:84
     def supports_tool_parallel_control?(_model_id); end
 
@@ -5119,8 +4733,6 @@ module RubyLLM::Providers::OpenAI::Chat
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/openai/chat.rb:111
     def format_thinking(msg); end
 
-    # @raise [Error]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/openai/chat.rb:54
     def parse_completion_response(response); end
 
@@ -5271,8 +4883,6 @@ module RubyLLM::Providers::OpenAI::Moderation
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/openai/moderation.rb:10
     def moderation_url; end
 
-    # @raise [Error]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/openai/moderation.rb:21
     def parse_moderation_response(response, model:); end
 
@@ -5324,8 +4934,6 @@ module RubyLLM::Providers::OpenAI::Temperature
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/openai/temperature.rb:10
     def normalize(temperature, model_id); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/openai/temperature.rb:22
     def temperature_close_to_one?(temperature); end
   end
@@ -5434,8 +5042,6 @@ module RubyLLM::Providers::OpenAI::Transcription
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/openai/transcription.rb:37
     def response_format_for(model, options); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/openai/transcription.rb:43
     def supports_chunking_strategy?(model, options); end
 
@@ -5525,8 +5131,6 @@ module RubyLLM::Providers::OpenRouter::Chat
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/openrouter/chat.rb:113
     def format_thinking(msg); end
 
-    # @raise [Error]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/openrouter/chat.rb:53
     def parse_completion_response(response); end
 
@@ -5562,8 +5166,6 @@ module RubyLLM::Providers::OpenRouter::Images
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/openrouter/images.rb:12
     def images_url; end
 
-    # @raise [Error]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/openrouter/images.rb:30
     def parse_image_response(response, model:); end
 
@@ -5709,13 +5311,9 @@ module RubyLLM::Providers::Perplexity::Capabilities
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/perplexity/capabilities.rb:45
     def pricing_for(model_id); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/perplexity/capabilities.rb:22
     def supports_tool_choice?(_model_id); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/providers/perplexity/capabilities.rb:26
     def supports_tool_parallel_control?(_model_id); end
   end
@@ -5766,8 +5364,6 @@ class RubyLLM::Providers::VertexAI < ::RubyLLM::Providers::Gemini
   include ::RubyLLM::Providers::VertexAI::Models
   include ::RubyLLM::Providers::VertexAI::Transcription
 
-  # @return [VertexAI] a new instance of VertexAI
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/providers/vertexai.rb:18
   def initialize(config); end
 
@@ -5968,29 +5564,21 @@ class RubyLLM::ServiceUnavailableError < ::RubyLLM::Error; end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/stream_accumulator.rb:5
 class RubyLLM::StreamAccumulator
-  # @return [StreamAccumulator] a new instance of StreamAccumulator
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/stream_accumulator.rb:8
   def initialize; end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/stream_accumulator.rb:23
   def add(chunk); end
 
-  # Returns the value of attribute content.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/stream_accumulator.rb:6
   def content; end
 
-  # Returns the value of attribute model_id.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/stream_accumulator.rb:6
   def model_id; end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/stream_accumulator.rb:33
   def to_message(response); end
 
-  # Returns the value of attribute tool_calls.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/stream_accumulator.rb:6
   def tool_calls; end
 
@@ -6127,21 +5715,15 @@ end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/thinking.rb:5
 class RubyLLM::Thinking
-  # @return [Thinking] a new instance of Thinking
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/thinking.rb:8
   def initialize(text: T.unsafe(nil), signature: T.unsafe(nil)); end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/thinking.rb:22
   def pretty_print(printer); end
 
-  # Returns the value of attribute signature.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/thinking.rb:6
   def signature; end
 
-  # Returns the value of attribute text.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/thinking.rb:6
   def text; end
 
@@ -6155,23 +5737,15 @@ end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/thinking.rb:36
 class RubyLLM::Thinking::Config
-  # @return [Config] a new instance of Config
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/thinking.rb:39
   def initialize(effort: T.unsafe(nil), budget: T.unsafe(nil)); end
 
-  # Returns the value of attribute budget.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/thinking.rb:37
   def budget; end
 
-  # Returns the value of attribute effort.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/thinking.rb:37
   def effort; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/thinking.rb:44
   def enabled?; end
 end
@@ -6180,36 +5754,24 @@ end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/tokens.rb:5
 class RubyLLM::Tokens
-  # @return [Tokens] a new instance of Tokens
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tokens.rb:9
   def initialize(input: T.unsafe(nil), output: T.unsafe(nil), cached: T.unsafe(nil), cache_creation: T.unsafe(nil), thinking: T.unsafe(nil), reasoning: T.unsafe(nil)); end
 
-  # Returns the value of attribute cache_creation.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tokens.rb:6
   def cache_creation; end
 
-  # Returns the value of attribute cached.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tokens.rb:6
   def cached; end
 
-  # Returns the value of attribute input.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tokens.rb:6
   def input; end
 
-  # Returns the value of attribute output.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tokens.rb:6
   def output; end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/tokens.rb:43
   def reasoning; end
 
-  # Returns the value of attribute thinking.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tokens.rb:6
   def thinking; end
 
@@ -6232,8 +5794,6 @@ class RubyLLM::Tool
   # pkg:gem/ruby_llm#lib/ruby_llm/tool.rb:76
   def description; end
 
-  # @raise [NotImplementedError]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tool.rb:112
   def execute(*_arg0, **_arg1, &_arg2); end
 
@@ -6282,8 +5842,6 @@ class RubyLLM::Tool
     # pkg:gem/ruby_llm#lib/ruby_llm/tool.rb:50
     def params(schema = T.unsafe(nil), &block); end
 
-    # Returns the value of attribute params_schema_definition.
-    #
     # pkg:gem/ruby_llm#lib/ruby_llm/tool.rb:34
     def params_schema_definition; end
 
@@ -6299,13 +5857,9 @@ end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/tool.rb:21
 class RubyLLM::Tool::Halt
-  # @return [Halt] a new instance of Halt
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tool.rb:24
   def initialize(content); end
 
-  # Returns the value of attribute content.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tool.rb:22
   def content; end
 
@@ -6318,16 +5872,12 @@ end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/tool.rb:165
 class RubyLLM::Tool::SchemaDefinition
-  # @return [SchemaDefinition] a new instance of SchemaDefinition
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tool.rb:209
   def initialize(schema: T.unsafe(nil), block: T.unsafe(nil)); end
 
   # pkg:gem/ruby_llm#lib/ruby_llm/tool.rb:218
   def json_schema; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tool.rb:214
   def present?; end
 
@@ -6361,35 +5911,21 @@ end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/tool_call.rb:5
 class RubyLLM::ToolCall
-  # @return [ToolCall] a new instance of ToolCall
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tool_call.rb:9
   def initialize(id:, name:, arguments: T.unsafe(nil), thought_signature: T.unsafe(nil)); end
 
-  # Returns the value of attribute arguments.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tool_call.rb:6
   def arguments; end
 
-  # Returns the value of attribute id.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tool_call.rb:6
   def id; end
 
-  # Returns the value of attribute name.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tool_call.rb:6
   def name; end
 
-  # Returns the value of attribute thought_signature.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tool_call.rb:7
   def thought_signature; end
 
-  # Sets the attribute thought_signature
-  #
-  # @param value the value to set the attribute thought_signature to.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/tool_call.rb:7
   def thought_signature=(_arg0); end
 
@@ -6401,43 +5937,27 @@ end
 #
 # pkg:gem/ruby_llm#lib/ruby_llm/transcription.rb:5
 class RubyLLM::Transcription
-  # @return [Transcription] a new instance of Transcription
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/transcription.rb:8
   def initialize(text:, model:, **attributes); end
 
-  # Returns the value of attribute duration.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/transcription.rb:6
   def duration; end
 
-  # Returns the value of attribute input_tokens.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/transcription.rb:6
   def input_tokens; end
 
-  # Returns the value of attribute language.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/transcription.rb:6
   def language; end
 
-  # Returns the value of attribute model.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/transcription.rb:6
   def model; end
 
-  # Returns the value of attribute output_tokens.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/transcription.rb:6
   def output_tokens; end
 
-  # Returns the value of attribute segments.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/transcription.rb:6
   def segments; end
 
-  # Returns the value of attribute text.
-  #
   # pkg:gem/ruby_llm#lib/ruby_llm/transcription.rb:6
   def text; end
 

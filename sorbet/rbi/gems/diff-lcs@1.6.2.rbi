@@ -118,10 +118,6 @@ module Diff::LCS
   # pkg:gem/diff-lcs#lib/diff/lcs.rb:88
   def traverse_sequences(other, callbacks = T.unsafe(nil), &block); end
 
-  # Attempts to patch +self+ with the provided +patchset+. A new sequence based
-  # on +self+ and the +patchset+ will be created. See Diff::LCS#patch. Attempts
-  # to autodiscover the direction of the patch.
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs.rb:105
   def unpatch(patchset); end
 
@@ -140,8 +136,6 @@ module Diff::LCS
   def unpatch_me(patchset); end
 
   class << self
-    # :yields: seq1[i] for each matched
-    #
     # pkg:gem/diff-lcs#lib/diff/lcs.rb:158
     def LCS(seq1, seq2, &block); end
 
@@ -161,8 +155,6 @@ module Diff::LCS
     # pkg:gem/diff-lcs#lib/diff/lcs.rb:169
     def diff(seq1, seq2, callbacks = T.unsafe(nil), &block); end
 
-    # :yields: seq1[i] for each matched
-    #
     # pkg:gem/diff-lcs#lib/diff/lcs.rb:145
     def lcs(seq1, seq2, &block); end
 
@@ -445,29 +437,21 @@ Diff::LCS::BalancedCallbacks = Diff::LCS::DefaultCallbacks
 #
 # pkg:gem/diff-lcs#lib/diff/lcs/block.rb:6
 class Diff::LCS::Block
-  # @return [Block] a new instance of Block
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/block.rb:9
   def initialize(chunk); end
 
-  # Returns the value of attribute changes.
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/block.rb:7
   def changes; end
 
   # pkg:gem/diff-lcs#lib/diff/lcs/block.rb:21
   def diff_size; end
 
-  # Returns the value of attribute insert.
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/block.rb:7
   def insert; end
 
   # pkg:gem/diff-lcs#lib/diff/lcs/block.rb:25
   def op; end
 
-  # Returns the value of attribute remove.
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/block.rb:7
   def remove; end
 end
@@ -480,8 +464,6 @@ end
 class Diff::LCS::Change
   include ::Comparable
 
-  # @return [Change] a new instance of Change
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/change.rb:27
   def initialize(*args); end
 
@@ -496,18 +478,12 @@ class Diff::LCS::Change
   # pkg:gem/diff-lcs#lib/diff/lcs/change.rb:20
   def action; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/change.rb:72
   def adding?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/change.rb:84
   def changed?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/change.rb:76
   def deleting?; end
 
@@ -516,13 +492,9 @@ class Diff::LCS::Change
   # pkg:gem/diff-lcs#lib/diff/lcs/change.rb:25
   def element; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/change.rb:88
   def finished_a?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/change.rb:92
   def finished_b?; end
 
@@ -540,8 +512,6 @@ class Diff::LCS::Change
   # pkg:gem/diff-lcs#lib/diff/lcs/change.rb:42
   def to_ary; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/change.rb:80
   def unchanged?; end
 
@@ -549,15 +519,11 @@ class Diff::LCS::Change
     # pkg:gem/diff-lcs#lib/diff/lcs/change.rb:44
     def from_a(arr); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/diff-lcs#lib/diff/lcs/change.rb:15
     def valid_action?(action); end
   end
 end
 
-# Fixnum is deprecated in Ruby 2.4 # standard:disable Naming/ConstantName
-#
 # pkg:gem/diff-lcs#lib/diff/lcs/change.rb:7
 Diff::LCS::Change::IntClass = Integer
 
@@ -575,8 +541,6 @@ Diff::LCS::Change::VALID_ACTIONS = T.let(T.unsafe(nil), Array)
 #
 # pkg:gem/diff-lcs#lib/diff/lcs/change.rb:100
 class Diff::LCS::ContextChange < ::Diff::LCS::Change
-  # @return [ContextChange] a new instance of ContextChange
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/change.rb:114
   def initialize(*args); end
 
@@ -803,10 +767,6 @@ end
 #
 # pkg:gem/diff-lcs#lib/diff/lcs/callbacks.rb:108
 class Diff::LCS::DiffCallbacks
-  # :yields: self
-  #
-  # @return [DiffCallbacks] a new instance of DiffCallbacks
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/callbacks.rb:112
   def initialize; end
 
@@ -845,13 +805,9 @@ class Diff::LCS::Hunk
   # Create a hunk using references to both the old and new data, as well as the
   # piece of data.
   #
-  # @return [Hunk] a new instance of Hunk
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/hunk.rb:16
   def initialize(data_old, data_new, piece, flag_context, file_length_difference); end
 
-  # Returns the value of attribute blocks.
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/hunk.rb:64
   def blocks; end
 
@@ -860,18 +816,12 @@ class Diff::LCS::Hunk
   # pkg:gem/diff-lcs#lib/diff/lcs/hunk.rb:115
   def diff(format, last = T.unsafe(nil)); end
 
-  # Returns the value of attribute end_new.
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/hunk.rb:66
   def end_new; end
 
-  # Returns the value of attribute end_old.
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/hunk.rb:66
   def end_old; end
 
-  # Returns the value of attribute file_length_difference.
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/hunk.rb:67
   def file_length_difference; end
 
@@ -891,8 +841,6 @@ class Diff::LCS::Hunk
   # pkg:gem/diff-lcs#lib/diff/lcs/hunk.rb:97
   def merge(hunk); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/hunk.rb:347
   def missing_last_newline?(data); end
 
@@ -900,25 +848,15 @@ class Diff::LCS::Hunk
   # provided hunk. This will be true if the difference between the two hunks
   # start or end positions is within one position of each other.
   #
-  # @return [Boolean]
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/hunk.rb:109
   def overlaps?(hunk); end
 
-  # Returns the value of attribute start_new.
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/hunk.rb:65
   def start_new; end
 
-  # Returns the value of attribute start_old.
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/hunk.rb:65
   def start_old; end
 
-  # Merges this hunk and the provided hunk together if they overlap. Returns
-  # a truthy value so that if there is no overlap, you can know the merge
-  # was skipped.
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/hunk.rb:104
   def unshift(hunk); end
 
@@ -1096,12 +1034,6 @@ end
 #
 # pkg:gem/diff-lcs#lib/diff/lcs/callbacks.rb:303
 class Diff::LCS::SDiffCallbacks
-  # :yields: self
-  #
-  # @return [SDiffCallbacks] a new instance of SDiffCallbacks
-  # @yield [_self]
-  # @yieldparam _self [Diff::LCS::SDiffCallbacks] the object that the method was called on
-  #
   # pkg:gem/diff-lcs#lib/diff/lcs/callbacks.rb:307
   def initialize; end
 

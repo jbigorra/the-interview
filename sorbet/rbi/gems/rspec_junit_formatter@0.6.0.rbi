@@ -69,8 +69,6 @@ class RSpecJUnitFormatter < ::RSpec::Core::Formatters::BaseFormatter
   # pkg:gem/rspec_junit_formatter#lib/rspec_junit_formatter/rspec3.rb:57
   def result_of(notification); end
 
-  # Returns the value of attribute started.
-  #
   # pkg:gem/rspec_junit_formatter#lib/rspec_junit_formatter/rspec3.rb:26
   def started; end
 

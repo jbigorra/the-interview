@@ -197,13 +197,9 @@ class LLHttp::Error < ::StandardError; end
 #
 # pkg:gem/llhttp-ffi#lib/llhttp/parser.rb:33
 class LLHttp::Parser
-  # @return [Parser] a new instance of Parser
-  #
   # pkg:gem/llhttp-ffi#lib/llhttp/parser.rb:60
   def initialize(delegate, type: T.unsafe(nil)); end
 
-  # [public] Parse the given data.
-  #
   # pkg:gem/llhttp-ffi#lib/llhttp/parser.rb:82
   def <<(data); end
 
@@ -228,8 +224,6 @@ class LLHttp::Parser
   def http_minor; end
 
   # [public] Returns `true` if there might be more messages.
-  #
-  # @return [Boolean]
   #
   # pkg:gem/llhttp-ffi#lib/llhttp/parser.rb:116
   def keep_alive?; end

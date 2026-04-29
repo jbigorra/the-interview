@@ -6,9 +6,8 @@
 
 
 # The main entry point for VCR.
-#
 # @note This module is extended onto itself; thus, the methods listed
-#   here as instance methods are available directly off of VCR.
+#  here as instance methods are available directly off of VCR.
 #
 # pkg:gem/vcr#lib/vcr/util/logger.rb:1
 module VCR
@@ -47,12 +46,13 @@ module VCR
   # Used to configure VCR.
   #
   # @example
-  #   VCR.configure do |c|
-  #   c.some_config_option = true
-  #   end
-  # @return [void]
+  #    VCR.configure do |c|
+  #      c.some_config_option = true
+  #    end
+  #
   # @yield the configuration block
   # @yieldparam config [VCR::Configuration] the configuration object
+  # @return [void]
   #
   # pkg:gem/vcr#lib/vcr.rb:234
   def configure; end
@@ -62,13 +62,14 @@ module VCR
   #
   # @example
   #   VCR.cucumber_tags do |t|
-  #   t.tags "tag1", "tag2"
-  #   t.tag "@some_other_tag", :record => :new_episodes
+  #     t.tags "tag1", "tag2"
+  #     t.tag "@some_other_tag", :record => :new_episodes
   #   end
-  # @return [void]
-  # @see VCR::CucumberTags#tags
+  #
   # @yield the cucumber tags configuration block
   # @yieldparam t [VCR::CucumberTags] Cucumber tags config object
+  # @return [void]
+  # @see VCR::CucumberTags#tags
   #
   # pkg:gem/vcr#lib/vcr.rb:256
   def cucumber_tags(&block); end
@@ -76,7 +77,7 @@ module VCR
   # The currently active cassette.
   #
   # @return [nil, VCR::Cassette] The current cassette or nil if there is
-  #   no current cassette.
+  #  no current cassette.
   #
   # pkg:gem/vcr#lib/vcr.rb:48
   def current_cassette; end
@@ -85,15 +86,18 @@ module VCR
   # In addition, any newly recorded HTTP interactions will be written to
   # disk.
   #
-  # @option options
   # @param options [Hash] Eject options.
+  # @option options :skip_no_unused_interactions_assertion [Boolean]
+  #  If `true` is given, this will skip the "no unused HTTP interactions"
+  #  assertion enabled by the `:allow_unused_http_interactions => false`
+  #  cassette option. This is intended for use when your test has had
+  #  an error, but your test framework has already handled it.
   # @return [VCR::Cassette, nil] the ejected cassette if there was one
   #
   # pkg:gem/vcr#lib/vcr.rb:159
   def eject_cassette(options = T.unsafe(nil)); end
 
   # @private
-  # @return [Boolean]
   #
   # pkg:gem/vcr#lib/vcr.rb:408
   def fibers_available?; end
@@ -115,34 +119,73 @@ module VCR
   #   # ...later, after making an HTTP request:
   #
   #   VCR.eject_cassette
-  # @note If you use this method you _must_ call `eject_cassette` when you
-  #   are done. It is generally recommended that you use {#use_cassette}
-  #   unless your code-under-test cannot be run as a block.
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
+  #
   # @param name [#to_s] The name of the cassette. VCR will sanitize
-  #   this to ensure it is a valid file name.
+  #                     this to ensure it is a valid file name.
   # @param options [Hash] The cassette options. The given options will
-  #   be merged with the configured default_cassette_options.
+  #  be merged with the configured default_cassette_options.
+  # @option options :record [:all, :none, :new_episodes, :once] The record mode.
+  # @option options :erb [Boolean, Hash] Whether or not to evaluate the
+  #  cassette as an ERB template. Defaults to false. A hash can be used
+  #  to provide the ERB template with local variables.
+  # @option options :match_requests_on [Array<Symbol, #call>] List of request matchers
+  #  to use to determine what recorded HTTP interaction to replay. Defaults to
+  #  [:method, :uri]. The built-in matchers are :method, :uri, :host, :path, :headers
+  #  and :body. You can also pass the name of a registered custom request matcher or
+  #  any object that responds to #call.
+  # @option options :re_record_interval [Integer] When given, the
+  #  cassette will be re-recorded at the given interval, in seconds.
+  # @option options :tag [Symbol] Used to apply tagged `before_record`
+  #  and `before_playback` hooks to the cassette.
+  # @option options :tags [Array<Symbol>] Used to apply multiple tags to
+  #  a cassette so that tagged `before_record` and `before_playback` hooks
+  #  will apply to the cassette.
+  # @option options :update_content_length_header [Boolean] Whether or
+  #  not to overwrite the Content-Length header of the responses to
+  #  match the length of the response body. Defaults to false.
+  # @option options :decode_compressed_response [Boolean] Whether or
+  #  not to decode compressed responses before recording the cassette.
+  #  This makes the cassette more human readable. Defaults to false.
+  # @option options :allow_playback_repeats [Boolean] Whether or not to
+  #  allow a single HTTP interaction to be played back multiple times.
+  #  Defaults to false.
+  # @option options :allow_unused_http_interactions [Boolean] If set to
+  #  false, an error will be raised if a cassette is ejected before all
+  #  previously recorded HTTP interactions have been used.
+  #  Defaults to true. Note that when an error has already occurred
+  #  (as indicated by the `$!` variable) unused interactions will be
+  #  allowed so that we don't silence the original error (which is almost
+  #  certainly more interesting/important).
+  # @option options :exclusive [Boolean] Whether or not to use only this
+  #  cassette and to completely ignore any cassettes in the cassettes stack.
+  #  Defaults to false.
+  # @option options :serialize_with [Symbol] Which serializer to use.
+  #  Valid values are :yaml, :syck, :psych, :json or any registered
+  #  custom serializer. Defaults to :yaml.
+  # @option options :persist_with [Symbol] Which cassette persister to
+  #  use. Defaults to :file_system. You can also register and use a
+  #  custom persister.
+  # @option options :persister_options [Hash] Pass options to the
+  #  persister specified in `persist_with`. Currently available options for the file_system persister:
+  #    - `:downcase_cassette_names`: when `true`, names of cassettes will be
+  #      normalized in lowercase before reading and writing, which can avoid
+  #      confusion when using both case-sensitive and case-insensitive file
+  #      systems.
+  # @option options :preserve_exact_body_bytes [Boolean] Whether or not
+  #  to base64 encode the bytes of the requests and responses for this cassette
+  #  when serializing it. See also `VCR::Configuration#preserve_exact_body_bytes`.
+  #
+  # @return [VCR::Cassette] the inserted cassette
+  #
   # @raise [ArgumentError] when the given cassette is already being used.
   # @raise [VCR::Errors::TurnedOffError] when VCR has been turned off
-  #   without using the :ignore_cassettes option.
+  #  without using the :ignore_cassettes option.
   # @raise [VCR::Errors::MissingERBVariableError] when the `:erb` option
-  #   is used and the ERB template requires variables that you did not provide.
-  # @return [VCR::Cassette] the inserted cassette
+  #  is used and the ERB template requires variables that you did not provide.
+  #
+  # @note If you use this method you _must_ call `eject_cassette` when you
+  #  are done. It is generally recommended that you use {#use_cassette}
+  #  unless your code-under-test cannot be run as a block.
   #
   # pkg:gem/vcr#lib/vcr.rb:132
   def insert_cassette(name, options = T.unsafe(nil)); end
@@ -158,7 +201,6 @@ module VCR
   def link_context(from_thread, to_key); end
 
   # @private
-  # @return [Boolean]
   #
   # pkg:gem/vcr#lib/vcr.rb:351
   def real_http_connections_allowed?; end
@@ -180,43 +222,43 @@ module VCR
 
   # Turns VCR off, so that it no longer handles every HTTP request.
   #
-  # @option options
   # @param options [Hash] hash of options
+  # @option options :ignore_cassettes [Boolean] controls what happens when a cassette is
+  #  inserted while VCR is turned off. If `true` is passed, the cassette insertion
+  #  will be ignored; otherwise a {VCR::Errors::TurnedOffError} will be raised.
+  #
+  # @return [void]
   # @raise [VCR::Errors::CassetteInUseError] if there is currently a cassette in use
   # @raise [ArgumentError] if you pass an invalid option
-  # @return [void]
   #
   # pkg:gem/vcr#lib/vcr.rb:290
   def turn_off!(options = T.unsafe(nil)); end
 
   # Turns on VCR, if it has previously been turned off.
-  #
   # @return [void]
   # @see #turn_off!
   # @see #turned_off
-  # @see #turned_on
   # @see #turned_on?
+  # @see #turned_on
   #
   # pkg:gem/vcr#lib/vcr.rb:327
   def turn_on!; end
 
   # Turns VCR off for the duration of a block.
   #
-  # @param options [Hash] hash of options
-  # @raise [VCR::Errors::CassetteInUseError] if there is currently a cassette in use
-  # @raise [ArgumentError] if you pass an invalid option
+  # @param (see #turn_off!)
   # @return [void]
+  # @raise (see #turn_off!)
   # @see #turn_off!
   # @see #turn_on!
-  # @see #turned_on
   # @see #turned_on?
+  # @see #turned_on
   #
   # pkg:gem/vcr#lib/vcr.rb:270
   def turned_off(options = T.unsafe(nil)); end
 
   # Turns on VCR, for the duration of a block.
-  #
-  # @param options [Hash] hash of options
+  # @param (see #turn_off!)
   # @return [void]
   # @see #turn_off!
   # @see #turned_off
@@ -225,11 +267,11 @@ module VCR
   # pkg:gem/vcr#lib/vcr.rb:311
   def turned_on(options = T.unsafe(nil)); end
 
+  # @return whether or not VCR is turned on
   # @note Normally VCR is _always_ turned on; it will only be off if you have
-  #   explicitly turned it off.
-  # @return [Boolean] whether or not VCR is turned on
-  # @see #turn_off!
+  #  explicitly turned it off.
   # @see #turn_on!
+  # @see #turn_off!
   # @see #turned_off
   #
   # pkg:gem/vcr#lib/vcr.rb:337
@@ -245,38 +287,18 @@ module VCR
   #
   # @example
   #   VCR.use_cassette('twitter', :record => :new_episodes) do
-  #   # make an HTTP request
+  #     # make an HTTP request
   #   end
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @option options
-  # @param name [#to_s] The name of the cassette. VCR will sanitize
-  #   this to ensure it is a valid file name.
-  # @param options [Hash] The cassette options. The given options will
-  #   be merged with the configured default_cassette_options.
-  # @raise [ArgumentError] when the given cassette is already being used.
-  # @raise [VCR::Errors::TurnedOffError] when VCR has been turned off
-  #   without using the :ignore_cassettes option.
-  # @raise [VCR::Errors::MissingERBVariableError] when the `:erb` option
-  #   is used and the ERB template requires variables that you did not provide.
-  # @return [void]
-  # @see #eject_cassette
-  # @see #insert_cassette
+  #
+  # @param (see #insert_cassette)
+  # @option (see #insert_cassette)
   # @yield Block to run while this cassette is in use.
   # @yieldparam cassette [(optional) VCR::Cassette] the cassette that has
-  #   been inserted.
+  #  been inserted.
+  # @raise (see #insert_cassette)
+  # @return [void]
+  # @see #insert_cassette
+  # @see #eject_cassette
   #
   # pkg:gem/vcr#lib/vcr.rb:184
   def use_cassette(name, options = T.unsafe(nil), &block); end
@@ -285,23 +307,23 @@ module VCR
   #
   # @example
   #   cassettes = [
-  #   { name: 'github' },
-  #   { name: 'apple', options: { erb: true } }
+  #    { name: 'github' },
+  #    { name: 'apple', options: { erb: true } }
   #   ]
   #   VCR.use_cassettes(cassettes) do
-  #   # make multiple HTTP requests
+  #     # make multiple HTTP requests
   #   end
   #
   # pkg:gem/vcr#lib/vcr.rb:213
   def use_cassettes(cassettes, &block); end
 
+  # @return [String] the current VCR version.
   # @note This string also has singleton methods:
   #
   #   * `major` [Integer] The major version.
   #   * `minor` [Integer] The minor version.
   #   * `patch` [Integer] The patch version.
   #   * `parts` [Array<Integer>] List of the version parts.
-  # @return [String] the current VCR version.
   #
   # pkg:gem/vcr#lib/vcr/version.rb:11
   def version; end
@@ -323,8 +345,6 @@ module VCR
   # pkg:gem/vcr#lib/vcr.rb:417
   def get_context(thread_key, fiber_key = T.unsafe(nil)); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr.rb:444
   def ignore_cassettes?; end
 
@@ -351,11 +371,7 @@ end
 class VCR::Cassette
   include ::VCR::Logger::Mixin
 
-  # @param name [#to_s] The name of the cassette. VCR will sanitize
-  #   this to ensure it is a valid file name.
-  # @param options [Hash] The cassette options. The given options will
-  #   be merged with the configured default_cassette_options.
-  # @return [Cassette] a new instance of Cassette
+  # @param (see VCR#insert_cassette)
   # @see VCR#insert_cassette
   #
   # pkg:gem/vcr#lib/vcr/cassette.rb:58
@@ -376,22 +392,24 @@ class VCR::Cassette
   # disk.
   #
   # @note This is not intended to be called directly. Use `VCR.eject_cassette` instead.
+  #
+  # @param (see VCR#eject_casssette)
   # @see VCR#eject_cassette
   #
   # pkg:gem/vcr#lib/vcr/cassette.rb:78
   def eject(options = T.unsafe(nil)); end
 
   # @return [Boolean, Hash] The cassette's ERB option. The file will be treated as an
-  #   ERB template if this has a truthy value. A hash, if provided, will be used as local
-  #   variables for the ERB template.
+  #  ERB template if this has a truthy value. A hash, if provided, will be used as local
+  #  variables for the ERB template.
   #
   # pkg:gem/vcr#lib/vcr/cassette.rb:41
   def erb; end
 
-  # @note VCR will take care of sanitizing the cassette name to make it a valid file name.
-  # @raise [NotImplementedError] if the configured cassette persister
-  #   does not support resolving file paths.
   # @return [String] The file for this cassette.
+  # @raise [NotImplementedError] if the configured cassette persister
+  #  does not support resolving file paths.
+  # @note VCR will take care of sanitizing the cassette name to make it a valid file name.
   #
   # pkg:gem/vcr#lib/vcr/cassette.rb:132
   def file; end
@@ -407,7 +425,7 @@ class VCR::Cassette
   def linked?; end
 
   # @return [Array<Symbol, #call>] List of request matchers. Used to find a response from an
-  #   existing HTTP interaction to play back.
+  #  existing HTTP interaction to play back.
   #
   # pkg:gem/vcr#lib/vcr/cassette.rb:36
   def match_requests_on; end
@@ -423,15 +441,16 @@ class VCR::Cassette
   # pkg:gem/vcr#lib/vcr/cassette.rb:124
   def new_recorded_interactions; end
 
+  # @return [Time, nil] The `recorded_at` time of the first HTTP interaction
+  #                     or nil if the cassette has no prior HTTP interactions.
+  #
   # @example
   #
   #   VCR.use_cassette("some cassette") do |cassette|
-  #   Timecop.freeze(cassette.originally_recorded_at || Time.now) do
-  #   # ...
+  #     Timecop.freeze(cassette.originally_recorded_at || Time.now) do
+  #       # ...
+  #     end
   #   end
-  #   end
-  # @return [Time, nil] The `recorded_at` time of the first HTTP interaction
-  #   or nil if the cassette has no prior HTTP interactions.
   #
   # pkg:gem/vcr#lib/vcr/cassette.rb:166
   def originally_recorded_at; end
@@ -447,16 +466,16 @@ class VCR::Cassette
   def record_http_interaction(interaction); end
 
   # @return [Symbol] The record mode. Determines whether the cassette records HTTP interactions,
-  #   plays them back, or does both.
+  #  plays them back, or does both.
   #
   # pkg:gem/vcr#lib/vcr/cassette.rb:25
   def record_mode; end
 
   # @return [Boolean] The cassette's record_on_error mode. When the code that uses the cassette
-  #   raises an error (for example a test failure) and record_on_error is set to false, no
-  #   cassette will be recorded. This is useful when you are TDD'ing an API integration: when
-  #   an error is raised that often means your request is invalid, so you don't want the cassette
-  #   to be recorded.
+  #  raises an error (for example a test failure) and record_on_error is set to false, no
+  #  cassette will be recorded. This is useful when you are TDD'ing an API integration: when
+  #  an error is raised that often means your request is invalid, so you don't want the cassette
+  #  to be recorded.
   #
   # pkg:gem/vcr#lib/vcr/cassette.rb:32
   def record_on_error; end
@@ -472,7 +491,6 @@ class VCR::Cassette
   def run_failed!; end
 
   # @private
-  # @return [Boolean]
   #
   # pkg:gem/vcr#lib/vcr/cassette.rb:92
   def run_failed?; end
@@ -482,13 +500,11 @@ class VCR::Cassette
   # pkg:gem/vcr#lib/vcr/cassette.rb:149
   def serializable_hash; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/cassette.rb:97
   def should_write_recorded_interactions_to_disk?; end
 
   # @return [Array<Symbol>] If set, {VCR::Configuration#before_record} and
-  #   {VCR::Configuration#before_playback} hooks with a corresponding tag will apply.
+  #  {VCR::Configuration#before_playback} hooks with a corresponding tag will apply.
   #
   # pkg:gem/vcr#lib/vcr/cassette.rb:54
   def tags; end
@@ -531,28 +547,18 @@ class VCR::Cassette
   # pkg:gem/vcr#lib/vcr/cassette.rb:341
   def request_summary(request); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/cassette.rb:270
   def should_assert_no_unused_interactions?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/cassette.rb:237
   def should_re_record?(record_mode); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/cassette.rb:262
   def should_remove_matching_existing_interactions?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/cassette.rb:266
   def should_remove_unused_interactions?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/cassette.rb:258
   def should_stub_requests?; end
 
@@ -577,8 +583,6 @@ end
 #
 # pkg:gem/vcr#lib/vcr/cassette/erb_renderer.rb:6
 class VCR::Cassette::ERBRenderer
-  # @return [ERBRenderer] a new instance of ERBRenderer
-  #
   # pkg:gem/vcr#lib/vcr/cassette/erb_renderer.rb:7
   def initialize(raw_template, erb, cassette_name = T.unsafe(nil)); end
 
@@ -593,16 +597,12 @@ class VCR::Cassette::ERBRenderer
   # pkg:gem/vcr#lib/vcr/cassette/erb_renderer.rb:34
   def erb_variables; end
 
-  # @raise [Errors::MissingERBVariableError]
-  #
   # pkg:gem/vcr#lib/vcr/cassette/erb_renderer.rb:21
   def handle_name_error(e); end
 
   # pkg:gem/vcr#lib/vcr/cassette/erb_renderer.rb:38
   def template; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/cassette/erb_renderer.rb:30
   def use_erb?; end
 
@@ -624,13 +624,9 @@ end
 class VCR::Cassette::HTTPInteractionList
   include ::VCR::Logger::Mixin
 
-  # @return [HTTPInteractionList] a new instance of HTTPInteractionList
-  #
   # pkg:gem/vcr#lib/vcr/cassette/http_interaction_list.rb:18
   def initialize(interactions, request_matchers, allow_playback_repeats = T.unsafe(nil), parent_list = T.unsafe(nil), log_prefix = T.unsafe(nil)); end
 
-  # Returns the value of attribute allow_playback_repeats.
-  #
   # pkg:gem/vcr#lib/vcr/cassette/http_interaction_list.rb:16
   def allow_playback_repeats; end
 
@@ -641,31 +637,21 @@ class VCR::Cassette::HTTPInteractionList
   # pkg:gem/vcr#lib/vcr/cassette/http_interaction_list.rb:65
   def assert_no_unused_interactions!; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/cassette/http_interaction_list.rb:48
   def has_interaction_matching?(request); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/cassette/http_interaction_list.rb:54
   def has_used_interaction_matching?(request); end
 
-  # Returns the value of attribute interactions.
-  #
   # pkg:gem/vcr#lib/vcr/cassette/http_interaction_list.rb:16
   def interactions; end
 
-  # Returns the value of attribute parent_list.
-  #
   # pkg:gem/vcr#lib/vcr/cassette/http_interaction_list.rb:16
   def parent_list; end
 
   # pkg:gem/vcr#lib/vcr/cassette/http_interaction_list.rb:58
   def remaining_unused_interaction_count; end
 
-  # Returns the value of attribute request_matchers.
-  #
   # pkg:gem/vcr#lib/vcr/cassette/http_interaction_list.rb:16
   def request_matchers; end
 
@@ -679,8 +665,6 @@ class VCR::Cassette::HTTPInteractionList
   # pkg:gem/vcr#lib/vcr/cassette/http_interaction_list.rb:79
   def has_unused_interactions?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/cassette/http_interaction_list.rb:96
   def interaction_matches_request?(request, interaction); end
 
@@ -703,13 +687,9 @@ end
 module VCR::Cassette::HTTPInteractionList::NullList
   extend ::VCR::Cassette::HTTPInteractionList::NullList
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/cassette/http_interaction_list.rb:11
   def has_interaction_matching?(*a); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/cassette/http_interaction_list.rb:12
   def has_used_interaction_matching?(*a); end
 
@@ -725,7 +705,6 @@ end
 # pkg:gem/vcr#lib/vcr/cassette/persisters.rb:4
 class VCR::Cassette::Persisters
   # @private
-  # @return [Persisters] a new instance of Persisters
   #
   # pkg:gem/vcr#lib/vcr/cassette/persisters.rb:8
   def initialize; end
@@ -733,8 +712,8 @@ class VCR::Cassette::Persisters
   # Gets the named persister.
   #
   # @param name [Symbol] the name of the persister
-  # @raise [ArgumentError] if there is not a persister for the given name
   # @return the named persister
+  # @raise [ArgumentError] if there is not a persister for the given name
   #
   # pkg:gem/vcr#lib/vcr/cassette/persisters.rb:17
   def [](name); end
@@ -756,7 +735,7 @@ module VCR::Cassette::Persisters::FileSystem
 
   # Gets the cassette for the given storage key (file name).
   #
-  # @param file_name [String] the file name
+  # @param [String] file_name the file name
   # @return [String] the cassette content
   #
   # pkg:gem/vcr#lib/vcr/cassette/persisters/file_system.rb:23
@@ -764,8 +743,8 @@ module VCR::Cassette::Persisters::FileSystem
 
   # Sets the cassette for the given storage key (file name).
   #
-  # @param content [String] the content to store
-  # @param file_name [String] the file name
+  # @param [String] file_name the file name
+  # @param [String] content the content to store
   #
   # pkg:gem/vcr#lib/vcr/cassette/persisters/file_system.rb:33
   def []=(file_name, content); end
@@ -790,8 +769,6 @@ module VCR::Cassette::Persisters::FileSystem
   # pkg:gem/vcr#lib/vcr/cassette/persisters/file_system.rb:47
   def absolute_path_for(path); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/cassette/persisters/file_system.rb:63
   def downcase_cassette_names?; end
 
@@ -804,7 +781,6 @@ end
 # pkg:gem/vcr#lib/vcr/cassette/serializers.rb:4
 class VCR::Cassette::Serializers
   # @private
-  # @return [Serializers] a new instance of Serializers
   #
   # pkg:gem/vcr#lib/vcr/cassette/serializers.rb:12
   def initialize; end
@@ -812,8 +788,8 @@ class VCR::Cassette::Serializers
   # Gets the named serializer.
   #
   # @param name [Symbol] the name of the serializer
-  # @raise [ArgumentError] if there is not a serializer for the given name
   # @return the named serializer
+  # @raise [ArgumentError] if there is not a serializer for the given name
   #
   # pkg:gem/vcr#lib/vcr/cassette/serializers.rb:21
   def [](name); end
@@ -822,7 +798,7 @@ class VCR::Cassette::Serializers
   #
   # @param name [Symbol] the name of the serializer
   # @param value [#file_extension, #serialize, #deserialize] the serializer object. It must implement
-  #   `file_extension()`, `serialize(Hash)` and `deserialize(String)`.
+  #  `file_extension()`, `serialize(Hash)` and `deserialize(String)`.
   #
   # pkg:gem/vcr#lib/vcr/cassette/serializers.rb:39
   def []=(name, value); end
@@ -843,7 +819,7 @@ module VCR::Cassette::Serializers::Compressed
 
   # Deserializes the given compressed cassette data.
   #
-  # @param string [String] the compressed YAML cassette data
+  # @param [String] string the compressed YAML cassette data
   # @return [Hash] the deserialized object
   #
   # pkg:gem/vcr#lib/vcr/cassette/serializers/compressed.rb:38
@@ -858,7 +834,7 @@ module VCR::Cassette::Serializers::Compressed
 
   # Serializes the given hash using YAML and Zlib.
   #
-  # @param hash [Hash] the object to serialize
+  # @param [Hash] hash the object to serialize
   # @return [String] the compressed cassette data
   #
   # pkg:gem/vcr#lib/vcr/cassette/serializers/compressed.rb:29
@@ -879,7 +855,7 @@ module VCR::Cassette::Serializers::JSON
 
   # Deserializes the given string using `JSON`.
   #
-  # @param string [String] the JSON string
+  # @param [String] string the JSON string
   # @return [Hash] the deserialized object
   #
   # pkg:gem/vcr#lib/vcr/cassette/serializers/json.rb:44
@@ -894,7 +870,7 @@ module VCR::Cassette::Serializers::JSON
 
   # Serializes the given hash using `JSON`.
   #
-  # @param hash [Hash] the object to serialize
+  # @param [Hash] hash the object to serialize
   # @return [String] the JSON string
   #
   # pkg:gem/vcr#lib/vcr/cassette/serializers/json.rb:34
@@ -925,7 +901,7 @@ module VCR::Cassette::Serializers::Psych
 
   # Deserializes the given string using Psych.
   #
-  # @param string [String] the YAML string
+  # @param [String] string the YAML string
   # @return [Hash] the deserialized object
   #
   # pkg:gem/vcr#lib/vcr/cassette/serializers/psych.rb:45
@@ -940,7 +916,7 @@ module VCR::Cassette::Serializers::Psych
 
   # Serializes the given hash using Psych.
   #
-  # @param hash [Hash] the object to serialize
+  # @param [Hash] hash the object to serialize
   # @return [String] the YAML string
   #
   # pkg:gem/vcr#lib/vcr/cassette/serializers/psych.rb:33
@@ -971,7 +947,7 @@ module VCR::Cassette::Serializers::Syck
 
   # Deserializes the given string using Syck.
   #
-  # @param string [String] the YAML string
+  # @param [String] string the YAML string
   # @return [Hash] the deserialized object
   #
   # pkg:gem/vcr#lib/vcr/cassette/serializers/syck.rb:43
@@ -986,7 +962,7 @@ module VCR::Cassette::Serializers::Syck
 
   # Serializes the given hash using Syck.
   #
-  # @param hash [Hash] the object to serialize
+  # @param [Hash] hash the object to serialize
   # @return [String] the YAML string
   #
   # pkg:gem/vcr#lib/vcr/cassette/serializers/syck.rb:33
@@ -1024,7 +1000,7 @@ module VCR::Cassette::Serializers::YAML
 
   # Deserializes the given string using YAML.
   #
-  # @param string [String] the YAML string
+  # @param [String] string the YAML string
   # @return [Hash] the deserialized object
   #
   # pkg:gem/vcr#lib/vcr/cassette/serializers/yaml.rb:47
@@ -1039,7 +1015,7 @@ module VCR::Cassette::Serializers::YAML
 
   # Serializes the given hash using YAML.
   #
-  # @param hash [Hash] the object to serialize
+  # @param [Hash] hash the object to serialize
   # @return [String] the YAML string
   #
   # pkg:gem/vcr#lib/vcr/cassette/serializers/yaml.rb:35
@@ -1090,28 +1066,27 @@ class VCR::Configuration
   include ::VCR::Logger::Mixin
   extend ::VCR::Hooks::ClassMethods
 
-  # @return [Configuration] a new instance of Configuration
-  #
   # pkg:gem/vcr#lib/vcr/configuration.rb:489
   def initialize; end
 
   # Adds a callback that will be called with each HTTP request after it is complete.
   #
   # @example
-  #   VCR.configure do |c|
-  #   c.after_http_request(:ignored?) do |request, response|
-  #   puts "Request: #{request.method} #{request.uri}"
-  #   puts "Response: #{response.status.code}"
-  #   end
-  #   end
+  #  VCR.configure do |c|
+  #    c.after_http_request(:ignored?) do |request, response|
+  #      puts "Request: #{request.method} #{request.uri}"
+  #      puts "Response: #{response.status.code}"
+  #    end
+  #  end
+  #
   # @param filters [optional splat of #to_proc] one or more filters to apply.
   #   The objects provided will be converted to procs using `#to_proc`. If provided,
   #   the callback will only be invoked if these procs all return `true`.
-  # @see #around_http_request
-  # @see #before_http_request
   # @yield the callback
   # @yieldparam request [VCR::Request::Typed] the request that is being made
   # @yieldparam response [VCR::Response] the response from the request
+  # @see #before_http_request
+  # @see #around_http_request
   #
   # pkg:gem/vcr#lib/vcr/configuration.rb:365
   def after_http_request(*filters); end
@@ -1123,14 +1098,17 @@ class VCR::Configuration
   # will be raised for any HTTP request made when there is no
   # cassette in use.
   #
-  # @overload allow_http_connections_when_no_cassette=
   # @overload allow_http_connections_when_no_cassette?
+  #   @return [Boolean] whether or not HTTP connections are allowed
+  #    when there is no cassette.
+  # @overload allow_http_connections_when_no_cassette=
+  #   @param value [Boolean] sets whether or not to allow HTTP
+  #    connections when there is no cassette.
   #
   # pkg:gem/vcr#lib/vcr/configuration.rb:128
   def allow_http_connections_when_no_cassette=(_arg0); end
 
   # @private (documented above)
-  # @return [Boolean]
   #
   # pkg:gem/vcr#lib/vcr/configuration.rb:130
   def allow_http_connections_when_no_cassette?; end
@@ -1138,27 +1116,28 @@ class VCR::Configuration
   # Adds a callback that will be executed around each HTTP request.
   #
   # @example
-  #   VCR.configure do |c|
-  #   c.around_http_request(lambda {|r| r.uri =~ /api.geocoder.com/}) do |request|
-  #   # extract an address like "1700 E Pine St, Seattle, WA"
-  #   # from a query like "address=1700+E+Pine+St%2C+Seattle%2C+WA"
-  #   address = CGI.unescape(URI(request.uri).query.split('=').last)
-  #   VCR.use_cassette("geocoding/#{address}", &request)
-  #   end
-  #   end
-  # @note This method can only be used on ruby interpreters that support
-  #   fibers (i.e. 1.9+). On 1.8 you can use separate `before_http_request` and
-  #   `after_http_request` hooks.
-  # @note You _must_ call `request.proceed` or pass the request as a proc on to a
-  #   method that yields to a block (i.e. `some_method(&request)`).
+  #  VCR.configure do |c|
+  #    c.around_http_request(lambda {|r| r.uri =~ /api.geocoder.com/}) do |request|
+  #      # extract an address like "1700 E Pine St, Seattle, WA"
+  #      # from a query like "address=1700+E+Pine+St%2C+Seattle%2C+WA"
+  #      address = CGI.unescape(URI(request.uri).query.split('=').last)
+  #      VCR.use_cassette("geocoding/#{address}", &request)
+  #    end
+  #  end
+  #
+  # @yield the callback
+  # @yieldparam request [VCR::Request::FiberAware] the request that is being made
+  # @raise [VCR::Errors::NotSupportedError] if the fiber library cannot be loaded.
   # @param filters [optional splat of #to_proc] one or more filters to apply.
   #   The objects provided will be converted to procs using `#to_proc`. If provided,
   #   the callback will only be invoked if these procs all return `true`.
-  # @raise [VCR::Errors::NotSupportedError] if the fiber library cannot be loaded.
-  # @see #after_http_request
+  # @note This method can only be used on ruby interpreters that support
+  #  fibers (i.e. 1.9+). On 1.8 you can use separate `before_http_request` and
+  #  `after_http_request` hooks.
+  # @note You _must_ call `request.proceed` or pass the request as a proc on to a
+  #  method that yields to a block (i.e. `some_method(&request)`).
   # @see #before_http_request
-  # @yield the callback
-  # @yieldparam request [VCR::Request::FiberAware] the request that is being made
+  # @see #after_http_request
   #
   # pkg:gem/vcr#lib/vcr/configuration.rb:394
   def around_http_request(*filters, &block); end
@@ -1167,24 +1146,25 @@ class VCR::Configuration
   # HTTP interaction is loaded for playback.
   #
   # @example
-  #   VCR.configure do |c|
-  #   # Don't playback transient 5xx errors
-  #   c.before_playback do |interaction|
-  #   interaction.ignore! if interaction.response.status.code >= 500
-  #   end
+  #  VCR.configure do |c|
+  #    # Don't playback transient 5xx errors
+  #    c.before_playback do |interaction|
+  #      interaction.ignore! if interaction.response.status.code >= 500
+  #    end
   #
-  #   # Change a response header for playback
-  #   c.before_playback(:twilio) do |interaction|
-  #   interaction.response.headers['X-Foo-Bar'] = 'Bazz'
-  #   end
-  #   end
+  #    # Change a response header for playback
+  #    c.before_playback(:twilio) do |interaction|
+  #      interaction.response.headers['X-Foo-Bar'] = 'Bazz'
+  #    end
+  #  end
+  #
   # @param tag [(optional) Symbol] Used to apply this hook to only cassettes that match
-  #   the given tag.
-  # @see #before_record
+  #  the given tag.
   # @yield the callback
-  # @yieldparam cassette [(optional) VCR::Cassette] The current cassette.
   # @yieldparam interaction [VCR::HTTPInteraction::HookAware] The interaction that is being
-  #   loaded.
+  #  loaded.
+  # @yieldparam cassette [(optional) VCR::Cassette] The current cassette.
+  # @see #before_record
   #
   # pkg:gem/vcr#lib/vcr/configuration.rb:324
   def before_playback(tag = T.unsafe(nil), &block); end
@@ -1193,24 +1173,25 @@ class VCR::Configuration
   # are serialized and written to disk.
   #
   # @example
-  #   VCR.configure do |c|
-  #   # Don't record transient 5xx errors
-  #   c.before_record do |interaction|
-  #   interaction.ignore! if interaction.response.status.code >= 500
-  #   end
+  #  VCR.configure do |c|
+  #    # Don't record transient 5xx errors
+  #    c.before_record do |interaction|
+  #      interaction.ignore! if interaction.response.status.code >= 500
+  #    end
   #
-  #   # Modify the response body for cassettes tagged with :twilio
-  #   c.before_record(:twilio) do |interaction|
-  #   interaction.response.body.downcase!
-  #   end
-  #   end
+  #    # Modify the response body for cassettes tagged with :twilio
+  #    c.before_record(:twilio) do |interaction|
+  #      interaction.response.body.downcase!
+  #    end
+  #  end
+  #
   # @param tag [(optional) Symbol] Used to apply this hook to only cassettes that match
-  #   the given tag.
-  # @see #before_playback
+  #  the given tag.
   # @yield the callback
-  # @yieldparam cassette [(optional) VCR::Cassette] The current cassette.
   # @yieldparam interaction [VCR::HTTPInteraction::HookAware] The interaction that will be
-  #   serialized and written to disk.
+  #  serialized and written to disk.
+  # @yieldparam cassette [(optional) VCR::Cassette] The current cassette.
+  # @see #before_playback
   #
   # pkg:gem/vcr#lib/vcr/configuration.rb:296
   def before_record(tag = T.unsafe(nil), &block); end
@@ -1226,12 +1207,13 @@ class VCR::Configuration
   #
   # @example
   #   VCR.configure do |c|
-  #   c.cassette_library_dir = 'spec/cassettes'
+  #     c.cassette_library_dir = 'spec/cassettes'
   #   end
-  # @note This is only necessary if you use the `:file_system`
-  #   cassette persister (the default).
+  #
   # @param dir [String] the directory to read cassettes from and write cassettes to
   # @return [void]
+  # @note This is only necessary if you use the `:file_system`
+  #   cassette persister (the default).
   #
   # pkg:gem/vcr#lib/vcr/configuration.rb:29
   def cassette_library_dir=(dir); end
@@ -1240,13 +1222,14 @@ class VCR::Configuration
   #
   # @example
   #   VCR.configure do |c|
-  #   c.cassette_persisters[:my_custom_persister] = my_custom_persister
+  #     c.cassette_persisters[:my_custom_persister] = my_custom_persister
   #   end
+  #
+  # @return [VCR::Cassette::Persisters] the cassette persister registry object.
   # @note Custom persisters must implement the following interface:
   #
   #   * `persister[storage_key]`           # returns previously persisted content
   #   * `persister[storage_key] = content` # persists given content
-  # @return [VCR::Cassette::Persisters] the cassette persister registry object.
   #
   # pkg:gem/vcr#lib/vcr/configuration.rb:268
   def cassette_persisters; end
@@ -1255,14 +1238,15 @@ class VCR::Configuration
   #
   # @example
   #   VCR.configure do |c|
-  #   c.cassette_serializers[:my_custom_serializer] = my_custom_serializer
+  #     c.cassette_serializers[:my_custom_serializer] = my_custom_serializer
   #   end
+  #
+  # @return [VCR::Cassette::Serializers] the cassette serializer registry object.
   # @note Custom serializers must implement the following interface:
   #
   #   * `file_extension      # => String`
   #   * `serialize(Hash)     # => String`
   #   * `deserialize(String) # => Hash`
-  # @return [VCR::Cassette::Serializers] the cassette serializer registry object.
   #
   # pkg:gem/vcr#lib/vcr/configuration.rb:252
   def cassette_serializers; end
@@ -1275,16 +1259,19 @@ class VCR::Configuration
 
   # An object to log debug output to.
   #
-  # @example
-  #   VCR.configure do |c|
-  #   c.debug_logger = $stderr
-  #   end
-  # @example
-  #   VCR.configure do |c|
-  #   c.debug_logger = File.open('vcr.log', 'w')
-  #   end
   # @overload debug_logger
-  # @overload debug_logger=
+  #   @return [#puts] the logger
+  # @overload debug_logger=(logger)
+  #   @param logger [#puts] the logger
+  #   @return [void]
+  # @example
+  #   VCR.configure do |c|
+  #     c.debug_logger = $stderr
+  #   end
+  # @example
+  #   VCR.configure do |c|
+  #     c.debug_logger = File.open('vcr.log', 'w')
+  #   end
   #
   # pkg:gem/vcr#lib/vcr/configuration.rb:439
   def debug_logger; end
@@ -1296,13 +1283,16 @@ class VCR::Configuration
 
   # Default options to apply to every cassette.
   #
+  # @overload default_cassette_options
+  #   @return [Hash] default options to apply to every cassette
+  # @overload default_cassette_options=(options)
+  #   @param options [Hash] default options to apply to every cassette
+  #   @return [void]
   # @example
   #   VCR.configure do |c|
-  #   c.default_cassette_options = { :record => :new_episodes }
+  #     c.default_cassette_options = { :record => :new_episodes }
   #   end
   # @note {VCR#insert_cassette} for the list of valid options.
-  # @overload default_cassette_options
-  # @overload default_cassette_options=
   #
   # pkg:gem/vcr#lib/vcr/configuration.rb:45
   def default_cassette_options; end
@@ -1320,17 +1310,18 @@ class VCR::Configuration
   #
   # @example
   #   VCR.configure do |c|
-  #   # Put "<GITHUB_API_KEY>" in place of the actual API key in
-  #   # our cassettes so we don't have to commit to source control.
-  #   c.filter_sensitive_data('<GITHUB_API_KEY>') { GithubClient.api_key }
+  #     # Put "<GITHUB_API_KEY>" in place of the actual API key in
+  #     # our cassettes so we don't have to commit to source control.
+  #     c.filter_sensitive_data('<GITHUB_API_KEY>') { GithubClient.api_key }
   #
-  #   # Put a "<USER_ID>" placeholder variable in our cassettes tagged with
-  #   # :user_cassette since it can be different for different test runs.
-  #   c.define_cassette_placeholder('<USER_ID>', :user_cassette) { User.last.id }
+  #     # Put a "<USER_ID>" placeholder variable in our cassettes tagged with
+  #     # :user_cassette since it can be different for different test runs.
+  #     c.define_cassette_placeholder('<USER_ID>', :user_cassette) { User.last.id }
   #   end
+  #
   # @param placeholder [String] The placeholder string.
   # @param tag [Symbol] Set this to apply this only to cassettes
-  #   with a matching tag; otherwise it will apply to every cassette.
+  #  with a matching tag; otherwise it will apply to every cassette.
   # @yield block that determines what string to replace
   # @yieldparam interaction [(optional) VCR::HTTPInteraction::HookAware] the HTTP interaction
   # @yieldreturn the string to replace
@@ -1338,29 +1329,6 @@ class VCR::Configuration
   # pkg:gem/vcr#lib/vcr/configuration.rb:224
   def define_cassette_placeholder(placeholder, tag = T.unsafe(nil), &block); end
 
-  # Sets up a {#before_record} and a {#before_playback} hook that will
-  # insert a placeholder string in the cassette in place of another string.
-  # You can use this as a generic way to interpolate a variable into the
-  # cassette for a unique string. It's particularly useful for unique
-  # sensitive strings like API keys and passwords.
-  #
-  # @example
-  #   VCR.configure do |c|
-  #   # Put "<GITHUB_API_KEY>" in place of the actual API key in
-  #   # our cassettes so we don't have to commit to source control.
-  #   c.filter_sensitive_data('<GITHUB_API_KEY>') { GithubClient.api_key }
-  #
-  #   # Put a "<USER_ID>" placeholder variable in our cassettes tagged with
-  #   # :user_cassette since it can be different for different test runs.
-  #   c.define_cassette_placeholder('<USER_ID>', :user_cassette) { User.last.id }
-  #   end
-  # @param placeholder [String] The placeholder string.
-  # @param tag [Symbol] Set this to apply this only to cassettes
-  #   with a matching tag; otherwise it will apply to every cassette.
-  # @yield block that determines what string to replace
-  # @yieldparam interaction [(optional) VCR::HTTPInteraction::HookAware] the HTTP interaction
-  # @yieldreturn the string to replace
-  #
   # pkg:gem/vcr#lib/vcr/configuration.rb:237
   def filter_sensitive_data(placeholder, tag = T.unsafe(nil), &block); end
 
@@ -1368,23 +1336,18 @@ class VCR::Configuration
   #
   # @example
   #   VCR.configure do |c|
-  #   c.hook_into :webmock, :typhoeus
+  #     c.hook_into :webmock, :typhoeus
   #   end
+  #
   # @param hooks [Array<Symbol>] List of libraries. Valid values are
-  #   `:webmock`, `:typhoeus`, `:excon` and `:faraday`.
+  #  `:webmock`, `:typhoeus`, `:excon` and `:faraday`.
   # @raise [ArgumentError] when given an unsupported library name.
   # @raise [VCR::Errors::LibraryVersionTooLowError] when the version
-  #   of a library you are using is too low for VCR to support.
+  #  of a library you are using is too low for VCR to support.
   #
   # pkg:gem/vcr#lib/vcr/configuration.rb:64
   def hook_into(*hooks); end
 
-  # Specifies host(s) that VCR should ignore.
-  #
-  # @param hosts [Array<String>] List of hosts to ignore
-  # @see #ignore_localhost=
-  # @see #ignore_request
-  #
   # pkg:gem/vcr#lib/vcr/configuration.rb:77
   def ignore_host(*hosts); end
 
@@ -1410,12 +1373,13 @@ class VCR::Configuration
   #
   # @example
   #   VCR.configure do |c|
-  #   c.ignore_request do |request|
-  #   uri = URI(request.uri)
-  #   # ignore only localhost requests to port 7500
-  #   uri.host == 'localhost' && uri.port == 7500
+  #     c.ignore_request do |request|
+  #       uri = URI(request.uri)
+  #       # ignore only localhost requests to port 7500
+  #       uri.host == 'localhost' && uri.port == 7500
+  #     end
   #   end
-  #   end
+  #
   # @yield the callback
   # @yieldparam request [VCR::Request] the HTTP request
   # @yieldreturn [Boolean] whether or not to ignore the request
@@ -1423,16 +1387,15 @@ class VCR::Configuration
   # pkg:gem/vcr#lib/vcr/configuration.rb:111
   def ignore_request(&block); end
 
-  # Logger object that provides logging APIs and helper methods.
-  #
   # @private
+  # Logger object that provides logging APIs and helper methods.
   #
   # pkg:gem/vcr#lib/vcr/configuration.rb:453
   def logger; end
 
-  # @param http_message [#body, #headers] the `VCR::Request` or `VCR::Response` object being serialized
   # @return [Boolean] whether or not the body of the given HTTP message should
-  #   be base64 encoded during serialization in order to preserve the bytes exactly.
+  #  be base64 encoded during serialization in order to preserve the bytes exactly.
+  # @param http_message [#body, #headers] the `VCR::Request` or `VCR::Response` object being serialized
   # @see #preserve_exact_body_bytes
   #
   # pkg:gem/vcr#lib/vcr/configuration.rb:483
@@ -1451,7 +1414,9 @@ class VCR::Configuration
   # This defaults to `URI.decode_www_form` from the ruby standard library.
   #
   # @overload query_parser
+  #  @return [#call] the current query string parser object
   # @overload query_parser=
+  #  @param value [#call] sets the query_parser
   #
   # pkg:gem/vcr#lib/vcr/configuration.rb:150
   def query_parser; end
@@ -1469,7 +1434,9 @@ class VCR::Configuration
   # This defaults to `URI.decode_www_form` from the ruby standard library.
   #
   # @overload query_parser
+  #  @return [#call] the current query string parser object
   # @overload query_parser=
+  #  @param value [#call] sets the query_parser
   #
   # pkg:gem/vcr#lib/vcr/configuration.rb:150
   def query_parser=(_arg0); end
@@ -1477,21 +1444,22 @@ class VCR::Configuration
   # Registers a request matcher for later use.
   #
   # @example
-  #   VCR.configure do |c|
-  #   c.register_request_matcher :port do |request_1, request_2|
-  #   URI(request_1.uri).port == URI(request_2.uri).port
-  #   end
-  #   end
+  #  VCR.configure do |c|
+  #    c.register_request_matcher :port do |request_1, request_2|
+  #      URI(request_1.uri).port == URI(request_2.uri).port
+  #    end
+  #  end
   #
-  #   VCR.use_cassette("my_cassette", :match_requests_on => [:method, :host, :port]) do
-  #   # ...
-  #   end
+  #  VCR.use_cassette("my_cassette", :match_requests_on => [:method, :host, :port]) do
+  #    # ...
+  #  end
+  #
   # @param name [Symbol] the name of the request matcher
   # @yield the request matcher
   # @yieldparam request_1 [VCR::Request] One request
   # @yieldparam request_2 [VCR::Request] The other request
   # @yieldreturn [Boolean] whether or not these two requests should be considered
-  #   equivalent
+  #  equivalent
   #
   # pkg:gem/vcr#lib/vcr/configuration.rb:197
   def register_request_matcher(name, &block); end
@@ -1502,11 +1470,6 @@ class VCR::Configuration
   # pkg:gem/vcr#lib/vcr/deprecations.rb:26
   def stub_with(*adapters); end
 
-  # Specifies host(s) that VCR should stop ignoring.
-  #
-  # @param hosts [Array<String>] List of hosts to unignore
-  # @see #ignore_hosts
-  #
   # pkg:gem/vcr#lib/vcr/configuration.rb:86
   def unignore_host(*hosts); end
 
@@ -1539,7 +1502,9 @@ class VCR::Configuration
   # This defaults to `URI` from the ruby standard library.
   #
   # @overload uri_parser
+  #  @return [#parse] the current URI parser object
   # @overload uri_parser=
+  #  @param value [#parse] sets the uri_parser
   #
   # pkg:gem/vcr#lib/vcr/configuration.rb:176
   def uri_parser; end
@@ -1565,7 +1530,9 @@ class VCR::Configuration
   # This defaults to `URI` from the ruby standard library.
   #
   # @overload uri_parser
+  #  @return [#parse] the current URI parser object
   # @overload uri_parser=
+  #  @param value [#parse] sets the uri_parser
   #
   # pkg:gem/vcr#lib/vcr/configuration.rb:176
   def uri_parser=(_arg0); end
@@ -1623,19 +1590,10 @@ end
 # pkg:gem/vcr#lib/vcr/test_frameworks/cucumber.rb:3
 class VCR::CucumberTags
   # @private
-  # @return [CucumberTags] a new instance of CucumberTags
   #
   # pkg:gem/vcr#lib/vcr/test_frameworks/cucumber.rb:19
   def initialize(main_object); end
 
-  # Adds `Before` and `After` cucumber hooks for the named tags that
-  # will cause a VCR cassette to be used for scenarios with matching tags.
-  #
-  # @param tag_names [Array<String,Hash>] the cucumber scenario tags. If
-  #   the last argument is a hash it is treated as cassette options.
-  #   - `:use_scenario_name => true` to automatically name the
-  #   cassette according to the scenario name.
-  #
   # pkg:gem/vcr#lib/vcr/test_frameworks/cucumber.rb:80
   def tag(*tag_names); end
 
@@ -1643,9 +1601,9 @@ class VCR::CucumberTags
   # will cause a VCR cassette to be used for scenarios with matching tags.
   #
   # @param tag_names [Array<String,Hash>] the cucumber scenario tags. If
-  #   the last argument is a hash it is treated as cassette options.
+  #  the last argument is a hash it is treated as cassette options.
   #   - `:use_scenario_name => true` to automatically name the
-  #   cassette according to the scenario name.
+  #     cassette according to the scenario name.
   #
   # pkg:gem/vcr#lib/vcr/test_frameworks/cucumber.rb:30
   def tags(*tag_names); end
@@ -1664,13 +1622,10 @@ class VCR::CucumberTags
 end
 
 # Constructs a cassette name from a Cucumber 2 scenario outline
-#
 # @private
 #
 # pkg:gem/vcr#lib/vcr/test_frameworks/cucumber.rb:84
 class VCR::CucumberTags::ScenarioNameBuilder
-  # @return [ScenarioNameBuilder] a new instance of ScenarioNameBuilder
-  #
   # pkg:gem/vcr#lib/vcr/test_frameworks/cucumber.rb:85
   def initialize(test_case); end
 
@@ -1715,14 +1670,12 @@ end
 module VCR::Errors; end
 
 # Error raised when an `around_http_request` hook is used improperly.
-#
 # @see VCR::Configuration#around_http_request
 #
 # pkg:gem/vcr#lib/vcr/errors.rb:36
 class VCR::Errors::AroundHTTPRequestHookError < ::VCR::Errors::Error; end
 
 # Error raised when VCR is turned off while a cassette is in use.
-#
 # @see VCR#turn_off!
 # @see VCR#turned_off
 #
@@ -1747,7 +1700,6 @@ class VCR::Errors::InvalidCassetteFormatError < ::VCR::Errors::Error; end
 
 # Error raised when the version of one of the libraries that VCR hooks into
 # is too low for VCR to support.
-#
 # @see VCR::Configuration#hook_into
 #
 # pkg:gem/vcr#lib/vcr/errors.rb:26
@@ -1755,7 +1707,6 @@ class VCR::Errors::LibraryVersionTooLowError < ::VCR::Errors::Error; end
 
 # Error raised when an cassette ERB template is rendered and a
 # variable is missing.
-#
 # @see VCR#insert_cassette
 # @see VCR#use_cassette
 #
@@ -1764,14 +1715,12 @@ class VCR::Errors::MissingERBVariableError < ::VCR::Errors::Error; end
 
 # Error raised when you attempt to use a VCR feature that is not
 # supported on your ruby interpreter.
-#
 # @see VCR::Configuration#around_http_request
 #
 # pkg:gem/vcr#lib/vcr/errors.rb:41
 class VCR::Errors::NotSupportedError < ::VCR::Errors::Error; end
 
 # Error raised when a VCR cassette is inserted while VCR is turned off.
-#
 # @see VCR#insert_cassette
 # @see VCR#use_cassette
 #
@@ -1779,18 +1728,16 @@ class VCR::Errors::NotSupportedError < ::VCR::Errors::Error; end
 class VCR::Errors::TurnedOffError < ::VCR::Errors::Error; end
 
 # Error raised when an HTTP request is made that VCR is unable to handle.
-#
 # @note VCR will raise this to force you to do something about the
-#   HTTP request. The idea is that you want to handle _every_ HTTP
-#   request in your test suite. The error message will give you
-#   suggestions for how to deal with the request.
+#  HTTP request. The idea is that you want to handle _every_ HTTP
+#  request in your test suite. The error message will give you
+#  suggestions for how to deal with the request.
 #
 # pkg:gem/vcr#lib/vcr/errors.rb:63
 class VCR::Errors::UnhandledHTTPRequestError < ::VCR::Errors::Error
   # Constructs the error.
   #
-  # @param request [VCR::Request] the unhandled request.
-  # @return [UnhandledHTTPRequestError] a new instance of UnhandledHTTPRequestError
+  # @param [VCR::Request] request the unhandled request.
   #
   # pkg:gem/vcr#lib/vcr/errors.rb:70
   def initialize(request); end
@@ -1832,18 +1779,12 @@ class VCR::Errors::UnhandledHTTPRequestError < ::VCR::Errors::Error
   # pkg:gem/vcr#lib/vcr/errors.rb:168
   def formatted_suggestions; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/errors.rb:311
   def has_used_interaction_matching?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/errors.rb:114
   def match_request_on_body?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/errors.rb:110
   def match_request_on_headers?; end
 
@@ -1876,7 +1817,6 @@ VCR::Errors::UnhandledHTTPRequestError::ALL_SUGGESTIONS = T.let(T.unsafe(nil), H
 
 # Error raised when you ask VCR to decode a compressed response
 # body but the content encoding isn't one of the known ones.
-#
 # @see VCR::Response#decompress
 #
 # pkg:gem/vcr#lib/vcr/errors.rb:46
@@ -1889,7 +1829,6 @@ class VCR::Errors::UnregisteredMatcherError < ::VCR::Errors::Error; end
 
 # Error raised when you eject a cassette before all previously
 # recorded HTTP interactions are played back.
-#
 # @note Only applicable when :allow_episode_skipping is false.
 # @see VCR::HTTPInteractionList#assert_no_unused_interactions!
 #
@@ -1898,19 +1837,17 @@ class VCR::Errors::UnusedHTTPInteractionError < ::VCR::Errors::Error; end
 
 # Represents a single interaction over HTTP, containing a request and a response.
 #
-# @attr recorded_at [Time] when this HTTP interaction was recorded
-# @attr request [Request] the request
-# @attr response [Response] the response
+# @attr [Request] request the request
+# @attr [Response] response the response
+# @attr [Time] recorded_at when this HTTP interaction was recorded
 #
 # pkg:gem/vcr#lib/vcr/structs.rb:483
 class VCR::HTTPInteraction < ::Struct
-  # @return [HTTPInteraction] a new instance of HTTPInteraction
-  #
   # pkg:gem/vcr#lib/vcr/structs.rb:484
   def initialize(*args); end
 
   # @return [HookAware] an instance with additional capabilities
-  #   suitable for use in `before_record` and `before_playback` hooks.
+  #  suitable for use in `before_record` and `before_playback` hooks.
   #
   # pkg:gem/vcr#lib/vcr/structs.rb:514
   def hook_aware; end
@@ -1918,7 +1855,7 @@ class VCR::HTTPInteraction < ::Struct
   # Builds a serializable hash from the HTTP interaction data.
   #
   # @return [Hash] hash that represents this HTTP interaction
-  #   and can be easily serialized.
+  #  and can be easily serialized.
   # @see HTTPInteraction.from_hash
   #
   # pkg:gem/vcr#lib/vcr/structs.rb:494
@@ -1927,7 +1864,7 @@ class VCR::HTTPInteraction < ::Struct
   class << self
     # Constructs a new instance from a hash.
     #
-    # @param hash [Hash] the hash to use to construct the instance.
+    # @param [Hash] hash the hash to use to construct the instance.
     # @return [HTTPInteraction] the HTTP interaction
     #
     # pkg:gem/vcr#lib/vcr/structs.rb:506
@@ -1940,16 +1877,14 @@ end
 #
 # pkg:gem/vcr#lib/vcr/structs.rb:520
 class VCR::HTTPInteraction::HookAware
-  # @return [HookAware] a new instance of HookAware
-  #
   # pkg:gem/vcr#lib/vcr/structs.rb:521
   def initialize(http_interaction); end
 
   # Replaces a string in any part of the HTTP interaction (headers, request body,
   # response body, etc) with the given replacement text.
   #
-  # @param replacement_text [#to_s] the text to put in its place
-  # @param text [#to_s] the text to replace
+  # @param [#to_s] text the text to replace
+  # @param [#to_s] replacement_text the text to put in its place
   #
   # pkg:gem/vcr#lib/vcr/structs.rb:545
   def filter!(text, replacement_text); end
@@ -1957,7 +1892,6 @@ class VCR::HTTPInteraction::HookAware
   # Flags the HTTP interaction so that VCR ignores it. This is useful in
   # a {VCR::Configuration#before_record} or {VCR::Configuration#before_playback}
   # hook so that VCR does not record or play it back.
-  #
   # @see #ignored?
   #
   # pkg:gem/vcr#lib/vcr/structs.rb:530
@@ -1989,8 +1923,6 @@ module VCR::Hooks
   # pkg:gem/vcr#lib/vcr/util/hooks.rb:34
   def clear_hooks; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/util/hooks.rb:44
   def has_hooks_for?(hook_type); end
 
@@ -2001,8 +1933,6 @@ module VCR::Hooks
   def invoke_hook(hook_type, *args); end
 
   class << self
-    # @private
-    #
     # pkg:gem/vcr#lib/vcr/util/hooks.rb:19
     def included(klass); end
   end
@@ -2025,33 +1955,15 @@ class VCR::Hooks::FilteredHook < ::Struct
   # pkg:gem/vcr#lib/vcr/util/hooks.rb:12
   def conditionally_invoke(*args); end
 
-  # Returns the value of attribute filters
-  #
-  # @return [Object] the current value of filters
-  #
   # pkg:gem/vcr#lib/vcr/util/hooks.rb:9
   def filters; end
 
-  # Sets the attribute filters
-  #
-  # @param value [Object] the value to set the attribute filters to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/vcr#lib/vcr/util/hooks.rb:9
   def filters=(_); end
 
-  # Returns the value of attribute hook
-  #
-  # @return [Object] the current value of hook
-  #
   # pkg:gem/vcr#lib/vcr/util/hooks.rb:9
   def hook; end
 
-  # Sets the attribute hook
-  #
-  # @param value [Object] the value to set the attribute hook to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/vcr#lib/vcr/util/hooks.rb:9
   def hook=(_); end
 
@@ -2079,8 +1991,6 @@ end
 module VCR::InternetConnection
   extend ::VCR::InternetConnection
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/util/internet_connection.rb:31
   def available?; end
 end
@@ -2092,20 +2002,12 @@ VCR::InternetConnection::EXAMPLE_HOST = T.let(T.unsafe(nil), String)
 #
 # pkg:gem/vcr#lib/vcr/library_hooks.rb:3
 class VCR::LibraryHooks
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/library_hooks.rb:6
   def disabled?(hook); end
 
-  # Returns the value of attribute exclusive_hook.
-  #
   # pkg:gem/vcr#lib/vcr/library_hooks.rb:4
   def exclusive_hook; end
 
-  # Sets the attribute exclusive_hook
-  #
-  # @param value the value to set the attribute exclusive_hook to.
-  #
   # pkg:gem/vcr#lib/vcr/library_hooks.rb:4
   def exclusive_hook=(_arg0); end
 
@@ -2119,8 +2021,6 @@ end
 class VCR::LinkedCassette < ::SimpleDelegator
   # Prevents cassette ejection by raising EjectLinkedCassetteError
   #
-  # @raise [Errors::EjectLinkedCassetteError]
-  #
   # pkg:gem/vcr#lib/vcr/linked_cassette.rb:62
   def eject(*args); end
 
@@ -2131,7 +2031,6 @@ class VCR::LinkedCassette < ::SimpleDelegator
 
   class << self
     # Create a new CassetteList
-    #
     # @param cassettes [Array] context-owned cassettes
     # @param linked_cassettes [Array] context-unowned (linked) cassettes
     #
@@ -2147,10 +2046,8 @@ class VCR::LinkedCassette::CassetteList
   include ::Enumerable
 
   # Creates a new list of context-owned cassettes and linked cassettes
-  #
   # @param cassettes [Array] context-owned cassettes
   # @param linked_cassettes [Array] context-unowned (linked) cassettes
-  # @return [CassetteList] a new instance of CassetteList
   #
   # pkg:gem/vcr#lib/vcr/linked_cassette.rb:14
   def initialize(cassettes, linked_cassettes); end
@@ -2176,14 +2073,11 @@ class VCR::LinkedCassette::CassetteList
   def wrap(cassette); end
 end
 
-# Provides log message formatting helper methods.
-#
 # @private
+# Provides log message formatting helper methods.
 #
 # pkg:gem/vcr#lib/vcr/util/logger.rb:4
 class VCR::Logger
-  # @return [Logger] a new instance of Logger
-  #
   # pkg:gem/vcr#lib/vcr/util/logger.rb:5
   def initialize(stream); end
 
@@ -2197,10 +2091,9 @@ class VCR::Logger
   def response_summary(response); end
 end
 
+# @private
 # Provides common logger helper methods that simply delegate to
 # the underlying logger object.
-#
-# @private
 #
 # pkg:gem/vcr#lib/vcr/util/logger.rb:45
 module VCR::Logger::Mixin
@@ -2214,14 +2107,14 @@ module VCR::Logger::Mixin
   def response_summary(*args); end
 end
 
+# @private
 # A null-object version of the Logger. Used when
 # a `debug_logger` has not been set.
 #
 # @note We used to use a null object for the `debug_logger` itself,
-#   but some users noticed a negative perf impact from having the
-#   logger formatting logic still executing in that case, so we
-#   moved the null object interface up a layer to here.
-# @private
+#       but some users noticed a negative perf impact from having the
+#       logger formatting logic still executing in that case, so we
+#       moved the null object interface up a layer to here.
 #
 # pkg:gem/vcr#lib/vcr/util/logger.rb:34
 module VCR::Logger::Null
@@ -2254,6 +2147,7 @@ end
 VCR::MainThread = T.let(T.unsafe(nil), Thread)
 
 # Contains middlewares for use with different libraries.
+# Contains middlewares for use with different libraries.
 #
 # pkg:gem/vcr#lib/vcr.rb:39
 module VCR::Middleware; end
@@ -2264,14 +2158,13 @@ module VCR::Middleware; end
 # pkg:gem/vcr#lib/vcr/middleware/rack.rb:5
 class VCR::Middleware::CassetteArguments
   # @private
-  # @return [CassetteArguments] a new instance of CassetteArguments
   #
   # pkg:gem/vcr#lib/vcr/middleware/rack.rb:7
   def initialize; end
 
   # Sets (and gets) the cassette name.
   #
-  # @param name [#to_s] the cassette name
+  # @param [#to_s] name the cassette name
   # @return [#to_s] the cassette name
   #
   # pkg:gem/vcr#lib/vcr/middleware/rack.rb:16
@@ -2279,7 +2172,7 @@ class VCR::Middleware::CassetteArguments
 
   # Sets (and gets) the cassette options.
   #
-  # @param options [Hash] the cassette options
+  # @param [Hash] options the cassette options
   # @return [Hash] the cassette options
   #
   # pkg:gem/vcr#lib/vcr/middleware/rack.rb:25
@@ -2290,7 +2183,7 @@ end
 # Faraday.
 #
 # @note You can either insert this middleware into the Faraday middleware stack
-#   yourself or configure {VCR::Configuration#hook_into} to hook into `:faraday`.
+#  yourself or configure {VCR::Configuration#hook_into} to hook into `:faraday`.
 #
 # pkg:gem/vcr#lib/vcr/middleware/faraday.rb:15
 class VCR::Middleware::Faraday
@@ -2298,15 +2191,14 @@ class VCR::Middleware::Faraday
 
   # Constructs a new instance of the Faraday middleware.
   #
-  # @param app [#call] the faraday app
-  # @return [Faraday] a new instance of Faraday
+  # @param [#call] app the faraday app
   #
   # pkg:gem/vcr#lib/vcr/middleware/faraday.rb:21
   def initialize(app); end
 
   # Handles the HTTP request being made through Faraday
   #
-  # @param env [Hash] the Faraday request env hash
+  # @param [Hash] env the Faraday request env hash
   #
   # pkg:gem/vcr#lib/vcr/middleware/faraday.rb:29
   def call(env); end
@@ -2321,18 +2213,12 @@ end
 #
 # pkg:gem/vcr#lib/vcr/middleware/faraday.rb:40
 class VCR::Middleware::Faraday::RequestHandler < ::VCR::RequestHandler
-  # @return [RequestHandler] a new instance of RequestHandler
-  #
   # pkg:gem/vcr#lib/vcr/middleware/faraday.rb:42
   def initialize(app, env); end
 
-  # Returns the value of attribute app.
-  #
   # pkg:gem/vcr#lib/vcr/middleware/faraday.rb:41
   def app; end
 
-  # Returns the value of attribute env.
-  #
   # pkg:gem/vcr#lib/vcr/middleware/faraday.rb:41
   def env; end
 
@@ -2344,8 +2230,6 @@ class VCR::Middleware::Faraday::RequestHandler < ::VCR::RequestHandler
   # pkg:gem/vcr#lib/vcr/middleware/faraday.rb:129
   def collect_chunks; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/middleware/faraday.rb:61
   def delay_finishing?; end
 
@@ -2378,13 +2262,14 @@ end
 #
 # @example
 #   app = Rack::Builder.new do
-#   use VCR::Middleware::Rack do |cassette, env|
-#   cassette.name "rack/#{env['SERVER_NAME']}"
-#   cassette.options :record => :new_episodes
+#     use VCR::Middleware::Rack do |cassette, env|
+#       cassette.name "rack/#{env['SERVER_NAME']}"
+#       cassette.options :record => :new_episodes
+#     end
+#
+#     run MyRackApp
 #   end
 #
-#   run MyRackApp
-#   end
 # @note This will record/replay _outbound_ HTTP requests made by your rack app.
 #
 # pkg:gem/vcr#lib/vcr/middleware/rack.rb:43
@@ -2393,19 +2278,18 @@ class VCR::Middleware::Rack
 
   # Constructs a new instance of VCR's rack middleware.
   #
-  # @param app [#call] the rack app
-  # @raise [ArgumentError] if no configuration block is provided
-  # @return [Rack] a new instance of Rack
+  # @param [#call] app the rack app
   # @yield the cassette configuration block
-  # @yieldparam cassette [CassetteArguments] the cassette configuration object
-  # @yieldparam env [(optional) Hash] the rack env hash
+  # @yieldparam [CassetteArguments] cassette the cassette configuration object
+  # @yieldparam [(optional) Hash] env the rack env hash
+  # @raise [ArgumentError] if no configuration block is provided
   #
   # pkg:gem/vcr#lib/vcr/middleware/rack.rb:53
   def initialize(app, &block); end
 
   # Implements the rack middleware interface.
   #
-  # @param env [Hash] the rack env hash
+  # @param [Hash] env the rack env hash
   # @return [Array(Integer, Hash, #each)] the rack response
   #
   # pkg:gem/vcr#lib/vcr/middleware/rack.rb:62
@@ -2440,8 +2324,6 @@ module VCR::Normalizers::Body
   def serializable_body; end
 
   class << self
-    # @private
-    #
     # pkg:gem/vcr#lib/vcr/structs.rb:9
     def included(klass); end
   end
@@ -2524,10 +2406,10 @@ end
 
 # The request of an {HTTPInteraction}.
 #
-# @attr body [String, nil] the request body
-# @attr headers [Hash{String => Array<String>}] the request headers
-# @attr method [Symbol] the HTTP method (i.e. :head, :options, :get, :post, :put, :patch or :delete)
-# @attr uri [String] the request URI
+# @attr [Symbol] method the HTTP method (i.e. :head, :options, :get, :post, :put, :patch or :delete)
+# @attr [String] uri the request URI
+# @attr [String, nil] body the request body
+# @attr [Hash{String => Array<String>}] headers the request headers
 #
 # pkg:gem/vcr#lib/vcr/structs.rb:163
 class VCR::Request < ::Struct
@@ -2535,15 +2417,9 @@ class VCR::Request < ::Struct
   include ::VCR::Normalizers::Body
   extend ::VCR::Normalizers::Body::ClassMethods
 
-  # @return [Request] a new instance of Request
-  #
   # pkg:gem/vcr#lib/vcr/structs.rb:167
   def initialize(*args); end
 
-  # the HTTP method (i.e. :head, :options, :get, :post, :put, :patch or :delete)
-  #
-  # @return [Symbol] the current value of method
-  #
   # pkg:gem/vcr#lib/vcr/structs.rb:215
   def method(*args); end
 
@@ -2557,7 +2433,7 @@ class VCR::Request < ::Struct
   # Builds a serializable hash from the request data.
   #
   # @return [Hash] hash that represents this request and can be easily
-  #   serialized.
+  #  serialized.
   # @see Request.from_hash
   #
   # pkg:gem/vcr#lib/vcr/structs.rb:184
@@ -2571,7 +2447,7 @@ class VCR::Request < ::Struct
   class << self
     # Constructs a new instance from a hash.
     #
-    # @param hash [Hash] the hash to use to construct the instance.
+    # @param [Hash] hash the hash to use to construct the instance.
     # @return [Request] the request
     #
     # pkg:gem/vcr#lib/vcr/structs.rb:197
@@ -2604,17 +2480,16 @@ end
 #
 # pkg:gem/vcr#lib/vcr/structs.rb:221
 class VCR::Request::Typed
-  # @param request [Request] the request
-  # @param type [Symbol] the type. Should be one of `:ignored`, `:stubbed`, `:recordable` or `:unhandled`.
-  # @return [Typed] a new instance of Typed
+  # @param [Request] request the request
+  # @param [Symbol] type the type. Should be one of `:ignored`, `:stubbed`, `:recordable` or `:unhandled`.
   #
   # pkg:gem/vcr#lib/vcr/structs.rb:227
   def initialize(request, type); end
 
   # @return [Boolean] whether or not this request is being stubbed by an
-  #   external library (such as WebMock).
-  # @see #stubbed?
+  #  external library (such as WebMock).
   # @see #stubbed_by_vcr?
+  # @see #stubbed?
   #
   # pkg:gem/vcr#lib/vcr/structs.rb:248
   def externally_stubbed?; end
@@ -2624,8 +2499,8 @@ class VCR::Request::Typed
   # pkg:gem/vcr#lib/vcr/structs.rb:233
   def ignored?; end
 
-  # @note VCR allows `:ignored` and `:recordable` requests to be made for real.
   # @return [Boolean] whether or not this request will be made for real.
+  # @note VCR allows `:ignored` and `:recordable` requests to be made for real.
   #
   # pkg:gem/vcr#lib/vcr/structs.rb:264
   def real?; end
@@ -2636,9 +2511,9 @@ class VCR::Request::Typed
   def recordable?; end
 
   # @return [Boolean] whether or not this request will be stubbed.
-  #   It may be stubbed by an external library or by VCR.
-  # @see #externally_stubbed?
+  #  It may be stubbed by an external library or by VCR.
   # @see #stubbed_by_vcr?
+  # @see #externally_stubbed?
   #
   # pkg:gem/vcr#lib/vcr/structs.rb:272
   def stubbed?; end
@@ -2672,18 +2547,12 @@ class VCR::RequestHandler
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/request_handler.rb:62
   def disabled?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/request_handler.rb:54
   def externally_stubbed?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/request_handler.rb:66
   def has_response_stub?(consume_stub); end
 
@@ -2713,8 +2582,6 @@ class VCR::RequestHandler
   # pkg:gem/vcr#lib/vcr/request_handler.rb:90
   def on_stubbed_by_vcr_request; end
 
-  # @raise [VCR::Errors::UnhandledHTTPRequestError]
-  #
   # pkg:gem/vcr#lib/vcr/request_handler.rb:96
   def on_unhandled_request; end
 
@@ -2727,8 +2594,6 @@ class VCR::RequestHandler
   # pkg:gem/vcr#lib/vcr/request_handler.rb:29
   def set_typed_request_for_after_hook(request_type); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/request_handler.rb:58
   def should_ignore?; end
 
@@ -2745,13 +2610,9 @@ class VCR::RequestIgnorer
   include ::VCR::RequestIgnorer::DefinedHooks
   extend ::VCR::Hooks::ClassMethods
 
-  # @return [RequestIgnorer] a new instance of RequestIgnorer
-  #
   # pkg:gem/vcr#lib/vcr/request_ignorer.rb:13
   def initialize; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/request_ignorer.rb:40
   def ignore?(request); end
 
@@ -2761,8 +2622,6 @@ class VCR::RequestIgnorer
   # pkg:gem/vcr#lib/vcr/request_ignorer.rb:20
   def ignore_localhost=(value); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/request_ignorer.rb:28
   def localhost_ignored?; end
 
@@ -2789,7 +2648,6 @@ VCR::RequestIgnorer::LOCALHOST_ALIASES = T.let(T.unsafe(nil), Array)
 # pkg:gem/vcr#lib/vcr/request_matcher_registry.rb:5
 class VCR::RequestMatcherRegistry
   # @private
-  # @return [RequestMatcherRegistry] a new instance of RequestMatcherRegistry
   #
   # pkg:gem/vcr#lib/vcr/request_matcher_registry.rb:49
   def initialize; end
@@ -2804,25 +2662,6 @@ class VCR::RequestMatcherRegistry
   # pkg:gem/vcr#lib/vcr/request_matcher_registry.rb:55
   def register(name, &block); end
 
-  # Builds a dynamic request matcher that matches on a URI while ignoring the
-  # named query parameters. This is useful for dealing with non-deterministic
-  # URIs (i.e. that have a timestamp or request signature parameter).
-  #
-  # @example
-  #   without_timestamp = VCR.request_matchers.uri_without_param(:timestamp)
-  #
-  #   # use it directly...
-  #   VCR.use_cassette('example', :match_requests_on => [:method, without_timestamp]) { }
-  #
-  #   # ...or register it as a named matcher
-  #   VCR.configure do |c|
-  #   c.register_request_matcher(:uri_without_timestamp, &without_timestamp)
-  #   end
-  #
-  #   VCR.use_cassette('example', :match_requests_on => [:method, :uri_without_timestamp]) { }
-  # @param ignores [Array<#to_s>] The names of the query parameters to ignore
-  # @return [#call] the request matcher
-  #
   # pkg:gem/vcr#lib/vcr/request_matcher_registry.rb:94
   def uri_without_param(*ignores); end
 
@@ -2838,10 +2677,11 @@ class VCR::RequestMatcherRegistry
   #
   #   # ...or register it as a named matcher
   #   VCR.configure do |c|
-  #   c.register_request_matcher(:uri_without_timestamp, &without_timestamp)
+  #     c.register_request_matcher(:uri_without_timestamp, &without_timestamp)
   #   end
   #
   #   VCR.use_cassette('example', :match_requests_on => [:method, :uri_without_timestamp]) { }
+  #
   # @param ignores [Array<#to_s>] The names of the query parameters to ignore
   # @return [#call] the request matcher
   #
@@ -2873,8 +2713,6 @@ VCR::RequestMatcherRegistry::DEFAULT_MATCHERS = T.let(T.unsafe(nil), Array)
 #
 # pkg:gem/vcr#lib/vcr/request_matcher_registry.rb:12
 class VCR::RequestMatcherRegistry::Matcher < ::Struct
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/request_matcher_registry.rb:13
   def matches?(request_1, request_2); end
 end
@@ -2895,11 +2733,11 @@ end
 
 # The response of an {HTTPInteraction}.
 #
-# @attr adapter_metadata [Hash] Additional metadata used by a specific VCR adapter.
-# @attr body [String] the response body
-# @attr headers [Hash{String => Array<String>}] the response headers
-# @attr http_version [nil, String] the HTTP version
-# @attr status [ResponseStatus] the status of the response
+# @attr [ResponseStatus] status the status of the response
+# @attr [Hash{String => Array<String>}] headers the response headers
+# @attr [String] body the response body
+# @attr [nil, String] http_version the HTTP version
+# @attr [Hash] adapter_metadata Additional metadata used by a specific VCR adapter.
 #
 # pkg:gem/vcr#lib/vcr/structs.rb:318
 class VCR::Response < ::Struct
@@ -2907,14 +2745,10 @@ class VCR::Response < ::Struct
   include ::VCR::Normalizers::Body
   extend ::VCR::Normalizers::Body::ClassMethods
 
-  # @return [Response] a new instance of Response
-  #
   # pkg:gem/vcr#lib/vcr/structs.rb:322
   def initialize(*args); end
 
   # Checks if the type of encoding is one of "gzip" or "deflate".
-  #
-  # @return [Boolean]
   #
   # pkg:gem/vcr#lib/vcr/structs.rb:369
   def compressed?; end
@@ -2928,9 +2762,9 @@ class VCR::Response < ::Struct
 
   # Decodes the compressed body and deletes evidence that it was ever compressed.
   #
-  # @raise [VCR::Errors::UnknownContentEncodingError] if the content encoding
-  #   is not a known encoding.
   # @return self
+  # @raise [VCR::Errors::UnknownContentEncodingError] if the content encoding
+  #  is not a known encoding.
   #
   # pkg:gem/vcr#lib/vcr/structs.rb:383
   def decompress; end
@@ -2938,7 +2772,7 @@ class VCR::Response < ::Struct
   # Recompresses the decompressed body according to adapter metadata.
   #
   # @raise [VCR::Errors::UnknownContentEncodingError] if the content encoding
-  #   stored in the adapter metadata is unknown
+  #  stored in the adapter metadata is unknown
   #
   # pkg:gem/vcr#lib/vcr/structs.rb:397
   def recompress; end
@@ -2946,7 +2780,7 @@ class VCR::Response < ::Struct
   # Builds a serializable hash from the response data.
   #
   # @return [Hash] hash that represents this response
-  #   and can be easily serialized.
+  #  and can be easily serialized.
   # @see Response.from_hash
   #
   # pkg:gem/vcr#lib/vcr/structs.rb:332
@@ -2960,8 +2794,6 @@ class VCR::Response < ::Struct
 
   # Checks if VCR decompressed the response body
   #
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/structs.rb:374
   def vcr_decompressed?; end
 
@@ -2969,14 +2801,14 @@ class VCR::Response < ::Struct
     # Decode string compressed with gzip or deflate
     #
     # @raise [VCR::Errors::UnknownContentEncodingError] if the content encoding
-    #   is not a known encoding.
+    #  is not a known encoding.
     #
     # pkg:gem/vcr#lib/vcr/structs.rb:434
     def decompress(body, type); end
 
     # Constructs a new instance from a hash.
     #
-    # @param hash [Hash] the hash to use to construct the instance.
+    # @param [Hash] hash the hash to use to construct the instance.
     # @return [Response] the response
     #
     # pkg:gem/vcr#lib/vcr/structs.rb:347
@@ -2989,15 +2821,15 @@ VCR::Response::HAVE_ZLIB = T.let(T.unsafe(nil), TrueClass)
 
 # The response status of an {HTTPInteraction}.
 #
-# @attr code [Integer] the HTTP status code
-# @attr message [String] the HTTP status message (e.g. "OK" for a status of 200)
+# @attr [Integer] code the HTTP status code
+# @attr [String] message the HTTP status message (e.g. "OK" for a status of 200)
 #
 # pkg:gem/vcr#lib/vcr/structs.rb:457
 class VCR::ResponseStatus < ::Struct
   # Builds a serializable hash from the response status data.
   #
   # @return [Hash] hash that represents this response status
-  #   and can be easily serialized.
+  #  and can be easily serialized.
   # @see ResponseStatus.from_hash
   #
   # pkg:gem/vcr#lib/vcr/structs.rb:463
@@ -3006,7 +2838,7 @@ class VCR::ResponseStatus < ::Struct
   class << self
     # Constructs a new instance from a hash.
     #
-    # @param hash [Hash] the hash to use to construct the instance.
+    # @param [Hash] hash the hash to use to construct the instance.
     # @return [ResponseStatus] the response status
     #
     # pkg:gem/vcr#lib/vcr/structs.rb:473
@@ -3026,8 +2858,6 @@ end
 #
 # pkg:gem/vcr#lib/vcr/util/version_checker.rb:3
 class VCR::VersionChecker
-  # @return [VersionChecker] a new instance of VersionChecker
-  #
   # pkg:gem/vcr#lib/vcr/util/version_checker.rb:4
   def initialize(library_name, library_version, min_version); end
 
@@ -3042,13 +2872,9 @@ class VCR::VersionChecker
   # pkg:gem/vcr#lib/vcr/util/version_checker.rb:43
   def parse_version(version); end
 
-  # @raise [Errors::LibraryVersionTooLowError]
-  #
   # pkg:gem/vcr#lib/vcr/util/version_checker.rb:23
   def raise_too_low_error; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/vcr#lib/vcr/util/version_checker.rb:19
   def too_low?; end
 

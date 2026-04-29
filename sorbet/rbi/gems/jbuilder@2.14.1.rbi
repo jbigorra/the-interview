@@ -7,10 +7,6 @@
 
 # pkg:gem/jbuilder#lib/jbuilder/version.rb:3
 class Jbuilder < ::BasicObject
-  # @return [Jbuilder] a new instance of Jbuilder
-  # @yield [_self]
-  # @yieldparam _self [Jbuilder] the object that the method was called on
-  #
   # pkg:gem/jbuilder#lib/jbuilder.rb:16
   def initialize(key_formatter: T.unsafe(nil), ignore_nil: T.unsafe(nil), deep_format_keys: T.unsafe(nil), &block); end
 
@@ -178,8 +174,6 @@ class Jbuilder < ::BasicObject
   # pkg:gem/jbuilder#lib/jbuilder.rb:253
   def nil!; end
 
-  # Returns the nil JSON.
-  #
   # pkg:gem/jbuilder#lib/jbuilder.rb:257
   def null!; end
 
@@ -193,8 +187,6 @@ class Jbuilder < ::BasicObject
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/jbuilder#lib/jbuilder.rb:365
   def _blank?(value = T.unsafe(nil)); end
 
@@ -210,8 +202,6 @@ class Jbuilder < ::BasicObject
   # pkg:gem/jbuilder#lib/jbuilder.rb:326
   def _format_keys(hash_or_array); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/jbuilder#lib/jbuilder.rb:361
   def _is_collection?(object); end
 
@@ -272,16 +262,12 @@ class Jbuilder::Blank
   # pkg:gem/jbuilder#lib/jbuilder/blank.rb:5
   def ==(other); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/jbuilder#lib/jbuilder/blank.rb:9
   def empty?; end
 end
 
 # pkg:gem/jbuilder#lib/jbuilder/collection_renderer.rb:8
 class Jbuilder::CollectionRenderer < ::ActionView::CollectionRenderer
-  # @return [CollectionRenderer] a new instance of CollectionRenderer
-  #
   # pkg:gem/jbuilder#lib/jbuilder/collection_renderer.rb:28
   def initialize(lookup_context, options, &scope); end
 
@@ -305,8 +291,6 @@ class Jbuilder::CollectionRenderer::ScopedIterator < ::SimpleDelegator
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
   include ::Enumerable
 
-  # @return [ScopedIterator] a new instance of ScopedIterator
-  #
   # pkg:gem/jbuilder#lib/jbuilder/collection_renderer.rb:12
   def initialize(obj, scope); end
 
@@ -324,8 +308,6 @@ end
 
 # pkg:gem/jbuilder#lib/jbuilder/key_formatter.rb:6
 class Jbuilder::KeyFormatter
-  # @return [KeyFormatter] a new instance of KeyFormatter
-  #
   # pkg:gem/jbuilder#lib/jbuilder/key_formatter.rb:7
   def initialize(*formats, **formats_with_options); end
 
@@ -377,8 +359,6 @@ end
 
 # pkg:gem/jbuilder#lib/jbuilder/jbuilder_template.rb:8
 class JbuilderTemplate < ::Jbuilder
-  # @return [JbuilderTemplate] a new instance of JbuilderTemplate
-  #
   # pkg:gem/jbuilder#lib/jbuilder/jbuilder_template.rb:15
   def initialize(context, options = T.unsafe(nil)); end
 
@@ -480,13 +460,9 @@ class JbuilderTemplate < ::Jbuilder
   # pkg:gem/jbuilder#lib/jbuilder/jbuilder_template.rb:218
   def _fragment_name_with_digest(key, options); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/jbuilder#lib/jbuilder/jbuilder_template.rb:230
   def _is_active_model?(object); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/jbuilder#lib/jbuilder/jbuilder_template.rb:226
   def _partial_options?(options); end
 
@@ -509,15 +485,9 @@ class JbuilderTemplate < ::Jbuilder
   def _write_fragment_cache(key, options = T.unsafe(nil)); end
 
   class << self
-    # Returns the value of attribute template_lookup_options.
-    #
     # pkg:gem/jbuilder#lib/jbuilder/jbuilder_template.rb:10
     def template_lookup_options; end
 
-    # Sets the attribute template_lookup_options
-    #
-    # @param value the value to set the attribute template_lookup_options to.
-    #
     # pkg:gem/jbuilder#lib/jbuilder/jbuilder_template.rb:10
     def template_lookup_options=(_arg0); end
   end

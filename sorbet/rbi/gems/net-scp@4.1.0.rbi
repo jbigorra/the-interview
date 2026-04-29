@@ -197,8 +197,6 @@ class Net::SCP
   # Creates a new Net::SCP session on top of the given Net::SSH +session+
   # object.
   #
-  # @return [SCP] a new instance of SCP
-  #
   # pkg:gem/net-scp#lib/net/scp.rb:251
   def initialize(session); end
 
@@ -291,8 +289,6 @@ class Net::SCP
   # an integer 0 as the only byte, the state machine is kicked into the
   # next state (see +await_response+). If the response is not a 0, an
   # exception is raised.
-  #
-  # @raise [Net::SCP::Error]
   #
   # pkg:gem/net-scp#lib/net/scp.rb:409
   def await_response_state(channel); end

@@ -7,6 +7,9 @@
 
 # Ruby client for SerpApi.com
 #  Scrape results for all major search engines from our fast, easy, and complete API.
+# Client implementation for SerpApi.com
+#
+# Module includes SerpApi error handling.
 #
 # pkg:gem/serpapi#lib/serpapi.rb:3
 module SerpApi; end
@@ -63,9 +66,7 @@ class SerpApi::Client
   # * All parameters are optional.
   # * The `close` method should be called when the client is no longer needed.
   #
-  # @param params [Hash] default for the search
-  # @raise [SerpApiError]
-  # @return [Client] a new instance of Client
+  # @param [Hash] params default for the search
   #
   # pkg:gem/serpapi#lib/serpapi/client.rb:69
   def initialize(params = T.unsafe(nil)); end
@@ -75,7 +76,7 @@ class SerpApi::Client
   # example: spec/serpapi/client/account_api_spec.rb
   # doc: https://serpapi.com/account-api
   #
-  # @param api_key [String] secret key [optional if already provided to the constructor]
+  # @param [String] api_key secret key [optional if already provided to the constructor]
   # @return [Hash] account information
   #
   # pkg:gem/serpapi#lib/serpapi/client.rb:164
@@ -114,7 +115,7 @@ class SerpApi::Client
   # example: spec/serpapi/location_api_spec.rb
   # doc: https://serpapi.com/locations-api
   #
-  # @param params [Hash] must includes fields: q, limit
+  # @param [Hash] params must includes fields: q, limit
   # @return [Array<Hash>] list of matching locations
   #
   # pkg:gem/serpapi#lib/serpapi/client.rb:133
@@ -137,9 +138,8 @@ class SerpApi::Client
   # note that the raw response
   #                 from the search engine is converted to JSON by SerpApi.com backend.
   #                 thus, most of the compute power is on the backsdend and not on the client side.
-  #
-  # @param params [Hash] includes engine, api_key, search fields and more..
-  #   this override the default params provided to the constructor.
+  # @param [Hash] params includes engine, api_key, search fields and more..
+  #                this override the default params provided to the constructor.
   # @return [Hash] search results formatted as a Hash.
   #
   # pkg:gem/serpapi#lib/serpapi/client.rb:112
@@ -156,9 +156,8 @@ class SerpApi::Client
   # example: spec/serpapi/client/search_archive_api_spec.rb
   # doc: https://serpapi.com/search-archive-api
   #
-  # @param format [Symbol] :json or :html [default: json, optional]
-  # @param search_id [String|Integer] from original search `results[:search_metadata][:id]`
-  # @raise [SerpApiError]
+  # @param [String|Integer] search_id from original search `results[:search_metadata][:id]`
+  # @param [Symbol] format :json or :html [default: json, optional]
   # @return [String|Hash] raw html or JSON / Hash
   #
   # pkg:gem/serpapi#lib/serpapi/client.rb:151
@@ -181,9 +180,9 @@ class SerpApi::Client
 
   # Perform HTTP GET request to the SerpApi.com backend endpoint.
   #
-  # @param decoder [Symbol] type :json or :html
-  # @param endpoint [String] HTTP service URI
-  # @param params [Hash] custom search inputs
+  # @param [String] endpoint HTTP service URI
+  # @param [Symbol] decoder type :json or :html
+  # @param [Hash] params custom search inputs
   # @return [String|Hash] raw HTML or decoded response as JSON / Hash
   #
   # pkg:gem/serpapi#lib/serpapi/client.rb:217
@@ -203,8 +202,7 @@ class SerpApi::Client
   # pkg:gem/serpapi#lib/serpapi/client.rb:242
   def process_json_response(response, endpoint, params); end
 
-  # @param params [Hash] to merge with default parameters provided to the constructor.
-  # @raise [SerpApiError]
+  # @param [Hash] params to merge with default parameters provided to the constructor.
   # @return [Hash] merged query parameters after cleanup
   #
   # pkg:gem/serpapi#lib/serpapi/client.rb:193
@@ -212,13 +210,9 @@ class SerpApi::Client
 
   # Centralized error raising to clean up the logic methods
   #
-  # @raise [SerpApiError]
-  #
   # pkg:gem/serpapi#lib/serpapi/client.rb:270
   def raise_http_error(response, data, endpoint, params, explicit_error: T.unsafe(nil), decoder: T.unsafe(nil)); end
 
-  # @raise [SerpApiError]
-  #
   # pkg:gem/serpapi#lib/serpapi/client.rb:284
   def raise_parser_error(response, endpoint, params); end
 
@@ -245,39 +239,28 @@ SerpApi::Client::BACKEND = T.let(T.unsafe(nil), String)
 class SerpApi::SerpApiError < ::StandardError
   # All attributes are optional keyword arguments.
   #
-  # @param decoder [Symbol, nil] optional decoder/format used (e.g. :json)
   # @param message [String, nil] an optional human message passed to StandardError
+  # @param serpapi_error [String, nil] optional error string coming from SerpAPI
+  # @param search_params [Hash, nil] optional hash of the search parameters used
   # @param response_status [Integer, nil] optional HTTP or response status code
   # @param search_id [String, nil] optional id returned by the service for the search
-  # @param search_params [Hash, nil] optional hash of the search parameters used
-  # @param serpapi_error [String, nil] optional error string coming from SerpAPI
-  # @return [SerpApiError] a new instance of SerpApiError
+  # @param decoder [Symbol, nil] optional decoder/format used (e.g. :json)
   #
   # pkg:gem/serpapi#lib/serpapi/error.rb:25
   def initialize(message = T.unsafe(nil), serpapi_error: T.unsafe(nil), search_params: T.unsafe(nil), response_status: T.unsafe(nil), search_id: T.unsafe(nil), decoder: T.unsafe(nil)); end
 
-  # Returns the value of attribute decoder.
-  #
   # pkg:gem/serpapi#lib/serpapi/error.rb:15
   def decoder; end
 
-  # Returns the value of attribute response_status.
-  #
   # pkg:gem/serpapi#lib/serpapi/error.rb:15
   def response_status; end
 
-  # Returns the value of attribute search_id.
-  #
   # pkg:gem/serpapi#lib/serpapi/error.rb:15
   def search_id; end
 
-  # Returns the value of attribute search_params.
-  #
   # pkg:gem/serpapi#lib/serpapi/error.rb:15
   def search_params; end
 
-  # Returns the value of attribute serpapi_error.
-  #
   # pkg:gem/serpapi#lib/serpapi/error.rb:15
   def serpapi_error; end
 
@@ -293,13 +276,9 @@ class SerpApi::SerpApiError < ::StandardError
   # pkg:gem/serpapi#lib/serpapi/error.rb:63
   def validate_optional_integer(value, name = T.unsafe(nil)); end
 
-  # @raise [TypeError]
-  #
   # pkg:gem/serpapi#lib/serpapi/error.rb:56
   def validate_optional_string(value, name = T.unsafe(nil)); end
 
-  # @raise [TypeError]
-  #
   # pkg:gem/serpapi#lib/serpapi/error.rb:75
   def validate_optional_symbol(value, name = T.unsafe(nil)); end
 end

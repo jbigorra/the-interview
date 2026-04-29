@@ -61,7 +61,7 @@ group :development, :test do
 
   # Static type checking [https://sorbet.org/]
   gem "sorbet", require: false
-  gem "tapioca", require: false
+  gem "tapioca", ">= 0.19", require: false
 
   gem "rspec-rails"
   gem "factory_bot_rails"

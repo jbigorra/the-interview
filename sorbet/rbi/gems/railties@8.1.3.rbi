@@ -6,6 +6,8 @@
 
 
 # :include: ../README.rdoc
+# :enddoc:
+# :enddoc:
 #
 # pkg:gem/railties#lib/rails/gem_version.rb:3
 module Rails
@@ -13,25 +15,15 @@ module Rails
   extend ::ActiveSupport::Benchmarkable
 
   class << self
-    # Returns the value of attribute app_class.
-    #
     # pkg:gem/railties#lib/rails.rb:43
     def app_class; end
 
-    # Sets the attribute app_class
-    #
-    # @param value the value to set the attribute app_class to.
-    #
     # pkg:gem/railties#lib/rails.rb:43
     def app_class=(_arg0); end
 
     # pkg:gem/railties#lib/rails.rb:44
     def application; end
 
-    # Sets the attribute application
-    #
-    # @param value the value to set the attribute application to.
-    #
     # pkg:gem/railties#lib/rails.rb:42
     def application=(_arg0); end
 
@@ -41,15 +33,9 @@ module Rails
     # pkg:gem/railties#lib/rails.rb:55
     def backtrace_cleaner; end
 
-    # Returns the value of attribute cache.
-    #
     # pkg:gem/railties#lib/rails.rb:43
     def cache; end
 
-    # Sets the attribute cache
-    #
-    # @param value the value to set the attribute cache to.
-    #
     # pkg:gem/railties#lib/rails.rb:43
     def cache=(_arg0); end
 
@@ -121,15 +107,9 @@ module Rails
     # pkg:gem/railties#lib/rails.rb:48
     def initialized?(*_arg0, **_arg1, &_arg2); end
 
-    # Returns the value of attribute logger.
-    #
     # pkg:gem/railties#lib/rails.rb:43
     def logger; end
 
-    # Sets the attribute logger
-    #
-    # @param value the value to set the attribute logger to.
-    #
     # pkg:gem/railties#lib/rails.rb:43
     def logger=(_arg0); end
 
@@ -206,25 +186,15 @@ end
 #
 # pkg:gem/railties#lib/rails/application.rb:60
 class Rails::Application < ::Rails::Engine
-  # @return [Application] a new instance of Application
-  #
   # pkg:gem/railties#lib/rails/application.rb:107
   def initialize(initial_variable_values = T.unsafe(nil), &block); end
 
-  # Returns the value of attribute assets.
-  #
   # pkg:gem/railties#lib/rails/application.rb:98
   def assets; end
 
-  # Sets the attribute assets
-  #
-  # @param value the value to set the attribute assets to.
-  #
   # pkg:gem/railties#lib/rails/application.rb:98
   def assets=(_arg0); end
 
-  # Returns the value of attribute autoloaders.
-  #
   # pkg:gem/railties#lib/rails/application.rb:100
   def autoloaders; end
 
@@ -234,10 +204,6 @@ class Rails::Application < ::Rails::Engine
   # pkg:gem/railties#lib/rails/application.rb:453
   def config; end
 
-  # Sets the attribute config
-  #
-  # @param value the value to set the attribute config to.
-  #
   # pkg:gem/railties#lib/rails/application.rb:457
   def config=(_arg0); end
 
@@ -307,9 +273,20 @@ class Rails::Application < ::Rails::Engine
   # pkg:gem/railties#lib/rails/application.rb:497
   def credentials; end
 
-  # Sets the attribute credentials
+  # Returns an ActiveSupport::EncryptedConfiguration instance for the
+  # credentials file specified by +config.credentials.content_path+.
   #
-  # @param value the value to set the attribute credentials to.
+  # By default, +config.credentials.content_path+ will point to either
+  # <tt>config/credentials/#{environment}.yml.enc</tt> for the current
+  # environment (for example, +config/credentials/production.yml.enc+ for the
+  # +production+ environment), or +config/credentials.yml.enc+ if that file
+  # does not exist.
+  #
+  # The encryption key is taken from either <tt>ENV["RAILS_MASTER_KEY"]</tt>,
+  # or from the file specified by +config.credentials.key_path+. By default,
+  # +config.credentials.key_path+ will point to either
+  # <tt>config/credentials/#{environment}.key</tt> for the current
+  # environment, or +config/master.key+ if that file does not exist.
   #
   # pkg:gem/railties#lib/rails/application.rb:458
   def credentials=(_arg0); end
@@ -358,8 +335,6 @@ class Rails::Application < ::Rails::Engine
   # pkg:gem/railties#lib/rails/application.rb:319
   def env_config; end
 
-  # Returns the value of attribute executor.
-  #
   # pkg:gem/railties#lib/rails/application.rb:100
   def executor; end
 
@@ -379,8 +354,6 @@ class Rails::Application < ::Rails::Engine
   def initialize!(group = T.unsafe(nil)); end
 
   # Returns true if the application is initialized.
-  #
-  # @return [Boolean]
   #
   # pkg:gem/railties#lib/rails/application.rb:132
   def initialized?; end
@@ -498,13 +471,9 @@ class Rails::Application < ::Rails::Engine
   # pkg:gem/railties#lib/rails/application.rb:166
   def reload_routes_unless_loaded; end
 
-  # Returns the value of attribute reloader.
-  #
   # pkg:gem/railties#lib/rails/application.rb:100
   def reloader; end
 
-  # Returns the value of attribute reloaders.
-  #
   # pkg:gem/railties#lib/rails/application.rb:100
   def reloaders; end
 
@@ -523,20 +492,12 @@ class Rails::Application < ::Rails::Engine
   # pkg:gem/railties#lib/rails/application.rb:367
   def runner(&blk); end
 
-  # Returns the value of attribute sandbox.
-  #
   # pkg:gem/railties#lib/rails/application.rb:98
   def sandbox; end
 
-  # Sets the attribute sandbox
-  #
-  # @param value the value to set the attribute sandbox to.
-  #
   # pkg:gem/railties#lib/rails/application.rb:98
   def sandbox=(_arg0); end
 
-  # Returns the value of attribute sandbox.
-  #
   # pkg:gem/railties#lib/rails/application.rb:99
   def sandbox?; end
 
@@ -648,8 +609,6 @@ class Rails::Application < ::Rails::Engine
     # pkg:gem/railties#lib/rails/application.rb:86
     def find_root(from); end
 
-    # @private
-    #
     # pkg:gem/railties#lib/rails/application.rb:69
     def inherited(base); end
 
@@ -669,79 +628,45 @@ end
 
 # pkg:gem/railties#lib/rails/application/configuration.rb:13
 class Rails::Application::Configuration < ::Rails::Engine::Configuration
-  # @return [Configuration] a new instance of Configuration
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:31
   def initialize(*_arg0); end
 
-  # Returns the value of attribute add_autoload_paths_to_load_path.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def add_autoload_paths_to_load_path; end
 
-  # Sets the attribute add_autoload_paths_to_load_path
-  #
-  # @param value the value to set the attribute add_autoload_paths_to_load_path to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def add_autoload_paths_to_load_path=(_arg0); end
 
-  # Returns the value of attribute allow_concurrency.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def allow_concurrency; end
 
-  # Sets the attribute allow_concurrency
-  #
-  # @param value the value to set the attribute allow_concurrency to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def allow_concurrency=(_arg0); end
 
   # pkg:gem/railties#lib/rails/application/configuration.rb:582
   def annotations; end
 
-  # Returns the value of attribute api_only.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:29
   def api_only; end
 
   # pkg:gem/railties#lib/rails/application/configuration.rb:395
   def api_only=(value); end
 
-  # Returns the value of attribute asset_host.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def asset_host; end
 
-  # Sets the attribute asset_host
-  #
-  # @param value the value to set the attribute asset_host to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def asset_host=(_arg0); end
 
-  # Returns the value of attribute assume_ssl.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def assume_ssl; end
 
-  # Sets the attribute assume_ssl
-  #
-  # @param value the value to set the attribute assume_ssl to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def assume_ssl=(_arg0); end
 
-  # Returns the value of attribute autoflush_log.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def autoflush_log; end
 
-  # Sets the attribute autoflush_log
-  #
-  # @param value the value to set the attribute autoflush_log to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def autoflush_log=(_arg0); end
 
@@ -751,42 +676,24 @@ class Rails::Application::Configuration < ::Rails::Engine::Configuration
   # pkg:gem/railties#lib/rails/application/configuration.rb:502
   def autoload_lib_once(ignore:); end
 
-  # Returns the value of attribute beginning_of_week.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def beginning_of_week; end
 
-  # Sets the attribute beginning_of_week
-  #
-  # @param value the value to set the attribute beginning_of_week to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def beginning_of_week=(_arg0); end
 
   # pkg:gem/railties#lib/rails/application/configuration.rb:407
   def broadcast_log_level; end
 
-  # Returns the value of attribute cache_classes.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def cache_classes; end
 
-  # Sets the attribute cache_classes
-  #
-  # @param value the value to set the attribute cache_classes to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def cache_classes=(_arg0); end
 
-  # Returns the value of attribute cache_store.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def cache_store; end
 
-  # Sets the attribute cache_store
-  #
-  # @param value the value to set the attribute cache_store to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def cache_store=(_arg0); end
 
@@ -796,27 +703,15 @@ class Rails::Application::Configuration < ::Rails::Engine::Configuration
   # pkg:gem/railties#lib/rails/application/configuration.rb:518
   def colorize_logging=(val); end
 
-  # Returns the value of attribute consider_all_requests_local.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def consider_all_requests_local; end
 
-  # Sets the attribute consider_all_requests_local
-  #
-  # @param value the value to set the attribute consider_all_requests_local to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def consider_all_requests_local=(_arg0); end
 
-  # Returns the value of attribute console.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def console; end
 
-  # Sets the attribute console
-  #
-  # @param value the value to set the attribute console to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def console=(_arg0); end
 
@@ -825,63 +720,33 @@ class Rails::Application::Configuration < ::Rails::Engine::Configuration
   # pkg:gem/railties#lib/rails/application/configuration.rb:587
   def content_security_policy(&block); end
 
-  # Returns the value of attribute content_security_policy_nonce_auto.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def content_security_policy_nonce_auto; end
 
-  # Sets the attribute content_security_policy_nonce_auto
-  #
-  # @param value the value to set the attribute content_security_policy_nonce_auto to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def content_security_policy_nonce_auto=(_arg0); end
 
-  # Returns the value of attribute content_security_policy_nonce_directives.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def content_security_policy_nonce_directives; end
 
-  # Sets the attribute content_security_policy_nonce_directives
-  #
-  # @param value the value to set the attribute content_security_policy_nonce_directives to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def content_security_policy_nonce_directives=(_arg0); end
 
-  # Returns the value of attribute content_security_policy_nonce_generator.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def content_security_policy_nonce_generator; end
 
-  # Sets the attribute content_security_policy_nonce_generator
-  #
-  # @param value the value to set the attribute content_security_policy_nonce_generator to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def content_security_policy_nonce_generator=(_arg0); end
 
-  # Returns the value of attribute content_security_policy_report_only.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def content_security_policy_report_only; end
 
-  # Sets the attribute content_security_policy_report_only
-  #
-  # @param value the value to set the attribute content_security_policy_report_only to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def content_security_policy_report_only=(_arg0); end
 
-  # Returns the value of attribute credentials.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def credentials; end
 
-  # Sets the attribute credentials
-  #
-  # @param value the value to set the attribute credentials to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def credentials=(_arg0); end
 
@@ -894,49 +759,27 @@ class Rails::Application::Configuration < ::Rails::Engine::Configuration
   # pkg:gem/railties#lib/rails/application/configuration.rb:409
   def debug_exception_response_format; end
 
-  # Sets the attribute debug_exception_response_format
-  #
-  # @param value the value to set the attribute debug_exception_response_format to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:413
   def debug_exception_response_format=(_arg0); end
 
   # pkg:gem/railties#lib/rails/application/configuration.rb:604
   def default_log_file; end
 
-  # Returns the value of attribute disable_sandbox.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def disable_sandbox; end
 
-  # Sets the attribute disable_sandbox
-  #
-  # @param value the value to set the attribute disable_sandbox to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def disable_sandbox=(_arg0); end
 
-  # Returns the value of attribute dom_testing_default_html_version.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def dom_testing_default_html_version; end
 
-  # Sets the attribute dom_testing_default_html_version
-  #
-  # @param value the value to set the attribute dom_testing_default_html_version to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def dom_testing_default_html_version=(_arg0); end
 
-  # Returns the value of attribute eager_load.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def eager_load; end
 
-  # Sets the attribute eager_load
-  #
-  # @param value the value to set the attribute eager_load to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def eager_load=(_arg0); end
 
@@ -946,107 +789,57 @@ class Rails::Application::Configuration < ::Rails::Engine::Configuration
   # pkg:gem/railties#lib/rails/application/configuration.rb:383
   def enable_reloading=(value); end
 
-  # Returns the value of attribute encoding.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:29
   def encoding; end
 
   # pkg:gem/railties#lib/rails/application/configuration.rb:387
   def encoding=(value); end
 
-  # Returns the value of attribute exceptions_app.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def exceptions_app; end
 
-  # Sets the attribute exceptions_app
-  #
-  # @param value the value to set the attribute exceptions_app to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def exceptions_app=(_arg0); end
 
-  # Returns the value of attribute file_watcher.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def file_watcher; end
 
-  # Sets the attribute file_watcher
-  #
-  # @param value the value to set the attribute file_watcher to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def file_watcher=(_arg0); end
 
-  # Returns the value of attribute filter_parameters.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def filter_parameters; end
 
-  # Sets the attribute filter_parameters
-  #
-  # @param value the value to set the attribute filter_parameters to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def filter_parameters=(_arg0); end
 
-  # Returns the value of attribute filter_redirect.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def filter_redirect; end
 
-  # Sets the attribute filter_redirect
-  #
-  # @param value the value to set the attribute filter_redirect to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def filter_redirect=(_arg0); end
 
-  # Returns the value of attribute force_ssl.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def force_ssl; end
 
-  # Sets the attribute force_ssl
-  #
-  # @param value the value to set the attribute force_ssl to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def force_ssl=(_arg0); end
 
-  # Returns the value of attribute helpers_paths.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def helpers_paths; end
 
-  # Sets the attribute helpers_paths
-  #
-  # @param value the value to set the attribute helpers_paths to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def helpers_paths=(_arg0); end
 
-  # Returns the value of attribute host_authorization.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def host_authorization; end
 
-  # Sets the attribute host_authorization
-  #
-  # @param value the value to set the attribute host_authorization to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def host_authorization=(_arg0); end
 
-  # Returns the value of attribute hosts.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def hosts; end
 
-  # Sets the attribute hosts
-  #
-  # @param value the value to set the attribute hosts to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def hosts=(_arg0); end
 
@@ -1070,64 +863,36 @@ class Rails::Application::Configuration < ::Rails::Engine::Configuration
   # pkg:gem/railties#lib/rails/application/configuration.rb:94
   def load_defaults(target_version); end
 
-  # Returns the value of attribute loaded_config_version.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:29
   def loaded_config_version; end
 
-  # Returns the value of attribute log_file_size.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def log_file_size; end
 
-  # Sets the attribute log_file_size
-  #
-  # @param value the value to set the attribute log_file_size to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def log_file_size=(_arg0); end
 
-  # Returns the value of attribute log_formatter.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def log_formatter; end
 
-  # Sets the attribute log_formatter
-  #
-  # @param value the value to set the attribute log_formatter to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def log_formatter=(_arg0); end
 
-  # Returns the value of attribute log_level.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:29
   def log_level; end
 
   # pkg:gem/railties#lib/rails/application/configuration.rb:402
   def log_level=(level); end
 
-  # Returns the value of attribute log_tags.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def log_tags; end
 
-  # Sets the attribute log_tags
-  #
-  # @param value the value to set the attribute log_tags to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def log_tags=(_arg0); end
 
-  # Returns the value of attribute logger.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def logger; end
 
-  # Sets the attribute logger
-  #
-  # @param value the value to set the attribute logger to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def logger=(_arg0); end
 
@@ -1139,104 +904,54 @@ class Rails::Application::Configuration < ::Rails::Engine::Configuration
   # pkg:gem/railties#lib/rails/application/configuration.rb:596
   def permissions_policy(&block); end
 
-  # Returns the value of attribute precompile_filter_parameters.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def precompile_filter_parameters; end
 
-  # Sets the attribute precompile_filter_parameters
-  #
-  # @param value the value to set the attribute precompile_filter_parameters to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def precompile_filter_parameters=(_arg0); end
 
-  # Returns the value of attribute public_file_server.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def public_file_server; end
 
-  # Sets the attribute public_file_server
-  #
-  # @param value the value to set the attribute public_file_server to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def public_file_server=(_arg0); end
 
-  # Returns the value of attribute railties_order.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def railties_order; end
 
-  # Sets the attribute railties_order
-  #
-  # @param value the value to set the attribute railties_order to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def railties_order=(_arg0); end
 
-  # Returns the value of attribute rake_eager_load.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def rake_eager_load; end
 
-  # Sets the attribute rake_eager_load
-  #
-  # @param value the value to set the attribute rake_eager_load to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def rake_eager_load=(_arg0); end
 
-  # Returns the value of attribute relative_url_root.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def relative_url_root; end
 
-  # Sets the attribute relative_url_root
-  #
-  # @param value the value to set the attribute relative_url_root to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def relative_url_root=(_arg0); end
 
-  # Returns the value of attribute reload_classes_only_on_change.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def reload_classes_only_on_change; end
 
-  # Sets the attribute reload_classes_only_on_change
-  #
-  # @param value the value to set the attribute reload_classes_only_on_change to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def reload_classes_only_on_change=(_arg0); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:375
   def reloading_enabled?; end
 
-  # Returns the value of attribute require_master_key.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def require_master_key; end
 
-  # Sets the attribute require_master_key
-  #
-  # @param value the value to set the attribute require_master_key to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def require_master_key=(_arg0); end
 
-  # Returns the value of attribute sandbox_by_default.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def sandbox_by_default; end
 
-  # Sets the attribute sandbox_by_default
-  #
-  # @param value the value to set the attribute sandbox_by_default to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def sandbox_by_default=(_arg0); end
 
@@ -1246,27 +961,15 @@ class Rails::Application::Configuration < ::Rails::Engine::Configuration
   # pkg:gem/railties#lib/rails/application/configuration.rb:535
   def secret_key_base=(new_secret_key_base); end
 
-  # Returns the value of attribute server_timing.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def server_timing; end
 
-  # Sets the attribute server_timing
-  #
-  # @param value the value to set the attribute server_timing to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def server_timing=(_arg0); end
 
-  # Returns the value of attribute session_options.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def session_options; end
 
-  # Sets the attribute session_options
-  #
-  # @param value the value to set the attribute session_options to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def session_options=(_arg0); end
 
@@ -1289,68 +992,36 @@ class Rails::Application::Configuration < ::Rails::Engine::Configuration
   # pkg:gem/railties#lib/rails/application/configuration.rb:562
   def session_store(new_session_store = T.unsafe(nil), **options); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:578
   def session_store?; end
 
-  # Returns the value of attribute silence_healthcheck_path.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def silence_healthcheck_path; end
 
-  # Sets the attribute silence_healthcheck_path
-  #
-  # @param value the value to set the attribute silence_healthcheck_path to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def silence_healthcheck_path=(_arg0); end
 
-  # Returns the value of attribute ssl_options.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def ssl_options; end
 
-  # Sets the attribute ssl_options
-  #
-  # @param value the value to set the attribute ssl_options to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def ssl_options=(_arg0); end
 
-  # Returns the value of attribute time_zone.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def time_zone; end
 
-  # Sets the attribute time_zone
-  #
-  # @param value the value to set the attribute time_zone to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def time_zone=(_arg0); end
 
-  # Returns the value of attribute x.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def x; end
 
-  # Sets the attribute x
-  #
-  # @param value the value to set the attribute x to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def x=(_arg0); end
 
-  # Returns the value of attribute yjit.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def yjit; end
 
-  # Sets the attribute yjit
-  #
-  # @param value the value to set the attribute yjit to.
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:14
   def yjit=(_arg0); end
 
@@ -1365,8 +1036,6 @@ end
 
 # pkg:gem/railties#lib/rails/application/configuration.rb:620
 class Rails::Application::Configuration::Custom
-  # @return [Custom] a new instance of Custom
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:621
   def initialize; end
 
@@ -1375,34 +1044,24 @@ class Rails::Application::Configuration::Custom
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/railties#lib/rails/application/configuration.rb:637
   def respond_to_missing?(symbol, _); end
 end
 
 # pkg:gem/railties#lib/rails/application/default_middleware_stack.rb:5
 class Rails::Application::DefaultMiddlewareStack
-  # @return [DefaultMiddlewareStack] a new instance of DefaultMiddlewareStack
-  #
   # pkg:gem/railties#lib/rails/application/default_middleware_stack.rb:8
   def initialize(app, config, paths); end
 
-  # Returns the value of attribute app.
-  #
   # pkg:gem/railties#lib/rails/application/default_middleware_stack.rb:6
   def app; end
 
   # pkg:gem/railties#lib/rails/application/default_middleware_stack.rb:14
   def build_stack; end
 
-  # Returns the value of attribute config.
-  #
   # pkg:gem/railties#lib/rails/application/default_middleware_stack.rb:6
   def config; end
 
-  # Returns the value of attribute paths.
-  #
   # pkg:gem/railties#lib/rails/application/default_middleware_stack.rb:6
   def paths; end
 
@@ -1434,8 +1093,6 @@ end
 
 # pkg:gem/railties#lib/rails/application/finisher.rb:96
 class Rails::Application::Finisher::MonitorHook
-  # @return [MonitorHook] a new instance of MonitorHook
-  #
   # pkg:gem/railties#lib/rails/application/finisher.rb:97
   def initialize(monitor = T.unsafe(nil)); end
 
@@ -1455,23 +1112,15 @@ class Rails::Application::RoutesReloader
   extend ::ActiveSupport::Callbacks::ClassMethods
   extend ::ActiveSupport::DescendantsTracker
 
-  # @return [RoutesReloader] a new instance of RoutesReloader
-  #
   # pkg:gem/railties#lib/rails/application/routes_reloader.rb:14
   def initialize; end
 
   # pkg:gem/railties#lib/rails/application/routes_reloader.rb:7
   def __callbacks; end
 
-  # Returns the value of attribute eager_load.
-  #
   # pkg:gem/railties#lib/rails/application/routes_reloader.rb:10
   def eager_load; end
 
-  # Sets the attribute eager_load
-  #
-  # @param value the value to set the attribute eager_load to.
-  #
   # pkg:gem/railties#lib/rails/application/routes_reloader.rb:10
   def eager_load=(_arg0); end
 
@@ -1484,29 +1133,21 @@ class Rails::Application::RoutesReloader
   # pkg:gem/railties#lib/rails/application/routes_reloader.rb:36
   def execute_unless_loaded; end
 
-  # Returns the value of attribute external_routes.
-  #
   # pkg:gem/railties#lib/rails/application/routes_reloader.rb:9
   def external_routes; end
 
-  # Returns the value of attribute loaded.
-  #
   # pkg:gem/railties#lib/rails/application/routes_reloader.rb:9
   def loaded; end
 
   # pkg:gem/railties#lib/rails/application/routes_reloader.rb:11
   def loaded=(_arg0); end
 
-  # Returns the value of attribute paths.
-  #
   # pkg:gem/railties#lib/rails/application/routes_reloader.rb:9
   def paths; end
 
   # pkg:gem/railties#lib/rails/application/routes_reloader.rb:22
   def reload!; end
 
-  # Returns the value of attribute route_sets.
-  #
   # pkg:gem/railties#lib/rails/application/routes_reloader.rb:9
   def route_sets; end
 
@@ -1566,8 +1207,6 @@ class Rails::ApplicationController < ::ActionController::Base
   # pkg:gem/railties#lib/rails/application_controller.rb:27
   def disable_content_security_policy_nonce!; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/railties#lib/rails/application_controller.rb:23
   def local_request?; end
 
@@ -1613,13 +1252,9 @@ end
 class Rails::Autoloaders
   include ::Enumerable
 
-  # @return [Autoloaders] a new instance of Autoloaders
-  #
   # pkg:gem/railties#lib/rails/autoloaders.rb:11
   def initialize; end
 
-  # @yield [main]
-  #
   # pkg:gem/railties#lib/rails/autoloaders.rb:31
   def each; end
 
@@ -1629,18 +1264,12 @@ class Rails::Autoloaders
   # pkg:gem/railties#lib/rails/autoloaders.rb:36
   def logger=(logger); end
 
-  # Returns the value of attribute main.
-  #
   # pkg:gem/railties#lib/rails/autoloaders.rb:9
   def main; end
 
-  # Returns the value of attribute once.
-  #
   # pkg:gem/railties#lib/rails/autoloaders.rb:9
   def once; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/railties#lib/rails/autoloaders.rb:44
   def zeitwerk_enabled?; end
 end
@@ -1658,8 +1287,6 @@ end
 
 # pkg:gem/railties#lib/rails/backtrace_cleaner.rb:7
 class Rails::BacktraceCleaner < ::ActiveSupport::BacktraceCleaner
-  # @return [BacktraceCleaner] a new instance of BacktraceCleaner
-  #
   # pkg:gem/railties#lib/rails/backtrace_cleaner.rb:11
   def initialize; end
 
@@ -1684,72 +1311,42 @@ module Rails::Configuration; end
 
 # pkg:gem/railties#lib/rails/configuration.rb:104
 class Rails::Configuration::Generators
-  # @return [Generators] a new instance of Generators
-  #
   # pkg:gem/railties#lib/rails/configuration.rb:108
   def initialize; end
 
   # pkg:gem/railties#lib/rails/configuration.rb:130
   def after_generate(&block); end
 
-  # Returns the value of attribute after_generate_callbacks.
-  #
   # pkg:gem/railties#lib/rails/configuration.rb:106
   def after_generate_callbacks; end
 
-  # Returns the value of attribute aliases.
-  #
   # pkg:gem/railties#lib/rails/configuration.rb:105
   def aliases; end
 
-  # Sets the attribute aliases
-  #
-  # @param value the value to set the attribute aliases to.
-  #
   # pkg:gem/railties#lib/rails/configuration.rb:105
   def aliases=(_arg0); end
 
-  # Returns the value of attribute api_only.
-  #
   # pkg:gem/railties#lib/rails/configuration.rb:105
   def api_only; end
 
-  # Sets the attribute api_only
-  #
-  # @param value the value to set the attribute api_only to.
-  #
   # pkg:gem/railties#lib/rails/configuration.rb:105
   def api_only=(_arg0); end
 
   # pkg:gem/railties#lib/rails/configuration.rb:134
   def apply_rubocop_autocorrect_after_generate!; end
 
-  # Returns the value of attribute colorize_logging.
-  #
   # pkg:gem/railties#lib/rails/configuration.rb:105
   def colorize_logging; end
 
-  # Sets the attribute colorize_logging
-  #
-  # @param value the value to set the attribute colorize_logging to.
-  #
   # pkg:gem/railties#lib/rails/configuration.rb:105
   def colorize_logging=(_arg0); end
 
-  # Returns the value of attribute fallbacks.
-  #
   # pkg:gem/railties#lib/rails/configuration.rb:105
   def fallbacks; end
 
-  # Sets the attribute fallbacks
-  #
-  # @param value the value to set the attribute fallbacks to.
-  #
   # pkg:gem/railties#lib/rails/configuration.rb:105
   def fallbacks=(_arg0); end
 
-  # Returns the value of attribute hidden_namespaces.
-  #
   # pkg:gem/railties#lib/rails/configuration.rb:106
   def hidden_namespaces; end
 
@@ -1759,27 +1356,15 @@ class Rails::Configuration::Generators
   # pkg:gem/railties#lib/rails/configuration.rb:143
   def method_missing(method, *args); end
 
-  # Returns the value of attribute options.
-  #
   # pkg:gem/railties#lib/rails/configuration.rb:105
   def options; end
 
-  # Sets the attribute options
-  #
-  # @param value the value to set the attribute options to.
-  #
   # pkg:gem/railties#lib/rails/configuration.rb:105
   def options=(_arg0); end
 
-  # Returns the value of attribute templates.
-  #
   # pkg:gem/railties#lib/rails/configuration.rb:105
   def templates; end
 
-  # Sets the attribute templates
-  #
-  # @param value the value to set the attribute templates to.
-  #
   # pkg:gem/railties#lib/rails/configuration.rb:105
   def templates=(_arg0); end
 
@@ -1827,8 +1412,6 @@ end
 #
 # pkg:gem/railties#lib/rails/configuration.rb:46
 class Rails::Configuration::MiddlewareStackProxy
-  # @return [MiddlewareStackProxy] a new instance of MiddlewareStackProxy
-  #
   # pkg:gem/railties#lib/rails/configuration.rb:47
   def initialize(operations = T.unsafe(nil), delete_operations = T.unsafe(nil)); end
 
@@ -1870,13 +1453,9 @@ class Rails::Configuration::MiddlewareStackProxy
 
   protected
 
-  # Returns the value of attribute delete_operations.
-  #
   # pkg:gem/railties#lib/rails/configuration.rb:101
   def delete_operations; end
 
-  # Returns the value of attribute operations.
-  #
   # pkg:gem/railties#lib/rails/configuration.rb:101
   def operations; end
 end
@@ -2225,8 +1804,6 @@ class Rails::Engine < ::Rails::Railtie
   include ::ActiveSupport::Callbacks
   extend ::ActiveSupport::Callbacks::ClassMethods
 
-  # @return [Engine] a new instance of Engine
-  #
   # pkg:gem/railties#lib/rails/engine.rb:439
   def initialize; end
 
@@ -2343,8 +1920,6 @@ class Rails::Engine < ::Rails::Railtie
   # pkg:gem/railties#lib/rails/engine.rb:544
   def routes(&block); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/railties#lib/rails/engine.rb:679
   def routes?; end
 
@@ -2373,13 +1948,9 @@ class Rails::Engine < ::Rails::Railtie
   # pkg:gem/railties#lib/rails/engine.rb:712
   def default_middleware_stack; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/railties#lib/rails/engine.rb:740
   def fixtures_in_root_and_not_in_vendor_or_dot_dir?(fixtures); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/railties#lib/rails/engine.rb:696
   def has_migrations?; end
 
@@ -2399,15 +1970,9 @@ class Rails::Engine < ::Rails::Railtie
     # pkg:gem/railties#lib/rails/engine.rb:434
     def _load_seed_callbacks=(value); end
 
-    # Returns the value of attribute called_from.
-    #
     # pkg:gem/railties#lib/rails/engine.rb:353
     def called_from; end
 
-    # Sets the attribute called_from
-    #
-    # @param value the value to set the attribute called_from to.
-    #
     # pkg:gem/railties#lib/rails/engine.rb:353
     def called_from=(_arg0); end
 
@@ -2431,28 +1996,18 @@ class Rails::Engine < ::Rails::Railtie
     # pkg:gem/railties#lib/rails/engine.rb:700
     def find_root_with_flag(flag, root_path, default = T.unsafe(nil)); end
 
-    # @private
-    #
     # pkg:gem/railties#lib/rails/engine.rb:360
     def inherited(base); end
 
     # pkg:gem/railties#lib/rails/engine.rb:384
     def isolate_namespace(mod); end
 
-    # Returns the value of attribute isolated.
-    #
     # pkg:gem/railties#lib/rails/engine.rb:353
     def isolated; end
 
-    # Sets the attribute isolated
-    #
-    # @param value the value to set the attribute isolated to.
-    #
     # pkg:gem/railties#lib/rails/engine.rb:353
     def isolated=(_arg0); end
 
-    # Returns the value of attribute isolated.
-    #
     # pkg:gem/railties#lib/rails/engine.rb:355
     def isolated?; end
 
@@ -2468,8 +2023,6 @@ end
 
 # pkg:gem/railties#lib/rails/engine/configuration.rb:7
 class Rails::Engine::Configuration < ::Rails::Railtie::Configuration
-  # @return [Configuration] a new instance of Configuration
-  #
   # pkg:gem/railties#lib/rails/engine/configuration.rb:41
   def initialize(root = T.unsafe(nil)); end
 
@@ -2502,9 +2055,13 @@ class Rails::Engine::Configuration < ::Rails::Railtie::Configuration
   # pkg:gem/railties#lib/rails/engine/configuration.rb:29
   def autoload_once_paths; end
 
-  # Sets the attribute autoload_once_paths
+  # An array of custom autoload once paths. These won't be eager loaded
+  # unless you push them to +eager_load_paths+ too, which is recommended.
   #
-  # @param value the value to set the attribute autoload_once_paths to.
+  # This collection is empty by default, it accepts strings and +Pathname+
+  # objects.
+  #
+  # If you'd like to add +lib+ to it, please see +autoload_lib_once+.
   #
   # pkg:gem/railties#lib/rails/engine/configuration.rb:10
   def autoload_once_paths=(_arg0); end
@@ -2521,22 +2078,21 @@ class Rails::Engine::Configuration < ::Rails::Railtie::Configuration
   # pkg:gem/railties#lib/rails/engine/configuration.rb:20
   def autoload_paths; end
 
-  # Sets the attribute autoload_paths
+  # An array of custom autoload paths to be added to the ones defined
+  # automatically by Rails. These won't be eager loaded, unless you push
+  # them to +eager_load_paths+ too, which is recommended.
   #
-  # @param value the value to set the attribute autoload_paths to.
+  # This collection is empty by default, it accepts strings and +Pathname+
+  # objects.
+  #
+  # If you'd like to add +lib+ to it, please see +autoload_lib+.
   #
   # pkg:gem/railties#lib/rails/engine/configuration.rb:10
   def autoload_paths=(_arg0); end
 
-  # Returns the value of attribute default_scope.
-  #
   # pkg:gem/railties#lib/rails/engine/configuration.rb:9
   def default_scope; end
 
-  # Sets the attribute default_scope
-  #
-  # @param value the value to set the attribute default_scope to.
-  #
   # pkg:gem/railties#lib/rails/engine/configuration.rb:9
   def default_scope=(_arg0); end
 
@@ -2552,9 +2108,14 @@ class Rails::Engine::Configuration < ::Rails::Railtie::Configuration
   # pkg:gem/railties#lib/rails/engine/configuration.rb:39
   def eager_load_paths; end
 
-  # Sets the attribute eager_load_paths
+  # An array of custom eager load paths to be added to the ones defined
+  # automatically by Rails. Anything in this collection is considered to be
+  # an autoload path regardless of whether it was added to +autoload_paths+.
   #
-  # @param value the value to set the attribute eager_load_paths to.
+  # This collection is empty by default, it accepts strings and +Pathname+
+  # objects.
+  #
+  # If you'd like to add +lib+ to it, please see +autoload_lib+.
   #
   # pkg:gem/railties#lib/rails/engine/configuration.rb:10
   def eager_load_paths=(_arg0); end
@@ -2571,63 +2132,39 @@ class Rails::Engine::Configuration < ::Rails::Railtie::Configuration
   #
   #   config.generators.colorize_logging = false
   #
-  # @yield [@generators]
-  #
   # pkg:gem/railties#lib/rails/engine/configuration.rb:67
   def generators; end
 
-  # Returns the value of attribute javascript_path.
-  #
   # pkg:gem/railties#lib/rails/engine/configuration.rb:9
   def javascript_path; end
 
-  # Sets the attribute javascript_path
-  #
-  # @param value the value to set the attribute javascript_path to.
-  #
   # pkg:gem/railties#lib/rails/engine/configuration.rb:9
   def javascript_path=(_arg0); end
 
-  # Returns the value of attribute middleware.
-  #
   # pkg:gem/railties#lib/rails/engine/configuration.rb:9
   def middleware; end
 
-  # Sets the attribute middleware
-  #
-  # @param value the value to set the attribute middleware to.
-  #
   # pkg:gem/railties#lib/rails/engine/configuration.rb:9
   def middleware=(_arg0); end
 
   # pkg:gem/railties#lib/rails/engine/configuration.rb:73
   def paths; end
 
-  # Returns the value of attribute root.
-  #
   # pkg:gem/railties#lib/rails/engine/configuration.rb:8
   def root; end
 
   # pkg:gem/railties#lib/rails/engine/configuration.rb:115
   def root=(value); end
 
-  # Returns the value of attribute route_set_class.
-  #
   # pkg:gem/railties#lib/rails/engine/configuration.rb:9
   def route_set_class; end
 
-  # Sets the attribute route_set_class
-  #
-  # @param value the value to set the attribute route_set_class to.
-  #
   # pkg:gem/railties#lib/rails/engine/configuration.rb:9
   def route_set_class=(_arg0); end
 end
 
 # pkg:gem/railties#lib/rails/engine/lazy_route_set.rb:11
 class Rails::Engine::LazyRouteSet < ::ActionDispatch::Routing::RouteSet
-  # @return [LazyRouteSet] a new instance of LazyRouteSet
-  #
   # pkg:gem/railties#lib/rails/engine/lazy_route_set.rb:41
   def initialize(config = T.unsafe(nil)); end
 
@@ -2663,8 +2200,6 @@ end
 
 # pkg:gem/railties#lib/rails/engine/lazy_route_set.rb:12
 class Rails::Engine::LazyRouteSet::NamedRouteCollection < ::ActionDispatch::Routing::RouteSet::NamedRouteCollection
-  # @return [Boolean]
-  #
   # pkg:gem/railties#lib/rails/engine/lazy_route_set.rb:13
   def route_defined?(name); end
 end
@@ -2674,8 +2209,6 @@ module Rails::Engine::LazyRouteSet::ProxyUrlHelpers
   # pkg:gem/railties#lib/rails/engine/lazy_route_set.rb:25
   def full_url_for(options); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/railties#lib/rails/engine/lazy_route_set.rb:35
   def optimize_routes_generation?; end
 
@@ -2690,16 +2223,12 @@ end
 class Rails::Engine::Railties
   include ::Enumerable
 
-  # @return [Railties] a new instance of Railties
-  #
   # pkg:gem/railties#lib/rails/engine/railties.rb:9
   def initialize; end
 
   # pkg:gem/railties#lib/rails/engine/railties.rb:18
   def -(others); end
 
-  # Returns the value of attribute _all.
-  #
   # pkg:gem/railties#lib/rails/engine/railties.rb:7
   def _all; end
 
@@ -2895,8 +2424,6 @@ end
 
 # pkg:gem/railties#lib/rails/initializable.rb:112
 module Rails::Initializable::ClassMethods
-  # @raise [ArgumentError]
-  #
   # pkg:gem/railties#lib/rails/initializable.rb:130
   def initializer(name, opts = T.unsafe(nil), &blk); end
 
@@ -2915,8 +2442,6 @@ class Rails::Initializable::Collection
   include ::Enumerable
   include ::TSort
 
-  # @return [Collection] a new instance of Collection
-  #
   # pkg:gem/railties#lib/rails/initializable.rb:43
   def initialize(initializers = T.unsafe(nil)); end
 
@@ -2935,8 +2460,6 @@ class Rails::Initializable::Collection
   # pkg:gem/railties#lib/rails/initializable.rb:58
   def each(&block); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/railties#lib/rails/initializable.rb:95
   def has?(name); end
 
@@ -2966,39 +2489,27 @@ end
 
 # pkg:gem/railties#lib/rails/initializable.rb:11
 class Rails::Initializable::Initializer
-  # @return [Initializer] a new instance of Initializer
-  #
   # pkg:gem/railties#lib/rails/initializable.rb:14
   def initialize(name, context, before:, after:, group: T.unsafe(nil), &block); end
 
-  # Returns the value of attribute after.
-  #
   # pkg:gem/railties#lib/rails/initializable.rb:12
   def after; end
 
-  # Returns the value of attribute before.
-  #
   # pkg:gem/railties#lib/rails/initializable.rb:12
   def before; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/railties#lib/rails/initializable.rb:19
   def belongs_to?(group); end
 
   # pkg:gem/railties#lib/rails/initializable.rb:27
   def bind(context); end
 
-  # Returns the value of attribute block.
-  #
   # pkg:gem/railties#lib/rails/initializable.rb:12
   def block; end
 
   # pkg:gem/railties#lib/rails/initializable.rb:32
   def context_class; end
 
-  # Returns the value of attribute name.
-  #
   # pkg:gem/railties#lib/rails/initializable.rb:12
   def name; end
 
@@ -3046,8 +2557,6 @@ class Rails::MailersController < ::Rails::ApplicationController
   # pkg:gem/railties#lib/rails/mailers_controller.rb:119
   def set_locale(&block); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/railties#lib/rails/mailers_controller.rb:65
   def show_previews?; end
 
@@ -3112,8 +2621,6 @@ module Rails::Paths; end
 class Rails::Paths::Path
   include ::Enumerable
 
-  # @return [Path] a new instance of Path
-  #
   # pkg:gem/railties#lib/rails/paths.rb:119
   def initialize(root, current, paths, options = T.unsafe(nil)); end
 
@@ -3169,15 +2676,9 @@ class Rails::Paths::Path
   # pkg:gem/railties#lib/rails/paths.rb:143
   def first; end
 
-  # Returns the value of attribute glob.
-  #
   # pkg:gem/railties#lib/rails/paths.rb:117
   def glob; end
 
-  # Sets the attribute glob
-  #
-  # @param value the value to set the attribute glob to.
-  #
   # pkg:gem/railties#lib/rails/paths.rb:117
   def glob=(_arg0); end
 
@@ -3208,8 +2709,6 @@ class Rails::Paths::Path
   # pkg:gem/railties#lib/rails/paths.rb:152
   def skip_load_path!; end
 
-  # Expands all paths against the root and return all unique values.
-  #
   # pkg:gem/railties#lib/rails/paths.rb:235
   def to_a; end
 
@@ -3272,8 +2771,6 @@ end
 #
 # pkg:gem/railties#lib/rails/paths.rb:51
 class Rails::Paths::Root
-  # @return [Root] a new instance of Root
-  #
   # pkg:gem/railties#lib/rails/paths.rb:54
   def initialize(path); end
 
@@ -3304,15 +2801,9 @@ class Rails::Paths::Root
   # pkg:gem/railties#lib/rails/paths.rb:101
   def load_paths; end
 
-  # Returns the value of attribute path.
-  #
   # pkg:gem/railties#lib/rails/paths.rb:52
   def path; end
 
-  # Sets the attribute path
-  #
-  # @param value the value to set the attribute path to.
-  #
   # pkg:gem/railties#lib/rails/paths.rb:52
   def path=(_arg0); end
 
@@ -3375,8 +2866,6 @@ module Rails::Rack; end
 #
 # pkg:gem/railties#lib/rails/rack/logger.rb:14
 class Rails::Rack::Logger < ::ActiveSupport::LogSubscriber
-  # @return [Logger] a new instance of Logger
-  #
   # pkg:gem/railties#lib/rails/rack/logger.rb:15
   def initialize(app, taggers = T.unsafe(nil)); end
 
@@ -3419,8 +2908,6 @@ end
 #
 # pkg:gem/railties#lib/rails/rack/silence_request.rb:22
 class Rails::Rack::SilenceRequest
-  # @return [SilenceRequest] a new instance of SilenceRequest
-  #
   # pkg:gem/railties#lib/rails/rack/silence_request.rb:23
   def initialize(app, path:); end
 
@@ -3561,8 +3048,6 @@ class Rails::Railtie
   extend ::ActiveSupport::DescendantsTracker
   extend ::Rails::Initializable::ClassMethods
 
-  # @return [Railtie] a new instance of Railtie
-  #
   # pkg:gem/railties#lib/rails/railtie.rb:244
   def initialize; end
 
@@ -3613,11 +3098,13 @@ class Rails::Railtie
     # pkg:gem/railties#lib/rails/railtie.rb:193
     def <=>(other); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/railties#lib/rails/railtie.rb:171
     def abstract_railtie?; end
 
+    # This is used to create the <tt>config</tt> object on Railties, an instance of
+    # Railtie::Configuration, that is used by Railties and Application to store
+    # related configuration.
+    #
     # pkg:gem/railties#lib/rails/railtie.rb:145
     def config(*_arg0, **_arg1, &_arg2); end
 
@@ -3634,8 +3121,6 @@ class Rails::Railtie
     # pkg:gem/railties#lib/rails/railtie.rb:163
     def generators(&blk); end
 
-    # @private
-    #
     # pkg:gem/railties#lib/rails/railtie.rb:197
     def inherited(subclass); end
 
@@ -3665,8 +3150,6 @@ class Rails::Railtie
     # pkg:gem/railties#lib/rails/railtie.rb:205
     def increment_load_index; end
 
-    # Returns the value of attribute load_index.
-    #
     # pkg:gem/railties#lib/rails/railtie.rb:203
     def load_index; end
 
@@ -3691,8 +3174,6 @@ class Rails::Railtie
     # pkg:gem/railties#lib/rails/railtie.rb:234
     def register_block_for(type, &blk); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/railties#lib/rails/railtie.rb:215
     def respond_to_missing?(name, _); end
   end
@@ -3703,8 +3184,6 @@ Rails::Railtie::ABSTRACT_RAILTIES = T.let(T.unsafe(nil), Array)
 
 # pkg:gem/railties#lib/rails/railtie/configuration.rb:7
 class Rails::Railtie::Configuration
-  # @return [Configuration] a new instance of Configuration
-  #
   # pkg:gem/railties#lib/rails/railtie/configuration.rb:8
   def initialize; end
 
@@ -3722,8 +3201,6 @@ class Rails::Railtie::Configuration
   #
   # Values set on app_generators will become defaults for application, unless
   # application overwrites them.
-  #
-  # @yield [@@app_generators]
   #
   # pkg:gem/railties#lib/rails/railtie/configuration.rb:47
   def app_generators; end
@@ -3758,8 +3235,6 @@ class Rails::Railtie::Configuration
   # pkg:gem/railties#lib/rails/railtie/configuration.rb:18
   def eager_load_namespaces; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/railties#lib/rails/railtie/configuration.rb:90
   def respond_to?(name, include_private = T.unsafe(nil)); end
 
@@ -3788,8 +3263,6 @@ class Rails::Railtie::Configuration
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/railties#lib/rails/railtie/configuration.rb:95
   def actual_method?(key); end
 
@@ -3816,8 +3289,6 @@ end
 #
 # pkg:gem/railties#lib/rails/source_annotation_extractor.rb:21
 class Rails::SourceAnnotationExtractor
-  # @return [SourceAnnotationExtractor] a new instance of SourceAnnotationExtractor
-  #
   # pkg:gem/railties#lib/rails/source_annotation_extractor.rb:158
   def initialize(tag); end
 
@@ -3841,8 +3312,6 @@ class Rails::SourceAnnotationExtractor
   # pkg:gem/railties#lib/rails/source_annotation_extractor.rb:172
   def find_in(dir); end
 
-  # Returns the value of attribute tag.
-  #
   # pkg:gem/railties#lib/rails/source_annotation_extractor.rb:156
   def tag; end
 

@@ -42,39 +42,35 @@ module HTTP::Chainable
   include ::HTTP::Base64
 
   # Accept the given MIME type(s)
-  #
   # @param type
   #
   # pkg:gem/http#lib/http/chainable.rb:199
   def accept(type); end
 
   # Make a request with the given Authorization header
-  #
-  # @param value [#to_s] Authorization header value
+  # @param [#to_s] value Authorization header value
   #
   # pkg:gem/http#lib/http/chainable.rb:205
   def auth(value); end
 
   # Make a request with the given Basic authorization header
-  #
-  # @option opts
-  # @option opts
-  # @param opts [#fetch]
   # @see http://tools.ietf.org/html/rfc2617
+  # @param [#fetch] opts
+  # @option opts [#to_s] :user
+  # @option opts [#to_s] :pass
   #
   # pkg:gem/http#lib/http/chainable.rb:214
   def basic_auth(opts); end
 
   # Prepare an HTTP request with the given verb
+  # @param (see Client#build_request)
   #
   # pkg:gem/http#lib/http/chainable.rb:81
   def build_request(*args); end
 
   # Convert to a transparent TCP/IP tunnel
-  #
-  # @option options
-  # @param options [Hash] a customizable set of options
   # @param uri
+  # @option options [Hash]
   #
   # pkg:gem/http#lib/http/chainable.rb:62
   def connect(uri, options = T.unsafe(nil)); end
@@ -85,14 +81,12 @@ module HTTP::Chainable
   def cookies(cookies); end
 
   # Get options for HTTP
-  #
   # @return [HTTP::Options]
   #
   # pkg:gem/http#lib/http/chainable.rb:224
   def default_options; end
 
   # Set options for HTTP
-  #
   # @param opts
   # @return [HTTP::Options]
   #
@@ -100,10 +94,8 @@ module HTTP::Chainable
   def default_options=(opts); end
 
   # Delete a resource
-  #
-  # @option options
-  # @param options [Hash] a customizable set of options
   # @param uri
+  # @option options [Hash]
   #
   # pkg:gem/http#lib/http/chainable.rb:41
   def delete(uri, options = T.unsafe(nil)); end
@@ -114,7 +106,6 @@ module HTTP::Chainable
   def encoding(encoding); end
 
   # Make client follow redirects.
-  #
   # @param options
   # @return [HTTP::Client]
   # @see Redirector#initialize
@@ -123,25 +114,20 @@ module HTTP::Chainable
   def follow(options = T.unsafe(nil)); end
 
   # Get a resource
-  #
-  # @option options
-  # @param options [Hash] a customizable set of options
   # @param uri
+  # @option options [Hash]
   #
   # pkg:gem/http#lib/http/chainable.rb:20
   def get(uri, options = T.unsafe(nil)); end
 
   # Request a get sans response body
-  #
-  # @option options
-  # @param options [Hash] a customizable set of options
   # @param uri
+  # @option options [Hash]
   #
   # pkg:gem/http#lib/http/chainable.rb:13
   def head(uri, options = T.unsafe(nil)); end
 
   # Make a request with the given headers
-  #
   # @param headers
   #
   # pkg:gem/http#lib/http/chainable.rb:183
@@ -153,48 +139,69 @@ module HTTP::Chainable
   def nodelay; end
 
   # Return the methods supported on the given URI
-  #
-  # @option options
-  # @param options [Hash] a customizable set of options
   # @param uri
+  # @option options [Hash]
   #
   # pkg:gem/http#lib/http/chainable.rb:55
   def options(uri, options = T.unsafe(nil)); end
 
   # Apply partial modifications to a resource
-  #
-  # @option options
-  # @param options [Hash] a customizable set of options
   # @param uri
+  # @option options [Hash]
   #
   # pkg:gem/http#lib/http/chainable.rb:69
   def patch(uri, options = T.unsafe(nil)); end
 
-  # @overload persistent
-  # @overload persistent
+  # @overload persistent(host, timeout: 5)
+  #   Flags as persistent
+  #   @param  [String] host
+  #   @option [Integer] timeout Keep alive timeout
+  #   @raise  [Request::Error] if Host is invalid
+  #   @return [HTTP::Client] Persistent client
+  # @overload persistent(host, timeout: 5, &block)
+  #   Executes given block with persistent client and automatically closes
+  #   connection at the end of execution.
+  #
+  #   @example
+  #
+  #       def keys(users)
+  #         HTTP.persistent("https://github.com") do |http|
+  #           users.map { |u| http.get("/#{u}.keys").to_s }
+  #         end
+  #       end
+  #
+  #       # same as
+  #
+  #       def keys(users)
+  #         http = HTTP.persistent "https://github.com"
+  #         users.map { |u| http.get("/#{u}.keys").to_s }
+  #       ensure
+  #         http.close if http
+  #       end
+  #
+  #
+  #   @yieldparam [HTTP::Client] client Persistent client
+  #   @return [Object] result of last expression in the block
   #
   # pkg:gem/http#lib/http/chainable.rb:145
   def persistent(host, timeout: T.unsafe(nil)); end
 
   # Post to a resource
-  #
-  # @option options
-  # @param options [Hash] a customizable set of options
   # @param uri
+  # @option options [Hash]
   #
   # pkg:gem/http#lib/http/chainable.rb:27
   def post(uri, options = T.unsafe(nil)); end
 
   # Put to a resource
-  #
-  # @option options
-  # @param options [Hash] a customizable set of options
   # @param uri
+  # @option options [Hash]
   #
   # pkg:gem/http#lib/http/chainable.rb:34
   def put(uri, options = T.unsafe(nil)); end
 
   # Make an HTTP request with the given verb
+  # @param (see Client#request)
   #
   # pkg:gem/http#lib/http/chainable.rb:75
   def request(*args); end
@@ -216,28 +223,30 @@ module HTTP::Chainable
   #   # Retry max 3 times with geometrically progressed delay between retries
   #   HTTP.retriable(times: 3, delay: proc { |i| 1 + i*i }).get(url)
   #
+  # @param (see Performer#initialize)
+  #
   # pkg:gem/http#lib/http/chainable.rb:270
   def retriable(**options); end
 
-  # Make a request through an HTTP proxy
-  #
-  # @param proxy [Array]
-  # @raise [Request::Error] if HTTP proxy is invalid
-  #
   # pkg:gem/http#lib/http/chainable.rb:171
   def through(*proxy); end
 
-  # @overload timeout
-  # @overload timeout
+  # @overload timeout(options = {})
+  #   Adds per operation timeouts to the request
+  #   @param [Hash] options
+  #   @option options [Float] :read Read timeout
+  #   @option options [Float] :write Write timeout
+  #   @option options [Float] :connect Connect timeout
+  # @overload timeout(global_timeout)
+  #   Adds a global timeout to the full request
+  #   @param [Numeric] global_timeout
   #
   # pkg:gem/http#lib/http/chainable.rb:94
   def timeout(options); end
 
   # Echo the request back to the client
-  #
-  # @option options
-  # @param options [Hash] a customizable set of options
   # @param uri
+  # @option options [Hash]
   #
   # pkg:gem/http#lib/http/chainable.rb:48
   def trace(uri, options = T.unsafe(nil)); end
@@ -249,15 +258,13 @@ module HTTP::Chainable
   # * logging
   # * normalize_uri
   # * raise_error
-  #
   # @param features
   #
   # pkg:gem/http#lib/http/chainable.rb:248
   def use(*features); end
 
   # Make a request through an HTTP proxy
-  #
-  # @param proxy [Array]
+  # @param [Array] proxy
   # @raise [Request::Error] if HTTP proxy is invalid
   #
   # pkg:gem/http#lib/http/chainable.rb:158
@@ -277,8 +284,6 @@ class HTTP::Client
   include ::HTTP::Chainable
   extend ::Forwardable
 
-  # @return [Client] a new instance of Client
-  #
   # pkg:gem/http#lib/http/client.rb:21
   def initialize(default_options = T.unsafe(nil)); end
 
@@ -295,9 +300,6 @@ class HTTP::Client
   # pkg:gem/http#lib/http/client.rb:64
   def perform(request, options); end
 
-  # @return [Boolean] whenever client is persistent
-  # @see Options#persistent?
-  #
   # pkg:gem/http#lib/http/client.rb:61
   def persistent?(*args, **_arg1, &block); end
 
@@ -326,7 +328,7 @@ class HTTP::Client
 
   # Merges query params if needed
   #
-  # @param uri [#to_s]
+  # @param [#to_s] uri
   # @return [URI]
   #
   # pkg:gem/http#lib/http/client.rb:142
@@ -355,23 +357,20 @@ class HTTP::ConnectTimeoutError < ::HTTP::TimeoutError; end
 class HTTP::Connection
   extend ::Forwardable
 
-  # @param options [HTTP::Options]
-  # @param req [HTTP::Request]
+  # @param [HTTP::Request] req
+  # @param [HTTP::Options] options
   # @raise [HTTP::ConnectionError] when failed to connect
-  # @return [Connection] a new instance of Connection
   #
   # pkg:gem/http#lib/http/connection.rb:31
   def initialize(req, options); end
 
   # Close the connection
-  #
   # @return [void]
   #
   # pkg:gem/http#lib/http/connection.rb:132
   def close; end
 
   # Whether our connection has expired
-  #
   # @return [Boolean]
   #
   # pkg:gem/http#lib/http/connection.rb:151
@@ -383,14 +382,11 @@ class HTTP::Connection
   def failed_proxy_connect?; end
 
   # Callback for when we've reached the end of a response
-  #
   # @return [void]
   #
   # pkg:gem/http#lib/http/connection.rb:120
   def finish_response; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/http#lib/http/connection.rb:139
   def finished_request?; end
 
@@ -401,7 +397,6 @@ class HTTP::Connection
   def http_version(*args, **_arg1, &block); end
 
   # Whether we're keeping the conn alive
-  #
   # @return [Boolean]
   #
   # pkg:gem/http#lib/http/connection.rb:145
@@ -413,9 +408,8 @@ class HTTP::Connection
   def proxy_response_headers; end
 
   # Reads data from socket up until headers are loaded
-  #
-  # @raise [ResponseHeaderError] when unable to read response headers
   # @return [void]
+  # @raise [ResponseHeaderError] when unable to read response headers
   #
   # pkg:gem/http#lib/http/connection.rb:109
   def read_headers!; end
@@ -430,7 +424,7 @@ class HTTP::Connection
 
   # Send a request to the server
   #
-  # @param req [Request] Request to send to the server
+  # @param [Request] req Request to send to the server
   # @return [nil]
   #
   # pkg:gem/http#lib/http/connection.rb:72
@@ -442,15 +436,13 @@ class HTTP::Connection
   private
 
   # Feeds some more data into parser
-  #
-  # @raise [SocketReadError] when unable to read from socket
   # @return [void]
+  # @raise [SocketReadError] when unable to read from socket
   #
   # pkg:gem/http#lib/http/connection.rb:222
   def read_more(size); end
 
   # Resets expiration of persistent connection.
-  #
   # @return [void]
   #
   # pkg:gem/http#lib/http/connection.rb:198
@@ -463,16 +455,13 @@ class HTTP::Connection
 
   # Store whether the connection should be kept alive.
   # Once we reset the parser, we lose all of this state.
-  #
   # @return [void]
   #
   # pkg:gem/http#lib/http/connection.rb:205
   def set_keep_alive; end
 
   # Sets up SSL context and starts TLS if needed.
-  #
-  # @param options [HTTP::Options]
-  # @param req [HTTP::Request]
+  # @param (see #initialize)
   # @return [void]
   #
   # pkg:gem/http#lib/http/connection.rb:160
@@ -509,32 +498,18 @@ class HTTP::ConnectionError < ::HTTP::Error; end
 
 # pkg:gem/http#lib/http/content_type.rb:4
 class HTTP::ContentType
-  # @return [ContentType] a new instance of ContentType
-  #
   # pkg:gem/http#lib/http/content_type.rb:29
   def initialize(mime_type = T.unsafe(nil), charset = T.unsafe(nil)); end
 
-  # Returns the value of attribute charset.
-  #
   # pkg:gem/http#lib/http/content_type.rb:8
   def charset; end
 
-  # Sets the attribute charset
-  #
-  # @param value the value to set the attribute charset to.
-  #
   # pkg:gem/http#lib/http/content_type.rb:8
   def charset=(_arg0); end
 
-  # Returns the value of attribute mime_type.
-  #
   # pkg:gem/http#lib/http/content_type.rb:8
   def mime_type; end
 
-  # Sets the attribute mime_type
-  #
-  # @param value the value to set the attribute mime_type to.
-  #
   # pkg:gem/http#lib/http/content_type.rb:8
   def mime_type=(_arg0); end
 
@@ -567,8 +542,6 @@ class HTTP::Error < ::StandardError; end
 
 # pkg:gem/http#lib/http/feature.rb:4
 class HTTP::Feature
-  # @return [Feature] a new instance of Feature
-  #
   # pkg:gem/http#lib/http/feature.rb:5
   def initialize(opts = T.unsafe(nil)); end
 
@@ -587,17 +560,12 @@ module HTTP::Features; end
 
 # pkg:gem/http#lib/http/features/auto_deflate.rb:10
 class HTTP::Features::AutoDeflate < ::HTTP::Feature
-  # @raise [Error]
-  # @return [AutoDeflate] a new instance of AutoDeflate
-  #
   # pkg:gem/http#lib/http/features/auto_deflate.rb:13
   def initialize(**_arg0); end
 
   # pkg:gem/http#lib/http/features/auto_deflate.rb:40
   def deflated_body(body); end
 
-  # Returns the value of attribute method.
-  #
   # pkg:gem/http#lib/http/features/auto_deflate.rb:11
   def method; end
 
@@ -607,8 +575,6 @@ end
 
 # pkg:gem/http#lib/http/features/auto_deflate.rb:51
 class HTTP::Features::AutoDeflate::CompressedBody < ::HTTP::Request::Body
-  # @return [CompressedBody] a new instance of CompressedBody
-  #
   # pkg:gem/http#lib/http/features/auto_deflate.rb:52
   def initialize(uncompressed_body); end
 
@@ -641,8 +607,6 @@ end
 
 # pkg:gem/http#lib/http/features/auto_deflate.rb:99
 class HTTP::Features::AutoDeflate::GzippedBody::BlockIO
-  # @return [BlockIO] a new instance of BlockIO
-  #
   # pkg:gem/http#lib/http/features/auto_deflate.rb:100
   def initialize(block); end
 
@@ -660,8 +624,6 @@ class HTTP::Features::AutoInflate < ::HTTP::Feature
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/http#lib/http/features/auto_inflate.rb:33
   def supported_encoding?(response); end
 end
@@ -687,23 +649,15 @@ HTTP::Features::AutoInflate::SUPPORTED_ENCODING = T.let(T.unsafe(nil), Set)
 #
 # pkg:gem/http#lib/http/features/instrumentation.rb:21
 class HTTP::Features::Instrumentation < ::HTTP::Feature
-  # @return [Instrumentation] a new instance of Instrumentation
-  #
   # pkg:gem/http#lib/http/features/instrumentation.rb:24
   def initialize(instrumenter: T.unsafe(nil), namespace: T.unsafe(nil)); end
 
-  # Returns the value of attribute error_name.
-  #
   # pkg:gem/http#lib/http/features/instrumentation.rb:22
   def error_name; end
 
-  # Returns the value of attribute instrumenter.
-  #
   # pkg:gem/http#lib/http/features/instrumentation.rb:22
   def instrumenter; end
 
-  # Returns the value of attribute name.
-  #
   # pkg:gem/http#lib/http/features/instrumentation.rb:22
   def name; end
 
@@ -737,13 +691,9 @@ end
 #
 # pkg:gem/http#lib/http/features/logging.rb:11
 class HTTP::Features::Logging < ::HTTP::Feature
-  # @return [Logging] a new instance of Logging
-  #
   # pkg:gem/http#lib/http/features/logging.rb:28
   def initialize(logger: T.unsafe(nil)); end
 
-  # Returns the value of attribute logger.
-  #
   # pkg:gem/http#lib/http/features/logging.rb:26
   def logger; end
 
@@ -794,26 +744,18 @@ end
 
 # pkg:gem/http#lib/http/features/normalize_uri.rb:7
 class HTTP::Features::NormalizeUri < ::HTTP::Feature
-  # @return [NormalizeUri] a new instance of NormalizeUri
-  #
   # pkg:gem/http#lib/http/features/normalize_uri.rb:10
   def initialize(normalizer: T.unsafe(nil)); end
 
-  # Returns the value of attribute normalizer.
-  #
   # pkg:gem/http#lib/http/features/normalize_uri.rb:8
   def normalizer; end
 end
 
 # pkg:gem/http#lib/http/features/raise_error.rb:5
 class HTTP::Features::RaiseError < ::HTTP::Feature
-  # @return [RaiseError] a new instance of RaiseError
-  #
   # pkg:gem/http#lib/http/features/raise_error.rb:6
   def initialize(ignore: T.unsafe(nil)); end
 
-  # @raise [HTTP::StatusError]
-  #
   # pkg:gem/http#lib/http/features/raise_error.rb:12
   def wrap_response(response); end
 end
@@ -831,8 +773,6 @@ class HTTP::Headers
   extend ::Forwardable
 
   # Class constructor.
-  #
-  # @return [Headers] a new instance of Headers
   #
   # pkg:gem/http#lib/http/headers.rb:43
   def initialize; end
@@ -853,22 +793,18 @@ class HTTP::Headers
   # pkg:gem/http#lib/http/headers.rb:112
   def [](name); end
 
-  # Sets header.
-  #
-  # @return [void]
-  #
   # pkg:gem/http#lib/http/headers.rb:59
   def []=(name, value); end
 
   # Appends header.
   #
-  # @param name [String, Symbol] header name. When specified as a string, the
+  # @param [String, Symbol] name header name. When specified as a string, the
   #   name is sent as-is. When specified as a symbol, the name is converted
   #   to a string of capitalized words separated by a dash. Word boundaries
   #   are determined by an underscore (`_`) or a dash (`-`).
   #   Ex: `:content_type` is sent as `"Content-Type"`, and `"auth_key"` (string)
   #   is sent as `"auth_key"`.
-  # @param value [Array<#to_s>, #to_s] header value(s) to be appended
+  # @param [Array<#to_s>, #to_s] value header value(s) to be appended
   # @return [void]
   #
   # pkg:gem/http#lib/http/headers.rb:80
@@ -876,7 +812,7 @@ class HTTP::Headers
 
   # Removes header.
   #
-  # @param name [#to_s] header name
+  # @param [#to_s] name header name
   # @return [void]
   #
   # pkg:gem/http#lib/http/headers.rb:65
@@ -890,10 +826,6 @@ class HTTP::Headers
   # pkg:gem/http#lib/http/headers.rb:172
   def each; end
 
-  # Returns `true` if `self` has no key/value pairs
-  #
-  # @return [Boolean]
-  #
   # pkg:gem/http#lib/http/headers.rb:183
   def empty?(*args, **_arg1, &block); end
 
@@ -904,12 +836,6 @@ class HTTP::Headers
   # pkg:gem/http#lib/http/headers.rb:102
   def get(name); end
 
-  # Compute a hash-code for this headers container.
-  # Two containers with the same content will have the same hash code.
-  #
-  # @return [Fixnum]
-  # @see http://www.ruby-doc.org/core/Object.html#method-i-hash
-  #
   # pkg:gem/http#lib/http/headers.rb:191
   def hash(*args, **_arg1, &block); end
 
@@ -936,29 +862,23 @@ class HTTP::Headers
 
   # Returns new instance with `other` headers merged in.
   #
-  # @return [Headers]
   # @see #merge!
+  # @return [Headers]
   #
   # pkg:gem/http#lib/http/headers.rb:213
   def merge(other); end
 
   # Merges `other` headers into `self`.
   #
-  # @return [void]
   # @see #merge
+  # @return [void]
   #
   # pkg:gem/http#lib/http/headers.rb:205
   def merge!(other); end
 
   # Sets header.
   #
-  # @param name [String, Symbol] header name. When specified as a string, the
-  #   name is sent as-is. When specified as a symbol, the name is converted
-  #   to a string of capitalized words separated by a dash. Word boundaries
-  #   are determined by an underscore (`_`) or a dash (`-`).
-  #   Ex: `:content_type` is sent as `"Content-Type"`, and `"auth_key"` (string)
-  #   is sent as `"auth_key"`.
-  # @param value [Array<#to_s>, #to_s] header value(s) to be appended
+  # @param (see #add)
   # @return [void]
   #
   # pkg:gem/http#lib/http/headers.rb:55
@@ -978,10 +898,6 @@ class HTTP::Headers
   # pkg:gem/http#lib/http/headers.rb:133
   def to_h; end
 
-  # Returns Rack-compatible headers Hash
-  #
-  # @return [Hash]
-  #
   # pkg:gem/http#lib/http/headers.rb:136
   def to_hash; end
 
@@ -1001,7 +917,7 @@ class HTTP::Headers
 
   # Ensures there is no new line character in the header value
   #
-  # @param value [String]
+  # @param [String] value
   # @raise [HeaderError] if value includes new line character
   # @return [String] stringified header value
   #
@@ -1009,19 +925,13 @@ class HTTP::Headers
   def validate_value(value); end
 
   class << self
-    # Coerces given `object` into Headers.
-    #
-    # @param object [#to_hash, #to_h, #to_a]
-    # @raise [Error] if object can't be coerced
-    # @return [Headers]
-    #
     # pkg:gem/http#lib/http/headers.rb:35
     def [](object); end
 
     # Coerces given `object` into Headers.
     #
-    # @param object [#to_hash, #to_h, #to_a]
     # @raise [Error] if object can't be coerced
+    # @param [#to_hash, #to_h, #to_a] object
     # @return [Headers]
     #
     # pkg:gem/http#lib/http/headers.rb:22
@@ -1138,30 +1048,20 @@ HTTP::Headers::LOCATION = T.let(T.unsafe(nil), String)
 # @example Usage
 #
 #   class MyHttpRequest
-#   include HTTP::Headers::Mixin
+#     include HTTP::Headers::Mixin
 #
-#   def initialize
-#   @headers = HTTP::Headers.new
-#   end
+#     def initialize
+#       @headers = HTTP::Headers.new
+#     end
 #   end
 #
 # pkg:gem/http#lib/http/headers/mixin.rb:19
 module HTTP::Headers::Mixin
   extend ::Forwardable
 
-  # Smart version of {#get}.
-  #
-  # @return [nil] if header was not set
-  # @return [String] if header has exactly one value
-  # @return [Array<String>] if header has more than one value
-  #
   # pkg:gem/http#lib/http/headers/mixin.rb:27
   def [](*args, **_arg1, &block); end
 
-  # Sets header.
-  #
-  # @return [void]
-  #
   # pkg:gem/http#lib/http/headers/mixin.rb:31
   def []=(*args, **_arg1, &block); end
 
@@ -1173,8 +1073,6 @@ end
 
 # pkg:gem/http#lib/http/headers/normalizer.rb:5
 class HTTP::Headers::Normalizer
-  # @return [Normalizer] a new instance of Normalizer
-  #
   # pkg:gem/http#lib/http/headers/normalizer.rb:38
   def initialize; end
 
@@ -1187,7 +1085,7 @@ class HTTP::Headers::Normalizer
 
   # Transforms `name` to canonical HTTP header capitalization
   #
-  # @param name [String]
+  # @param [String] name
   # @raise [HeaderError] if normalized name does not
   #   match {COMPLIANT_NAME_RE}
   # @return [String] canonical HTTP header name
@@ -1202,20 +1100,16 @@ end
 HTTP::Headers::Normalizer::CANONICAL_NAME_RE = T.let(T.unsafe(nil), Regexp)
 
 # Matches valid header field name according to RFC.
-#
 # @see http://tools.ietf.org/html/rfc7230#section-3.2
 #
 # pkg:gem/http#lib/http/headers/normalizer.rb:11
 HTTP::Headers::Normalizer::COMPLIANT_NAME_RE = T.let(T.unsafe(nil), Regexp)
 
-# Normalized header names cache
-#
 # @private
+# Normalized header names cache
 #
 # pkg:gem/http#lib/http/headers/normalizer.rb:17
 class HTTP::Headers::Normalizer::Cache
-  # @return [Cache] a new instance of Cache
-  #
   # pkg:gem/http#lib/http/headers/normalizer.rb:20
   def initialize; end
 
@@ -1273,7 +1167,7 @@ module HTTP::MimeType
   class << self
     # Returns adapter associated with MIME type
     #
-    # @param type [#to_s]
+    # @param [#to_s] type
     # @raise [Error] if no adapter found
     # @return [Class]
     #
@@ -1282,7 +1176,7 @@ module HTTP::MimeType
 
     # Resolves type by shortcut if possible
     #
-    # @param type [#to_s]
+    # @param [#to_s] type
     # @return [String]
     #
     # pkg:gem/http#lib/http/mime_type.rb:58
@@ -1293,20 +1187,21 @@ module HTTP::MimeType
     # @example
     #
     #   module JsonAdapter
-    #   class << self
-    #   def encode(obj)
-    #   # encode logic here
-    #   end
+    #     class << self
+    #       def encode(obj)
+    #         # encode logic here
+    #       end
     #
-    #   def decode(str)
-    #   # decode logic here
-    #   end
-    #   end
+    #       def decode(str)
+    #         # decode logic here
+    #       end
+    #     end
     #   end
     #
     #   HTTP::MimeType.register_adapter 'application/json', MyJsonAdapter
-    # @param adapter [#encode, #decode]
-    # @param type [#to_s]
+    #
+    # @param [#to_s] type
+    # @param [#encode, #decode] adapter
     # @return [void]
     #
     # pkg:gem/http#lib/http/mime_type.rb:28
@@ -1317,8 +1212,9 @@ module HTTP::MimeType
     # @example
     #
     #   HTTP::MimeType.register_alias 'application/json', :json
-    # @param shortcut [#to_sym]
-    # @param type [#to_s]
+    #
+    # @param [#to_s] type
+    # @param [#to_sym] shortcut
     # @return [void]
     #
     # pkg:gem/http#lib/http/mime_type.rb:50
@@ -1382,8 +1278,6 @@ end
 
 # pkg:gem/http#lib/http/options.rb:9
 class HTTP::Options
-  # @return [Options] a new instance of Options
-  #
   # pkg:gem/http#lib/http/options.rb:50
   def initialize(options = T.unsafe(nil)); end
 
@@ -1393,8 +1287,6 @@ class HTTP::Options
   # pkg:gem/http#lib/http/options.rb:40
   def cookies; end
 
-  # @yield [dupped]
-  #
   # pkg:gem/http#lib/http/options.rb:172
   def dup; end
 
@@ -1443,8 +1335,6 @@ class HTTP::Options
   # pkg:gem/http#lib/http/options.rb:141
   def persistent=(value); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/http#lib/http/options.rb:145
   def persistent?; end
 
@@ -1593,50 +1483,28 @@ class HTTP::Options
 
   private
 
-  # @raise [Error]
-  #
   # pkg:gem/http#lib/http/options.rb:190
   def argument_error!(message); end
 
   class << self
-    # Returns the value of attribute available_features.
-    #
     # pkg:gem/http#lib/http/options.rb:17
     def available_features; end
 
-    # Returns the value of attribute default_socket_class.
-    #
     # pkg:gem/http#lib/http/options.rb:16
     def default_socket_class; end
 
-    # Sets the attribute default_socket_class
-    #
-    # @param value the value to set the attribute default_socket_class to.
-    #
     # pkg:gem/http#lib/http/options.rb:16
     def default_socket_class=(_arg0); end
 
-    # Returns the value of attribute default_ssl_socket_class.
-    #
     # pkg:gem/http#lib/http/options.rb:16
     def default_ssl_socket_class; end
 
-    # Sets the attribute default_ssl_socket_class
-    #
-    # @param value the value to set the attribute default_ssl_socket_class to.
-    #
     # pkg:gem/http#lib/http/options.rb:16
     def default_ssl_socket_class=(_arg0); end
 
-    # Returns the value of attribute default_timeout_class.
-    #
     # pkg:gem/http#lib/http/options.rb:16
     def default_timeout_class; end
 
-    # Sets the attribute default_timeout_class
-    #
-    # @param value the value to set the attribute default_timeout_class to.
-    #
     # pkg:gem/http#lib/http/options.rb:16
     def default_timeout_class=(_arg0); end
 
@@ -1663,37 +1531,28 @@ class HTTP::OutOfRetriesError < ::HTTP::Error
   # pkg:gem/http#lib/http/retriable/errors.rb:10
   def cause; end
 
-  # Sets the attribute cause
-  #
-  # @param value the value to set the attribute cause to.
-  #
   # pkg:gem/http#lib/http/retriable/errors.rb:8
   def cause=(_arg0); end
 
-  # Returns the value of attribute response.
-  #
   # pkg:gem/http#lib/http/retriable/errors.rb:6
   def response; end
 
-  # Sets the attribute response
-  #
-  # @param value the value to set the attribute response to.
-  #
   # pkg:gem/http#lib/http/retriable/errors.rb:6
   def response=(_arg0); end
 end
 
 # pkg:gem/http#lib/http/redirector.rb:8
 class HTTP::Redirector
-  # @option opts
-  # @option opts
-  # @param opts [Hash]
-  # @return [Redirector] a new instance of Redirector
+  # @param [Hash] opts
+  # @option opts [Boolean] :strict (true) redirector hops policy
+  # @option opts [#to_i] :max_hops (5) maximum allowed amount of hops
   #
   # pkg:gem/http#lib/http/redirector.rb:42
   def initialize(opts = T.unsafe(nil)); end
 
-  # Returns the value of attribute max_hops.
+  # @!attribute [r] max_hops
+  #   Returns maximum allowed hops.
+  #   @return [Fixnum]
   #
   # pkg:gem/http#lib/http/redirector.rb:37
   def max_hops; end
@@ -1703,7 +1562,9 @@ class HTTP::Redirector
   # pkg:gem/http#lib/http/redirector.rb:49
   def perform(request, response); end
 
-  # Returns the value of attribute strict.
+  # @!attribute [r] strict
+  #   Returns redirector policy.
+  #   @return [Boolean]
   #
   # pkg:gem/http#lib/http/redirector.rb:32
   def strict; end
@@ -1729,22 +1590,18 @@ class HTTP::Redirector
   def cookie_jar; end
 
   # Check if we got into an endless loop
-  #
   # @return [Boolean]
   #
   # pkg:gem/http#lib/http/redirector.rb:129
   def endless_loop?; end
 
   # Redirect policy for follow
-  #
-  # @raise [StateError]
   # @return [Request]
   #
   # pkg:gem/http#lib/http/redirector.rb:135
   def redirect_to(uri); end
 
   # Check if we reached max amount of redirect hops
-  #
   # @return [Boolean]
   #
   # pkg:gem/http#lib/http/redirector.rb:123
@@ -1789,22 +1646,17 @@ class HTTP::Request
   include ::HTTP::Headers::Mixin
   extend ::Forwardable
 
-  # @option opts
-  # @option opts
-  # @option opts
-  # @option opts
-  # @option opts
-  # @option opts
-  # @option opts
-  # @param opts [Hash] a customizable set of options
-  # @raise [UnsupportedMethodError]
-  # @return [Request] a new instance of Request
+  # @option opts [String] :version
+  # @option opts [#to_s] :verb HTTP request method
+  # @option opts [#call] :uri_normalizer (HTTP::URI::NORMALIZER)
+  # @option opts [HTTP::URI, #to_s] :uri
+  # @option opts [Hash] :headers
+  # @option opts [Hash] :proxy
+  # @option opts [String, Enumerable, IO, nil] :body
   #
   # pkg:gem/http#lib/http/request.rb:90
   def initialize(opts); end
 
-  # Returns the value of attribute body.
-  #
   # pkg:gem/http#lib/http/request.rb:81
   def body; end
 
@@ -1815,13 +1667,9 @@ class HTTP::Request
 
   # Compute HTTP request header for direct or proxy request
   #
-  # @raise [RequestError]
-  #
   # pkg:gem/http#lib/http/request.rb:173
   def headline; end
 
-  # @return [String]
-  #
   # pkg:gem/http#lib/http/request.rb:229
   def host(*args, **_arg1, &block); end
 
@@ -1837,15 +1685,14 @@ class HTTP::Request
   #
   # @example
   #
-  #   req.inspect
-  #   # => #<HTTP::Request/1.1 GET https://example.com>
+  #     req.inspect
+  #     # => #<HTTP::Request/1.1 GET https://example.com>
+  #
   # @return [String]
   #
   # pkg:gem/http#lib/http/request.rb:221
   def inspect; end
 
-  # Returns the value of attribute proxy.
-  #
   # pkg:gem/http#lib/http/request.rb:81
   def proxy; end
 
@@ -1893,21 +1740,15 @@ class HTTP::Request
   # pkg:gem/http#lib/http/request.rb:80
   def uri; end
 
-  # Returns the value of attribute uri_normalizer.
-  #
   # pkg:gem/http#lib/http/request.rb:76
   def uri_normalizer; end
 
   # Is this request using an authenticated proxy?
   #
-  # @return [Boolean]
-  #
   # pkg:gem/http#lib/http/request.rb:148
   def using_authenticated_proxy?; end
 
   # Is this request using a proxy?
-  #
-  # @return [Boolean]
   #
   # pkg:gem/http#lib/http/request.rb:143
   def using_proxy?; end
@@ -1917,19 +1758,19 @@ class HTTP::Request
   # pkg:gem/http#lib/http/request.rb:71
   def verb; end
 
-  # Returns the value of attribute version.
-  #
   # pkg:gem/http#lib/http/request.rb:81
   def version; end
 
   private
 
-  # @raise [RequestError]
   # @return [String] Default host (with port if needed) header value.
   #
   # pkg:gem/http#lib/http/request.rb:238
   def default_host_header_value; end
 
+  # @!attribute [r] port
+  #   @return [Fixnum]
+  #
   # pkg:gem/http#lib/http/request.rb:233
   def port; end
 
@@ -1942,8 +1783,6 @@ end
 
 # pkg:gem/http#lib/http/request/body.rb:5
 class HTTP::Request::Body
-  # @return [Body] a new instance of Body
-  #
   # pkg:gem/http#lib/http/request/body.rb:8
   def initialize(source); end
 
@@ -1966,8 +1805,6 @@ class HTTP::Request::Body
   # pkg:gem/http#lib/http/request/body.rb:17
   def size; end
 
-  # Returns the value of attribute source.
-  #
   # pkg:gem/http#lib/http/request/body.rb:6
   def source; end
 
@@ -1976,8 +1813,6 @@ class HTTP::Request::Body
   # pkg:gem/http#lib/http/request/body.rb:54
   def rewind(io); end
 
-  # @raise [RequestError]
-  #
   # pkg:gem/http#lib/http/request/body.rb:76
   def validate_source_type!; end
 end
@@ -1988,8 +1823,6 @@ end
 #
 # pkg:gem/http#lib/http/request/body.rb:88
 class HTTP::Request::Body::ProcIO
-  # @return [ProcIO] a new instance of ProcIO
-  #
   # pkg:gem/http#lib/http/request/body.rb:89
   def initialize(block); end
 
@@ -2027,8 +1860,6 @@ class HTTP::Request::UnsupportedSchemeError < ::HTTP::RequestError; end
 
 # pkg:gem/http#lib/http/request/writer.rb:7
 class HTTP::Request::Writer
-  # @return [Writer] a new instance of Writer
-  #
   # pkg:gem/http#lib/http/request/writer.rb:20
   def initialize(socket, body, headers, headline); end
 
@@ -2045,8 +1876,6 @@ class HTTP::Request::Writer
 
   # Returns true if the request should be sent in chunked encoding.
   #
-  # @return [Boolean]
-  #
   # pkg:gem/http#lib/http/request/writer.rb:105
   def chunked?; end
 
@@ -2061,8 +1890,6 @@ class HTTP::Request::Writer
   # in order to play nicely with Nagle's algorithm. Making two writes in a
   # row triggers a pathological case where Nagle is expecting a third write
   # that never happens.
-  #
-  # @yield [data]
   #
   # pkg:gem/http#lib/http/request/writer.rb:81
   def each_chunk; end
@@ -2128,17 +1955,15 @@ class HTTP::Response
 
   # Inits a new instance
   #
-  # @option opts
-  # @option opts
-  # @option opts
-  # @option opts
-  # @option opts
-  # @option opts
-  # @option opts
-  # @option opts
-  # @option opts
-  # @param opts [Hash] a customizable set of options
-  # @return [Response] a new instance of Response
+  # @option opts [Integer] :status Status code
+  # @option opts [String] :version HTTP version
+  # @option opts [Hash] :headers
+  # @option opts [Hash] :proxy_headers
+  # @option opts [HTTP::Connection] :connection
+  # @option opts [String] :encoding Encoding to use when reading body
+  # @option opts [String] :body
+  # @option opts [HTTP::Request] request The request this is in response to.
+  # @option opts [String] :uri (DEPRECATED) used to populate a missing request
   #
   # pkg:gem/http#lib/http/response.rb:45
   def initialize(opts); end
@@ -2148,27 +1973,15 @@ class HTTP::Response
   # pkg:gem/http#lib/http/response.rb:26
   def body; end
 
-  # Charset of response (if any)
-  #
-  # @return [String, nil]
-  #
   # pkg:gem/http#lib/http/response.rb:138
   def charset(*args, **_arg1, &block); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/http#lib/http/response.rb:146
   def chunked?; end
 
-  # @return [Fixnum] status code
-  #
   # pkg:gem/http#lib/http/response.rb:68
   def code(*args, **_arg1, &block); end
 
-  # The connection object used to make the corresponding request.
-  #
-  # @return [HTTP::Connection]
-  #
   # pkg:gem/http#lib/http/response.rb:81
   def connection(*args, **_arg1, &block); end
 
@@ -2203,17 +2016,13 @@ class HTTP::Response
   # pkg:gem/http#lib/http/response.rb:165
   def inspect; end
 
-  # MIME type of response (if any)
-  #
-  # @return [String, nil]
-  #
   # pkg:gem/http#lib/http/response.rb:133
   def mime_type(*args, **_arg1, &block); end
 
   # Parse response body with corresponding MIME type adapter.
   #
   # @param type [#to_s] Parse as given MIME type.
-  # @raise [Error] if no adapter found
+  # @raise (see MimeType.[])
   # @return [Object]
   #
   # pkg:gem/http#lib/http/response.rb:160
@@ -2227,8 +2036,6 @@ class HTTP::Response
   # pkg:gem/http#lib/http/response.rb:77
   def readpartial(*args, **_arg1, &block); end
 
-  # @return [String, nil] status message
-  #
   # pkg:gem/http#lib/http/response.rb:64
   def reason(*args, **_arg1, &block); end
 
@@ -2249,13 +2056,9 @@ class HTTP::Response
   # pkg:gem/http#lib/http/response.rb:90
   def to_a; end
 
-  # @return [String] eagerly consume the entire body as a string
-  #
   # pkg:gem/http#lib/http/response.rb:72
   def to_s(*args, **_arg1, &block); end
 
-  # @return [String] eagerly consume the entire body as a string
-  #
   # pkg:gem/http#lib/http/response.rb:73
   def to_str(*args, **_arg1, &block); end
 
@@ -2274,7 +2077,6 @@ class HTTP::Response
 
   # Initialize an HTTP::Request from options.
   #
-  # @raise [ArgumentError]
   # @return [HTTP::Request]
   #
   # pkg:gem/http#lib/http/response.rb:180
@@ -2288,8 +2090,6 @@ class HTTP::Response::Body
   include ::Enumerable
   extend ::Forwardable
 
-  # @return [Body] a new instance of Body
-  #
   # pkg:gem/http#lib/http/response/body.rb:19
   def initialize(stream, encoding: T.unsafe(nil)); end
 
@@ -2313,25 +2113,21 @@ class HTTP::Response::Body
   # pkg:gem/http#lib/http/response/body.rb:73
   def inspect; end
 
+  # (see HTTP::Client#readpartial)
+  #
   # pkg:gem/http#lib/http/response/body.rb:28
   def readpartial(*args); end
 
   # Assert that the body is actively being streamed
   #
-  # @raise [StateError]
-  #
   # pkg:gem/http#lib/http/response/body.rb:66
   def stream!; end
 
-  # @raise [StateError]
   # @return [String] eagerly consume the entire body as a string
   #
   # pkg:gem/http#lib/http/response/body.rb:43
   def to_s; end
 
-  # @raise [StateError]
-  # @return [String] eagerly consume the entire body as a string
-  #
   # pkg:gem/http#lib/http/response/body.rb:63
   def to_str; end
 
@@ -2345,13 +2141,9 @@ end
 
 # pkg:gem/http#lib/http/response/inflater.rb:7
 class HTTP::Response::Inflater
-  # @return [Inflater] a new instance of Inflater
-  #
   # pkg:gem/http#lib/http/response/inflater.rb:10
   def initialize(connection); end
 
-  # Returns the value of attribute connection.
-  #
   # pkg:gem/http#lib/http/response/inflater.rb:8
   def connection; end
 
@@ -2368,129 +2160,77 @@ end
 #
 # pkg:gem/http#lib/http/response/parser.rb:8
 class HTTP::Response::Parser
-  # @api private
-  # @return [Parser] a new instance of Parser
-  #
   # pkg:gem/http#lib/http/response/parser.rb:11
   def initialize; end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/response/parser.rb:36
   def <<(data); end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/response/parser.rb:28
   def add(data); end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/response/parser.rb:60
   def add_body(chunk); end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/response/parser.rb:48
   def add_header(name, value); end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/http#lib/http/response/parser.rb:56
   def finished?; end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/response/parser.rb:9
   def headers; end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/http#lib/http/response/parser.rb:44
   def headers?; end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/response/parser.rb:9
   def http_version; end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/response/parser.rb:38
   def mark_header_finished; end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/response/parser.rb:52
   def mark_message_finished; end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/response/parser.rb:9
   def parser; end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/response/parser.rb:68
   def read(size); end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/response/parser.rb:17
   def reset; end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/response/parser.rb:9
   def status_code; end
 end
 
-# @api private
-#
 # pkg:gem/http#lib/http/response/parser.rb:82
 class HTTP::Response::Parser::Handler < ::LLHttp::Delegate
-  # @api private
-  # @return [Handler] a new instance of Handler
-  #
   # pkg:gem/http#lib/http/response/parser.rb:83
   def initialize(target); end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/response/parser.rb:110
   def on_body(body); end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/response/parser.rb:95
   def on_header_field(field); end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/response/parser.rb:100
   def on_header_value(value); end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/response/parser.rb:105
   def on_headers_complete; end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/response/parser.rb:114
   def on_message_complete; end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/response/parser.rb:89
   def reset; end
 
   private
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/response/parser.rb:120
   def append_header; end
 end
@@ -2500,8 +2240,6 @@ class HTTP::Response::Status
   # pkg:gem/http#lib/http/response/status.rb:148
   def __getobj__; end
 
-  # @raise [TypeError]
-  #
   # pkg:gem/http#lib/http/response/status.rb:142
   def __setobj__(obj); end
 
@@ -2518,7 +2256,6 @@ class HTTP::Response::Status
   def bad_request?; end
 
   # Check if status code is client error (4XX)
-  #
   # @return [Boolean]
   #
   # pkg:gem/http#lib/http/response/status.rb:108
@@ -2563,7 +2300,6 @@ class HTTP::Response::Status
   def im_used?; end
 
   # Check if status code is informational (1XX)
-  #
   # @return [Boolean]
   #
   # pkg:gem/http#lib/http/response/status.rb:90
@@ -2661,14 +2397,13 @@ class HTTP::Response::Status
   # pkg:gem/http#lib/http/response/status.rb:135
   def range_not_satisfiable?; end
 
-  # @return [String, nil] status message
   # @see REASONS
+  # @return [String, nil] status message
   #
   # pkg:gem/http#lib/http/response/status.rb:79
   def reason; end
 
   # Check if status code is redirection (3XX)
-  #
   # @return [Boolean]
   #
   # pkg:gem/http#lib/http/response/status.rb:102
@@ -2687,7 +2422,6 @@ class HTTP::Response::Status
   def see_other?; end
 
   # Check if status code is server error (5XX)
-  #
   # @return [Boolean]
   #
   # pkg:gem/http#lib/http/response/status.rb:114
@@ -2697,7 +2431,6 @@ class HTTP::Response::Status
   def service_unavailable?; end
 
   # Check if status code is successful (2XX)
-  #
   # @return [Boolean]
   #
   # pkg:gem/http#lib/http/response/status.rb:96
@@ -2750,16 +2483,6 @@ class HTTP::Response::Status
   def variant_also_negotiates?; end
 
   class << self
-    # Coerces given value to Status.
-    #
-    # @example
-    #   Status.coerce(:bad_request) # => Status.new(400)
-    #   Status.coerce("400")        # => Status.new(400)
-    #   Status.coerce(true)         # => raises HTTP::Error
-    # @param object [Symbol, #to_i]
-    # @raise [Error] if coercion is impossible
-    # @return [Status]
-    #
     # pkg:gem/http#lib/http/response/status.rb:33
     def [](object); end
 
@@ -2770,8 +2493,9 @@ class HTTP::Response::Status
     #   Status.coerce(:bad_request) # => Status.new(400)
     #   Status.coerce("400")        # => Status.new(400)
     #   Status.coerce(true)         # => raises HTTP::Error
-    # @param object [Symbol, #to_i]
+    #
     # @raise [Error] if coercion is impossible
+    # @param [Symbol, #to_i] object
     # @return [Status]
     #
     # pkg:gem/http#lib/http/response/status.rb:22
@@ -2786,7 +2510,8 @@ class HTTP::Response::Status
     #   symbolize "Bad Request"           # => :bad_request
     #   symbolize "Request-URI Too Long"  # => :request_uri_too_long
     #   symbolize "I'm a Teapot"          # => :im_a_teapot
-    # @param str [#to_s]
+    #
+    # @param [#to_s] str
     # @return [Symbol]
     #
     # pkg:gem/http#lib/http/response/status.rb:47
@@ -2800,6 +2525,7 @@ end
 #
 #   REASONS[400] # => "Bad Request"
 #   REASONS[414] # => "Request-URI Too Long"
+#
 # @return [Hash<Fixnum => String>]
 #
 # pkg:gem/http#lib/http/response/status/reasons.rb:18
@@ -2812,6 +2538,7 @@ HTTP::Response::Status::REASONS = T.let(T.unsafe(nil), Hash)
 #   SYMBOLS[400] # => :bad_request
 #   SYMBOLS[414] # => :request_uri_too_long
 #   SYMBOLS[418] # => :im_a_teapot
+#
 # @return [Hash<Fixnum => Symbol>]
 #
 # pkg:gem/http#lib/http/response/status.rb:61
@@ -2824,6 +2551,7 @@ HTTP::Response::Status::SYMBOLS = T.let(T.unsafe(nil), Hash)
 #   SYMBOL_CODES[:bad_request]           # => 400
 #   SYMBOL_CODES[:request_uri_too_long]  # => 414
 #   SYMBOL_CODES[:im_a_teapot]           # => 418
+#
 # @return [Hash<Symbol => Fixnum>]
 #
 # pkg:gem/http#lib/http/response/status.rb:72
@@ -2848,9 +2576,8 @@ module HTTP::Retriable; end
 #
 # pkg:gem/http#lib/http/retriable/client.rb:10
 class HTTP::Retriable::Client < ::HTTP::Client
-  # @param options [HTTP::Options, Hash]
-  # @param performer [Performer]
-  # @return [Client] a new instance of Client
+  # @param [Performer] performer
+  # @param [HTTP::Options, Hash] options
   #
   # pkg:gem/http#lib/http/retriable/client.rb:13
   def initialize(performer, options); end
@@ -2878,63 +2605,45 @@ end
 #
 # pkg:gem/http#lib/http/retriable/delay_calculator.rb:6
 class HTTP::Retriable::DelayCalculator
-  # @api private
-  # @return [DelayCalculator] a new instance of DelayCalculator
-  #
   # pkg:gem/http#lib/http/retriable/delay_calculator.rb:7
   def initialize(opts); end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/retriable/delay_calculator.rb:47
   def calculate_delay_from_iteration(iteration); end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/retriable/delay_calculator.rb:16
   def call(iteration, response); end
 
   # Spec for Retry-After header
   # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Retry-After
   #
-  # @api private
-  #
   # pkg:gem/http#lib/http/retriable/delay_calculator.rb:37
   def delay_from_retry_header(value); end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/retriable/delay_calculator.rb:59
   def ensure_dealy_in_bounds(delay); end
 end
 
-# @api private
-#
 # pkg:gem/http#lib/http/retriable/delay_calculator.rb:26
 HTTP::Retriable::DelayCalculator::RFC2822_DATE_REGEX = T.let(T.unsafe(nil), Regexp)
 
 # Request performing watchdog.
-#
 # @api private
 #
 # pkg:gem/http#lib/http/retriable/performer.rb:12
 class HTTP::Retriable::Performer
-  # @api private
-  # @option opts
-  # @option opts
-  # @option opts
-  # @option opts
-  # @option opts
-  # @option opts
-  # @option opts
-  # @param opts [Hash]
-  # @return [Performer] a new instance of Performer
+  # @param [Hash] opts
+  # @option opts [#to_i] :tries (5)
+  # @option opts [#call, #to_i] :delay (DELAY_PROC)
+  # @option opts [Array(Exception)] :exceptions (RETRIABLE_ERRORS)
+  # @option opts [Array(#to_i)] :retry_statuses
+  # @option opts [#call] :on_retry
+  # @option opts [#to_f] :max_delay (Float::MAX)
+  # @option opts [#call] :should_retry
   #
   # pkg:gem/http#lib/http/retriable/performer.rb:34
   def initialize(opts); end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/retriable/performer.rb:76
   def calculate_delay(iteration, response); end
 
@@ -2944,8 +2653,8 @@ class HTTP::Retriable::Performer
   # up to `:tries` amount of times. Sleeps for amount of seconds calculated
   # with `:delay` proc before each retry.
   #
-  # @api private
   # @see #initialize
+  # @api private
   #
   # pkg:gem/http#lib/http/retriable/performer.rb:51
   def perform(client, req, &block); end
@@ -2954,46 +2663,30 @@ class HTTP::Retriable::Performer
 
   # Builds OutOfRetriesError
   #
-  # @api private
-  # @param exception [Exception, nil]
   # @param request [HTTP::Request]
   # @param status [HTTP::Response, nil]
+  # @param exception [Exception, nil]
   #
   # pkg:gem/http#lib/http/retriable/performer.rb:140
   def out_of_retries_error(request, response, exception); end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/http#lib/http/retriable/performer.rb:106
   def retry_exception?(err); end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/http#lib/http/retriable/performer.rb:96
   def retry_request?(req, err, res, attempt); end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/http#lib/http/retriable/performer.rb:110
   def retry_response?(res); end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/retriable/performer.rb:83
   def try_request; end
 
-  # @api private
-  #
   # pkg:gem/http#lib/http/retriable/performer.rb:125
   def wait_for_retry_or_raise(req, err, res, attempt); end
 end
 
 # Exceptions we should retry
-#
-# @api private
 #
 # pkg:gem/http#lib/http/retriable/performer.rb:14
 HTTP::Retriable::Performer::RETRIABLE_ERRORS = T.let(T.unsafe(nil), Array)
@@ -3013,13 +2706,9 @@ class HTTP::StateError < ::HTTP::ResponseError; end
 #
 # pkg:gem/http#lib/http/errors.rb:25
 class HTTP::StatusError < ::HTTP::ResponseError
-  # @return [StatusError] a new instance of StatusError
-  #
   # pkg:gem/http#lib/http/errors.rb:28
   def initialize(response); end
 
-  # Returns the value of attribute response.
-  #
   # pkg:gem/http#lib/http/errors.rb:26
   def response; end
 end
@@ -3029,13 +2718,9 @@ module HTTP::Timeout; end
 
 # pkg:gem/http#lib/http/timeout/global.rb:10
 class HTTP::Timeout::Global < ::HTTP::Timeout::Null
-  # @return [Global] a new instance of Global
-  #
   # pkg:gem/http#lib/http/timeout/global.rb:11
   def initialize(*args); end
 
-  # Write to the socket
-  #
   # pkg:gem/http#lib/http/timeout/global.rb:56
   def <<(data); end
 
@@ -3062,8 +2747,6 @@ class HTTP::Timeout::Global < ::HTTP::Timeout::Null
 
   private
 
-  # @raise [TimeoutError]
-  #
   # pkg:gem/http#lib/http/timeout/global.rb:108
   def log_time; end
 
@@ -3097,21 +2780,15 @@ end
 
 # pkg:gem/http#lib/http/timeout/null.rb:7
 class HTTP::Timeout::Null
-  # @return [Null] a new instance of Null
-  #
   # pkg:gem/http#lib/http/timeout/null.rb:10
   def initialize(options = T.unsafe(nil)); end
 
-  # Write to the socket
-  #
   # pkg:gem/http#lib/http/timeout/null.rb:58
   def <<(data); end
 
   # pkg:gem/http#lib/http/timeout/null.rb:25
   def close; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/http#lib/http/timeout/null.rb:29
   def closed?; end
 
@@ -3125,8 +2802,6 @@ class HTTP::Timeout::Null
   # pkg:gem/http#lib/http/timeout/null.rb:21
   def connect_ssl; end
 
-  # Returns the value of attribute options.
-  #
   # pkg:gem/http#lib/http/timeout/null.rb:8
   def options; end
 
@@ -3135,8 +2810,6 @@ class HTTP::Timeout::Null
   # pkg:gem/http#lib/http/timeout/null.rb:48
   def readpartial(size, buffer = T.unsafe(nil)); end
 
-  # Returns the value of attribute socket.
-  #
   # pkg:gem/http#lib/http/timeout/null.rb:8
   def socket; end
 
@@ -3165,8 +2838,6 @@ end
 
 # pkg:gem/http#lib/http/timeout/per_operation.rb:9
 class HTTP::Timeout::PerOperation < ::HTTP::Timeout::Null
-  # @return [PerOperation] a new instance of PerOperation
-  #
   # pkg:gem/http#lib/http/timeout/per_operation.rb:14
   def initialize(*args); end
 
@@ -3207,15 +2878,17 @@ class HTTP::URI
 
   # Creates an HTTP::URI instance from the given options
   #
-  # @option options_or_uri
-  # @option options_or_uri
-  # @option options_or_uri
-  # @option options_or_uri
-  # @option options_or_uri
-  # @option options_or_uri
-  # @option options_or_uri
-  # @option options_or_uri
-  # @param options_or_uri [Hash, Addressable::URI]
+  # @param [Hash, Addressable::URI] options_or_uri
+  #
+  # @option options_or_uri [String, #to_str] :scheme URI scheme
+  # @option options_or_uri [String, #to_str] :user for basic authentication
+  # @option options_or_uri [String, #to_str] :password for basic authentication
+  # @option options_or_uri [String, #to_str] :host name component
+  # @option options_or_uri [String, #to_str] :port network port to connect to
+  # @option options_or_uri [String, #to_str] :path component to request
+  # @option options_or_uri [String, #to_str] :query component distinct from path
+  # @option options_or_uri [String, #to_str] :fragment component at the end of the URI
+  #
   # @return [HTTP::URI] new URI instance
   #
   # pkg:gem/http#lib/http/uri.rb:104
@@ -3223,7 +2896,8 @@ class HTTP::URI
 
   # Are these URI objects equal? Normalizes both URIs prior to comparison
   #
-  # @param other [Object] URI to compare this one with
+  # @param [Object] other URI to compare this one with
+  #
   # @return [TrueClass, FalseClass] are the URIs equivalent (after normalization)?
   #
   # pkg:gem/http#lib/http/uri.rb:123
@@ -3242,7 +2916,8 @@ class HTTP::URI
 
   # Are these URI objects equal? Does NOT normalizes both URIs prior to comparison
   #
-  # @param other [Object] URI to compare this one with
+  # @param [Object] other URI to compare this one with
+  #
   # @return [TrueClass, FalseClass] are the URIs equivalent?
   #
   # pkg:gem/http#lib/http/uri.rb:132
@@ -3271,7 +2946,7 @@ class HTTP::URI
 
   # Sets the host component for the URI.
   #
-  # @param new_host [String, #to_str] The new host component.
+  # @param [String, #to_str] new_host The new host component.
   # @return [void]
   #
   # pkg:gem/http#lib/http/uri.rb:147
@@ -3360,6 +3035,10 @@ class HTTP::URI
   # pkg:gem/http#lib/http/uri.rb:157
   def port; end
 
+  # Port number, either as specified or the default if unspecified
+  #
+  # @return [Integer] port number
+  #
   # pkg:gem/http#lib/http/uri.rb:14
   def port=(*args, **_arg1, &block); end
 
@@ -3394,10 +3073,6 @@ class HTTP::URI
   # pkg:gem/http#lib/http/uri.rb:181
   def to_s; end
 
-  # Convert an HTTP::URI to a String
-  #
-  # @return [String] URI serialized as a String
-  #
   # pkg:gem/http#lib/http/uri.rb:184
   def to_str; end
 
@@ -3411,8 +3086,9 @@ class HTTP::URI
 
   # Process a URI host, adding or removing surrounding brackets if the host is an IPv6 address.
   #
-  # @param brackets [Boolean] When true, brackets will be added to IPv6 addresses if missing. When
+  # @param [Boolean] brackets When true, brackets will be added to IPv6 addresses if missing. When
   #   false, they will be removed if present.
+  #
   # @return [String] Host with IPv6 address brackets added or removed
   #
   # pkg:gem/http#lib/http/uri.rb:199
@@ -3421,8 +3097,9 @@ class HTTP::URI
   class << self
     # Encodes key/value pairs as application/x-www-form-urlencoded
     #
-    # @param form_values [#to_hash, #to_ary] to encode
-    # @param sort [TrueClass, FalseClass] should key/value pairs be sorted first?
+    # @param [#to_hash, #to_ary] form_values to encode
+    # @param [TrueClass, FalseClass] sort should key/value pairs be sorted first?
+    #
     # @return [String] encoded value
     #
     # pkg:gem/http#lib/http/uri.rb:73
@@ -3430,7 +3107,8 @@ class HTTP::URI
 
     # Parse the given URI string, returning an HTTP::URI object
     #
-    # @param uri [HTTP::URI, String, #to_str] to parse
+    # @param [HTTP::URI, String, #to_str] uri to parse
+    #
     # @return [HTTP::URI] new URI instance
     #
     # pkg:gem/http#lib/http/uri.rb:61
@@ -3438,9 +3116,11 @@ class HTTP::URI
 
     # Percent-encode all characters matching a regular expression.
     #
-    # @param string [String] raw string
-    # @private
+    # @param [String] string raw string
+    #
     # @return [String] encoded value
+    #
+    # @private
     #
     # pkg:gem/http#lib/http/uri.rb:84
     def percent_encode(string); end

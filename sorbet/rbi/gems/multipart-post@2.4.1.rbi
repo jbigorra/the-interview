@@ -8,6 +8,26 @@
 # pkg:gem/multipart-post#lib/multipart/post/composite_read_io.rb:90
 CompositeIO = Multipart::Post::CompositeReadIO
 
+# Released under the MIT License.
+# Copyright, 2006-2013, by Nick Sieger.
+# Copyright, 2010, by Tohru Hashimoto.
+# Copyright, 2011, by Jeff Hodges.
+# Copyright, 2011, by Alex Koppel.
+# Copyright, 2011, by Christine Yen.
+# Copyright, 2011, by Gerrit Riessen.
+# Copyright, 2011, by Luke Redpath.
+# Copyright, 2013, by Mislav Marohnić.
+# Copyright, 2013, by Leo Cassarani.
+# Copyright, 2019, by Olle Jonsson.
+# Copyright, 2019, by Patrick Davey.
+# Copyright, 2021, by Lewis Cowles.
+# Copyright, 2021-2024, by Samuel Williams.
+# Released under the MIT License.
+# Copyright, 2022-2024, by Samuel Williams.
+# Released under the MIT License.
+# Copyright, 2019, by Patrick Davey.
+# Copyright, 2021-2024, by Samuel Williams.
+#
 # pkg:gem/multipart-post#lib/multipart/post/version.rb:7
 module Multipart; end
 
@@ -18,17 +38,15 @@ module Multipart::Post; end
 # for purposes of reading as a single stream.
 #
 # @example
-#   crio = CompositeReadIO.new(StringIO.new('one'),
-#   StringIO.new('two'),
-#   StringIO.new('three'))
-#   puts crio.read # => "onetwothree"
+#     crio = CompositeReadIO.new(StringIO.new('one'),
+#                                StringIO.new('two'),
+#                                StringIO.new('three'))
+#     puts crio.read # => "onetwothree"
 #
 # pkg:gem/multipart-post#lib/multipart/post/composite_read_io.rb:28
 class Multipart::Post::CompositeReadIO
   # Create a new composite-read IO from the arguments, all of which should
   # respond to #read in a manner consistent with IO.
-  #
-  # @return [CompositeReadIO] a new instance of CompositeReadIO
   #
   # pkg:gem/multipart-post#lib/multipart/post/composite_read_io.rb:31
   def initialize(*ios); end
@@ -38,8 +56,6 @@ class Multipart::Post::CompositeReadIO
   # pkg:gem/multipart-post#lib/multipart/post/composite_read_io.rb:37
   def close; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/multipart-post#lib/multipart/post/composite_read_io.rb:46
   def closed?; end
 
@@ -65,8 +81,6 @@ module Multipart::Post::Multipartable
   # pkg:gem/multipart-post#lib/multipart/post/multipartable.rb:38
   def initialize(path, params, headers = T.unsafe(nil), boundary = T.unsafe(nil)); end
 
-  # Returns the value of attribute boundary.
-  #
   # pkg:gem/multipart-post#lib/multipart/post/multipartable.rb:61
   def boundary; end
 
@@ -90,8 +104,6 @@ module Multipart::Post::Parts; end
 class Multipart::Post::Parts::EpiloguePart
   include ::Multipart::Post::Parts::Part
 
-  # @return [EpiloguePart] a new instance of EpiloguePart
-  #
   # pkg:gem/multipart-post#lib/multipart/post/parts.rb:141
   def initialize(boundary); end
 end
@@ -103,26 +115,23 @@ class Multipart::Post::Parts::FilePart
   include ::Multipart::Post::Parts::Part
 
   # @param boundary [String]
-  # @param headers [Hash]
-  # @param io [IO]
   # @param name [#to_s]
-  # @return [FilePart] a new instance of FilePart
+  # @param io [IO]
+  # @param headers [Hash]
   #
   # pkg:gem/multipart-post#lib/multipart/post/parts.rb:92
   def initialize(boundary, name, io, headers = T.unsafe(nil)); end
 
   # @param boundary [String]
-  # @param content_len [Integer]
-  # @param filename [String]
   # @param name [#to_s]
-  # @param opts [Hash]
+  # @param filename [String]
   # @param type [String]
+  # @param content_len [Integer]
+  # @param opts [Hash]
   #
   # pkg:gem/multipart-post#lib/multipart/post/parts.rb:107
   def build_head(boundary, name, filename, type, content_len, opts = T.unsafe(nil)); end
 
-  # Returns the value of attribute length.
-  #
   # pkg:gem/multipart-post#lib/multipart/post/parts.rb:86
   def length; end
 end
@@ -134,18 +143,17 @@ class Multipart::Post::Parts::ParamPart
   include ::Multipart::Post::Parts::Part
 
   # @param boundary [String]
-  # @param headers [Hash] Content-Type and Content-ID are used, if present.
   # @param name [#to_s]
   # @param value [String]
-  # @return [ParamPart] a new instance of ParamPart
+  # @param headers [Hash] Content-Type and Content-ID are used, if present.
   #
   # pkg:gem/multipart-post#lib/multipart/post/parts.rb:58
   def initialize(boundary, name, value, headers = T.unsafe(nil)); end
 
   # @param boundary [String]
-  # @param headers [Hash] Content-Type is used, if present.
   # @param name [#to_s]
   # @param value [String]
+  # @param headers [Hash] Content-Type is used, if present.
   #
   # pkg:gem/multipart-post#lib/multipart/post/parts.rb:71
   def build_part(boundary, name, value, headers = T.unsafe(nil)); end
@@ -163,8 +171,6 @@ module Multipart::Post::Parts::Part
   def to_io; end
 
   class << self
-    # @return [Boolean]
-    #
     # pkg:gem/multipart-post#lib/multipart/post/parts.rb:37
     def file?(value); end
 
@@ -189,49 +195,34 @@ class Multipart::Post::UploadIO
   # an arbitrarily named RackMultipart file in /tmp).
   #
   # @example
-  #   UploadIO.new("file.txt", "text/plain")
-  #   UploadIO.new(file_io, "text/plain", "file.txt")
-  # @return [UploadIO] a new instance of UploadIO
+  #     UploadIO.new("file.txt", "text/plain")
+  #     UploadIO.new(file_io, "text/plain", "file.txt")
   #
   # pkg:gem/multipart-post#lib/multipart/post/upload_io.rb:26
   def initialize(filename_or_io, content_type, filename = T.unsafe(nil), opts = T.unsafe(nil)); end
 
-  # Returns the value of attribute content_type.
-  #
   # pkg:gem/multipart-post#lib/multipart/post/upload_io.rb:10
   def content_type; end
 
-  # Returns the value of attribute io.
-  #
   # pkg:gem/multipart-post#lib/multipart/post/upload_io.rb:10
   def io; end
 
-  # Returns the value of attribute local_path.
-  #
   # pkg:gem/multipart-post#lib/multipart/post/upload_io.rb:10
   def local_path; end
 
   # pkg:gem/multipart-post#lib/multipart/post/upload_io.rb:52
   def method_missing(*args); end
 
-  # Returns the value of attribute opts.
-  #
   # pkg:gem/multipart-post#lib/multipart/post/upload_io.rb:10
   def opts; end
 
-  # Returns the value of attribute original_filename.
-  #
   # pkg:gem/multipart-post#lib/multipart/post/upload_io.rb:10
   def original_filename; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/multipart-post#lib/multipart/post/upload_io.rb:56
   def respond_to?(meth, include_all = T.unsafe(nil)); end
 
   class << self
-    # @raise [ArgumentError]
-    #
     # pkg:gem/multipart-post#lib/multipart/post/upload_io.rb:46
     def convert!(io, content_type, original_filename, local_path); end
   end

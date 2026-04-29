@@ -27,6 +27,13 @@ module FFI
   end
 end
 
+# we can sometimes get dependent libraries from libvips -- either the platform
+# will open dependencies for us automatically, or the libvips binary has been
+# built to includes all main dependencies (common on windows, can happen
+# elsewhere)
+#
+# we must get glib functions from libvips if we can, since it will be the
+# one that libvips itself is using, and they will share runtime types
 # This module provides a binding for the [libvips image processing
 # library](https://libvips.github.io/libvips/).
 #

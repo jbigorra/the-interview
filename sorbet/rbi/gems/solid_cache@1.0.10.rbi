@@ -53,51 +53,33 @@ end
 
 # pkg:gem/solid_cache#lib/solid_cache/configuration.rb:4
 class SolidCache::Configuration
-  # @return [Configuration] a new instance of Configuration
-  #
   # pkg:gem/solid_cache#lib/solid_cache/configuration.rb:7
   def initialize(store_options: T.unsafe(nil), database: T.unsafe(nil), databases: T.unsafe(nil), connects_to: T.unsafe(nil), executor: T.unsafe(nil), encrypt: T.unsafe(nil), encryption_context_properties: T.unsafe(nil), size_estimate_samples: T.unsafe(nil)); end
 
-  # Returns the value of attribute connects_to.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/configuration.rb:5
   def connects_to; end
 
-  # Returns the value of attribute encrypt.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/configuration.rb:5
   def encrypt; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/solid_cache#lib/solid_cache/configuration.rb:25
   def encrypt?; end
 
-  # Returns the value of attribute encryption_context_properties.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/configuration.rb:5
   def encryption_context_properties; end
 
-  # Returns the value of attribute executor.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/configuration.rb:5
   def executor; end
 
   # pkg:gem/solid_cache#lib/solid_cache/configuration.rb:21
   def shard_keys; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/solid_cache#lib/solid_cache/configuration.rb:17
   def sharded?; end
 
-  # Returns the value of attribute size_estimate_samples.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/configuration.rb:5
   def size_estimate_samples; end
 
-  # Returns the value of attribute store_options.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/configuration.rb:5
   def store_options; end
 
@@ -120,29 +102,21 @@ end
 
 # pkg:gem/solid_cache#lib/solid_cache/connections/sharded.rb:5
 class SolidCache::Connections::Sharded
-  # @return [Sharded] a new instance of Sharded
-  #
   # pkg:gem/solid_cache#lib/solid_cache/connections/sharded.rb:8
   def initialize(names); end
 
   # pkg:gem/solid_cache#lib/solid_cache/connections/sharded.rb:27
   def assign(keys); end
 
-  # Returns the value of attribute consistent_hash.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/connections/sharded.rb:6
   def consistent_hash; end
 
   # pkg:gem/solid_cache#lib/solid_cache/connections/sharded.rb:31
   def count; end
 
-  # Returns the value of attribute names.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/connections/sharded.rb:6
   def names; end
 
-  # Returns the value of attribute nodes.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/connections/sharded.rb:6
   def nodes; end
 
@@ -163,8 +137,6 @@ end
 
 # pkg:gem/solid_cache#lib/solid_cache/connections/single.rb:5
 class SolidCache::Connections::Single
-  # @return [Single] a new instance of Single
-  #
   # pkg:gem/solid_cache#lib/solid_cache/connections/single.rb:8
   def initialize(name); end
 
@@ -174,8 +146,6 @@ class SolidCache::Connections::Single
   # pkg:gem/solid_cache#lib/solid_cache/connections/single.rb:30
   def count; end
 
-  # Returns the value of attribute name.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/connections/single.rb:6
   def name; end
 
@@ -343,17 +313,12 @@ end
 
 # pkg:gem/solid_cache#lib/solid_cache/maglev_hash.rb:6
 class SolidCache::MaglevHash
-  # @raise [ArgumentError]
-  # @return [MaglevHash] a new instance of MaglevHash
-  #
   # pkg:gem/solid_cache#lib/solid_cache/maglev_hash.rb:12
   def initialize(nodes); end
 
   # pkg:gem/solid_cache#lib/solid_cache/maglev_hash.rb:20
   def node(key); end
 
-  # Returns the value of attribute nodes.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/maglev_hash.rb:7
   def nodes; end
 
@@ -365,16 +330,12 @@ class SolidCache::MaglevHash
   # pkg:gem/solid_cache#lib/solid_cache/maglev_hash.rb:43
   def build_preferences(node); end
 
-  # Returns the value of attribute lookup.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/maglev_hash.rb:25
   def lookup; end
 
   # pkg:gem/solid_cache#lib/solid_cache/maglev_hash.rb:50
   def md5(*args); end
 
-  # Returns the value of attribute node_count.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/maglev_hash.rb:25
   def node_count; end
 
@@ -384,8 +345,6 @@ end
 
 # pkg:gem/solid_cache#lib/solid_cache/maglev_hash.rb:58
 class SolidCache::MaglevHash::Preferences
-  # @return [Preferences] a new instance of Preferences
-  #
   # pkg:gem/solid_cache#lib/solid_cache/maglev_hash.rb:59
   def initialize(offset, skip); end
 
@@ -397,13 +356,9 @@ class SolidCache::MaglevHash::Preferences
   # pkg:gem/solid_cache#lib/solid_cache/maglev_hash.rb:74
   def next_slot; end
 
-  # Returns the value of attribute preferred_slots.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/maglev_hash.rb:72
   def preferred_slots; end
 
-  # Returns the value of attribute rank.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/maglev_hash.rb:72
   def rank; end
 end
@@ -447,8 +402,6 @@ class SolidCache::Store < ::ActiveSupport::Cache::Store
   include ::SolidCache::Store::Connections
   include ::SolidCache::Store::Api
 
-  # @return [Store] a new instance of Store
-  #
   # pkg:gem/solid_cache#lib/solid_cache/store.rb:8
   def initialize(options = T.unsafe(nil)); end
 
@@ -456,8 +409,6 @@ class SolidCache::Store < ::ActiveSupport::Cache::Store
   def setup!; end
 
   class << self
-    # @return [Boolean]
-    #
     # pkg:gem/solid_cache#lib/solid_cache/store.rb:12
     def supports_cache_versioning?; end
   end
@@ -468,8 +419,6 @@ module SolidCache::Store::Api
   # pkg:gem/solid_cache#lib/solid_cache/store/api.rb:11
   def initialize(options = T.unsafe(nil)); end
 
-  # @raise [NotImplementedError]
-  #
   # pkg:gem/solid_cache#lib/solid_cache/store/api.rb:35
   def cleanup(options = T.unsafe(nil)); end
 
@@ -482,8 +431,6 @@ module SolidCache::Store::Api
   # pkg:gem/solid_cache#lib/solid_cache/store/api.rb:17
   def increment(name, amount = T.unsafe(nil), options = T.unsafe(nil)); end
 
-  # Returns the value of attribute max_key_bytesize.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/store/api.rb:9
   def max_key_bytesize; end
 
@@ -552,8 +499,6 @@ module SolidCache::Store::Connections
   # pkg:gem/solid_cache#lib/solid_cache/store/connections.rb:37
   def connections; end
 
-  # Returns the value of attribute shard_options.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/store/connections.rb:6
   def shard_options; end
 
@@ -598,8 +543,6 @@ module SolidCache::Store::Entries
   # pkg:gem/solid_cache#lib/solid_cache/store/entries.rb:8
   def initialize(options = T.unsafe(nil)); end
 
-  # Returns the value of attribute clear_with.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/store/entries.rb:6
   def clear_with; end
 
@@ -637,8 +580,6 @@ module SolidCache::Store::Execution
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/solid_cache#lib/solid_cache/store/execution.rb:43
   def active_record_instrumentation?; end
 
@@ -657,43 +598,27 @@ end
 
 # pkg:gem/solid_cache#lib/solid_cache/store/expiry.rb:5
 module SolidCache::Store::Expiry
-  # @raise [ArgumentError]
-  #
   # pkg:gem/solid_cache#lib/solid_cache/store/expiry.rb:12
   def initialize(options = T.unsafe(nil)); end
 
-  # Returns the value of attribute expires_per_write.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/store/expiry.rb:10
   def expires_per_write; end
 
-  # Returns the value of attribute expiry_batch_size.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/store/expiry.rb:10
   def expiry_batch_size; end
 
-  # Returns the value of attribute expiry_method.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/store/expiry.rb:10
   def expiry_method; end
 
-  # Returns the value of attribute expiry_queue.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/store/expiry.rb:10
   def expiry_queue; end
 
-  # Returns the value of attribute max_age.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/store/expiry.rb:10
   def max_age; end
 
-  # Returns the value of attribute max_entries.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/store/expiry.rb:10
   def max_entries; end
 
-  # Returns the value of attribute max_size.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/store/expiry.rb:10
   def max_size; end
 
@@ -722,8 +647,6 @@ module SolidCache::Store::Failsafe
 
   private
 
-  # Returns the value of attribute error_handler.
-  #
   # pkg:gem/solid_cache#lib/solid_cache/store/failsafe.rb:28
   def error_handler; end
 

@@ -9,8 +9,6 @@
 module Bootsnap
   extend ::Bootsnap
 
-  # @return [Boolean]
-  #
   # pkg:gem/bootsnap#lib/bootsnap/bundler.rb:6
   def bundler?; end
 
@@ -26,8 +24,6 @@ module Bootsnap
     # pkg:gem/bootsnap#lib/bootsnap.rb:168
     def absolute_path?(path); end
 
-    # Returns the value of attribute cache_dir.
-    #
     # pkg:gem/bootsnap#lib/bootsnap.rb:10
     def cache_dir; end
 
@@ -52,15 +48,15 @@ module Bootsnap
     # pkg:gem/bootsnap#lib/bootsnap.rb:12
     def log_stats!; end
 
-    # Returns the value of attribute logger.
-    #
     # pkg:gem/bootsnap#lib/bootsnap.rb:10
     def logger; end
 
     # pkg:gem/bootsnap#lib/bootsnap.rb:26
     def logger=(logger); end
 
-    # Allow the C extension to redefine `rb_get_path` without warning.
+    # This is a semi-accurate ruby implementation of the native `rb_get_path(VALUE)` function.
+    # The native version is very intricate and may behave differently on windows etc.
+    # But we only use it for non-MRI platform.
     # Allow the C extension to redefine `rb_get_path` without warning.
     #
     # pkg:gem/bootsnap#lib/bootsnap.rb:176
@@ -77,8 +73,6 @@ module Bootsnap
     # pkg:gem/bootsnap#lib/bootsnap.rb:190
     def bool_env(key, default: T.unsafe(nil)); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/bootsnap#lib/bootsnap.rb:186
     def enabled?(key); end
   end
@@ -90,8 +84,6 @@ module Bootsnap::CompileCache
     # pkg:gem/bootsnap#lib/bootsnap/compile_cache.rb:12
     def setup(cache_dir:, iseq:, yaml:, json: T.unsafe(nil), readonly: T.unsafe(nil), revalidation: T.unsafe(nil)); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/bootsnap#lib/bootsnap/compile_cache.rb:41
     def supported?; end
   end
@@ -103,8 +95,6 @@ class Bootsnap::CompileCache::Error < ::StandardError; end
 # pkg:gem/bootsnap#lib/bootsnap/compile_cache/iseq.rb:8
 module Bootsnap::CompileCache::ISeq
   class << self
-    # Returns the value of attribute cache_dir.
-    #
     # pkg:gem/bootsnap#lib/bootsnap/compile_cache/iseq.rb:10
     def cache_dir; end
 
@@ -114,27 +104,15 @@ module Bootsnap::CompileCache::ISeq
     # pkg:gem/bootsnap#lib/bootsnap/compile_cache/iseq.rb:118
     def compile_option_updated; end
 
-    # Returns the value of attribute compiler_selector.
-    #
     # pkg:gem/bootsnap#lib/bootsnap/compile_cache/iseq.rb:11
     def compiler_selector; end
 
-    # Sets the attribute compiler_selector
-    #
-    # @param value the value to set the attribute compiler_selector to.
-    #
     # pkg:gem/bootsnap#lib/bootsnap/compile_cache/iseq.rb:11
     def compiler_selector=(_arg0); end
 
-    # Returns the value of attribute default_compiler.
-    #
     # pkg:gem/bootsnap#lib/bootsnap/compile_cache/iseq.rb:11
     def default_compiler; end
 
-    # Sets the attribute default_compiler
-    #
-    # @param value the value to set the attribute default_compiler to.
-    #
     # pkg:gem/bootsnap#lib/bootsnap/compile_cache/iseq.rb:11
     def default_compiler=(_arg0); end
 
@@ -147,8 +125,6 @@ module Bootsnap::CompileCache::ISeq
     # pkg:gem/bootsnap#lib/bootsnap/compile_cache/iseq.rb:89
     def precompile(path); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/bootsnap#lib/bootsnap/compile_cache/iseq.rb:17
     def supported?; end
   end
@@ -156,13 +132,9 @@ end
 
 # pkg:gem/bootsnap#lib/bootsnap/compile_cache/iseq.rb:22
 class Bootsnap::CompileCache::ISeq::Compiler
-  # @return [Compiler] a new instance of Compiler
-  #
   # pkg:gem/bootsnap#lib/bootsnap/compile_cache/iseq.rb:25
   def initialize(namespace = T.unsafe(nil), compile_options = T.unsafe(nil)); end
 
-  # Returns the value of attribute compile_options.
-  #
   # pkg:gem/bootsnap#lib/bootsnap/compile_cache/iseq.rb:23
   def compile_options; end
 
@@ -172,8 +144,6 @@ class Bootsnap::CompileCache::ISeq::Compiler
   # pkg:gem/bootsnap#lib/bootsnap/compile_cache/iseq.rb:50
   def input_to_storage(_, path); end
 
-  # Returns the value of attribute namespace.
-  #
   # pkg:gem/bootsnap#lib/bootsnap/compile_cache/iseq.rb:23
   def namespace; end
 
@@ -242,16 +212,12 @@ Bootsnap::CompileCache::UNCOMPILABLE = T.let(T.unsafe(nil), BasicObject)
 # pkg:gem/bootsnap#lib/bootsnap/compile_cache/yaml.rb:7
 module Bootsnap::CompileCache::YAML
   class << self
-    # Returns the value of attribute cache_dir.
-    #
     # pkg:gem/bootsnap#lib/bootsnap/compile_cache/yaml.rb:20
     def cache_dir; end
 
     # pkg:gem/bootsnap#lib/bootsnap/compile_cache/yaml.rb:22
     def cache_dir=(cache_dir); end
 
-    # Returns the value of attribute implementation.
-    #
     # pkg:gem/bootsnap#lib/bootsnap/compile_cache/yaml.rb:20
     def implementation; end
 
@@ -261,15 +227,9 @@ module Bootsnap::CompileCache::YAML
     # pkg:gem/bootsnap#lib/bootsnap/compile_cache/yaml.rb:37
     def install!(cache_dir); end
 
-    # Returns the value of attribute msgpack_factory.
-    #
     # pkg:gem/bootsnap#lib/bootsnap/compile_cache/yaml.rb:19
     def msgpack_factory; end
 
-    # Sets the attribute msgpack_factory
-    #
-    # @param value the value to set the attribute msgpack_factory to.
-    #
     # pkg:gem/bootsnap#lib/bootsnap/compile_cache/yaml.rb:19
     def msgpack_factory=(_arg0); end
 
@@ -286,20 +246,12 @@ module Bootsnap::CompileCache::YAML
     # UTF-8, US-ASCII and BINARY. So if Encoding.default_internal is set to anything else
     # we can't safely use the cache
     #
-    # @return [Boolean]
-    #
     # pkg:gem/bootsnap#lib/bootsnap/compile_cache/yaml.rb:46
     def supported_internal_encoding?; end
 
-    # Returns the value of attribute supported_options.
-    #
     # pkg:gem/bootsnap#lib/bootsnap/compile_cache/yaml.rb:19
     def supported_options; end
 
-    # Sets the attribute supported_options
-    #
-    # @param value the value to set the attribute supported_options to.
-    #
     # pkg:gem/bootsnap#lib/bootsnap/compile_cache/yaml.rb:19
     def supported_options=(_arg0); end
   end
@@ -427,26 +379,18 @@ class Bootsnap::InvalidConfiguration < ::StandardError; end
 # pkg:gem/bootsnap#lib/bootsnap/load_path_cache.rb:4
 module Bootsnap::LoadPathCache
   class << self
-    # Returns the value of attribute enabled.
-    #
     # pkg:gem/bootsnap#lib/bootsnap/load_path_cache.rb:28
     def enabled?; end
 
-    # Returns the value of attribute load_path_cache.
-    #
     # pkg:gem/bootsnap#lib/bootsnap/load_path_cache.rb:27
     def load_path_cache; end
 
-    # Returns the value of attribute loaded_features_index.
-    #
     # pkg:gem/bootsnap#lib/bootsnap/load_path_cache.rb:27
     def loaded_features_index; end
 
     # pkg:gem/bootsnap#lib/bootsnap/load_path_cache.rb:31
     def setup(cache_path:, development_mode:, ignore_directories:, readonly: T.unsafe(nil)); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/bootsnap#lib/bootsnap/load_path_cache.rb:56
     def supported?; end
 
@@ -460,7 +404,7 @@ Bootsnap::LoadPathCache::CACHED_EXTENSIONS = T.let(T.unsafe(nil), Array)
 
 # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/cache.rb:7
 class Bootsnap::LoadPathCache::Cache
-  # @return [Cache] a new instance of Cache
+  # seconds
   #
   # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/cache.rb:10
   def initialize(store, path_obj, development_mode: T.unsafe(nil)); end
@@ -482,8 +426,6 @@ class Bootsnap::LoadPathCache::Cache
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/cache.rb:134
   def dir_changed?; end
 
@@ -502,8 +444,6 @@ class Bootsnap::LoadPathCache::Cache
   # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/cache.rb:204
   def search_index(feature); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/cache.rb:181
   def stale?; end
 
@@ -517,8 +457,6 @@ class Bootsnap::LoadPathCache::Cache
   def unshift_paths_locked(*paths); end
 end
 
-# seconds
-#
 # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/cache.rb:8
 Bootsnap::LoadPathCache::Cache::AGE_THRESHOLD = T.let(T.unsafe(nil), Integer)
 
@@ -693,8 +631,6 @@ Bootsnap::LoadPathCache::FALLBACK_SCAN = T.let(T.unsafe(nil), BasicObject)
 #
 # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/loaded_features_index.rb:26
 class Bootsnap::LoadPathCache::LoadedFeaturesIndex
-  # @return [LoadedFeaturesIndex] a new instance of LoadedFeaturesIndex
-  #
   # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/loaded_features_index.rb:27
   def initialize; end
 
@@ -704,8 +640,6 @@ class Bootsnap::LoadPathCache::LoadedFeaturesIndex
   # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/loaded_features_index.rb:78
   def identify(short, cursor); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/loaded_features_index.rb:68
   def key?(feature); end
 
@@ -754,8 +688,6 @@ class Bootsnap::LoadPathCache::LoadedFeaturesIndex
   #
   # See <https://docs.ruby-lang.org/en/master/Kernel.html#method-i-require>.
   #
-  # @return [Boolean]
-  #
   # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/loaded_features_index.rb:146
   def extension_elidable?(feature); end
 
@@ -776,8 +708,6 @@ end
 
 # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/path.rb:7
 class Bootsnap::LoadPathCache::Path
-  # @return [Path] a new instance of Path
-  #
   # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/path.rb:24
   def initialize(path, real: T.unsafe(nil)); end
 
@@ -791,26 +721,18 @@ class Bootsnap::LoadPathCache::Path
 
   # True if the path exists, but represents a non-directory object
   #
-  # @return [Boolean]
-  #
   # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/path.rb:47
   def non_directory?; end
 
-  # Returns the value of attribute path.
-  #
   # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/path.rb:22
   def path; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/path.rb:53
   def relative?; end
 
   # A path is considered 'stable' if it is part of a Gem.path or the ruby
   # distribution. When adding or removing files in these paths, the cache
   # must be cleared before the change will be noticed.
-  #
-  # @return [Boolean]
   #
   # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/path.rb:11
   def stable?; end
@@ -821,8 +743,6 @@ class Bootsnap::LoadPathCache::Path
   # A path is considered volatile if it doesn't live under a Gem.path or
   # the ruby distribution root. These paths are scanned for new additions
   # more frequently.
-  #
-  # @return [Boolean]
   #
   # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/path.rb:18
   def volatile?; end
@@ -865,15 +785,9 @@ module Bootsnap::LoadPathCache::PathScanner
     # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/path_scanner.rb:80
     def call(root_path); end
 
-    # Returns the value of attribute ignored_directories.
-    #
     # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/path_scanner.rb:19
     def ignored_directories; end
 
-    # Sets the attribute ignored_directories
-    #
-    # @param value the value to set the attribute ignored_directories to.
-    #
     # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/path_scanner.rb:19
     def ignored_directories=(_arg0); end
 
@@ -904,26 +818,18 @@ Bootsnap::LoadPathCache::SLASH = T.let(T.unsafe(nil), String)
 
 # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/store.rb:9
 class Bootsnap::LoadPathCache::Store
-  # @return [Store] a new instance of Store
-  #
   # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/store.rb:16
   def initialize(store_path, readonly: T.unsafe(nil)); end
 
-  # @raise [SetOutsideTransactionNotAllowed]
-  #
   # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/store.rb:28
   def fetch(key); end
 
   # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/store.rb:24
   def get(key); end
 
-  # @raise [SetOutsideTransactionNotAllowed]
-  #
   # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/store.rb:40
   def set(key, value); end
 
-  # @raise [NestedTransactionError]
-  #
   # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/store.rb:49
   def transaction; end
 
@@ -962,19 +868,6 @@ Bootsnap::LoadPathCache::Store::VERSION_KEY = T.let(T.unsafe(nil), String)
 
 # pkg:gem/bootsnap#lib/bootsnap/version.rb:4
 Bootsnap::VERSION = T.let(T.unsafe(nil), String)
-
-# pkg:gem/bootsnap#lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:3
-module Kernel
-  private
-
-  # Avoid method redefinition warnings
-  #
-  # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:6
-  def require(path); end
-
-  # pkg:gem/bootsnap#lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:4
-  def require_without_bootsnap(name); end
-end
 
 module Psych
   extend ::Bootsnap::CompileCache::YAML::Psych4::Patch

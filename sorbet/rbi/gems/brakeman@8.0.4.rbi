@@ -25,8 +25,6 @@ module Brakeman
 
     # Compare JSON output from a previous scan and return the diff of the two scans
     #
-    # @raise [ArgumentError]
-    #
     # pkg:gem/brakeman#lib/brakeman.rb:553
     def compare(options); end
 
@@ -220,8 +218,6 @@ end
 
 # pkg:gem/brakeman#lib/brakeman/logger.rb:18
 class Brakeman::Logger::Base
-  # @return [Base] a new instance of Base
-  #
   # pkg:gem/brakeman#lib/brakeman/logger.rb:19
   def initialize(options, log_destination = T.unsafe(nil)); end
 
@@ -245,15 +241,10 @@ class Brakeman::Logger::Base
   # pkg:gem/brakeman#lib/brakeman/logger.rb:65
   def color(message, *_arg1); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/brakeman#lib/brakeman/logger.rb:73
   def color?; end
 
   # Wraps a step in the scanning process
-  #
-  # @yield [_self]
-  # @yieldparam _self [Brakeman::Logger::Base] the object that the method was called on
   #
   # pkg:gem/brakeman#lib/brakeman/logger.rb:44
   def context(description, &_arg1); end
@@ -269,8 +260,6 @@ class Brakeman::Logger::Base
   # pkg:gem/brakeman#lib/brakeman/logger.rb:26
   def log(message, newline: T.unsafe(nil)); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/brakeman#lib/brakeman/logger.rb:62
   def show_timing?; end
 
@@ -297,8 +286,6 @@ end
 
 # pkg:gem/brakeman#lib/brakeman/logger.rb:153
 class Brakeman::Logger::Console < ::Brakeman::Logger::Base
-  # @return [Console] a new instance of Console
-  #
   # pkg:gem/brakeman#lib/brakeman/logger.rb:156
   def initialize(options, *_arg1); end
 
@@ -320,8 +307,6 @@ class Brakeman::Logger::Console < ::Brakeman::Logger::Base
   # pkg:gem/brakeman#lib/brakeman/logger.rb:187
   def context(description, &_arg1); end
 
-  # Returns the value of attribute prefix.
-  #
   # pkg:gem/brakeman#lib/brakeman/logger.rb:154
   def prefix; end
 
@@ -363,8 +348,6 @@ end
 
 # pkg:gem/brakeman#lib/brakeman/logger.rb:90
 class Brakeman::Logger::Plain < ::Brakeman::Logger::Base
-  # @return [Plain] a new instance of Plain
-  #
   # pkg:gem/brakeman#lib/brakeman/logger.rb:91
   def initialize(options, *_arg1); end
 
@@ -383,8 +366,6 @@ end
 
 # pkg:gem/brakeman#lib/brakeman/logger.rb:124
 class Brakeman::Logger::Quiet < ::Brakeman::Logger::Base
-  # @return [Quiet] a new instance of Quiet
-  #
   # pkg:gem/brakeman#lib/brakeman/logger.rb:125
   def initialize(*_arg0); end
 end

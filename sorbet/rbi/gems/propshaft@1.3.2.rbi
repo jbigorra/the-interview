@@ -24,16 +24,12 @@ end
 
 # pkg:gem/propshaft#lib/propshaft/assembly.rb:12
 class Propshaft::Assembly
-  # @return [Assembly] a new instance of Assembly
-  #
   # pkg:gem/propshaft#lib/propshaft/assembly.rb:15
   def initialize(config); end
 
   # pkg:gem/propshaft#lib/propshaft/assembly.rb:49
   def compilers; end
 
-  # Returns the value of attribute config.
-  #
   # pkg:gem/propshaft#lib/propshaft/assembly.rb:13
   def config; end
 
@@ -55,8 +51,6 @@ end
 
 # pkg:gem/propshaft#lib/propshaft/asset.rb:5
 class Propshaft::Asset
-  # @return [Asset] a new instance of Asset
-  #
   # pkg:gem/propshaft#lib/propshaft/asset.rb:19
   def initialize(path, logical_path:, load_path:); end
 
@@ -81,8 +75,6 @@ class Propshaft::Asset
   # pkg:gem/propshaft#lib/propshaft/asset.rb:69
   def digested_path; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/propshaft#lib/propshaft/asset.rb:77
   def fresh?(digest); end
 
@@ -92,25 +84,17 @@ class Propshaft::Asset
   # pkg:gem/propshaft#lib/propshaft/asset.rb:43
   def length; end
 
-  # Returns the value of attribute load_path.
-  #
   # pkg:gem/propshaft#lib/propshaft/asset.rb:6
   def load_path; end
 
-  # Returns the value of attribute logical_path.
-  #
   # pkg:gem/propshaft#lib/propshaft/asset.rb:6
   def logical_path; end
 
-  # Returns the value of attribute path.
-  #
   # pkg:gem/propshaft#lib/propshaft/asset.rb:6
   def path; end
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/propshaft#lib/propshaft/asset.rb:90
   def already_digested?; end
 
@@ -130,19 +114,13 @@ Propshaft::Asset::CONTENT_TYPES_WITH_UTF8_CHARSET = T.let(T.unsafe(nil), Array)
 #
 # pkg:gem/propshaft#lib/propshaft/compiler.rb:4
 class Propshaft::Compiler
-  # @return [Compiler] a new instance of Compiler
-  #
   # pkg:gem/propshaft#lib/propshaft/compiler.rb:8
   def initialize(assembly); end
 
-  # Returns the value of attribute assembly.
-  #
   # pkg:gem/propshaft#lib/propshaft/compiler.rb:5
   def assembly; end
 
   # Override this in a specific compiler
-  #
-  # @raise [NotImplementedError]
   #
   # pkg:gem/propshaft#lib/propshaft/compiler.rb:13
   def compile(asset, input); end
@@ -221,23 +199,15 @@ Propshaft::Compiler::SourceMappingUrls::SOURCE_MAPPING_PATTERN = T.let(T.unsafe(
 
 # pkg:gem/propshaft#lib/propshaft/compilers.rb:1
 class Propshaft::Compilers
-  # @return [Compilers] a new instance of Compilers
-  #
   # pkg:gem/propshaft#lib/propshaft/compilers.rb:4
   def initialize(assembly); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/propshaft#lib/propshaft/compilers.rb:14
   def any?; end
 
-  # Returns the value of attribute assembly.
-  #
   # pkg:gem/propshaft#lib/propshaft/compilers.rb:2
   def assembly; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/propshaft#lib/propshaft/compilers.rb:18
   def compilable?(asset); end
 
@@ -250,8 +220,6 @@ class Propshaft::Compilers
   # pkg:gem/propshaft#lib/propshaft/compilers.rb:9
   def register(mime_type, klass); end
 
-  # Returns the value of attribute registrations.
-  #
   # pkg:gem/propshaft#lib/propshaft/compilers.rb:2
   def registrations; end
 end
@@ -380,8 +348,6 @@ module Propshaft::Helper
   # Integrity is only computed in secure contexts (HTTPS or local development)
   # and when explicitly requested via the +integrity+ option.
   #
-  # @return [Boolean]
-  #
   # pkg:gem/propshaft#lib/propshaft/helper.rb:135
   def _compute_integrity?(options); end
 
@@ -396,16 +362,12 @@ module Propshaft::Helper
   # * The request is made over HTTPS (SSL), OR
   # * The request is local (development environment)
   #
-  # @return [Boolean]
-  #
   # pkg:gem/propshaft#lib/propshaft/helper.rb:152
   def _secure_subresource_integrity_context?; end
 end
 
 # pkg:gem/propshaft#lib/propshaft/load_path.rb:4
 class Propshaft::LoadPath
-  # @return [LoadPath] a new instance of LoadPath
-  #
   # pkg:gem/propshaft#lib/propshaft/load_path.rb:17
   def initialize(paths = T.unsafe(nil), compilers:, version: T.unsafe(nil), file_watcher: T.unsafe(nil), integrity_hash_algorithm: T.unsafe(nil)); end
 
@@ -425,8 +387,6 @@ class Propshaft::LoadPath
   # pkg:gem/propshaft#lib/propshaft/load_path.rb:53
   def cache_sweeper; end
 
-  # Returns the value of attribute compilers.
-  #
   # pkg:gem/propshaft#lib/propshaft/load_path.rb:15
   def compilers; end
 
@@ -436,21 +396,15 @@ class Propshaft::LoadPath
   # pkg:gem/propshaft#lib/propshaft/load_path.rb:26
   def find_referenced_by(asset); end
 
-  # Returns the value of attribute integrity_hash_algorithm.
-  #
   # pkg:gem/propshaft#lib/propshaft/load_path.rb:15
   def integrity_hash_algorithm; end
 
   # pkg:gem/propshaft#lib/propshaft/load_path.rb:44
   def manifest; end
 
-  # Returns the value of attribute paths.
-  #
   # pkg:gem/propshaft#lib/propshaft/load_path.rb:15
   def paths; end
 
-  # Returns the value of attribute version.
-  #
   # pkg:gem/propshaft#lib/propshaft/load_path.rb:15
   def version; end
 
@@ -480,8 +434,6 @@ end
 
 # pkg:gem/propshaft#lib/propshaft/load_path.rb:5
 class Propshaft::LoadPath::NullFileWatcher
-  # @return [NullFileWatcher] a new instance of NullFileWatcher
-  #
   # pkg:gem/propshaft#lib/propshaft/load_path.rb:6
   def initialize(paths, files_to_watch, &block); end
 
@@ -504,21 +456,9 @@ class Propshaft::Manifest
   #   integrity hashes (e.g., 'sha256', 'sha384', 'sha512'). If +nil+, integrity hashes
   #   will not be generated.
   #
-  # @return [Manifest] a new instance of Manifest
-  #
   # pkg:gem/propshaft#lib/propshaft/manifest.rb:82
   def initialize(integrity_hash_algorithm: T.unsafe(nil)); end
 
-  # Adds a manifest entry to the manifest.
-  #
-  # ==== Parameters
-  #
-  # * +entry+ - The manifest entry to add
-  #
-  # ==== Returns
-  #
-  # The entry that was added.
-  #
   # pkg:gem/propshaft#lib/propshaft/manifest.rb:122
   def <<(entry); end
 
@@ -608,8 +548,6 @@ class Propshaft::Manifest
 
   private
 
-  # Returns the value of attribute integrity_hash_algorithm.
-  #
   # pkg:gem/propshaft#lib/propshaft/manifest.rb:181
   def integrity_hash_algorithm; end
 
@@ -649,23 +587,15 @@ class Propshaft::Manifest::ManifestEntry
   # * +digested_path+ - The digested path of the asset
   # * +integrity+ - The integrity hash of the asset (optional)
   #
-  # @return [ManifestEntry] a new instance of ManifestEntry
-  #
   # pkg:gem/propshaft#lib/propshaft/manifest.rb:22
   def initialize(logical_path:, digested_path:, integrity:); end
 
-  # Returns the value of attribute digested_path.
-  #
   # pkg:gem/propshaft#lib/propshaft/manifest.rb:13
   def digested_path; end
 
-  # Returns the value of attribute integrity.
-  #
   # pkg:gem/propshaft#lib/propshaft/manifest.rb:13
   def integrity; end
 
-  # Returns the value of attribute logical_path.
-  #
   # pkg:gem/propshaft#lib/propshaft/manifest.rb:13
   def logical_path; end
 
@@ -681,8 +611,6 @@ end
 #
 # pkg:gem/propshaft#lib/propshaft/errors.rb:8
 class Propshaft::MissingAssetError < ::Propshaft::Error
-  # @return [MissingAssetError] a new instance of MissingAssetError
-  #
   # pkg:gem/propshaft#lib/propshaft/errors.rb:9
   def initialize(path); end
 
@@ -692,8 +620,6 @@ end
 
 # pkg:gem/propshaft#lib/propshaft/output_path.rb:3
 class Propshaft::OutputPath
-  # @return [OutputPath] a new instance of OutputPath
-  #
   # pkg:gem/propshaft#lib/propshaft/output_path.rb:6
   def initialize(path, manifest); end
 
@@ -703,13 +629,9 @@ class Propshaft::OutputPath
   # pkg:gem/propshaft#lib/propshaft/output_path.rb:25
   def files; end
 
-  # Returns the value of attribute manifest.
-  #
   # pkg:gem/propshaft#lib/propshaft/output_path.rb:4
   def manifest; end
 
-  # Returns the value of attribute path.
-  #
   # pkg:gem/propshaft#lib/propshaft/output_path.rb:4
   def path; end
 
@@ -727,8 +649,6 @@ end
 
 # pkg:gem/propshaft#lib/propshaft/processor.rb:3
 class Propshaft::Processor
-  # @return [Processor] a new instance of Processor
-  #
   # pkg:gem/propshaft#lib/propshaft/processor.rb:6
   def initialize(load_path:, output_path:, compilers:, manifest_path:); end
 
@@ -738,23 +658,15 @@ class Propshaft::Processor
   # pkg:gem/propshaft#lib/propshaft/processor.rb:18
   def clobber; end
 
-  # Returns the value of attribute compilers.
-  #
   # pkg:gem/propshaft#lib/propshaft/processor.rb:4
   def compilers; end
 
-  # Returns the value of attribute load_path.
-  #
   # pkg:gem/propshaft#lib/propshaft/processor.rb:4
   def load_path; end
 
-  # Returns the value of attribute manifest_path.
-  #
   # pkg:gem/propshaft#lib/propshaft/processor.rb:4
   def manifest_path; end
 
-  # Returns the value of attribute output_path.
-  #
   # pkg:gem/propshaft#lib/propshaft/processor.rb:4
   def output_path; end
 
@@ -784,8 +696,6 @@ end
 
 # pkg:gem/propshaft#lib/propshaft/quiet_assets.rb:1
 class Propshaft::QuietAssets
-  # @return [QuietAssets] a new instance of QuietAssets
-  #
   # pkg:gem/propshaft#lib/propshaft/quiet_assets.rb:2
   def initialize(app); end
 
@@ -801,21 +711,15 @@ module Propshaft::Resolver; end
 
 # pkg:gem/propshaft#lib/propshaft/resolver/dynamic.rb:2
 class Propshaft::Resolver::Dynamic
-  # @return [Dynamic] a new instance of Dynamic
-  #
   # pkg:gem/propshaft#lib/propshaft/resolver/dynamic.rb:5
   def initialize(load_path:, prefix:); end
 
   # pkg:gem/propshaft#lib/propshaft/resolver/dynamic.rb:15
   def integrity(logical_path); end
 
-  # Returns the value of attribute load_path.
-  #
   # pkg:gem/propshaft#lib/propshaft/resolver/dynamic.rb:3
   def load_path; end
 
-  # Returns the value of attribute prefix.
-  #
   # pkg:gem/propshaft#lib/propshaft/resolver/dynamic.rb:3
   def prefix; end
 
@@ -833,21 +737,15 @@ end
 
 # pkg:gem/propshaft#lib/propshaft/resolver/static.rb:2
 class Propshaft::Resolver::Static
-  # @return [Static] a new instance of Static
-  #
   # pkg:gem/propshaft#lib/propshaft/resolver/static.rb:5
   def initialize(manifest_path:, prefix:); end
 
   # pkg:gem/propshaft#lib/propshaft/resolver/static.rb:15
   def integrity(logical_path); end
 
-  # Returns the value of attribute manifest_path.
-  #
   # pkg:gem/propshaft#lib/propshaft/resolver/static.rb:3
   def manifest_path; end
 
-  # Returns the value of attribute prefix.
-  #
   # pkg:gem/propshaft#lib/propshaft/resolver/static.rb:3
   def prefix; end
 
@@ -868,8 +766,6 @@ end
 
 # pkg:gem/propshaft#lib/propshaft/server.rb:4
 class Propshaft::Server
-  # @return [Server] a new instance of Server
-  #
   # pkg:gem/propshaft#lib/propshaft/server.rb:5
   def initialize(app, assembly); end
 

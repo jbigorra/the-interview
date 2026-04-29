@@ -17,8 +17,6 @@ module FFI::Compiler::Loader
     # pkg:gem/ffi-compiler#lib/ffi-compiler/loader.rb:28
     def caller_path(line = T.unsafe(nil)); end
 
-    # @raise [LoadError]
-    #
     # pkg:gem/ffi-compiler#lib/ffi-compiler/loader.rb:8
     def find(name, start_path = T.unsafe(nil)); end
   end
@@ -29,8 +27,6 @@ class FFI::Compiler::Platform
   # pkg:gem/ffi-compiler#lib/ffi-compiler/platform.rb:13
   def arch; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ffi-compiler#lib/ffi-compiler/platform.rb:25
   def mac?; end
 

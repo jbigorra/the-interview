@@ -10,13 +10,9 @@ module FactoryBotRails; end
 
 # pkg:gem/factory_bot_rails#lib/factory_bot_rails/definition_file_paths.rb:4
 class FactoryBotRails::DefinitionFilePaths
-  # @return [DefinitionFilePaths] a new instance of DefinitionFilePaths
-  #
   # pkg:gem/factory_bot_rails#lib/factory_bot_rails/definition_file_paths.rb:5
   def initialize(definition_file_paths); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/factory_bot_rails#lib/factory_bot_rails/definition_file_paths.rb:23
   def any?; end
 
@@ -29,8 +25,6 @@ end
 
 # pkg:gem/factory_bot_rails#lib/factory_bot_rails/factory_validator.rb:2
 class FactoryBotRails::FactoryValidator
-  # @return [FactoryValidator] a new instance of FactoryValidator
-  #
   # pkg:gem/factory_bot_rails#lib/factory_bot_rails/factory_validator.rb:3
   def initialize(validators = T.unsafe(nil)); end
 
@@ -49,8 +43,6 @@ end
 # pkg:gem/factory_bot_rails#lib/factory_bot_rails/file_fixture_support.rb:2
 module FactoryBotRails::FileFixtureSupport
   class << self
-    # @private
-    #
     # pkg:gem/factory_bot_rails#lib/factory_bot_rails/file_fixture_support.rb:3
     def included(klass); end
   end
@@ -58,13 +50,9 @@ end
 
 # pkg:gem/factory_bot_rails#lib/factory_bot_rails/generator.rb:6
 class FactoryBotRails::Generator
-  # @return [Generator] a new instance of Generator
-  #
   # pkg:gem/factory_bot_rails#lib/factory_bot_rails/generator.rb:7
   def initialize(config); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/factory_bot_rails#lib/factory_bot_rails/generator.rb:29
   def factory_bot_disabled?; end
 
@@ -86,8 +74,6 @@ module FactoryBotRails::Generators; end
 
 # pkg:gem/factory_bot_rails#lib/factory_bot_rails/generators/non_rspec_generator.rb:3
 class FactoryBotRails::Generators::NonRSpecGenerator
-  # @return [NonRSpecGenerator] a new instance of NonRSpecGenerator
-  #
   # pkg:gem/factory_bot_rails#lib/factory_bot_rails/generators/non_rspec_generator.rb:4
   def initialize(generators); end
 
@@ -102,8 +88,6 @@ end
 
 # pkg:gem/factory_bot_rails#lib/factory_bot_rails/generators/null_generator.rb:3
 class FactoryBotRails::Generators::NullGenerator
-  # @return [NullGenerator] a new instance of NullGenerator
-  #
   # pkg:gem/factory_bot_rails#lib/factory_bot_rails/generators/null_generator.rb:4
   def initialize(*_arg0); end
 
@@ -113,8 +97,6 @@ end
 
 # pkg:gem/factory_bot_rails#lib/factory_bot_rails/generators/rspec_generator.rb:3
 class FactoryBotRails::Generators::RSpecGenerator
-  # @return [RSpecGenerator] a new instance of RSpecGenerator
-  #
   # pkg:gem/factory_bot_rails#lib/factory_bot_rails/generators/rspec_generator.rb:4
   def initialize(generators); end
 
@@ -143,8 +125,6 @@ end
 
 # pkg:gem/factory_bot_rails#lib/factory_bot_rails/reloader.rb:6
 class FactoryBotRails::Reloader
-  # @return [Reloader] a new instance of Reloader
-  #
   # pkg:gem/factory_bot_rails#lib/factory_bot_rails/reloader.rb:7
   def initialize(app); end
 
@@ -153,8 +133,6 @@ class FactoryBotRails::Reloader
 
   private
 
-  # Returns the value of attribute app.
-  #
   # pkg:gem/factory_bot_rails#lib/factory_bot_rails/reloader.rb:20
   def app; end
 

@@ -20,6 +20,22 @@ class RSpec::CallerFilter
   class << self
     # Earlier rubies do not support the two argument form of `caller`. This
     # fallback is logically the same, but slower.
+    # This supports args because it's more efficient when the caller specifies
+    # these. It allows us to skip frames the caller knows are part of RSpec,
+    # and to decrease the increment size if the caller is confident the line will
+    # be found in a small number of stack frames from `skip_frames`.
+    #
+    # Note that there is a risk to passing a `skip_frames` value that is too high:
+    # If it skipped the first non-rspec line, then this method would return the
+    # 2nd or 3rd (or whatever) non-rspec line. Thus, you generally shouldn't pass
+    # values for these parameters, particularly since most places that use this are
+    # not hot spots (generally it gets used for deprecation warnings). However,
+    # if you do have a hot spot that calls this, passing `skip_frames` can make
+    # a significant difference. Just make sure that that particular use is tested
+    # so that if the provided `skip_frames` changes to no longer be accurate in
+    # such a way that would return the wrong stack frame, a test will fail to tell you.
+    #
+    # See benchmarks/skip_frames_for_caller_filter.rb for measurements.
     #
     # pkg:gem/rspec-support#lib/rspec/support/caller_filter.rb:49
     def first_non_rspec_line(skip_frames = T.unsafe(nil), increment = T.unsafe(nil)); end
@@ -48,13 +64,15 @@ RSpec::CallerFilter::RSPEC_LIBS = T.let(T.unsafe(nil), Array)
 # pkg:gem/rspec-support#lib/rspec/support.rb:4
 module RSpec::Support
   class << self
-    # Used internally to get a class of a given object, even if it does not respond to #class.
-    #
     # @api private
+    #
+    # Used internally to get a class of a given object, even if it does not respond to #class.
     #
     # pkg:gem/rspec-support#lib/rspec/support.rb:86
     def class_of(object); end
 
+    # @api private
+    #
     # Defines a helper method that is optimized to require files from the
     # named lib. The passed block MUST be `{ |f| require_relative f }`
     # because for `require_relative` to work properly from within the named
@@ -64,8 +82,6 @@ module RSpec::Support
     # regardless of the number of dirs in $LOAD_PATH. `require`, on the other
     # hand, does a linear O(N) search over the dirs in the $LOAD_PATH until
     # it can resolve the file relative to one of the dirs.
-    #
-    # @api private
     #
     # pkg:gem/rspec-support#lib/rspec/support.rb:16
     def define_optimized_require_for_rspec(lib, &require_relative); end
@@ -89,7 +105,6 @@ module RSpec::Support
     def failure_notifier=(callable); end
 
     # @private
-    # @return [Boolean]
     #
     # pkg:gem/rspec-support#lib/rspec/support/matcher_definition.rb:29
     def is_a_matcher?(object); end
@@ -120,9 +135,9 @@ module RSpec::Support
     # pkg:gem/rspec-support#lib/rspec/support.rb:25
     def require_rspec_support(f); end
 
-    # gives a string representation of an object for use in RSpec descriptions
-    #
     # @api private
+    #
+    # gives a string representation of an object for use in RSpec descriptions
     #
     # pkg:gem/rspec-support#lib/rspec/support/matcher_definition.rb:36
     def rspec_description_for_object(object); end
@@ -131,10 +146,12 @@ module RSpec::Support
     def thread_local_data; end
 
     # @api private
+    # @api private
     #
     # pkg:gem/rspec-support#lib/rspec/support.rb:140
     def warning_notifier; end
 
+    # @api private
     # @api private
     #
     # pkg:gem/rspec-support#lib/rspec/support.rb:133
@@ -175,8 +192,6 @@ RSpec::Support::AllExceptionsExceptOnesWeMustNotRescue::AVOID_RESCUING = T.let(T
 #
 # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:293
 class RSpec::Support::BlockSignature < ::RSpec::Support::MethodSignature
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:295
   def classify_parameters; end
 end
@@ -187,8 +202,6 @@ end
 class RSpec::Support::ComparableVersion
   include ::Comparable
 
-  # @return [ComparableVersion] a new instance of ComparableVersion
-  #
   # pkg:gem/rspec-support#lib/rspec/support/comparable_version.rb:11
   def initialize(string); end
 
@@ -198,8 +211,6 @@ class RSpec::Support::ComparableVersion
   # pkg:gem/rspec-support#lib/rspec/support/comparable_version.rb:37
   def segments; end
 
-  # Returns the value of attribute string.
-  #
   # pkg:gem/rspec-support#lib/rspec/support/comparable_version.rb:9
   def string; end
 end
@@ -216,13 +227,9 @@ RSpec::Support::DEFAULT_WARNING_NOTIFIER = T.let(T.unsafe(nil), Proc)
 
 # pkg:gem/rspec-support#lib/rspec/support/differ.rb:11
 class RSpec::Support::Differ
-  # @return [Differ] a new instance of Differ
-  #
   # pkg:gem/rspec-support#lib/rspec/support/differ.rb:68
   def initialize(opts = T.unsafe(nil)); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/differ.rb:64
   def color?; end
 
@@ -243,13 +250,9 @@ class RSpec::Support::Differ
   # pkg:gem/rspec-support#lib/rspec/support/differ.rb:125
   def add_to_output(output, string); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/differ.rb:79
   def all_strings?(*args); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/differ.rb:83
   def any_multiline_strings?(*args); end
 
@@ -286,18 +289,12 @@ class RSpec::Support::Differ
   # pkg:gem/rspec-support#lib/rspec/support/differ.rb:193
   def hash_to_string(hash); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/differ.rb:107
   def multiline?(string); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/differ.rb:87
   def no_numbers?(*args); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/differ.rb:75
   def no_procs?(*args); end
 
@@ -314,36 +311,29 @@ class RSpec::Support::Differ
   def safely_flatten(array); end
 end
 
+# @api private
+#
 # Replacement for fileutils#mkdir_p because we don't want to require parts
 # of stdlib in RSpec.
-#
-# @api private
 #
 # pkg:gem/rspec-support#lib/rspec/support/directory_maker.rb:11
 class RSpec::Support::DirectoryMaker
   class << self
-    # Implements nested directory construction
-    #
     # @api private
+    #
+    # Implements nested directory construction
     #
     # pkg:gem/rspec-support#lib/rspec/support/directory_maker.rb:15
     def mkdir_p(path); end
 
     private
 
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/directory_maker.rb:57
     def directory_exists?(dirname); end
 
-    # @api private
-    #
     # pkg:gem/rspec-support#lib/rspec/support/directory_maker.rb:52
     def generate_path(stack, part); end
 
-    # @api private
-    #
     # pkg:gem/rspec-support#lib/rspec/support/directory_maker.rb:49
     def generate_stack(path); end
   end
@@ -353,8 +343,6 @@ end
 #
 # pkg:gem/rspec-support#lib/rspec/support/encoded_string.rb:6
 class RSpec::Support::EncodedString
-  # @return [EncodedString] a new instance of EncodedString
-  #
   # pkg:gem/rspec-support#lib/rspec/support/encoded_string.rb:16
   def initialize(string, encoding = T.unsafe(nil)); end
 
@@ -376,8 +364,6 @@ class RSpec::Support::EncodedString
   # pkg:gem/rspec-support#lib/rspec/support/encoded_string.rb:25
   def lines(*args, &block); end
 
-  # Returns the value of attribute source_encoding.
-  #
   # pkg:gem/rspec-support#lib/rspec/support/encoded_string.rb:21
   def source_encoding; end
 
@@ -437,6 +423,10 @@ class RSpec::Support::EncodedString
   # pkg:gem/rspec-support#lib/rspec/support/encoded_string.rb:93
   def matching_encoding(string); end
 
+  # https://github.com/ruby/ruby/blob/eeb05e8c11/doc/NEWS-2.1.0#L120-L123
+  # https://github.com/ruby/ruby/blob/v2_1_0/string.c#L8242
+  # https://github.com/hsbt/string-scrub
+  # https://github.com/rubinius/rubinius/blob/v2.5.2/kernel/common/string.rb#L1913-L1972
   # http://stackoverflow.com/a/8711118/879854
   # Loop over chars in a string replacing chars
   # with invalid encoding, which is a pretty good proxy
@@ -470,8 +460,6 @@ RSpec::Support::EncodedString::UTF_8 = T.let(T.unsafe(nil), String)
 #
 # pkg:gem/rspec-support#lib/rspec/support/hunk_generator.rb:9
 class RSpec::Support::HunkGenerator
-  # @return [HunkGenerator] a new instance of HunkGenerator
-  #
   # pkg:gem/rspec-support#lib/rspec/support/hunk_generator.rb:10
   def initialize(actual, expected); end
 
@@ -525,13 +513,9 @@ end
 #
 # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:440
 class RSpec::Support::LooseSignatureVerifier::SignatureWithKeywordArgumentsMatcher
-  # @return [SignatureWithKeywordArgumentsMatcher] a new instance of SignatureWithKeywordArgumentsMatcher
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:441
   def initialize(signature); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:461
   def has_kw_args_in?(args); end
 
@@ -544,8 +528,6 @@ class RSpec::Support::LooseSignatureVerifier::SignatureWithKeywordArgumentsMatch
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:453
   def non_kw_args_arity_description; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:457
   def valid_non_kw_args?(*args); end
 end
@@ -557,13 +539,9 @@ end
 #
 # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:13
 class RSpec::Support::MethodSignature
-  # @return [MethodSignature] a new instance of MethodSignature
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:16
   def initialize(method); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:123
   def arbitrary_kw_args?; end
 
@@ -576,16 +554,12 @@ class RSpec::Support::MethodSignature
   # Without considering what the last arg is, could it
   # contain keyword arguments?
   #
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:117
   def could_contain_kw_args?(args); end
 
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:51
   def description; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:84
   def has_kw_args_in?(args); end
 
@@ -610,13 +584,9 @@ class RSpec::Support::MethodSignature
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:14
   def required_kw_args; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:127
   def unlimited_args?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:31
   def valid_non_kw_args?(positional_arg_count, optional_max_arg_count = T.unsafe(nil)); end
 end
@@ -631,67 +601,39 @@ RSpec::Support::MethodSignature::INFINITY = T.let(T.unsafe(nil), Float)
 #
 # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:244
 class RSpec::Support::MethodSignatureExpectation
-  # @api private
-  # @return [MethodSignatureExpectation] a new instance of MethodSignatureExpectation
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:245
   def initialize; end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:272
   def empty?; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:256
   def expect_arbitrary_keywords; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:256
   def expect_arbitrary_keywords=(_arg0); end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:256
   def expect_unlimited_arguments; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:256
   def expect_unlimited_arguments=(_arg0); end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:254
   def keywords; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:279
   def keywords=(values); end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:254
   def max_count; end
 
-  # @api private
-  # @raise [ArgumentError]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:258
   def max_count=(number); end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:254
   def min_count; end
 
-  # @api private
-  # @raise [ArgumentError]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:265
   def min_count=(number); end
 end
@@ -702,84 +644,63 @@ end
 #
 # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:305
 class RSpec::Support::MethodSignatureVerifier
-  # @api private
-  # @return [MethodSignatureVerifier] a new instance of MethodSignatureVerifier
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:308
   def initialize(signature, args = T.unsafe(nil)); end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:351
   def error_message; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:306
   def kw_args; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:306
   def max_non_kw_args; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:306
   def min_non_kw_args; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:306
   def non_kw_args; end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:343
   def valid?; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:315
   def with_expectation(expectation); end
 
   private
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:382
   def arbitrary_kw_args?; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:378
   def invalid_kw_args; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:374
   def missing_kw_args; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:390
   def split_args(args); end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:386
   def unlimited_args?; end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/method_signature_verifier.rb:370
   def valid_non_kw_args?; end
 end
 
+# On 1.8.7, it's in the stdlib.
+# We don't want to load the stdlib, b/c this is a test tool, and can affect
+# the test environment, causing tests to pass where they should fail.
+#
+# So we're transcribing/modifying it from
+# https://github.com/ruby/ruby/blob/v1_8_7_374/lib/thread.rb#L56
+# Some methods we don't need are deleted. Anything I don't
+# understand (there's quite a bit, actually) is left in.
+#
+# Some formatting changes are made to appease the robot overlord:
+#   https://travis-ci.org/rspec/rspec-core/jobs/54410874
+# @private
 # On 1.9 and up, this is in core, so we just use the real one
 #
 # pkg:gem/rspec-support#lib/rspec/support/reentrant_mutex.rb:65
@@ -796,34 +717,24 @@ end
 # pkg:gem/rspec-support#lib/rspec/support/reentrant_mutex.rb:68
 RSpec::Support::Mutex::NEW_MUTEX_METHOD = T.let(T.unsafe(nil), Method)
 
-# Provides query methods for different OS or OS features.
-#
 # @api private
+#
+# Provides query methods for different OS or OS features.
 #
 # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:11
 module RSpec::Support::OS
   private
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:14
   def windows?; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:18
   def windows_file_path?; end
 
   class << self
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:14
     def windows?; end
 
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:18
     def windows_file_path?; end
   end
@@ -831,39 +742,25 @@ end
 
 # Provide additional output details beyond what `inspect` provides when
 # printing Time, DateTime, or BigDecimal
-#
 # @api private
 #
 # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:10
 class RSpec::Support::ObjectFormatter
-  # @api private
-  # @return [ObjectFormatter] a new instance of ObjectFormatter
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:29
   def initialize(max_formatted_output_length = T.unsafe(nil)); end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:34
   def format(object); end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:13
   def max_formatted_output_length; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:13
   def max_formatted_output_length=(_arg0); end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:72
   def prepare_array(array); end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:96
   def prepare_element(element); end
 
@@ -877,29 +774,18 @@ class RSpec::Support::ObjectFormatter
   # for that item. Then we can just use `Array#inspect` or `Hash#inspect` to
   # format the entire thing.
   #
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:58
   def prepare_for_inspection(object); end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:78
   def prepare_hash(input_hash); end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:115
   def recursive_structure?(object); end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:88
   def sort_hash_keys(input_hash); end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:108
   def with_entering_structure(structure); end
 
@@ -910,8 +796,6 @@ class RSpec::Support::ObjectFormatter
   # will be removed as printing partial ANSI
   # codes to the terminal can lead to corruption
   #
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:270
   def truncate_string(str, start_index, end_index); end
 
@@ -919,65 +803,34 @@ class RSpec::Support::ObjectFormatter
     # Methods are deferred to a default instance of the class to maintain the interface
     # For example, calling ObjectFormatter.format is still possible
     #
-    # @api private
-    #
     # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:17
     def default_instance; end
 
-    # @api private
-    #
     # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:21
     def format(object); end
 
-    # @api private
-    #
     # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:25
     def prepare_for_inspection(object); end
   end
 end
 
-# @api private
-#
 # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:129
 class RSpec::Support::ObjectFormatter::BaseInspector < ::Struct
-  # Returns the value of attribute formatter
-  #
-  # @return [Object] the current value of formatter
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:129
   def formatter; end
 
-  # Sets the attribute formatter
-  #
-  # @param value [Object] the value to set the attribute formatter to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:129
   def formatter=(_); end
 
-  # @api private
-  # @raise [NotImplementedError]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:134
   def inspect; end
 
-  # Returns the value of attribute object
-  #
-  # @return [Object] the current value of object
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:129
   def object; end
 
-  # Sets the attribute object
-  #
-  # @param value [Object] the value to set the attribute object to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:129
   def object=(_); end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:138
   def pretty_print(pp); end
 
@@ -985,10 +838,6 @@ class RSpec::Support::ObjectFormatter::BaseInspector < ::Struct
     # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:129
     def [](*_arg0); end
 
-    # @api private
-    # @raise [NotImplementedError]
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:130
     def can_inspect?(_object); end
 
@@ -1006,122 +855,73 @@ class RSpec::Support::ObjectFormatter::BaseInspector < ::Struct
   end
 end
 
-# @api private
-#
 # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:179
 class RSpec::Support::ObjectFormatter::BigDecimalInspector < ::RSpec::Support::ObjectFormatter::BaseInspector
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:184
   def inspect; end
 
   class << self
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:180
     def can_inspect?(object); end
   end
 end
 
-# @api private
-#
 # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:161
 class RSpec::Support::ObjectFormatter::DateTimeInspector < ::RSpec::Support::ObjectFormatter::BaseInspector
   # ActiveSupport sometimes overrides inspect. If `ActiveSupport` is
   # defined use a custom format string that includes more time precision.
   #
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:170
   def inspect; end
 
   class << self
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:164
     def can_inspect?(object); end
   end
 end
 
-# @api private
-#
 # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:162
 RSpec::Support::ObjectFormatter::DateTimeInspector::FORMAT = T.let(T.unsafe(nil), String)
 
-# @api private
-#
 # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:226
 class RSpec::Support::ObjectFormatter::DelegatorInspector < ::RSpec::Support::ObjectFormatter::BaseInspector
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:231
   def inspect; end
 
   class << self
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:227
     def can_inspect?(object); end
   end
 end
 
-# @api private
-#
 # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:189
 class RSpec::Support::ObjectFormatter::DescribableMatcherInspector < ::RSpec::Support::ObjectFormatter::BaseInspector
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:194
   def inspect; end
 
   class << self
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:190
     def can_inspect?(object); end
   end
 end
 
-# @api private
-#
 # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:11
 RSpec::Support::ObjectFormatter::ELLIPSIS = T.let(T.unsafe(nil), String)
 
-# @api private
-#
 # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:249
 RSpec::Support::ObjectFormatter::INSPECTOR_CLASSES = T.let(T.unsafe(nil), Array)
 
-# @api private
-#
 # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:119
 class RSpec::Support::ObjectFormatter::InspectableItem < ::Struct
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:120
   def inspect; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:124
   def pretty_print(pp); end
 
-  # Returns the value of attribute text
-  #
-  # @return [Object] the current value of text
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:119
   def text; end
 
-  # Sets the attribute text
-  #
-  # @param value [Object] the value to set the attribute text to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:119
   def text=(_); end
 
@@ -1143,81 +943,52 @@ class RSpec::Support::ObjectFormatter::InspectableItem < ::Struct
   end
 end
 
-# @api private
-#
 # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:236
 class RSpec::Support::ObjectFormatter::InspectableObjectInspector < ::RSpec::Support::ObjectFormatter::BaseInspector
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:244
   def inspect; end
 
   class << self
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:237
     def can_inspect?(object); end
   end
 end
 
-# @api private
-#
 # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:143
 class RSpec::Support::ObjectFormatter::TimeInspector < ::RSpec::Support::ObjectFormatter::BaseInspector
   # for 1.8.7
-  #
-  # @api private
   #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:151
   def inspect; end
 
   class << self
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:146
     def can_inspect?(object); end
   end
 end
 
-# @api private
-#
 # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:144
 RSpec::Support::ObjectFormatter::TimeInspector::FORMAT = T.let(T.unsafe(nil), String)
 
-# @api private
-#
 # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:199
 class RSpec::Support::ObjectFormatter::UninspectableObjectInspector < ::RSpec::Support::ObjectFormatter::BaseInspector
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:209
   def inspect; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:213
   def klass; end
 
   # http://stackoverflow.com/a/2818916
   #
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:218
   def native_object_id; end
 
   class << self
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:202
     def can_inspect?(object); end
   end
 end
 
-# @api private
-#
 # pkg:gem/rspec-support#lib/rspec/support/object_formatter.rb:200
 RSpec::Support::ObjectFormatter::UninspectableObjectInspector::OBJECT_ID_FORMAT = T.let(T.unsafe(nil), String)
 
@@ -1226,24 +997,18 @@ RSpec::Support::ObjectFormatter::UninspectableObjectInspector::OBJECT_ID_FORMAT 
 #
 # pkg:gem/rspec-support#lib/rspec/support/recursive_const_methods.rb:7
 module RSpec::Support::RecursiveConstMethods
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/recursive_const_methods.rb:45
   def const_defined_on?(mod, const_name); end
 
   # pkg:gem/rspec-support#lib/rspec/support/recursive_const_methods.rb:53
   def constants_defined_on(mod); end
 
-  # @raise [NameError]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/recursive_const_methods.rb:49
   def get_const_defined_on(mod, const_name); end
 
   # pkg:gem/rspec-support#lib/rspec/support/recursive_const_methods.rb:73
   def normalize_const_name(const_name); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/recursive_const_methods.rb:64
   def recursive_const_defined?(const_name); end
 
@@ -1265,8 +1030,6 @@ end
 #
 # pkg:gem/rspec-support#lib/rspec/support/reentrant_mutex.rb:16
 class RSpec::Support::ReentrantMutex
-  # @return [ReentrantMutex] a new instance of ReentrantMutex
-  #
   # pkg:gem/rspec-support#lib/rspec/support/reentrant_mutex.rb:17
   def initialize; end
 
@@ -1282,109 +1045,71 @@ class RSpec::Support::ReentrantMutex
   def exit; end
 end
 
-# Provides query methods for different rubies
-#
 # @api private
+#
+# Provides query methods for different rubies
 #
 # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:26
 module RSpec::Support::Ruby
   private
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:29
   def jruby?; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:37
   def jruby_9000?; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:33
   def jruby_version; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:49
   def mri?; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:45
   def non_mri?; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:41
   def rbx?; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:53
   def truffleruby?; end
 
   class << self
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:29
     def jruby?; end
 
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:37
     def jruby_9000?; end
 
-    # @api private
-    #
     # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:33
     def jruby_version; end
 
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:49
     def mri?; end
 
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:45
     def non_mri?; end
 
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:41
     def rbx?; end
 
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:53
     def truffleruby?; end
   end
 end
 
+# @api private
+#
 # Provides query methods for ruby features that differ among
 # implementations.
-#
-# @api private
 #
 # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:62
 module RSpec::Support::RubyFeatures
   private
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:85
   def caller_locations_supported?; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:155
   def distincts_kw_args_from_positional_hash?; end
 
@@ -1395,114 +1120,75 @@ module RSpec::Support::RubyFeatures
   # When we drop support for JRuby 1.7 and/or Ruby 1.8, we can drop
   # this special case.
   #
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:76
   def fork_supported?; end
 
   # https://rubyreferences.github.io/rubychanges/3.0.html#keyword-arguments-are-now-fully-separated-from-positional-arguments
   #
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:111
   def kw_arg_separation?; end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:160
   def kw_args_supported?; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:216
   def module_prepends_supported?; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:212
   def module_refinement_supported?; end
 
-  # @api private
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:81
   def optional_and_splat_args_supported?; end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:164
   def required_kw_args_supported?; end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:146
   def ripper_supported?; end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:90
   def supports_exception_cause?; end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:168
   def supports_rebinding_module_methods?; end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:100
   def supports_syntax_suggest?; end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:121
   def supports_taint?; end
 
   class << self
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:85
     def caller_locations_supported?; end
 
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:155
     def distincts_kw_args_from_positional_hash?; end
 
+    # On JRuby 1.7 `--1.8` mode, `Process.respond_to?(:fork)` returns true,
+    # but when you try to fork, it raises an error:
+    #   NotImplementedError: fork is not available on this platform
+    #
+    # When we drop support for JRuby 1.7 and/or Ruby 1.8, we can drop
+    # this special case.
+    #
     # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:76
     def fork_supported?; end
 
+    # https://rubyreferences.github.io/rubychanges/3.0.html#keyword-arguments-are-now-fully-separated-from-positional-arguments
+    #
     # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:111
     def kw_arg_separation?; end
 
     # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:160
     def kw_args_supported?; end
 
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:216
     def module_prepends_supported?; end
 
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:212
     def module_refinement_supported?; end
 
-    # @api private
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-support#lib/rspec/support/ruby_features.rb:81
     def optional_and_splat_args_supported?; end
 
@@ -1545,24 +1231,24 @@ module RSpec::Support::Warnings
   # pkg:gem/rspec-support#lib/rspec/support/warnings.rb:9
   def deprecate(deprecated, options = T.unsafe(nil)); end
 
+  # @private
+  #
   # Used internally to print deprecation warnings
   # when rspec-core isn't loaded
-  #
-  # @private
   #
   # pkg:gem/rspec-support#lib/rspec/support/warnings.rb:17
   def warn_deprecation(message, options = T.unsafe(nil)); end
 
-  # Used internally to print longer warnings
-  #
   # @private
+  #
+  # Used internally to print longer warnings
   #
   # pkg:gem/rspec-support#lib/rspec/support/warnings.rb:31
   def warn_with(message, options = T.unsafe(nil)); end
 
-  # Used internally to print warnings
-  #
   # @private
+  #
+  # Used internally to print warnings
   #
   # pkg:gem/rspec-support#lib/rspec/support/warnings.rb:24
   def warning(text, options = T.unsafe(nil)); end
@@ -1579,6 +1265,9 @@ module RSpec::Support::WithKeywordsWhenNeeded
   def class_exec(klass, *args, **_arg2, &block); end
 
   class << self
+    # Remove this in RSpec 4 in favour of explicitly passed in kwargs where
+    # this is used. Works around a warning in Ruby 2.7
+    #
     # pkg:gem/rspec-support#lib/rspec/support/with_keywords_when_needed.rb:17
     def class_exec(klass, *args, **_arg2, &block); end
   end

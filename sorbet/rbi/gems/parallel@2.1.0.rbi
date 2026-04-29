@@ -8,13 +8,9 @@
 # pkg:gem/parallel#lib/parallel/version.rb:2
 module Parallel
   class << self
-    # @return [Boolean]
-    #
     # pkg:gem/parallel#lib/parallel.rb:256
     def all?(*args, &block); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/parallel#lib/parallel.rb:251
     def any?(*args, &block); end
 
@@ -136,8 +132,6 @@ end
 
 # pkg:gem/parallel#lib/parallel.rb:12
 class Parallel::Break < ::StandardError
-  # @return [Break] a new instance of Break
-  #
   # pkg:gem/parallel#lib/parallel.rb:15
   def initialize(value = T.unsafe(nil)); end
 
@@ -147,8 +141,6 @@ class Parallel::Break < ::StandardError
   # pkg:gem/parallel#lib/parallel.rb:22
   def _dump(_depth); end
 
-  # Returns the value of attribute value.
-  #
   # pkg:gem/parallel#lib/parallel.rb:13
   def value; end
 
@@ -165,21 +157,15 @@ class Parallel::DeadWorker < ::StandardError; end
 
 # pkg:gem/parallel#lib/parallel.rb:44
 class Parallel::ExceptionWrapper
-  # @return [ExceptionWrapper] a new instance of ExceptionWrapper
-  #
   # pkg:gem/parallel#lib/parallel.rb:47
   def initialize(exception); end
 
-  # Returns the value of attribute exception.
-  #
   # pkg:gem/parallel#lib/parallel.rb:45
   def exception; end
 end
 
 # pkg:gem/parallel#lib/parallel.rb:111
 class Parallel::JobFactory
-  # @return [JobFactory] a new instance of JobFactory
-  #
   # pkg:gem/parallel#lib/parallel.rb:112
   def initialize(source, mutex); end
 
@@ -202,8 +188,6 @@ class Parallel::JobFactory
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/parallel#lib/parallel.rb:160
   def producer?; end
 
@@ -227,7 +211,7 @@ module Parallel::Serializer; end
 #
 # pkg:gem/parallel#lib/parallel/serializer.rb:17
 class Parallel::Serializer::Hmac
-  # @return [Hmac] a new instance of Hmac
+  # SHA256
   #
   # pkg:gem/parallel#lib/parallel/serializer.rb:22
   def initialize(inner: T.unsafe(nil), secret: T.unsafe(nil)); end
@@ -235,22 +219,18 @@ class Parallel::Serializer::Hmac
   # pkg:gem/parallel#lib/parallel/serializer.rb:27
   def dump(data, io); end
 
-  # @raise [SecurityError]
-  #
   # pkg:gem/parallel#lib/parallel/serializer.rb:33
   def load(io); end
 end
 
+# 32-bit big-endian unsigned int
+#
 # pkg:gem/parallel#lib/parallel/serializer.rb:19
 Parallel::Serializer::Hmac::LENGTH_BYTES = T.let(T.unsafe(nil), Integer)
 
-# 32-bit big-endian unsigned int
-#
 # pkg:gem/parallel#lib/parallel/serializer.rb:18
 Parallel::Serializer::Hmac::LENGTH_FORMAT = T.let(T.unsafe(nil), String)
 
-# SHA256
-#
 # pkg:gem/parallel#lib/parallel/serializer.rb:20
 Parallel::Serializer::Hmac::MAC_BYTES = T.let(T.unsafe(nil), Integer)
 
@@ -265,13 +245,9 @@ Parallel::Stop = T.let(T.unsafe(nil), Object)
 
 # pkg:gem/parallel#lib/parallel.rb:35
 class Parallel::UndumpableException < ::StandardError
-  # @return [UndumpableException] a new instance of UndumpableException
-  #
   # pkg:gem/parallel#lib/parallel.rb:38
   def initialize(original); end
 
-  # Returns the value of attribute backtrace.
-  #
   # pkg:gem/parallel#lib/parallel.rb:36
   def backtrace; end
 end
@@ -308,8 +284,6 @@ Parallel::Version = T.let(T.unsafe(nil), String)
 
 # pkg:gem/parallel#lib/parallel.rb:63
 class Parallel::Worker
-  # @return [Worker] a new instance of Worker
-  #
   # pkg:gem/parallel#lib/parallel.rb:67
   def initialize(read, write, pid, serializer); end
 
@@ -319,36 +293,24 @@ class Parallel::Worker
   # pkg:gem/parallel#lib/parallel.rb:81
   def close_pipes; end
 
-  # Returns the value of attribute pid.
-  #
   # pkg:gem/parallel#lib/parallel.rb:64
   def pid; end
 
-  # Returns the value of attribute read.
-  #
   # pkg:gem/parallel#lib/parallel.rb:64
   def read; end
 
   # pkg:gem/parallel#lib/parallel.rb:74
   def stop; end
 
-  # Returns the value of attribute thread.
-  #
   # pkg:gem/parallel#lib/parallel.rb:65
   def thread; end
 
-  # Sets the attribute thread
-  #
-  # @param value the value to set the attribute thread to.
-  #
   # pkg:gem/parallel#lib/parallel.rb:65
   def thread=(_arg0); end
 
   # pkg:gem/parallel#lib/parallel.rb:86
   def work(data); end
 
-  # Returns the value of attribute write.
-  #
   # pkg:gem/parallel#lib/parallel.rb:64
   def write; end
 

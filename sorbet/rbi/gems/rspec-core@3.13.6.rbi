@@ -6,6 +6,9 @@
 
 
 # Namespace for all core RSpec code.
+# This is borrowed (slightly modified) from Scott Taylor's
+# project_path project:
+#   http://github.com/smtlaissezfaire/project_path
 #
 # pkg:gem/rspec-core#lib/rspec/core/version.rb:1
 module RSpec
@@ -27,28 +30,37 @@ module RSpec
     # convention is to use [RSpec.configure](RSpec#configure-class_method).
     #
     # @example
-    #   RSpec.configuration.drb_port = 1234
-    # @see Core::Configuration
+    #     RSpec.configuration.drb_port = 1234
     # @see RSpec.configure
+    # @see Core::Configuration
+    # Setters for shared global objects
+    # @api private
     #
     # pkg:gem/rspec-core#lib/rspec/core.rb:85
     def configuration; end
 
-    # Setters for shared global objects
+    # Returns the global [Configuration](RSpec/Core/Configuration) object. While
+    # you _can_ use this method to access the configuration, the more common
+    # convention is to use [RSpec.configure](RSpec#configure-class_method).
     #
+    # @example
+    #     RSpec.configuration.drb_port = 1234
+    # @see RSpec.configure
+    # @see Core::Configuration
+    # Setters for shared global objects
     # @api private
     #
     # pkg:gem/rspec-core#lib/rspec/core.rb:49
     def configuration=(_arg0); end
 
     # Yields the global configuration to a block.
+    # @yield [Configuration] global configuration
     #
     # @example
-    #   RSpec.configure do |config|
-    #   config.add_formatter 'documentation'
-    #   end
+    #     RSpec.configure do |config|
+    #       config.add_formatter 'documentation'
+    #     end
     # @see Core::Configuration
-    # @yield [Configuration] global configuration
     #
     # pkg:gem/rspec-core#lib/rspec/core.rb:97
     def configure; end
@@ -69,24 +81,23 @@ module RSpec
     #
     # @example
     #
-    #   RSpec.configure do |c|
-    #   # context.example is deprecated, but RSpec.current_example is not
-    #   # available until RSpec 3.0.
-    #   fetch_current_example = RSpec.respond_to?(:current_example) ?
-    #   proc { RSpec.current_example } : proc { |context| context.example }
+    #     RSpec.configure do |c|
+    #       # context.example is deprecated, but RSpec.current_example is not
+    #       # available until RSpec 3.0.
+    #       fetch_current_example = RSpec.respond_to?(:current_example) ?
+    #         proc { RSpec.current_example } : proc { |context| context.example }
     #
-    #   c.before(:example) do
-    #   example = fetch_current_example.call(self)
+    #       c.before(:example) do
+    #         example = fetch_current_example.call(self)
     #
-    #   # ...
-    #   end
-    #   end
+    #         # ...
+    #       end
+    #     end
     #
     # pkg:gem/rspec-core#lib/rspec/core.rb:122
     def current_example; end
 
     # Set the current example being executed.
-    #
     # @api private
     #
     # pkg:gem/rspec-core#lib/rspec/core.rb:128
@@ -106,14 +117,12 @@ module RSpec
     #   * `:suite` as a final value, again this is outside of the test lifecycle.
     #
     # Reminder, `:context` hooks have `:all` alias and `:example` hooks have `:each` alias.
-    #
     # @return [Symbol]
     #
     # pkg:gem/rspec-core#lib/rspec/core.rb:154
     def current_scope; end
 
     # Set the current scope rspec is executing in
-    #
     # @api private
     #
     # pkg:gem/rspec-core#lib/rspec/core.rb:134
@@ -150,15 +159,17 @@ module RSpec
     # pkg:gem/rspec-core#lib/rspec/core/shared_example_group.rb:114
     def shared_examples_for(name, *args, &block); end
 
-    # Internal container for global non-configuration data.
-    #
     # @private
+    # Internal container for global non-configuration data.
+    # Setters for shared global objects
+    # @api private
     #
     # pkg:gem/rspec-core#lib/rspec/core.rb:160
     def world; end
 
+    # @private
+    # Internal container for global non-configuration data.
     # Setters for shared global objects
-    #
     # @api private
     #
     # pkg:gem/rspec-core#lib/rspec/core.rb:49
@@ -184,9 +195,8 @@ module RSpec::Core
   end
 end
 
-# Unnamed example group used by `SuiteHookContext`.
-#
 # @private
+# Unnamed example group used by `SuiteHookContext`.
 #
 # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:782
 class RSpec::Core::AnonymousExampleGroup < ::RSpec::Core::ExampleGroup
@@ -200,16 +210,12 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/backtrace_formatter.rb:4
 class RSpec::Core::BacktraceFormatter
-  # @return [BacktraceFormatter] a new instance of BacktraceFormatter
-  #
   # pkg:gem/rspec-core#lib/rspec/core/backtrace_formatter.rb:8
   def initialize; end
 
   # pkg:gem/rspec-core#lib/rspec/core/backtrace_formatter.rb:49
   def backtrace_line(line); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/backtrace_formatter.rb:53
   def exclude?(line); end
 
@@ -229,15 +235,9 @@ class RSpec::Core::BacktraceFormatter
   # pkg:gem/rspec-core#lib/rspec/core/backtrace_formatter.rb:33
   def format_backtrace(backtrace, options = T.unsafe(nil)); end
 
-  # Sets the attribute full_backtrace
-  #
-  # @param value the value to set the attribute full_backtrace to.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/backtrace_formatter.rb:22
   def full_backtrace=(_arg0); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/backtrace_formatter.rb:24
   def full_backtrace?; end
 
@@ -253,8 +253,6 @@ class RSpec::Core::BacktraceFormatter
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/backtrace_formatter.rb:60
   def matches?(patterns, line); end
 end
@@ -278,13 +276,10 @@ end
 # parent process. Where supported, encoding is explicitly
 # set to ensure binary data is able to pass from child to
 # parent.
-#
 # @private
 #
 # pkg:gem/rspec-core#lib/rspec/core/bisect/utilities.rb:36
 class RSpec::Core::Bisect::Channel
-  # @return [Channel] a new instance of Channel
-  #
   # pkg:gem/rspec-core#lib/rspec/core/bisect/utilities.rb:41
   def initialize; end
 
@@ -305,33 +300,15 @@ RSpec::Core::Bisect::Channel::MARSHAL_DUMP_ENCODING = T.let(T.unsafe(nil), Encod
 #
 # pkg:gem/rspec-core#lib/rspec/core/bisect/utilities.rb:5
 class RSpec::Core::Bisect::ExampleSetDescriptor < ::Struct
-  # Returns the value of attribute all_example_ids
-  #
-  # @return [Object] the current value of all_example_ids
-  #
   # pkg:gem/rspec-core#lib/rspec/core/bisect/utilities.rb:5
   def all_example_ids; end
 
-  # Sets the attribute all_example_ids
-  #
-  # @param value [Object] the value to set the attribute all_example_ids to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/bisect/utilities.rb:5
   def all_example_ids=(_); end
 
-  # Returns the value of attribute failed_example_ids
-  #
-  # @return [Object] the current value of failed_example_ids
-  #
   # pkg:gem/rspec-core#lib/rspec/core/bisect/utilities.rb:5
   def failed_example_ids; end
 
-  # Sets the attribute failed_example_ids
-  #
-  # @param value [Object] the value to set the attribute failed_example_ids to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/bisect/utilities.rb:5
   def failed_example_ids=(_); end
 
@@ -356,13 +333,10 @@ end
 # Wraps a `formatter` providing a simple means to notify it in place
 # of an `RSpec::Core::Reporter`, without involving configuration in
 # any way.
-#
 # @private
 #
 # pkg:gem/rspec-core#lib/rspec/core/bisect/utilities.rb:19
 class RSpec::Core::Bisect::Notifier
-  # @return [Notifier] a new instance of Notifier
-  #
   # pkg:gem/rspec-core#lib/rspec/core/bisect/utilities.rb:20
   def initialize(formatter); end
 
@@ -391,20 +365,22 @@ end
 # The global, project-specific and local files can all be overridden with a
 # separate custom file using the --options command-line parameter.
 #
-# @example Hooks
-#   RSpec.configure do |c|
-#   c.before(:suite)   { establish_connection }
-#   c.before(:example) { log_in_as :authorized }
-#   c.around(:example) { |ex| Database.transaction(&ex) }
-#   end
 # @example Standard settings
-#   RSpec.configure do |c|
-#   c.drb          = true
-#   c.drb_port     = 1234
-#   c.default_path = 'behavior'
-#   end
-# @see Hooks
+#     RSpec.configure do |c|
+#       c.drb          = true
+#       c.drb_port     = 1234
+#       c.default_path = 'behavior'
+#     end
+#
+# @example Hooks
+#     RSpec.configure do |c|
+#       c.before(:suite)   { establish_connection }
+#       c.before(:example) { log_in_as :authorized }
+#       c.around(:example) { |ex| Database.transaction(&ex) }
+#     end
+#
 # @see RSpec.configure
+# @see Hooks
 #
 # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:47
 class RSpec::Core::Configuration
@@ -413,15 +389,12 @@ class RSpec::Core::Configuration
 
   # Build an object to store runtime configuration options and set defaults
   #
-  # @return [Configuration] a new instance of Configuration
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:528
   def initialize; end
 
-  # Adds a formatter to the set RSpec will use for this run.
+  # @overload add_formatter(formatter)
+  # @overload add_formatter(formatter, output)
   #
-  # @overload add_formatter
-  # @overload add_formatter
   # @param formatter [Class, String, Object] formatter to use. Can be any of the
   #   string values supported from the CLI (`p`/`progress`,
   #   `d`/`doc`/`documentation`, `h`/`html`, or `j`/`json`), any
@@ -430,11 +403,30 @@ class RSpec::Core::Configuration
   # @param output [String, IO] where the formatter will write its output.
   #   Can be an IO object or a string path to a file. If not provided,
   #   the configured `output_stream` (`$stdout`, by default) will be used.
+  #
+  # Adds a formatter to the set RSpec will use for this run.
+  #
   # @see RSpec::Core::Formatters::Protocol
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:996
   def add_formatter(formatter, output = T.unsafe(nil)); end
 
+  # @overload add_setting(name)
+  # @overload add_setting(name, opts)
+  # @option opts [Symbol] :default
+  #
+  #   Set a default value for the generated getter and predicate methods:
+  #
+  #       add_setting(:foo, :default => "default value")
+  #
+  # @option opts [Symbol] :alias_with
+  #
+  #   Use `:alias_with` to alias the setter, getter, and predicate to
+  #   another name, or names:
+  #
+  #       add_setting(:foo, :alias_with => :bar)
+  #       add_setting(:foo, :alias_with => [:bar, :baz])
+  #
   # Adds a custom setting to the RSpec.configuration object.
   #
   #     RSpec.configuration.add_setting :foo
@@ -454,12 +446,6 @@ class RSpec::Core::Configuration
   #     RSpec.configuration.foo=(value)
   #     RSpec.configuration.foo
   #     RSpec.configuration.foo? # Returns true if foo returns anything but nil or false.
-  #
-  # @option opts
-  # @option opts
-  # @overload add_setting
-  # @overload add_setting
-  # @param opts [Hash] a customizable set of options
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:659
   def add_setting(name, opts = T.unsafe(nil)); end
@@ -483,11 +469,11 @@ class RSpec::Core::Configuration
   #
   # @example
   #   RSpec.configure do |config|
-  #   config.alias_example_group_to :describe_model, :type => :model
+  #     config.alias_example_group_to :describe_model, :type => :model
   #   end
   #
   #   shared_context_for "model tests", :type => :model do
-  #   # define common model test helper methods, `let` declarations, etc
+  #     # define common model test helper methods, `let` declarations, etc
   #   end
   #
   #   # This lets you do this:
@@ -499,9 +485,10 @@ class RSpec::Core::Configuration
   #
   #   RSpec.describe User, :type => :model do
   #   end
+  #
   # @note The defined aliased will also be added to the top level
-  #   (e.g. `main` and from within modules) if
-  #   `expose_dsl_globally` is set to true.
+  #       (e.g. `main` and from within modules) if
+  #       `expose_dsl_globally` is set to true.
   # @see #alias_example_to
   # @see #expose_dsl_globally=
   #
@@ -510,35 +497,36 @@ class RSpec::Core::Configuration
 
   # Creates a method that delegates to `example` including the submitted
   # `args`. Used internally to add variants of `example` like `pending`:
+  # @param name [String] example name alias
+  # @param args [Array<Symbol>, Hash] metadata for the generated example
   #
-  # @example
-  #   RSpec.configure do |config|
-  #   config.alias_example_to :pending, :pending => true
-  #   end
-  #
-  #   # This lets you do this:
-  #
-  #   RSpec.describe Thing do
-  #   pending "does something" do
-  #   thing = Thing.new
-  #   end
-  #   end
-  #
-  #   # ... which is the equivalent of
-  #
-  #   RSpec.describe Thing do
-  #   it "does something", :pending => true do
-  #   thing = Thing.new
-  #   end
-  #   end
   # @note The specific example alias below (`pending`) is already
   #   defined for you.
   # @note Use with caution. This extends the language used in your
   #   specs, but does not add any additional documentation. We use this
   #   in RSpec to define methods like `focus` and `xit`, but we also add
   #   docs for those methods.
-  # @param args [Array<Symbol>, Hash] metadata for the generated example
-  # @param name [String] example name alias
+  #
+  # @example
+  #   RSpec.configure do |config|
+  #     config.alias_example_to :pending, :pending => true
+  #   end
+  #
+  #   # This lets you do this:
+  #
+  #   RSpec.describe Thing do
+  #     pending "does something" do
+  #       thing = Thing.new
+  #     end
+  #   end
+  #
+  #   # ... which is the equivalent of
+  #
+  #   RSpec.describe Thing do
+  #     it "does something", :pending => true do
+  #       thing = Thing.new
+  #     end
+  #   end
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1177
   def alias_example_to(name, *args); end
@@ -549,21 +537,22 @@ class RSpec::Core::Configuration
   #
   # @example
   #   RSpec.configure do |config|
-  #   config.alias_it_behaves_like_to(:it_has_behavior, 'has behavior:')
+  #     config.alias_it_behaves_like_to(:it_has_behavior, 'has behavior:')
   #   end
   #
   #   # allows the user to include a shared example group like:
   #
   #   RSpec.describe Entity do
-  #   it_has_behavior 'sortability' do
-  #   let(:sortable) { Entity.new }
-  #   end
+  #     it_has_behavior 'sortability' do
+  #       let(:sortable) { Entity.new }
+  #     end
   #   end
   #
   #   # which is reported in the output as:
   #   # Entity
   #   #   has behavior: sortability
   #   #     ...sortability examples here
+  #
   # @note Use with caution. This extends the language used in your
   #   specs, but does not add any additional documentation. We use this
   #   in RSpec to define `it_should_behave_like` (for backward
@@ -572,32 +561,6 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1240
   def alias_it_behaves_like_to(new_name, report_label = T.unsafe(nil)); end
 
-  # Define an alias for it_should_behave_like that allows different
-  # language (like "it_has_behavior" or "it_behaves_like") to be
-  # employed when including shared examples.
-  #
-  # @example
-  #   RSpec.configure do |config|
-  #   config.alias_it_behaves_like_to(:it_has_behavior, 'has behavior:')
-  #   end
-  #
-  #   # allows the user to include a shared example group like:
-  #
-  #   RSpec.describe Entity do
-  #   it_has_behavior 'sortability' do
-  #   let(:sortable) { Entity.new }
-  #   end
-  #   end
-  #
-  #   # which is reported in the output as:
-  #   # Entity
-  #   #   has behavior: sortability
-  #   #     ...sortability examples here
-  # @note Use with caution. This extends the language used in your
-  #   specs, but does not add any additional documentation. We use this
-  #   in RSpec to define `it_should_behave_like` (for backward
-  #   compatibility), but we also add docs for that method.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1243
   def alias_it_should_behave_like_to(new_name, report_label = T.unsafe(nil)); end
 
@@ -619,22 +582,10 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2061
   def append_after(scope = T.unsafe(nil), *meta, &block); end
 
-  # Defines a `before` hook. See {Hooks#before} for full docs.
-  #
-  # This method differs from {Hooks#before} in only one way: it supports
-  # the `:suite` scope. Hooks with the `:suite` scope will be run once before
-  # the first example of the entire suite is executed. Conditions passed along
-  # with `:suite` are effectively ignored.
-  #
-  # @see #after
-  # @see #append_after
-  # @see #prepend_before
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1990
   def append_before(scope = T.unsafe(nil), *meta, &block); end
 
   # @private
-  # @raise [SystemStackError]
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1941
   def apply_derived_metadata_to(metadata); end
@@ -657,14 +608,12 @@ class RSpec::Core::Configuration
   # To override this behaviour and display a full backtrace, use
   # `--backtrace` on the command line, in a `.rspec` file, or in the
   # `rspec_options` attribute of RSpec's rake task.
-  #
   # @return [Array<Regexp>]
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:697
   def backtrace_exclusion_patterns; end
 
   # Set regular expressions used to exclude lines in backtrace.
-  #
   # @param patterns [Array<Regexp>] set backtrace_formatter exclusion_patterns
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:703
@@ -683,14 +632,12 @@ class RSpec::Core::Configuration
   # will be included.
   #
   # You can modify the list via the getter, or replace it with the setter.
-  #
   # @return [Array<Regexp>]
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:716
   def backtrace_inclusion_patterns; end
 
   # Set regular expressions used to include lines in backtrace.
-  #
   # @attr patterns [Array<Regexp>] set backtrace_formatter inclusion_patterns
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:722
@@ -703,9 +650,9 @@ class RSpec::Core::Configuration
   # the first example of the entire suite is executed. Conditions passed along
   # with `:suite` are effectively ignored.
   #
+  # @see #prepend_before
   # @see #after
   # @see #append_after
-  # @see #prepend_before
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1976
   def before(scope = T.unsafe(nil), *meta, &block); end
@@ -727,6 +674,7 @@ class RSpec::Core::Configuration
   #
   # @note This option will only be used by `--bisect` if you set it in a file
   #   loaded via `--require`.
+  #
   # @return [Symbol]
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:499
@@ -740,6 +688,11 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2125
   def bisect_runner_class; end
 
+  # Toggle output color.
+  #
+  # @deprecated No longer recommended because of complex behavior. Instead,
+  #   rely on the fact that TTYs will display color by default, or set
+  #   {:color_mode} to :on to display color on a non-TTY output.
   # Enables color output if the output is a TTY.  As of RSpec 3.6, this is
   # the default behavior and this option is retained only for backwards
   # compatibility.
@@ -747,9 +700,9 @@ class RSpec::Core::Configuration
   # @deprecated No longer recommended because of complex behavior. Instead,
   #   rely on the fact that TTYs will display color by default, or set
   #   {#color_mode} to :on to display color on a non-TTY output.
-  # @return [Boolean]
-  # @see color_enabled?
   # @see color_mode
+  # @see color_enabled?
+  # @return [Boolean]
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:922
   def color; end
@@ -759,14 +712,23 @@ class RSpec::Core::Configuration
   # @deprecated No longer recommended because of complex behavior. Instead,
   #   rely on the fact that TTYs will display color by default, or set
   #   {:color_mode} to :on to display color on a non-TTY output.
+  # Enables color output if the output is a TTY.  As of RSpec 3.6, this is
+  # the default behavior and this option is retained only for backwards
+  # compatibility.
+  #
+  # @deprecated No longer recommended because of complex behavior. Instead,
+  #   rely on the fact that TTYs will display color by default, or set
+  #   {#color_mode} to :on to display color on a non-TTY output.
+  # @see color_mode
+  # @see color_enabled?
+  # @return [Boolean]
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:960
   def color=(_arg0); end
 
   # Check if color is enabled for a particular output.
-  #
   # @param output [IO] an output stream to use, defaults to the current
-  #   `output_stream`
+  #        `output_stream`
   # @return [Boolean]
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:943
@@ -779,21 +741,31 @@ class RSpec::Core::Configuration
   # - :on - the output will be in color, whether or not the output is a TTY
   # - :off - the output will not be in color
   #
-  # @return [Boolean]
   # @see color_enabled?
+  # @return [Boolean]
+  # Set the color mode.
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:935
   def color_mode; end
 
+  # The mode for determining whether to display output in color. One of:
+  #
+  # - :automatic - the output will be in color if the output is a TTY (the
+  #   default)
+  # - :on - the output will be in color, whether or not the output is a TTY
+  # - :off - the output will not be in color
+  #
+  # @see color_enabled?
+  # @return [Boolean]
   # Set the color mode.
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:953
   def color_mode=(_arg0); end
 
+  # @private
+  #
   # Used internally to extend the singleton class of a single example's
   # example group instance with modules using `include` and/or `extend`.
-  #
-  # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1580
   def configure_example(example, example_hooks); end
@@ -803,10 +775,10 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1622
   def configure_expectation_framework; end
 
+  # @private
+  #
   # Used internally to extend a group with modules using `include`, `prepend` and/or
   # `extend`.
-  #
-  # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1568
   def configure_group(group); end
@@ -816,21 +788,9 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1616
   def configure_mock_framework; end
 
-  # The default output color. Defaults to `:white` but can be set to one of
-  # the following: `[:black, :white, :red, :green, :yellow, :blue,
-  # :magenta, :cyan]`
-  #
-  # @return [Symbol]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def default_color; end
 
-  # The default output color. Defaults to `:white` but can be set to one of
-  # the following: `[:black, :white, :red, :green, :yellow, :blue,
-  # :magenta, :cyan]`
-  #
-  # @return [Symbol]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:89
   def default_color=(_arg0); end
 
@@ -848,31 +808,15 @@ class RSpec::Core::Configuration
   # @example
   #
   #   RSpec.configure do |rspec|
-  #   rspec.default_formatter = 'doc'
+  #     rspec.default_formatter = 'doc'
   #   end
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1014
   def default_formatter=(value); end
 
-  # Path to use if no path is provided to the `rspec` command (default:
-  # `"spec"`). Allows you to just type `rspec` instead of `rspec spec` to
-  # run all the examples in the `spec` directory.
-  #
-  # @note Other scripts invoking `rspec` indirectly will ignore this
-  #   setting.
-  # @return [String]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def default_path; end
 
-  # Path to use if no path is provided to the `rspec` command (default:
-  # `"spec"`). Allows you to just type `rspec` instead of `rspec spec` to
-  # run all the examples in the `spec` directory.
-  #
-  # @note Other scripts invoking `rspec` indirectly will ignore this
-  #   setting.
-  # @return [String]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:121
   def default_path=(path); end
 
@@ -881,14 +825,6 @@ class RSpec::Core::Configuration
 
   # Defines a callback that can assign derived metadata values.
   #
-  # @example
-  #   RSpec.configure do |config|
-  #   # Tag all groups and examples in the spec/unit directory with
-  #   # :type => :unit
-  #   config.define_derived_metadata(:file_path => %r{/spec/unit/}) do |metadata|
-  #   metadata[:type] = :unit
-  #   end
-  #   end
   # @param filters [Array<Symbol>, Hash] metadata filters that determine
   #   which example or group metadata hashes the callback will be triggered
   #   for. If none are given, the callback will be run against the metadata
@@ -896,39 +832,30 @@ class RSpec::Core::Configuration
   # @yieldparam metadata [Hash] original metadata hash from an example or
   #   group. Mutate this in your block as needed.
   #
+  # @example
+  #   RSpec.configure do |config|
+  #     # Tag all groups and examples in the spec/unit directory with
+  #     # :type => :unit
+  #     config.define_derived_metadata(:file_path => %r{/spec/unit/}) do |metadata|
+  #       metadata[:type] = :unit
+  #     end
+  #   end
+  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1900
   def define_derived_metadata(*filters, &block); end
 
-  # Determines where deprecation warnings are printed.
-  # Defaults to `$stderr`.
-  #
-  # @return [IO, String] IO or filename to write to
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def deprecation_stream; end
 
   # Determines where deprecation warnings are printed.
-  #
   # @param value [IO, String] IO to write to or filename to write to
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:168
   def deprecation_stream=(value); end
 
-  # Color used to print details.  Defaults to `:cyan` but can be set to one
-  # of the following: `[:black, :white, :red, :green, :yellow, :blue,
-  # :magenta, :cyan]`
-  #
-  # @return [Symbol]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def detail_color; end
 
-  # Color used to print details.  Defaults to `:cyan` but can be set to one
-  # of the following: `[:black, :white, :red, :green, :yellow, :blue,
-  # :magenta, :cyan]`
-  #
-  # @return [Symbol]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:89
   def detail_color=(_arg0); end
 
@@ -948,32 +875,34 @@ class RSpec::Core::Configuration
   # simply disables monkey patching on whatever pieces of RSpec
   # the user is using.
   #
+  # @note It configures rspec-mocks and rspec-expectations only
+  #   if the user is using those (either explicitly or implicitly
+  #   by not setting `mock_with` or `expect_with` to anything else).
+  #
+  # @note If the user uses this options with `mock_with :mocha`
+  #   (or similar) they will still have monkey patching active
+  #   in their test environment from mocha.
+  #
   # @example
   #
   #   # It disables all monkey patching.
   #   RSpec.configure do |config|
-  #   config.disable_monkey_patching!
+  #     config.disable_monkey_patching!
   #   end
   #
   #   # Is an equivalent to
   #   RSpec.configure do |config|
-  #   config.expose_dsl_globally = false
+  #     config.expose_dsl_globally = false
   #
-  #   config.mock_with :rspec do |mocks|
-  #   mocks.syntax = :expect
-  #   mocks.patch_marshal_to_support_partial_doubles = false
-  #   end
+  #     config.mock_with :rspec do |mocks|
+  #       mocks.syntax = :expect
+  #       mocks.patch_marshal_to_support_partial_doubles = false
+  #     end
   #
-  #   config.expect_with :rspec do |expectations|
-  #   expectations.syntax = :expect
+  #     config.expect_with :rspec do |expectations|
+  #       expectations.syntax = :expect
+  #     end
   #   end
-  #   end
-  # @note It configures rspec-mocks and rspec-expectations only
-  #   if the user is using those (either explicitly or implicitly
-  #   by not setting `mock_with` or `expect_with` to anything else).
-  # @note If the user uses this options with `mock_with :mocha`
-  #   (or similar) they will still have monkey patching active
-  #   in their test environment from mocha.
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1873
   def disable_monkey_patching!; end
@@ -983,89 +912,51 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1881
   def disable_monkey_patching=(_arg0); end
 
-  # Run examples over DRb (default: `false`). RSpec doesn't supply the DRb
-  # server, but you can use tools like spork.
-  #
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def drb; end
 
-  # Run examples over DRb (default: `false`). RSpec doesn't supply the DRb
-  # server, but you can use tools like spork.
-  #
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:89
   def drb=(_arg0); end
 
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:78
   def drb?; end
 
-  # The drb_port (default: nil).
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def drb_port; end
 
-  # The drb_port (default: nil).
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:89
   def drb_port=(_arg0); end
 
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:78
   def drb_port?; end
 
-  # Prints the formatter output of your suite without running any
-  # examples or hooks.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def dry_run; end
 
-  # Prints the formatter output of your suite without running any
-  # examples or hooks.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:89
   def dry_run=(_arg0); end
 
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:78
   def dry_run?; end
 
-  # The exit code to return if there are any errors outside examples (default: failure_exit_code)
-  #
-  # @return [Integer]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def error_exit_code; end
 
-  # The exit code to return if there are any errors outside examples (default: failure_exit_code)
-  #
-  # @return [Integer]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:89
   def error_exit_code=(_arg0); end
 
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:78
   def error_exit_code?; end
 
-  # Default: `$stderr`.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def error_stream; end
 
-  # Default: `$stderr`.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:89
   def error_stream=(_arg0); end
 
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:78
   def error_stream?; end
 
-  # The file path to use for persisting example statuses. Necessary for the
-  # `--only-failures` and `--next-failure` CLI options.
-  #
-  # @overload example_status_persistence_file_path
-  # @overload example_status_persistence_file_path=
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def example_status_persistence_file_path; end
 
@@ -1075,15 +966,10 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:192
   def example_status_persistence_file_path=(value); end
 
-  # Exclude files matching this pattern.
-  #
-  # @return [String]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def exclude_pattern; end
 
   # Set pattern to match files to exclude.
-  #
   # @attr value [String] the filename pattern to exclude spec files by
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:304
@@ -1151,19 +1037,20 @@ class RSpec::Core::Configuration
   # RSpec 2.x's `example` method, so this config option
   # can be used to maintain compatibility.
   #
+  # @param method_name [Symbol] the name of the helper method
+  #
   # @example
   #
   #   RSpec.configure do |rspec|
-  #   rspec.expose_current_running_example_as :example
+  #     rspec.expose_current_running_example_as :example
   #   end
   #
   #   RSpec.describe MyClass do
-  #   before do
-  #   # `example` can be used here because of the above config.
-  #   do_something if example.metadata[:type] == "foo"
+  #     before do
+  #       # `example` can be used here because of the above config.
+  #       do_something if example.metadata[:type] == "foo"
+  #     end
   #   end
-  #   end
-  # @param method_name [Symbol] the name of the helper method
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1811
   def expose_current_running_example_as(method_name); end
@@ -1178,7 +1065,6 @@ class RSpec::Core::Configuration
 
   # Indicates if the DSL has been exposed off of modules and `main`.
   # Default: true
-  #
   # @return [Boolean]
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:143
@@ -1194,41 +1080,38 @@ class RSpec::Core::Configuration
   #
   # @example
   #
-  #   module UiHelpers
-  #   def run_in_browser
-  #   # ...
-  #   end
-  #   end
+  #     module UiHelpers
+  #       def run_in_browser
+  #         # ...
+  #       end
+  #     end
   #
-  #   module PermissionHelpers
-  #   def define_permissions
-  #   # ...
-  #   end
-  #   end
+  #     module PermissionHelpers
+  #       def define_permissions
+  #         # ...
+  #       end
+  #     end
   #
-  #   RSpec.configure do |config|
-  #   config.extend(UiHelpers, :type => :request)
-  #   config.extend(PermissionHelpers, :with_permissions, :type => :request)
-  #   end
+  #     RSpec.configure do |config|
+  #       config.extend(UiHelpers, :type => :request)
+  #       config.extend(PermissionHelpers, :with_permissions, :type => :request)
+  #     end
   #
-  #   describe "edit profile", :with_permissions, :type => :request do
-  #   run_in_browser
-  #   define_permissions
+  #     describe "edit profile", :with_permissions, :type => :request do
+  #       run_in_browser
+  #       define_permissions
   #
-  #   it "does stuff in the client" do
-  #   # ...
-  #   end
-  #   end
+  #       it "does stuff in the client" do
+  #         # ...
+  #       end
+  #     end
+  #
   # @see #include
   # @see #prepend
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1518
   def extend(mod, *filters); end
 
-  # If specified, indicates the number of failures required before cleaning
-  # up and exit (default: `nil`). Can also be `true` to fail and exit on first
-  # failure
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def fail_fast; end
 
@@ -1237,55 +1120,27 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:214
   def fail_fast=(value); end
 
-  # Whether or not to fail when there are no RSpec examples (default: false).
-  #
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def fail_if_no_examples; end
 
-  # Whether or not to fail when there are no RSpec examples (default: false).
-  #
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:89
   def fail_if_no_examples=(_arg0); end
 
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:78
   def fail_if_no_examples?; end
 
-  # Color to use to indicate failure.  Defaults to `:red` but can be set to
-  # one of the following: `[:black, :white, :red, :green, :yellow, :blue,
-  # :magenta, :cyan]`
-  #
-  # @return [Symbol]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def failure_color; end
 
-  # Color to use to indicate failure.  Defaults to `:red` but can be set to
-  # one of the following: `[:black, :white, :red, :green, :yellow, :blue,
-  # :magenta, :cyan]`
-  #
-  # @return [Symbol]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:89
   def failure_color=(_arg0); end
 
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:78
   def failure_color?; end
 
-  # The exit code to return if there are any failures (default: 1).
-  #
-  # @return [Integer]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def failure_exit_code; end
 
-  # The exit code to return if there are any failures (default: 1).
-  #
-  # @return [Integer]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:89
   def failure_exit_code=(_arg0); end
 
@@ -1297,49 +1152,42 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1083
   def files_or_directories_to_run=(*files); end
 
+  # @private
   # The spec files RSpec will run.
-  #
   # @return [Array] specified files about to run
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1096
   def files_to_run; end
 
   # @private
+  # The spec files RSpec will run.
+  # @return [Array] specified files about to run
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:516
   def files_to_run=(_arg0); end
 
-  # Returns the `inclusion_filter`. If none has been set, returns an empty
-  # hash.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1317
   def filter; end
 
-  # Clears and reassigns the `inclusion_filter`. Set to `nil` if you don't
-  # want any inclusion filter at all.
-  #
-  # ### Warning
-  #
-  # This overrides any inclusion filters/tags set on the command line or in
-  # configuration files.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1309
   def filter=(filter); end
 
   # Adds {#backtrace_exclusion_patterns} that will filter lines from
   # the named gems from backtraces.
   #
+  # @param gem_names [Array<String>] Names of the gems to filter
+  #
   # @example
   #   RSpec.configure do |config|
-  #   config.filter_gems_from_backtrace "rack", "rake"
+  #     config.filter_gems_from_backtrace "rack", "rake"
   #   end
+  #
   # @note The patterns this adds will match the named gems in their common
   #   locations (e.g. system gems, vendored with bundler, installed as a
   #   :git dependency with bundler, etc) but is not guaranteed to work for
   #   all possible gem locations. For example, if you have the gem source
   #   in a directory with a completely unrelated name, and use bundler's
   #   :path option, this will not filter it.
-  # @param gem_names [Array<String>] Names of the gems to filter
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:742
   def filter_gems_from_backtrace(*gem_names); end
@@ -1354,37 +1202,6 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:518
   def filter_manager=(_arg0); end
 
-  # Adds key/value pairs to the `inclusion_filter`. If `args`
-  # includes any symbols that are not part of the hash, each symbol
-  # is treated as a key in the hash with the value `true`.
-  #
-  # ### Note
-  #
-  # Filters set using this method can be overridden from the command line
-  # or config files (e.g. `.rspec`).
-  #
-  # @example
-  #   # Given this declaration.
-  #   describe "something", :foo => 'bar' do
-  #   # ...
-  #   end
-  #
-  #   # Any of the following will include that group.
-  #   config.filter_run_including :foo => 'bar'
-  #   config.filter_run_including :foo => /^ba/
-  #   config.filter_run_including :foo => lambda {|v| v == 'bar'}
-  #   config.filter_run_including :foo => lambda {|v,m| m[:foo] == 'bar'}
-  #
-  #   # Given a proc with an arity of 1, the lambda is passed the value
-  #   # related to the key, e.g.
-  #   config.filter_run_including :foo => lambda {|v| v == 'bar'}
-  #
-  #   # Given a proc with an arity of 2, the lambda is passed the value
-  #   # related to the key, and the metadata itself e.g.
-  #   config.filter_run_including :foo => lambda {|v,m| m[:foo] == 'bar'}
-  #
-  #   filter_run_including :foo # same as filter_run_including :foo => true
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1280
   def filter_run(*args); end
 
@@ -1398,26 +1215,26 @@ class RSpec::Core::Configuration
   # or config files (e.g. `.rspec`).
   #
   # @example
-  #   # Given this declaration.
-  #   describe "something", :foo => 'bar' do
-  #   # ...
-  #   end
+  #     # Given this declaration.
+  #     describe "something", :foo => 'bar' do
+  #       # ...
+  #     end
   #
-  #   # Any of the following will exclude that group.
-  #   config.filter_run_excluding :foo => 'bar'
-  #   config.filter_run_excluding :foo => /^ba/
-  #   config.filter_run_excluding :foo => lambda {|v| v == 'bar'}
-  #   config.filter_run_excluding :foo => lambda {|v,m| m[:foo] == 'bar'}
+  #     # Any of the following will exclude that group.
+  #     config.filter_run_excluding :foo => 'bar'
+  #     config.filter_run_excluding :foo => /^ba/
+  #     config.filter_run_excluding :foo => lambda {|v| v == 'bar'}
+  #     config.filter_run_excluding :foo => lambda {|v,m| m[:foo] == 'bar'}
   #
-  #   # Given a proc with an arity of 1, the lambda is passed the value
-  #   # related to the key, e.g.
-  #   config.filter_run_excluding :foo => lambda {|v| v == 'bar'}
+  #     # Given a proc with an arity of 1, the lambda is passed the value
+  #     # related to the key, e.g.
+  #     config.filter_run_excluding :foo => lambda {|v| v == 'bar'}
   #
-  #   # Given a proc with an arity of 2, the lambda is passed the value
-  #   # related to the key, and the metadata itself e.g.
-  #   config.filter_run_excluding :foo => lambda {|v,m| m[:foo] == 'bar'}
+  #     # Given a proc with an arity of 2, the lambda is passed the value
+  #     # related to the key, and the metadata itself e.g.
+  #     config.filter_run_excluding :foo => lambda {|v,m| m[:foo] == 'bar'}
   #
-  #   filter_run_excluding :foo # same as filter_run_excluding :foo => true
+  #     filter_run_excluding :foo # same as filter_run_excluding :foo => true
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1349
   def filter_run_excluding(*args); end
@@ -1432,26 +1249,26 @@ class RSpec::Core::Configuration
   # or config files (e.g. `.rspec`).
   #
   # @example
-  #   # Given this declaration.
-  #   describe "something", :foo => 'bar' do
-  #   # ...
-  #   end
+  #     # Given this declaration.
+  #     describe "something", :foo => 'bar' do
+  #       # ...
+  #     end
   #
-  #   # Any of the following will include that group.
-  #   config.filter_run_including :foo => 'bar'
-  #   config.filter_run_including :foo => /^ba/
-  #   config.filter_run_including :foo => lambda {|v| v == 'bar'}
-  #   config.filter_run_including :foo => lambda {|v,m| m[:foo] == 'bar'}
+  #     # Any of the following will include that group.
+  #     config.filter_run_including :foo => 'bar'
+  #     config.filter_run_including :foo => /^ba/
+  #     config.filter_run_including :foo => lambda {|v| v == 'bar'}
+  #     config.filter_run_including :foo => lambda {|v,m| m[:foo] == 'bar'}
   #
-  #   # Given a proc with an arity of 1, the lambda is passed the value
-  #   # related to the key, e.g.
-  #   config.filter_run_including :foo => lambda {|v| v == 'bar'}
+  #     # Given a proc with an arity of 1, the lambda is passed the value
+  #     # related to the key, e.g.
+  #     config.filter_run_including :foo => lambda {|v| v == 'bar'}
   #
-  #   # Given a proc with an arity of 2, the lambda is passed the value
-  #   # related to the key, and the metadata itself e.g.
-  #   config.filter_run_including :foo => lambda {|v,m| m[:foo] == 'bar'}
+  #     # Given a proc with an arity of 2, the lambda is passed the value
+  #     # related to the key, and the metadata itself e.g.
+  #     config.filter_run_including :foo => lambda {|v,m| m[:foo] == 'bar'}
   #
-  #   filter_run_including :foo # same as filter_run_including :foo => true
+  #     filter_run_including :foo # same as filter_run_including :foo => true
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1275
   def filter_run_including(*args); end
@@ -1469,30 +1286,18 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1291
   def filter_run_when_matching(*args); end
 
-  # Color used when a pending example is fixed. Defaults to `:blue` but can
-  # be set to one of the following: `[:black, :white, :red, :green,
-  # :yellow, :blue, :magenta, :cyan]`
-  #
-  # @return [Symbol]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def fixed_color; end
 
-  # Color used when a pending example is fixed. Defaults to `:blue` but can
-  # be set to one of the following: `[:black, :white, :red, :green,
-  # :yellow, :blue, :magenta, :cyan]`
-  #
-  # @return [Symbol]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:89
   def fixed_color=(_arg0); end
 
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:78
   def fixed_color?; end
 
-  # Used to set higher priority option values from the command line.
-  #
   # @private
+  #
+  # Used to set higher priority option values from the command line.
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:592
   def force(hash); end
@@ -1503,7 +1308,7 @@ class RSpec::Core::Configuration
   #   # This will strip the descriptions of both examples and example
   #   # groups.
   #   RSpec.configure do |config|
-  #   config.format_docstrings { |s| s.strip }
+  #     config.format_docstrings { |s| s.strip }
   #   end
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1661
@@ -1514,20 +1319,6 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1666
   def format_docstrings_block; end
 
-  # Adds a formatter to the set RSpec will use for this run.
-  #
-  # @overload add_formatter
-  # @overload add_formatter
-  # @param formatter [Class, String, Object] formatter to use. Can be any of the
-  #   string values supported from the CLI (`p`/`progress`,
-  #   `d`/`doc`/`documentation`, `h`/`html`, or `j`/`json`), any
-  #   class that implements the formatter protocol and has registered
-  #   itself with RSpec as a formatter, or a formatter instance.
-  # @param output [String, IO] where the formatter will write its output.
-  #   Can be an IO object or a string path to a file. If not provided,
-  #   the configured `output_stream` (`$stdout`, by default) will be used.
-  # @see RSpec::Core::Formatters::Protocol
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:999
   def formatter=(formatter, output = T.unsafe(nil)); end
 
@@ -1547,14 +1338,12 @@ class RSpec::Core::Configuration
   def formatters; end
 
   # Toggle full backtrace.
-  #
   # @attr true_or_false [Boolean] toggle full backtrace display
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:908
   def full_backtrace=(true_or_false); end
 
   # Check if full backtrace is enabled.
-  #
   # @return [Boolean] is full backtrace enabled
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:902
@@ -1575,17 +1364,15 @@ class RSpec::Core::Configuration
   def full_description; end
 
   # Run examples matching on `description` in all files to run.
-  #
   # @param description [String, Regexp] the pattern to filter on
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:972
   def full_description=(description); end
 
+  # @private
   # Holds the various registered hooks. Here we use a FilterableItemRepository
   # implementation that is specifically optimized for the read/write patterns
   # of the config object.
-  #
-  # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2109
   def hooks; end
@@ -1601,52 +1388,54 @@ class RSpec::Core::Configuration
   #
   # @example
   #
-  #   module AuthenticationHelpers
-  #   def login_as(user)
-  #   # ...
-  #   end
-  #   end
+  #     module AuthenticationHelpers
+  #       def login_as(user)
+  #         # ...
+  #       end
+  #     end
   #
-  #   module PreferencesHelpers
-  #   def preferences(user, preferences = {})
-  #   # ...
-  #   end
-  #   end
+  #     module PreferencesHelpers
+  #       def preferences(user, preferences = {})
+  #         # ...
+  #       end
+  #     end
   #
-  #   module UserHelpers
-  #   def users(username)
-  #   # ...
-  #   end
-  #   end
+  #     module UserHelpers
+  #       def users(username)
+  #         # ...
+  #       end
+  #     end
   #
-  #   RSpec.configure do |config|
-  #   config.include(UserHelpers) # included in all groups
+  #     RSpec.configure do |config|
+  #       config.include(UserHelpers) # included in all groups
   #
-  #   # included in examples with `:preferences` metadata
-  #   config.include(PreferenceHelpers, :preferences)
+  #       # included in examples with `:preferences` metadata
+  #       config.include(PreferenceHelpers, :preferences)
   #
-  #   # included in examples with `:type => :request` metadata
-  #   config.include(AuthenticationHelpers, :type => :request)
+  #       # included in examples with `:type => :request` metadata
+  #       config.include(AuthenticationHelpers, :type => :request)
   #
-  #   # included in examples where the `:type` metadata matches a proc condition
-  #   config.include(AuthenticationHelpers, :type => proc { |type, _metadata| [:request, :controller].include?(type) })
-  #   end
+  #       # included in examples where the `:type` metadata matches a proc condition
+  #       config.include(AuthenticationHelpers, :type => proc { |type, _metadata| [:request, :controller].include?(type) })
+  #     end
   #
-  #   describe "edit profile", :preferences, :type => :request do
-  #   it "can be viewed by owning user" do
-  #   login_as preferences(users(:jdoe), :lang => 'es')
-  #   get "/profiles/jdoe"
-  #   assert_select ".username", :text => 'jdoe'
-  #   end
-  #   end
+  #     describe "edit profile", :preferences, :type => :request do
+  #       it "can be viewed by owning user" do
+  #         login_as preferences(users(:jdoe), :lang => 'es')
+  #         get "/profiles/jdoe"
+  #         assert_select ".username", :text => 'jdoe'
+  #       end
+  #     end
+  #
   # @note Filtered module inclusions can also be applied to
   #   individual examples that have matching metadata. Just like
   #   Ruby's object model is that every object has a singleton class
   #   which has only a single instance, RSpec's model is that every
   #   example has a singleton example group containing just the one
   #   example.
-  # @see #extend
+  #
   # @see #include_context
+  # @see #extend
   # @see #prepend
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1428
@@ -1658,38 +1447,40 @@ class RSpec::Core::Configuration
   #
   # @example
   #
-  #   RSpec.shared_context "example admin user" do
-  #   let(:admin_user) { create_user(:admin) }
-  #   end
+  #     RSpec.shared_context "example admin user" do
+  #       let(:admin_user) { create_user(:admin) }
+  #     end
   #
-  #   RSpec.shared_context "example guest user" do
-  #   let(:guest_user) { create_user(:guest) }
-  #   end
+  #     RSpec.shared_context "example guest user" do
+  #       let(:guest_user) { create_user(:guest) }
+  #     end
   #
-  #   RSpec.configure do |config|
-  #   config.include_context "example guest user", :type => :request
-  #   config.include_context "example admin user", :admin, :type => :request
-  #   end
+  #     RSpec.configure do |config|
+  #       config.include_context "example guest user", :type => :request
+  #       config.include_context "example admin user", :admin, :type => :request
+  #     end
   #
-  #   RSpec.describe "The admin page", :type => :request do
-  #   it "can be viewed by admins", :admin do
-  #   login_with admin_user
-  #   get "/admin"
-  #   expect(response).to be_ok
-  #   end
+  #     RSpec.describe "The admin page", :type => :request do
+  #       it "can be viewed by admins", :admin do
+  #         login_with admin_user
+  #         get "/admin"
+  #         expect(response).to be_ok
+  #       end
   #
-  #   it "cannot be viewed by guests" do
-  #   login_with guest_user
-  #   get "/admin"
-  #   expect(response).to be_forbidden
-  #   end
-  #   end
+  #       it "cannot be viewed by guests" do
+  #         login_with guest_user
+  #         get "/admin"
+  #         expect(response).to be_forbidden
+  #       end
+  #     end
+  #
   # @note Filtered context inclusions can also be applied to
   #   individual examples that have matching metadata. Just like
   #   Ruby's object model is that every object has a singleton class
   #   which has only a single instance, RSpec's model is that every
   #   example has a singleton example group containing just the one
   #   example.
+  #
   # @see #include
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1475
@@ -1717,11 +1508,6 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1101
   def last_run_statuses; end
 
-  # Returns dirs that have been prepended to the load path by the `-I`
-  # command line option.
-  #
-  # @return [Array<String>]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def libs; end
 
@@ -1740,17 +1526,9 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:522
   def loaded_spec_files; end
 
-  # Maximum count of failed source lines to display in the failure reports
-  # (defaults to `10`).
-  # return [Integer]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def max_displayed_failure_line_count; end
 
-  # Maximum count of failed source lines to display in the failure reports
-  # (defaults to `10`).
-  # return [Integer]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:89
   def max_displayed_failure_line_count=(_arg0); end
 
@@ -1758,7 +1536,6 @@ class RSpec::Core::Configuration
   def max_displayed_failure_line_count?; end
 
   # Returns the configured mock framework adapter module.
-  #
   # @return [Symbol]
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:669
@@ -1807,36 +1584,23 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2114
   def on_example_group_definition(&block); end
 
-  # Returns an array of blocks to call before defining an example group
-  #
   # @api private
+  # Returns an array of blocks to call before defining an example group
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2120
   def on_example_group_definition_callbacks; end
 
-  # Indicates if the `--only-failures` (or `--next-failure`) flag is being used.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def only_failures; end
 
-  # Indicates if the `--only-failures` (or `--next-failure`) flag is being used.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:200
   def only_failures?; end
 
   # @private
-  # @return [Boolean]
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:203
   def only_failures_but_not_configured?; end
 
-  # Sets the default global ordering strategy. By default this can be one
-  # of `:defined`, `:random`, but is customizable through the
-  # `register_ordering` API. If order is set to `'rand:<seed>'`,
-  # the seed will also be set.
-  #
-  # @see #register_ordering
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1673
   def order=(*args, &block); end
 
@@ -1848,75 +1612,36 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1673
   def ordering_registry(*args, &block); end
 
-  # Determines where RSpec will send its output.
-  # Default: `$stdout`.
-  #
-  # @return [IO, String]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def output_stream; end
 
   # Set the output stream for reporter.
-  #
   # @attr value [IO, String] IO to write to or filename to write to, defaults to $stdout
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:274
   def output_stream=(value); end
 
-  # Load files matching this pattern (default: `'**{,/*/**}/*_spec.rb'`).
-  #
-  # @return [String]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def pattern; end
 
   # Set pattern to match files to load.
-  #
   # @attr value [String] the filename pattern to filter spec files by
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:293
   def pattern=(value); end
 
-  # Color to use to print pending examples.  Defaults to `:yellow` but can
-  # be set to one of the following: `[:black, :white, :red, :green,
-  # :yellow, :blue, :magenta, :cyan]`
-  #
-  # @return [Symbol]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def pending_color; end
 
-  # Color to use to print pending examples.  Defaults to `:yellow` but can
-  # be set to one of the following: `[:black, :white, :red, :green,
-  # :yellow, :blue, :magenta, :cyan]`
-  #
-  # @return [Symbol]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:89
   def pending_color=(_arg0); end
 
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:78
   def pending_color?; end
 
-  # Format the output for pending examples. Can be set to:
-  #  - :full (default) - pending examples appear similarly to failures
-  #  - :no_backtrace - same as above, but with no backtrace
-  #  - :skip - do not show the section at all
-  # return [Symbol]
-  #
-  # @raise [ArgumentError]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def pending_failure_output; end
 
-  # Format the output for pending examples. Can be set to:
-  #  - :full (default) - pending examples appear similarly to failures
-  #  - :no_backtrace - same as above, but with no backtrace
-  #  - :skip - do not show the section at all
-  # return [Symbol]
-  #
-  # @raise [ArgumentError]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:473
   def pending_failure_output=(mode); end
 
@@ -1932,43 +1657,33 @@ class RSpec::Core::Configuration
   #
   # @example
   #
-  #   module OverrideMod
-  #   def override_me
-  #   "overridden"
-  #   end
-  #   end
+  #     module OverrideMod
+  #       def override_me
+  #         "overridden"
+  #       end
+  #     end
   #
-  #   RSpec.configure do |config|
-  #   config.prepend(OverrideMod, :method => :prepend)
-  #   end
+  #     RSpec.configure do |config|
+  #       config.prepend(OverrideMod, :method => :prepend)
+  #     end
   #
-  #   describe "overriding example's class", :method => :prepend do
-  #   it "finds the user" do
-  #   self.class.class_eval do
-  #   def override_me
-  #   end
-  #   end
-  #   override_me # => "overridden"
-  #   # ...
-  #   end
-  #   end
-  # @see #extend
+  #     describe "overriding example's class", :method => :prepend do
+  #       it "finds the user" do
+  #         self.class.class_eval do
+  #           def override_me
+  #           end
+  #         end
+  #         override_me # => "overridden"
+  #         # ...
+  #       end
+  #     end
+  #
   # @see #include
+  # @see #extend
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1557
   def prepend(mod, *filters); end
 
-  # Defines a `after` hook. See {Hooks#after} for full docs.
-  #
-  # This method differs from {Hooks#after} in only one way: it supports
-  # the `:suite` scope. Hooks with the `:suite` scope will be run once after
-  # the last example of the entire suite is executed. Conditions passed along
-  # with `:suite` are effectively ignored.
-  #
-  # @see #append_after
-  # @see #before
-  # @see #prepend_before
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2045
   def prepend_after(scope = T.unsafe(nil), *meta, &block); end
 
@@ -1983,25 +1698,33 @@ class RSpec::Core::Configuration
   # the first example of the entire suite is executed. Conditions passed along
   # with `:suite` are effectively ignored.
   #
+  # @see #before
   # @see #after
   # @see #append_after
-  # @see #before
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2006
   def prepend_before(scope = T.unsafe(nil), *meta, &block); end
 
+  # @macro add_setting
+  # Report the times for the slowest examples (default: `false`).
+  # Use this to specify the number of examples to include in the profile.
+  # @return [Boolean]
+  # @api private
+  #
   # Defaults `profile_examples` to 10 examples when `@profile_examples` is
   # `true`.
-  #
-  # @api private
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1073
   def profile_examples; end
 
+  # @macro add_setting
   # Report the times for the slowest examples (default: `false`).
   # Use this to specify the number of examples to include in the profile.
-  #
   # @return [Boolean]
+  # @api private
+  #
+  # Defaults `profile_examples` to 10 examples when `@profile_examples` is
+  # `true`.
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:322
   def profile_examples=(_arg0); end
@@ -2009,27 +1732,9 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:78
   def profile_examples?; end
 
-  # Specifies which directories contain the source code for your project.
-  # When a failure occurs, RSpec looks through the backtrace to find a
-  # a line of source to print. It first looks for a line coming from
-  # one of the project source directories so that, for example, it prints
-  # the expectation or assertion call rather than the source code from
-  # the expectation or assertion framework.
-  #
-  # @return [Array<String>]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def project_source_dirs; end
 
-  # Specifies which directories contain the source code for your project.
-  # When a failure occurs, RSpec looks through the backtrace to find a
-  # a line of source to print. It first looks for a line coming from
-  # one of the project source directories so that, for example, it prints
-  # the expectation or assertion call rather than the source code from
-  # the expectation or assertion framework.
-  #
-  # @return [Array<String>]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:89
   def project_source_dirs=(_arg0); end
 
@@ -2044,7 +1749,7 @@ class RSpec::Core::Configuration
   # @example
   #
   #   RSpec.configure do |rspec|
-  #   rspec.raise_errors_for_deprecations!
+  #     rspec.raise_errors_for_deprecations!
   #   end
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1833
@@ -2057,51 +1762,12 @@ class RSpec::Core::Configuration
   # @example
   #
   #   RSpec.configure do |rspec|
-  #   rspec.raise_on_warning = true
+  #     rspec.raise_on_warning = true
   #   end
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1781
   def raise_on_warning=(value); end
 
-  # Registers a named ordering strategy that can later be
-  # used to order an example group's subgroups by adding
-  # `:order => <name>` metadata to the example group.
-  #
-  # @example
-  #   RSpec.configure do |rspec|
-  #   rspec.register_ordering :reverse do |list|
-  #   list.reverse
-  #   end
-  #   end
-  #
-  #   RSpec.describe 'MyClass', :order => :reverse do
-  #   # ...
-  #   end
-  # @example
-  #   RSpec.configure do |rspec|
-  #   rspec.register_ordering :global do |examples|
-  #   acceptance, other = examples.partition do |example|
-  #   example.metadata[:type] == :acceptance
-  #   end
-  #   other + acceptance
-  #   end
-  #   end
-  #
-  #   RSpec.describe 'MyClass', :type => :acceptance do
-  #   # will run last
-  #   end
-  #
-  #   RSpec.describe 'MyClass' do
-  #   # will run first
-  #   end
-  # @note Pass the symbol `:global` to set the ordering strategy that
-  #   will be used to order the top-level example groups and any example
-  #   groups that do not have declared `:order` metadata.
-  # @param name [Symbol] The name of the ordering.
-  # @yield Block that will order the given examples or example groups
-  # @yieldparam list [Array<RSpec::Core::Example>, Array<RSpec::Core::ExampleGroup>] The examples or groups to order
-  # @yieldreturn [Array<RSpec::Core::Example>, Array<RSpec::Core::ExampleGroup>] The re-ordered examples or groups
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1673
   def register_ordering(*args, &block); end
 
@@ -2110,10 +1776,6 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1056
   def reporter; end
 
-  # Indicates files configured to be required.
-  #
-  # @return [Array<String>]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def requires; end
 
@@ -2137,88 +1799,24 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:607
   def reset_reporter; end
 
-  # Run all examples if none match the configured filters
-  # (default: `false`).
-  #
-  # @deprecated Use {#filter_run_when_matching} instead for the specific
-  #   filters that you want to be ignored if none match.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def run_all_when_everything_filtered; end
 
-  # Run all examples if none match the configured filters
-  # (default: `false`).
-  #
-  # @deprecated Use {#filter_run_when_matching} instead for the specific
-  #   filters that you want to be ignored if none match.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:89
   def run_all_when_everything_filtered=(_arg0); end
 
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:78
   def run_all_when_everything_filtered?; end
 
-  # Seed for random ordering (default: generated randomly each run).
-  #
-  # When you run specs with `--order random`, RSpec generates a random seed
-  # for the randomization and prints it to the `output_stream` (assuming
-  # you're using RSpec's built-in formatters). If you discover an ordering
-  # dependency (i.e. examples fail intermittently depending on order), set
-  # this (on Configuration or on the command line with `--seed`) to run
-  # using the same seed while you debug the issue.
-  #
-  # We recommend, actually, that you use the command line approach so you
-  # don't accidentally leave the seed encoded.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1673
   def seed(*args, &block); end
 
-  # Sets the seed value and sets the default global ordering to random.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1673
   def seed=(*args, &block); end
 
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1673
   def seed_used?(*args, &block); end
 
-  # Configures how RSpec treats metadata passed as part of a shared example
-  # group definition. For example, given this shared example group definition:
-  #
-  #     RSpec.shared_context "uses DB", :db => true do
-  #       around(:example) do |ex|
-  #         MyORM.transaction(:rollback => true, &ex)
-  #       end
-  #     end
-  #
-  # ...there are two ways RSpec can treat the `:db => true` metadata, each
-  # of which has a corresponding config option:
-  #
-  # 1. `:trigger_inclusion`: this shared context will be implicitly included
-  #    in any groups (or examples) that have `:db => true` metadata.
-  # 2. `:apply_to_host_groups`: the metadata will be inherited by the metadata
-  #    hash of all host groups and examples.
-  #
-  # `:trigger_inclusion` is the legacy behavior from before RSpec 3.5 but should
-  # be considered deprecated. Instead, you can explicitly include a group with
-  # `include_context`:
-  #
-  #     RSpec.describe "My model" do
-  #       include_context "uses DB"
-  #     end
-  #
-  # ...or you can configure RSpec to include the context based on matching metadata
-  # using an API that mirrors configured module inclusion:
-  #
-  #     RSpec.configure do |rspec|
-  #       rspec.include_context "uses DB", :db => true
-  #     end
-  #
-  # `:apply_to_host_groups` is a new feature of RSpec 3.5 and will be the only
-  # supported behavior in RSpec 4.
-  #
-  # @overload shared_context_metadata_behavior
-  # @overload shared_context_metadata_behavior=
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def shared_context_metadata_behavior; end
 
@@ -2227,17 +1825,9 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:434
   def shared_context_metadata_behavior=(value); end
 
-  # Don't print filter info i.e. "Run options: include {:focus=>true}"
-  # (default `false`).
-  # return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def silence_filter_announcements; end
 
-  # Don't print filter info i.e. "Run options: include {:focus=>true}"
-  # (default `false`).
-  # return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:89
   def silence_filter_announcements=(_arg0); end
 
@@ -2268,38 +1858,18 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:520
   def static_config_filter_manager=(_arg0); end
 
-  # Color to use to indicate success.  Defaults to `:green` but can be set
-  # to one of the following: `[:black, :white, :red, :green, :yellow,
-  # :blue, :magenta, :cyan]`
-  #
-  # @return [Symbol]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def success_color; end
 
-  # Color to use to indicate success.  Defaults to `:green` but can be set
-  # to one of the following: `[:black, :white, :red, :green, :yellow,
-  # :blue, :magenta, :cyan]`
-  #
-  # @return [Symbol]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:89
   def success_color=(_arg0); end
 
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:78
   def success_color?; end
 
-  # Use threadsafe options where available.
-  # Currently this will place a mutex around memoized values such as let blocks.
-  # return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:66
   def threadsafe; end
 
-  # Use threadsafe options where available.
-  # Currently this will place a mutex around memoized values such as let blocks.
-  # return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:89
   def threadsafe=(_arg0); end
 
@@ -2343,12 +1913,12 @@ class RSpec::Core::Configuration
   #
   # @example
   #   RSpec.configure do |config|
-  #   config.when_first_matching_example_defined(:db) do
-  #   # Load a support file that does some heavyweight setup,
-  #   # including bootstrapping the DB, but only if we have loaded
-  #   # any examples tagged with `:db`.
-  #   require 'support/db'
-  #   end
+  #     config.when_first_matching_example_defined(:db) do
+  #       # Load a support file that does some heavyweight setup,
+  #       # including bootstrapping the DB, but only if we have loaded
+  #       # any examples tagged with `:db`.
+  #       require 'support/db'
+  #     end
   #   end
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1923
@@ -2373,16 +1943,12 @@ class RSpec::Core::Configuration
 
   # :nocov:
   #
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2254
   def absolute_pattern?(pattern); end
 
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2355
   def add_hook_to_existing_matching_groups(meta, scope, &block); end
 
-  # @raise [MustBeConfiguredBeforeExampleGroupsError]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2294
   def assert_no_example_groups_defined(config_option); end
 
@@ -2428,16 +1994,12 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2143
   def load_file_handling_errors(method, file); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2377
   def metadata_applies_to_group?(meta, group); end
 
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2369
   def on_existing_matching_groups(meta); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2307
   def output_to_tty?(output = T.unsafe(nil)); end
 
@@ -2447,18 +2009,12 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2216
   def paths_to_check(paths); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2221
   def pattern_might_load_specs_from_vendored_dirs?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2330
   def rspec_expectations_loaded?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2326
   def rspec_mocks_loaded?; end
 
@@ -2468,6 +2024,7 @@ class RSpec::Core::Configuration
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2392
   def safe_extend(mod, host); end
 
+  # for 1.8.7
   # :nocov:
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:2388
@@ -2483,17 +2040,17 @@ class RSpec::Core::Configuration
   def value_for(key); end
 
   class << self
-    # As `add_setting` but only add the reader.
-    #
     # @private
+    #
+    # As `add_setting` but only add the reader.
     #
     # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:100
     def add_read_only_setting(name, opts = T.unsafe(nil)); end
 
+    # @private
+    #
     # Invoked by the `add_setting` instance method. Use that method on a
     # `Configuration` instance rather than this class method.
-    #
-    # @private
     #
     # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:87
     def add_setting(name, opts = T.unsafe(nil)); end
@@ -2525,17 +2082,15 @@ end
 # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1651
 RSpec::Core::Configuration::DEFAULT_FORMATTER = T.let(T.unsafe(nil), Proc)
 
+# @private
+#
 # This buffer is used to capture all messages sent to the reporter during
 # reporter initialization. It can then replay those messages after the
 # formatter is correctly initialized. Otherwise, deprecation warnings
 # during formatter initialization can cause an infinite loop.
 #
-# @private
-#
 # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1039
 class RSpec::Core::Configuration::DeprecationReporterBuffer
-  # @return [DeprecationReporterBuffer] a new instance of DeprecationReporterBuffer
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:1040
   def initialize; end
 
@@ -2583,7 +2138,6 @@ RSpec::Core::Configuration::RAISE_ERROR_WARNING_NOTIFIER = T.let(T.unsafe(nil), 
 
 # Module that holds `attr_reader` declarations. It's in a separate
 # module to allow us to override those methods and use `super`.
-#
 # @private
 #
 # pkg:gem/rspec-core#lib/rspec/core/configuration.rb:53
@@ -2706,7 +2260,6 @@ RSpec::Core::Configuration::VALID_STATUSES = T.let(T.unsafe(nil), Array)
 # pkg:gem/rspec-core#lib/rspec/core/configuration_options.rb:10
 class RSpec::Core::ConfigurationOptions
   # @param args [Array<String>] command line arguments
-  # @return [ConfigurationOptions] a new instance of ConfigurationOptions
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration_options.rb:12
   def initialize(args); end
@@ -2724,9 +2277,8 @@ class RSpec::Core::ConfigurationOptions
   # pkg:gem/rspec-core#lib/rspec/core/configuration_options.rb:21
   def configure(config); end
 
-  # Updates the provided {FilterManager} based on the filter options.
-  #
   # @api private
+  # Updates the provided {FilterManager} based on the filter options.
   # @param filter_manager [FilterManager] instance to update
   #
   # pkg:gem/rspec-core#lib/rspec/core/configuration_options.rb:30
@@ -2759,8 +2311,6 @@ class RSpec::Core::ConfigurationOptions
   # pkg:gem/rspec-core#lib/rspec/core/configuration_options.rb:125
   def file_options; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/configuration_options.rb:66
   def force?(key); end
 
@@ -2874,20 +2424,17 @@ module RSpec::Core::DSL
     def expose_example_group_alias_globally(method_name); end
 
     # Adds the describe method to Module and the top level binding.
-    #
     # @api private
     #
     # pkg:gem/rspec-core#lib/rspec/core/dsl.rb:58
     def expose_globally!; end
 
     # @private
-    # @return [Boolean]
     #
     # pkg:gem/rspec-core#lib/rspec/core/dsl.rb:32
     def exposed_globally?; end
 
     # Removes the describe method from Module and the top level binding.
-    #
     # @api private
     #
     # pkg:gem/rspec-core#lib/rspec/core/dsl.rb:70
@@ -2910,25 +2457,22 @@ end
 # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:221
 class RSpec::Core::DeprecationError < ::StandardError; end
 
-# Wrapper around Ruby's `DidYouMean::SpellChecker` when available to provide file name suggestions.
-#
 # @private
+# Wrapper around Ruby's `DidYouMean::SpellChecker` when available to provide file name suggestions.
 #
 # pkg:gem/rspec-core#lib/rspec/core/did_you_mean.rb:5
 class RSpec::Core::DidYouMean
-  # @return [DidYouMean] a new instance of DidYouMean
-  #
   # pkg:gem/rspec-core#lib/rspec/core/did_you_mean.rb:8
   def initialize(relative_file_name); end
 
+  # provide probable suggestions
+  # :nocov: - not installed on CI
   # return a hint if API for ::DidYouMean::SpellChecker not supported
   # :nocov:
   #
   # pkg:gem/rspec-core#lib/rspec/core/did_you_mean.rb:15
   def call; end
 
-  # Returns the value of attribute relative_file_name.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/did_you_mean.rb:6
   def relative_file_name; end
 
@@ -2962,45 +2506,44 @@ end
 #
 # @example
 #
-#   RSpec.configure do |config|
-#   config.before do |example|
-#   log example.description
-#   end
+#     RSpec.configure do |config|
+#       config.before do |example|
+#         log example.description
+#       end
 #
-#   config.after do |example|
-#   log example.description
-#   end
+#       config.after do |example|
+#         log example.description
+#       end
 #
-#   config.around do |example|
-#   log example.description
-#   example.run
-#   end
-#   end
+#       config.around do |example|
+#         log example.description
+#         example.run
+#       end
+#     end
 #
-#   shared_examples "auditable" do
-#   it "does something" do
-#   log "#{example.full_description}: #{auditable.inspect}"
-#   auditable.should do_something
-#   end
-#   end
+#     shared_examples "auditable" do
+#       it "does something" do
+#         log "#{example.full_description}: #{auditable.inspect}"
+#         auditable.should do_something
+#       end
+#     end
+#
+# @see ExampleGroup
 # @note Example blocks are evaluated in the context of an instance
 #   of an `ExampleGroup`, not in the context of an instance of `Example`.
-# @see ExampleGroup
 #
 # pkg:gem/rspec-core#lib/rspec/core/example.rb:44
 class RSpec::Core::Example
   # Creates a new instance of Example.
-  #
-  # @api private
-  # @param description [String] the String passed to the `it` method (or
-  #   alias)
-  # @param example_block [Proc] the block of code that represents the
-  #   example
   # @param example_group_class [Class] the subclass of ExampleGroup in which
   #   this Example is declared
+  # @param description [String] the String passed to the `it` method (or
+  #   alias)
   # @param user_metadata [Hash] additional args passed to `it` to be used as
   #   metadata
-  # @return [Example] a new instance of Example
+  # @param example_block [Proc] the block of code that represents the
+  #   example
+  # @api private
   #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:186
   def initialize(example_group_class, description, user_metadata, example_block = T.unsafe(nil)); end
@@ -3026,18 +2569,18 @@ class RSpec::Core::Example
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:76
   def description; end
 
+  # @private
+  #
   # The exception that will be displayed to the user -- either the failure of
   # the example or the `pending_exception` if the example is pending.
-  #
-  # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:388
   def display_exception; end
 
+  # @private
+  #
   # Assigns the exception that will be displayed to the user -- either the failure of
   # the example or the `pending_exception` if the example is pending.
-  #
-  # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:396
   def display_exception=(ex); end
@@ -3057,45 +2600,37 @@ class RSpec::Core::Example
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:230
   def example_group; end
 
-  # Returns the example_group_instance that provides the context for
-  # running this example.
-  #
   # @attr_reader
   # @private
+  #
+  # Returns the example_group_instance that provides the context for
+  # running this example.
   #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:170
   def example_group_instance; end
 
+  # @attr_reader
+  #
   # Returns the first exception raised in the context of running this
   # example (nil if no exception is raised).
-  #
-  # @attr_reader
   #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:158
   def exception; end
 
-  # @return [ExecutionResult] represents the result of running this example.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:49
   def execution_result; end
 
+  # @private
+  #
   # Used internally to set an exception and fail without actually executing
   # the example when an exception is raised in before(:context).
-  #
-  # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:439
   def fail_with_exception(reporter, exception); end
 
-  # @return [String] the relative path to the file where this example was
-  #   defined.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:49
   def file_path; end
 
-  # @return [String] the full description (including the docstrings of
-  #   all parent example groups).
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:49
   def full_description; end
 
@@ -3120,9 +2655,6 @@ class RSpec::Core::Example
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:456
   def instance_exec(*args, &block); end
 
-  # @return [String] the exact source location of this example in a form
-  #   like `./path/to/spec.rb:17`
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:49
   def location; end
 
@@ -3131,22 +2663,16 @@ class RSpec::Core::Example
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:96
   def location_rerun_argument; end
 
-  # Returns the metadata object associated with this example.
-  #
   # @attr_reader
+  #
+  # Returns the metadata object associated with this example.
   #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:163
   def metadata; end
 
-  # @return [Boolean] flag that indicates that the example is not expected
-  #   to pass. It will be run and will either have a pending result (if a
-  #   failure occurs) or a failed result (if no failure occurs).
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:49
   def pending; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:234
   def pending?; end
 
@@ -3164,51 +2690,43 @@ class RSpec::Core::Example
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:111
   def rerun_argument; end
 
+  # @api private
   # instance_execs the block passed to the constructor in the context of
   # the instance of {ExampleGroup}.
-  #
-  # @api private
   # @param example_group_instance the instance of an ExampleGroup subclass
   #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:246
   def run(example_group_instance, reporter); end
 
-  # Used to set the exception when `aggregate_failures` fails.
-  #
   # @private
+  #
+  # Used to set the exception when `aggregate_failures` fails.
   #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:425
   def set_aggregate_failures_exception(exception); end
 
+  # @private
+  #
   # Used internally to set an exception in an after hook, which
   # captures the exception but doesn't raise it.
-  #
-  # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:412
   def set_exception(exception); end
 
-  # @return [Boolean] flag that will cause the example to not run.
-  #   The {ExecutionResult} status will be `:pending`.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:49
   def skip; end
 
+  # @private
+  #
   # Used internally to skip without actually executing the example when
   # skip is used in before(:context).
-  #
-  # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:449
   def skip_with_exception(reporter, exception); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:238
   def skipped?; end
 
-  # Provide a human-readable representation of this class
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:223
   def to_s; end
 
@@ -3234,8 +2752,6 @@ class RSpec::Core::Example
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:550
   def location_description; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:530
   def mocks_need_verification?; end
 
@@ -3261,9 +2777,9 @@ class RSpec::Core::Example
   def with_around_example_hooks; end
 
   class << self
-    # Used to define methods that delegate to this example's metadata.
-    #
     # @private
+    #
+    # Used to define methods that delegate to this example's metadata.
     #
     # pkg:gem/rspec-core#lib/rspec/core/example.rb:48
     def delegate_to_metadata(key); end
@@ -3275,6 +2791,12 @@ class RSpec::Core::Example
   end
 end
 
+# :nocov:
+# For some reason, rescuing `Support::AllExceptionsExceptOnesWeMustNotRescue`
+# in place of `Exception` above can cause the exit status to be the wrong
+# thing. I have no idea why. See:
+# https://github.com/rspec/rspec-core/pull/2063#discussion_r38284978
+# @private
 # @private
 #
 # pkg:gem/rspec-core#lib/rspec/core/example.rb:310
@@ -3288,9 +2810,8 @@ class RSpec::Core::Example::ExecutionResult
   include ::RSpec::Core::HashImitatable
   extend ::RSpec::Core::HashImitatable::ClassMethods
 
-  # Populates finished_at and run_time if it has not yet been set
-  #
   # @api private
+  # Populates finished_at and run_time if it has not yet been set
   #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:610
   def ensure_timing_set(clock); end
@@ -3352,8 +2873,6 @@ class RSpec::Core::Example::ExecutionResult
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:586
   def pending_fixed=(_arg0); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:588
   def pending_fixed?; end
 
@@ -3369,9 +2888,8 @@ class RSpec::Core::Example::ExecutionResult
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:576
   def pending_message=(_arg0); end
 
-  # Records the finished status of the example.
-  #
   # @api private
+  # Records the finished status of the example.
   #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:603
   def record_finished(status, finished_at); end
@@ -3434,21 +2952,20 @@ end
 #
 # @example
 #
-#   RSpec.configure do |c|
-#   c.around do |ex| # Procsy which wraps the example
-#   if ex.metadata[:key] == :some_value && some_global_condition
-#   raise "some message"
-#   end
-#   ex.run         # run delegates to ex.call.
-#   end
-#   end
+#     RSpec.configure do |c|
+#       c.around do |ex| # Procsy which wraps the example
+#         if ex.metadata[:key] == :some_value && some_global_condition
+#           raise "some message"
+#         end
+#         ex.run         # run delegates to ex.call.
+#       end
+#     end
+#
 # @note This class also exposes the instance methods of {Example},
 #   proxying them through to the wrapped {Example} instance.
 #
 # pkg:gem/rspec-core#lib/rspec/core/example.rb:331
 class RSpec::Core::Example::Procsy
-  # @return [Procsy] a new instance of Procsy
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:362
   def initialize(example, &block); end
 
@@ -3518,8 +3035,6 @@ class RSpec::Core::Example::Procsy
 
   # Indicates whether or not the around hook has executed the example.
   #
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:374
   def executed?; end
 
@@ -3576,8 +3091,6 @@ class RSpec::Core::Example::Procsy
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:346
   def ruby2_keywords(*a, &b); end
 
-  # Calls the proc and notes that the example has been executed.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:354
   def run(*args, &block); end
 
@@ -3639,22 +3152,25 @@ class RSpec::Core::ExampleGroup
   extend ::RSpec::Core::MemoizedHelpers::ClassMethods
   extend ::RSpec::Core::SharedExampleGroup
 
+  # @private
+  #
   # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:714
   def initialize(inspect_output = T.unsafe(nil)); end
 
   # Returns the class or module passed to the `describe` method (or alias).
   # Returns nil if the subject is not a class or module.
-  #
   # @example
-  #   RSpec.describe Thing do
-  #   it "does something" do
-  #   described_class == Thing
-  #   end
-  #   end
+  #     RSpec.describe Thing do
+  #       it "does something" do
+  #         described_class == Thing
+  #       end
+  #     end
   #
   # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:99
   def described_class; end
 
+  # @private
+  #
   # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:720
   def inspect; end
 
@@ -3679,49 +3195,11 @@ class RSpec::Core::ExampleGroup
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:473
     def children; end
 
-    # An alias of `example_group`. Generally used when grouping examples
-    # contextually (e.g. "with xyz", "when xyz" or "if xyz").
-    # Generates a subclass of this example group which inherits
-    # everything except the examples themselves.
-    #
-    # @example
-    #
-    #   RSpec.describe "something" do # << This describe method is defined in
-    #   # << RSpec::Core::DSL, included in the
-    #   # << global namespace (optional)
-    #   before do
-    #   do_something_before
-    #   end
-    #
-    #   before(:example, :clean_env) do
-    #   env.clear!
-    #   end
-    #
-    #   let(:thing) { Thing.new }
-    #
-    #   context "attribute (of something)" do
-    #   # examples in the group get the before hook
-    #   # declared above, and can access `thing`
-    #   end
-    #
-    #   context "needs additional setup", :clean_env, :implementation => JSON do
-    #   # specifies that hooks with matching metadata
-    #   # should be be run additionally
-    #   end
-    #   end
-    # @overload context
-    # @overload context
-    # @overload context
-    # @return [RSpec::Core::ExampleGroup]
-    # @see example_group
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def context(*args, &example_group_block); end
 
     # Returns true if a `before(:context)` or `after(:context)`
     # hook is currently executing.
-    #
-    # @return [Boolean]
     #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:549
     def currently_executing_a_context_hook?; end
@@ -3732,21 +3210,104 @@ class RSpec::Core::ExampleGroup
     def declaration_locations; end
 
     # @private
+    # @macro [attach] define_example_group_method
+    #   @!scope class
+    #   @method $1
+    #   @overload $1
+    #   @overload $1(&example_group_definition)
+    #     @param example_group_definition [Block] The definition of the example group.
+    #   @overload $1(doc_string, *metadata, &example_implementation)
+    #     @param doc_string [String] The group's doc string.
+    #     @param metadata [Array<Symbol>, Hash] Metadata for the group.
+    #       Symbols will be transformed into hash entries with `true` values.
+    #     @param example_group_definition [Block] The definition of the example group.
+    #   @return [RSpec::Core::ExampleGroup]
+    #
+    #   Generates a subclass of this example group which inherits
+    #   everything except the examples themselves.
+    #
+    #   @example
+    #
+    #     RSpec.describe "something" do # << This describe method is defined in
+    #                                   # << RSpec::Core::DSL, included in the
+    #                                   # << global namespace (optional)
+    #       before do
+    #         do_something_before
+    #       end
+    #
+    #       before(:example, :clean_env) do
+    #         env.clear!
+    #       end
+    #
+    #       let(:thing) { Thing.new }
+    #
+    #       $1 "attribute (of something)" do
+    #         # examples in the group get the before hook
+    #         # declared above, and can access `thing`
+    #       end
+    #
+    #       $1 "needs additional setup", :clean_env, :implementation => JSON do
+    #         # specifies that hooks with matching metadata
+    #         # should be be run additionally
+    #       end
+    #     end
+    #
     # @see DSL#describe
     #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:248
     def define_example_group_method(name, metadata = T.unsafe(nil)); end
 
-    # @example
-    #     $1 "does something", :slow, :load_factor => 100 do
+    # @private
+    # @macro [attach] define_example_method
+    #   @!scope class
+    #   @method $1
+    #   @overload $1
+    #   @overload $1(&example_implementation)
+    #     @param example_implementation [Block] The implementation of the example.
+    #   @overload $1(doc_string, *metadata)
+    #     @param doc_string [String] The example's doc string.
+    #     @param metadata [Array<Symbol>, Hash] Metadata for the example.
+    #       Symbols will be transformed into hash entries with `true` values.
+    #   @overload $1(doc_string, *metadata, &example_implementation)
+    #     @param doc_string [String] The example's doc string.
+    #     @param metadata [Array<Symbol>, Hash] Metadata for the example.
+    #       Symbols will be transformed into hash entries with `true` values.
+    #     @param example_implementation [Block] The implementation of the example.
+    #   @yield [Example] the example object
+    #   @example
+    #     $1 do
     #     end
     #
-    # @private
+    #     $1 "does something" do
+    #     end
+    #
+    #     $1 "does something", :slow, :uses_js do
+    #     end
+    #
+    #     $1 "does something", :with => 'additional metadata' do
+    #     end
+    #
+    #     $1 "does something" do |ex|
+    #       # ex is the Example object that contains metadata about the example
+    #     end
+    #
+    #  @example
+    #     $1 "does something", :slow, :load_factor => 100 do
+    #     end
     #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:145
     def define_example_method(name, extra_options = T.unsafe(nil)); end
 
     # @private
+    # @macro [attach] define_nested_shared_group_method
+    #   @!scope class
+    #   @method $1(name, *args, &block)
+    #     @param name [String, Symbol] The name of the shared group to include.
+    #     @param args [Array] Pass parameters to a shared example group
+    #     @param block [Block] Additional context to pass to the shared group.
+    #     @return [RSpec::Core::ExampleGroup]
+    #
+    #   @see SharedExampleGroup
     #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:324
     def define_nested_shared_group_method(new_name, report_label = T.unsafe(nil)); end
@@ -3766,45 +3327,18 @@ class RSpec::Core::ExampleGroup
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:510
     def descendants; end
 
-    # An alias of `example_group`. Generally used when grouping examples by a
-    # thing you are describing (e.g. an object, class or method).
-    # Generates a subclass of this example group which inherits
-    # everything except the examples themselves.
-    #
-    # @example
-    #
-    #   RSpec.describe "something" do # << This describe method is defined in
-    #   # << RSpec::Core::DSL, included in the
-    #   # << global namespace (optional)
-    #   before do
-    #   do_something_before
-    #   end
-    #
-    #   before(:example, :clean_env) do
-    #   env.clear!
-    #   end
-    #
-    #   let(:thing) { Thing.new }
-    #
-    #   describe "attribute (of something)" do
-    #   # examples in the group get the before hook
-    #   # declared above, and can access `thing`
-    #   end
-    #
-    #   describe "needs additional setup", :clean_env, :implementation => JSON do
-    #   # specifies that hooks with matching metadata
-    #   # should be be run additionally
-    #   end
-    #   end
-    # @overload describe
-    # @overload describe
-    # @overload describe
-    # @return [RSpec::Core::ExampleGroup]
-    # @see example_group
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def describe(*args, &example_group_block); end
 
+    # Returns the class or module passed to the `describe` method (or alias).
+    # Returns nil if the subject is not a class or module.
+    # @example
+    #     RSpec.describe Thing do
+    #       it "does something" do
+    #         described_class == Thing
+    #       end
+    #     end
+    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def described_class; end
 
@@ -3823,66 +3357,9 @@ class RSpec::Core::ExampleGroup
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:525
     def ensure_example_groups_are_configured; end
 
-    # Defines an example within a group.
-    #
-    # @example
-    #   example do
-    #   end
-    #
-    #   example "does something" do
-    #   end
-    #
-    #   example "does something", :slow, :uses_js do
-    #   end
-    #
-    #   example "does something", :with => 'additional metadata' do
-    #   end
-    #
-    #   example "does something" do |ex|
-    #   # ex is the Example object that contains metadata about the example
-    #   end
-    # @overload example
-    # @overload example
-    # @overload example
-    # @overload example
-    # @yield [Example] the example object
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def example(*all_args, &block); end
 
-    # Generates a subclass of this example group which inherits
-    # everything except the examples themselves.
-    #
-    # @example
-    #
-    #   RSpec.describe "something" do # << This describe method is defined in
-    #   # << RSpec::Core::DSL, included in the
-    #   # << global namespace (optional)
-    #   before do
-    #   do_something_before
-    #   end
-    #
-    #   before(:example, :clean_env) do
-    #   env.clear!
-    #   end
-    #
-    #   let(:thing) { Thing.new }
-    #
-    #   example_group "attribute (of something)" do
-    #   # examples in the group get the before hook
-    #   # declared above, and can access `thing`
-    #   end
-    #
-    #   example_group "needs additional setup", :clean_env, :implementation => JSON do
-    #   # specifies that hooks with matching metadata
-    #   # should be be run additionally
-    #   end
-    #   end
-    # @overload example_group
-    # @overload example_group
-    # @overload example_group
-    # @return [RSpec::Core::ExampleGroup]
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def example_group(*args, &example_group_block); end
 
@@ -3891,107 +3368,12 @@ class RSpec::Core::ExampleGroup
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:457
     def examples; end
 
-    # Shortcut to define an example group with `:focus => true`.
-    # Generates a subclass of this example group which inherits
-    # everything except the examples themselves.
-    #
-    # @example
-    #
-    #   RSpec.describe "something" do # << This describe method is defined in
-    #   # << RSpec::Core::DSL, included in the
-    #   # << global namespace (optional)
-    #   before do
-    #   do_something_before
-    #   end
-    #
-    #   before(:example, :clean_env) do
-    #   env.clear!
-    #   end
-    #
-    #   let(:thing) { Thing.new }
-    #
-    #   fcontext "attribute (of something)" do
-    #   # examples in the group get the before hook
-    #   # declared above, and can access `thing`
-    #   end
-    #
-    #   fcontext "needs additional setup", :clean_env, :implementation => JSON do
-    #   # specifies that hooks with matching metadata
-    #   # should be be run additionally
-    #   end
-    #   end
-    # @overload fcontext
-    # @overload fcontext
-    # @overload fcontext
-    # @return [RSpec::Core::ExampleGroup]
-    # @see example_group
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def fcontext(*args, &example_group_block); end
 
-    # Shortcut to define an example group with `:focus => true`.
-    # Generates a subclass of this example group which inherits
-    # everything except the examples themselves.
-    #
-    # @example
-    #
-    #   RSpec.describe "something" do # << This describe method is defined in
-    #   # << RSpec::Core::DSL, included in the
-    #   # << global namespace (optional)
-    #   before do
-    #   do_something_before
-    #   end
-    #
-    #   before(:example, :clean_env) do
-    #   env.clear!
-    #   end
-    #
-    #   let(:thing) { Thing.new }
-    #
-    #   fdescribe "attribute (of something)" do
-    #   # examples in the group get the before hook
-    #   # declared above, and can access `thing`
-    #   end
-    #
-    #   fdescribe "needs additional setup", :clean_env, :implementation => JSON do
-    #   # specifies that hooks with matching metadata
-    #   # should be be run additionally
-    #   end
-    #   end
-    # @overload fdescribe
-    # @overload fdescribe
-    # @overload fdescribe
-    # @return [RSpec::Core::ExampleGroup]
-    # @see example_group
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def fdescribe(*args, &example_group_block); end
 
-    # Shortcut to define an example with `:focus => true`.
-    #
-    # @example
-    #   fexample do
-    #   end
-    #
-    #   fexample "does something" do
-    #   end
-    #
-    #   fexample "does something", :slow, :uses_js do
-    #   end
-    #
-    #   fexample "does something", :with => 'additional metadata' do
-    #   end
-    #
-    #   fexample "does something" do |ex|
-    #   # ex is the Example object that contains metadata about the example
-    #   end
-    # @overload fexample
-    # @overload fexample
-    # @overload fexample
-    # @overload fexample
-    # @see example
-    # @yield [Example] the example object
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def fexample(*all_args, &block); end
 
@@ -4008,59 +3390,9 @@ class RSpec::Core::ExampleGroup
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:386
     def find_and_eval_shared(label, name, inclusion_location, *args, &customization_block); end
 
-    # Shortcut to define an example with `:focus => true`.
-    #
-    # @example
-    #   fit do
-    #   end
-    #
-    #   fit "does something" do
-    #   end
-    #
-    #   fit "does something", :slow, :uses_js do
-    #   end
-    #
-    #   fit "does something", :with => 'additional metadata' do
-    #   end
-    #
-    #   fit "does something" do |ex|
-    #   # ex is the Example object that contains metadata about the example
-    #   end
-    # @overload fit
-    # @overload fit
-    # @overload fit
-    # @overload fit
-    # @see example
-    # @yield [Example] the example object
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def fit(*all_args, &block); end
 
-    # Shortcut to define an example with `:focus => true`.
-    #
-    # @example
-    #   focus do
-    #   end
-    #
-    #   focus "does something" do
-    #   end
-    #
-    #   focus "does something", :slow, :uses_js do
-    #   end
-    #
-    #   focus "does something", :with => 'additional metadata' do
-    #   end
-    #
-    #   focus "does something" do |ex|
-    #   # ex is the Example object that contains metadata about the example
-    #   end
-    # @overload focus
-    # @overload focus
-    # @overload focus
-    # @overload focus
-    # @see example
-    # @yield [Example] the example object
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def focus(*all_args, &block); end
 
@@ -4069,31 +3401,6 @@ class RSpec::Core::ExampleGroup
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:662
     def for_filtered_examples(reporter, &block); end
 
-    # Shortcut to define an example with `:focus => true`.
-    #
-    # @example
-    #   fspecify do
-    #   end
-    #
-    #   fspecify "does something" do
-    #   end
-    #
-    #   fspecify "does something", :slow, :uses_js do
-    #   end
-    #
-    #   fspecify "does something", :with => 'additional metadata' do
-    #   end
-    #
-    #   fspecify "does something" do |ex|
-    #   # ex is the Example object that contains metadata about the example
-    #   end
-    # @overload fspecify
-    # @overload fspecify
-    # @overload fspecify
-    # @overload fspecify
-    # @see example
-    # @yield [Example] the example object
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def fspecify(*all_args, &block); end
 
@@ -4105,7 +3412,6 @@ class RSpec::Core::ExampleGroup
 
     # Define a singleton method for the singleton class (remove the method if
     # it's already been defined).
-    #
     # @private
     #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:40
@@ -4131,47 +3437,12 @@ class RSpec::Core::ExampleGroup
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:360
     def include_examples(name, *args, &block); end
 
-    # Defines an example within a group.
-    # This is the primary API to define a code example.
-    #
-    # @example
-    #   it do
-    #   end
-    #
-    #   it "does something" do
-    #   end
-    #
-    #   it "does something", :slow, :uses_js do
-    #   end
-    #
-    #   it "does something", :with => 'additional metadata' do
-    #   end
-    #
-    #   it "does something" do |ex|
-    #   # ex is the Example object that contains metadata about the example
-    #   end
-    # @overload it
-    # @overload it
-    # @overload it
-    # @overload it
-    # @yield [Example] the example object
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def it(*all_args, &block); end
 
-    # @param args [Array] Pass parameters to a shared example group
-    # @param block [Block] Additional context to pass to the shared group.
-    # @param name [String, Symbol] The name of the shared group to include.
-    # @return [RSpec::Core::ExampleGroup]
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def it_behaves_like(name, *args, &customization_block); end
 
-    # @param args [Array] Pass parameters to a shared example group
-    # @param block [Block] Additional context to pass to the shared group.
-    # @param name [String, Symbol] The name of the shared group to include.
-    # @return [RSpec::Core::ExampleGroup]
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def it_should_behave_like(name, *args, &customization_block); end
 
@@ -4179,7 +3450,6 @@ class RSpec::Core::ExampleGroup
     def location; end
 
     # The [Metadata](Metadata) object associated with this group.
-    #
     # @see Metadata
     #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:51
@@ -4200,31 +3470,6 @@ class RSpec::Core::ExampleGroup
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:515
     def parent_groups; end
 
-    # Shortcut to define an example with `:pending => true`
-    #
-    # @example
-    #   pending do
-    #   end
-    #
-    #   pending "does something" do
-    #   end
-    #
-    #   pending "does something", :slow, :uses_js do
-    #   end
-    #
-    #   pending "does something", :with => 'additional metadata' do
-    #   end
-    #
-    #   pending "does something" do |ex|
-    #   # ex is the Example object that contains metadata about the example
-    #   end
-    # @overload pending
-    # @overload pending
-    # @overload pending
-    # @overload pending
-    # @see example
-    # @yield [Example] the example object
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def pending(*all_args, &block); end
 
@@ -4234,7 +3479,6 @@ class RSpec::Core::ExampleGroup
     def remove_example(example); end
 
     # Clear memoized values when adding/removing examples
-    #
     # @private
     #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:366
@@ -4270,65 +3514,9 @@ class RSpec::Core::ExampleGroup
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:692
     def set_ivars(instance, ivars); end
 
-    # Shortcut to define an example with `:skip => true`
-    #
-    # @example
-    #   skip do
-    #   end
-    #
-    #   skip "does something" do
-    #   end
-    #
-    #   skip "does something", :slow, :uses_js do
-    #   end
-    #
-    #   skip "does something", :with => 'additional metadata' do
-    #   end
-    #
-    #   skip "does something" do |ex|
-    #   # ex is the Example object that contains metadata about the example
-    #   end
-    # @overload skip
-    # @overload skip
-    # @overload skip
-    # @overload skip
-    # @see example
-    # @yield [Example] the example object
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def skip(*all_args, &block); end
 
-    # Defines an example within a group.
-    # Useful for when your docstring does not read well off of `it`.
-    #
-    # @example
-    #   RSpec.describe MyClass do
-    #   specify "#do_something is deprecated" do
-    #   # ...
-    #   end
-    #   end
-    # @example
-    #   specify do
-    #   end
-    #
-    #   specify "does something" do
-    #   end
-    #
-    #   specify "does something", :slow, :uses_js do
-    #   end
-    #
-    #   specify "does something", :with => 'additional metadata' do
-    #   end
-    #
-    #   specify "does something" do |ex|
-    #   # ex is the Example object that contains metadata about the example
-    #   end
-    # @overload specify
-    # @overload specify
-    # @overload specify
-    # @overload specify
-    # @yield [Example] the example object
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def specify(*all_args, &block); end
 
@@ -4342,8 +3530,9 @@ class RSpec::Core::ExampleGroup
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:402
     def subclass(parent, description, args, registration_collection, &example_group_block); end
 
+    # @private
+    # 1.8.7
     # :nocov:
-    #
     # @private
     #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:569
@@ -4356,7 +3545,6 @@ class RSpec::Core::ExampleGroup
     def superclass_metadata; end
 
     # @private
-    # @return [Boolean]
     #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:520
     def top_level?; end
@@ -4366,13 +3554,12 @@ class RSpec::Core::ExampleGroup
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:687
     def top_level_description; end
 
+    # @private
     # Traverses the tree of groups, starting with `self`, then the children, recursively.
     # Halts the traversal of a branch of the tree as soon as the passed block returns true.
     # Note that siblings groups and their sub-trees will continue to be explored.
     # This is intended to make it easy to find the top-most group that satisfies some
     # condition.
-    #
-    # @private
     #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:483
     def traverse_tree_until(&block); end
@@ -4387,169 +3574,23 @@ class RSpec::Core::ExampleGroup
     # to return the metadata of the example that it exists for. This
     # is necessary for shared example group inclusion to work properly
     # with singleton example groups.
-    #
     # @private
     #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:61
     def with_replaced_metadata(meta); end
 
-    # Shortcut to temporarily make an example group skipped.
-    # Generates a subclass of this example group which inherits
-    # everything except the examples themselves.
-    #
-    # @example
-    #
-    #   RSpec.describe "something" do # << This describe method is defined in
-    #   # << RSpec::Core::DSL, included in the
-    #   # << global namespace (optional)
-    #   before do
-    #   do_something_before
-    #   end
-    #
-    #   before(:example, :clean_env) do
-    #   env.clear!
-    #   end
-    #
-    #   let(:thing) { Thing.new }
-    #
-    #   xcontext "attribute (of something)" do
-    #   # examples in the group get the before hook
-    #   # declared above, and can access `thing`
-    #   end
-    #
-    #   xcontext "needs additional setup", :clean_env, :implementation => JSON do
-    #   # specifies that hooks with matching metadata
-    #   # should be be run additionally
-    #   end
-    #   end
-    # @overload xcontext
-    # @overload xcontext
-    # @overload xcontext
-    # @return [RSpec::Core::ExampleGroup]
-    # @see example_group
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def xcontext(*args, &example_group_block); end
 
-    # Shortcut to temporarily make an example group skipped.
-    # Generates a subclass of this example group which inherits
-    # everything except the examples themselves.
-    #
-    # @example
-    #
-    #   RSpec.describe "something" do # << This describe method is defined in
-    #   # << RSpec::Core::DSL, included in the
-    #   # << global namespace (optional)
-    #   before do
-    #   do_something_before
-    #   end
-    #
-    #   before(:example, :clean_env) do
-    #   env.clear!
-    #   end
-    #
-    #   let(:thing) { Thing.new }
-    #
-    #   xdescribe "attribute (of something)" do
-    #   # examples in the group get the before hook
-    #   # declared above, and can access `thing`
-    #   end
-    #
-    #   xdescribe "needs additional setup", :clean_env, :implementation => JSON do
-    #   # specifies that hooks with matching metadata
-    #   # should be be run additionally
-    #   end
-    #   end
-    # @overload xdescribe
-    # @overload xdescribe
-    # @overload xdescribe
-    # @return [RSpec::Core::ExampleGroup]
-    # @see example_group
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def xdescribe(*args, &example_group_block); end
 
-    # Shortcut to define an example with `:skip => 'Temporarily skipped with xexample'`.
-    #
-    # @example
-    #   xexample do
-    #   end
-    #
-    #   xexample "does something" do
-    #   end
-    #
-    #   xexample "does something", :slow, :uses_js do
-    #   end
-    #
-    #   xexample "does something", :with => 'additional metadata' do
-    #   end
-    #
-    #   xexample "does something" do |ex|
-    #   # ex is the Example object that contains metadata about the example
-    #   end
-    # @overload xexample
-    # @overload xexample
-    # @overload xexample
-    # @overload xexample
-    # @see example
-    # @yield [Example] the example object
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def xexample(*all_args, &block); end
 
-    # Shortcut to define an example with `:skip => 'Temporarily skipped with xit'`.
-    #
-    # @example
-    #   xit do
-    #   end
-    #
-    #   xit "does something" do
-    #   end
-    #
-    #   xit "does something", :slow, :uses_js do
-    #   end
-    #
-    #   xit "does something", :with => 'additional metadata' do
-    #   end
-    #
-    #   xit "does something" do |ex|
-    #   # ex is the Example object that contains metadata about the example
-    #   end
-    # @overload xit
-    # @overload xit
-    # @overload xit
-    # @overload xit
-    # @see example
-    # @yield [Example] the example object
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def xit(*all_args, &block); end
 
-    # Shortcut to define an example with `:skip => 'Temporarily skipped with xspecify'`.
-    #
-    # @example
-    #   xspecify do
-    #   end
-    #
-    #   xspecify "does something" do
-    #   end
-    #
-    #   xspecify "does something", :slow, :uses_js do
-    #   end
-    #
-    #   xspecify "does something", :with => 'additional metadata' do
-    #   end
-    #
-    #   xspecify "does something" do |ex|
-    #   # ex is the Example object that contains metadata about the example
-    #   end
-    # @overload xspecify
-    # @overload xspecify
-    # @overload xspecify
-    # @overload xspecify
-    # @see example
-    # @yield [Example] the example object
-    #
     # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:43
     def xspecify(*all_args, &block); end
 
@@ -4560,6 +3601,8 @@ class RSpec::Core::ExampleGroup
   end
 end
 
+# :nocov:
+# @private
 # @private
 #
 # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:703
@@ -4576,13 +3619,10 @@ class RSpec::Core::ExampleGroup::WrongScopeError < ::NoMethodError; end
 # for later parsing. The hashes are expected to have symbol
 # keys and string values, and each hash should have the same
 # set of keys.
-#
 # @private
 #
 # pkg:gem/rspec-core#lib/rspec/core/example_status_persister.rb:143
 class RSpec::Core::ExampleStatusDumper
-  # @return [ExampleStatusDumper] a new instance of ExampleStatusDumper
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example_status_persister.rb:148
   def initialize(examples); end
 
@@ -4629,13 +3669,10 @@ end
 #     definitively do exist or may still exist.
 #   - Is sorted by file name and example definition order, so that
 #     the saved file is easily scannable if users want to inspect it.
-#
 # @private
 #
 # pkg:gem/rspec-core#lib/rspec/core/example_status_persister.rb:74
 class RSpec::Core::ExampleStatusMerger
-  # @return [ExampleStatusMerger] a new instance of ExampleStatusMerger
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example_status_persister.rb:79
   def initialize(this_run, from_previous_runs); end
 
@@ -4647,8 +3684,6 @@ class RSpec::Core::ExampleStatusMerger
   # pkg:gem/rspec-core#lib/rspec/core/example_status_persister.rb:102
   def delete_previous_examples_that_no_longer_exist; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example_status_persister.rb:108
   def example_must_no_longer_exist?(ex_id); end
 
@@ -4676,13 +3711,10 @@ end
 # OK because the values we plan to persist (example id, status, and perhaps
 # example duration) are highly unlikely to contain "\n" or " | " -- after
 # all, who puts those in file names?
-#
 # @private
 #
 # pkg:gem/rspec-core#lib/rspec/core/example_status_persister.rb:207
 class RSpec::Core::ExampleStatusParser
-  # @return [ExampleStatusParser] a new instance of ExampleStatusParser
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example_status_persister.rb:212
   def initialize(string); end
 
@@ -4708,13 +3740,10 @@ end
 
 # Persists example ids and their statuses so that we can filter
 # to just the ones that failed the last time they ran.
-#
 # @private
 #
 # pkg:gem/rspec-core#lib/rspec/core/example_status_persister.rb:8
 class RSpec::Core::ExampleStatusPersister
-  # @return [ExampleStatusPersister] a new instance of ExampleStatusPersister
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example_status_persister.rb:18
   def initialize(examples, file_name); end
 
@@ -4747,8 +3776,6 @@ RSpec::Core::ExclusionRules = RSpec::Core::FilterRules
 #
 # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:4
 class RSpec::Core::FilterManager
-  # @return [FilterManager] a new instance of FilterManager
-  #
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:7
   def initialize; end
 
@@ -4756,14 +3783,13 @@ class RSpec::Core::FilterManager
   def add_ids(rerun_path, scoped_ids); end
 
   # @api private
+  #
   # @param file_path [String]
   # @param line_numbers [Array]
   #
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:15
   def add_location(file_path, line_numbers); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:30
   def empty?; end
 
@@ -4776,8 +3802,6 @@ class RSpec::Core::FilterManager
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:65
   def exclude_with_low_priority(*args); end
 
-  # Returns the value of attribute exclusions.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:5
   def exclusions; end
 
@@ -4790,8 +3814,6 @@ class RSpec::Core::FilterManager
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:77
   def include_with_low_priority(*args); end
 
-  # Returns the value of attribute inclusions.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:5
   def inclusions; end
 
@@ -4809,8 +3831,6 @@ class RSpec::Core::FilterManager
   # defined in the same file as the location filters. Excluded specs in
   # other files should still be excluded.
   #
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:101
   def file_scoped_include?(ex_metadata, ids, locations); end
 
@@ -4822,8 +3842,6 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:115
 class RSpec::Core::FilterRules
-  # @return [FilterRules] a new instance of FilterRules
-  #
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:130
   def initialize(rules = T.unsafe(nil)); end
 
@@ -4848,33 +3866,21 @@ class RSpec::Core::FilterRules
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:169
   def each_pair(&block); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:165
   def empty?; end
 
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:157
   def fetch(*args, &block); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:177
   def include_example?(example); end
 
-  # Returns the value of attribute opposite.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:119
   def opposite; end
 
-  # Sets the attribute opposite
-  #
-  # @param value the value to set the attribute opposite to.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:119
   def opposite=(_arg0); end
 
-  # Returns the value of attribute rules.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:120
   def rules; end
 
@@ -4898,7 +3904,6 @@ RSpec::Core::FilterRules::PROJECT_DIR = T.let(T.unsafe(nil), String)
 # metadata of an example or example group.
 #
 # There are two implementations, optimized for different uses.
-#
 # @private
 #
 # pkg:gem/rspec-core#lib/rspec/core/metadata_filter.rb:87
@@ -4915,13 +3920,10 @@ module RSpec::Core::FilterableItemRepository; end
 # This is ideal for use by config, where filterable items (e.g. hooks)
 # are typically added at the start of the process (e.g. in `spec_helper`)
 # and then repeatedly queried as example groups and examples are defined.
-#
 # @private
 #
 # pkg:gem/rspec-core#lib/rspec/core/metadata_filter.rb:151
 class RSpec::Core::FilterableItemRepository::QueryOptimized < ::RSpec::Core::FilterableItemRepository::UpdateOptimized
-  # @return [QueryOptimized] a new instance of QueryOptimized
-  #
   # pkg:gem/rspec-core#lib/rspec/core/metadata_filter.rb:155
   def initialize(applies_predicate); end
 
@@ -4964,13 +3966,10 @@ end
 # be updated multiple times with globally configured hooks, etc,
 # but will not be queried frequently by other examples or example
 # groups.
-#
 # @private
 #
 # pkg:gem/rspec-core#lib/rspec/core/metadata_filter.rb:98
 class RSpec::Core::FilterableItemRepository::UpdateOptimized
-  # @return [UpdateOptimized] a new instance of UpdateOptimized
-  #
   # pkg:gem/rspec-core#lib/rspec/core/metadata_filter.rb:101
   def initialize(applies_predicate); end
 
@@ -4980,8 +3979,6 @@ class RSpec::Core::FilterableItemRepository::UpdateOptimized
   # pkg:gem/rspec-core#lib/rspec/core/metadata_filter.rb:114
   def delete(item, metadata); end
 
-  # Returns the value of attribute items_and_filters.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/metadata_filter.rb:99
   def items_and_filters; end
 
@@ -4998,12 +3995,14 @@ end
 module RSpec::Core::FlatMap
   private
 
+  # for 1.8.7
   # :nocov:
   #
   # pkg:gem/rspec-core#lib/rspec/core/flat_map.rb:6
   def flat_map(array, &block); end
 
   class << self
+    # for 1.8.7
     # :nocov:
     #
     # pkg:gem/rspec-core#lib/rspec/core/flat_map.rb:17
@@ -5082,10 +4081,10 @@ end
 module RSpec::Core::Formatters
   class << self
     # Register the formatter class
-    #
     # @param formatter_class [Class] formatter class to register
     # @param notifications [Array<Symbol>] one or more notifications to be
     #   registered to the specified formatter
+    #
     # @see RSpec::Core::Formatters::BaseFormatter
     #
     # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:86
@@ -5098,13 +4097,10 @@ end
 #
 # Subclasses must define a `notify_results(all_example_ids, failed_example_ids)`
 # method.
-#
 # @private
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/base_bisect_formatter.rb:12
 class RSpec::Core::Formatters::BaseBisectFormatter
-  # @return [BaseBisectFormatter] a new instance of BaseBisectFormatter
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/base_bisect_formatter.rb:17
   def initialize(expected_failures); end
 
@@ -5118,8 +4114,6 @@ class RSpec::Core::Formatters::BaseBisectFormatter
   def start_dump(_notification); end
 
   class << self
-    # @private
-    #
     # pkg:gem/rspec-core#lib/rspec/core/formatters/base_bisect_formatter.rb:13
     def inherited(formatter); end
   end
@@ -5129,39 +4123,34 @@ end
 # RSpec::Core::Formatters::BaseFormatter.
 #
 # @see RSpec::Core::Formatters::BaseTextFormatter
-# @see RSpec::Core::Formatters::Protocol
 # @see RSpec::Core::Reporter
+# @see RSpec::Core::Formatters::Protocol
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/base_formatter.rb:13
 class RSpec::Core::Formatters::BaseFormatter
   # @api public
   # @param output [IO] the formatter output
-  # @return [BaseFormatter] a new instance of BaseFormatter
   # @see RSpec::Core::Formatters::Protocol#initialize
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/base_formatter.rb:23
   def initialize(output); end
 
   # @api public
+  #
   # @param _notification [NullNotification] (Ignored)
   # @see RSpec::Core::Formatters::Protocol#close
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/base_formatter.rb:50
   def close(_notification); end
 
-  # Returns the value of attribute example_group.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/base_formatter.rb:17
   def example_group; end
 
-  # Sets the attribute example_group
-  #
-  # @param value the value to set the attribute example_group to.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/base_formatter.rb:17
   def example_group=(_arg0); end
 
   # @api public
+  #
   # @param notification [GroupNotification] containing example_group
   #   subclass of `RSpec::Core::ExampleGroup`
   # @see RSpec::Core::Formatters::Protocol#example_group_started
@@ -5169,12 +4158,11 @@ class RSpec::Core::Formatters::BaseFormatter
   # pkg:gem/rspec-core#lib/rspec/core/formatters/base_formatter.rb:42
   def example_group_started(notification); end
 
-  # Returns the value of attribute output.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/base_formatter.rb:18
   def output; end
 
   # @api public
+  #
   # @param notification [StartNotification]
   # @see RSpec::Core::Formatters::Protocol#start
   #
@@ -5202,19 +4190,21 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/base_text_formatter.rb:12
 class RSpec::Core::Formatters::BaseTextFormatter < ::RSpec::Core::Formatters::BaseFormatter
+  # @api public
+  #
   # Invoked at the end of a suite run. Allows the formatter to do any
   # tidying up, but be aware that formatter output streams may be used
   # elsewhere so don't actually close them.
   #
-  # @api public
   # @param _notification [NullNotification] (Ignored)
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/base_text_formatter.rb:65
   def close(_notification); end
 
+  # @api public
+  #
   # Dumps detailed information about each example failure.
   #
-  # @api public
   # @param notification [NullNotification]
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/base_text_formatter.rb:30
@@ -5225,19 +4215,21 @@ class RSpec::Core::Formatters::BaseTextFormatter < ::RSpec::Core::Formatters::Ba
   # pkg:gem/rspec-core#lib/rspec/core/formatters/base_text_formatter.rb:47
   def dump_pending(notification); end
 
+  # @api public
+  #
   # This method is invoked after the dumping of examples and failures.
   # Each parameter is assigned to a corresponding attribute.
   #
-  # @api public
   # @param summary [SummaryNotification] containing duration,
   #   example_count, failure_count and pending_count
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/base_text_formatter.rb:42
   def dump_summary(summary); end
 
+  # @api public
+  #
   # Used by the reporter to send messages to the output stream.
   #
-  # @api public
   # @param notification [MessageNotification] containing message
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/base_text_formatter.rb:21
@@ -5256,13 +4248,10 @@ end
 # method calls, we try to minimize the number of DRb calls for perf reasons,
 # opting to communicate only at the start and the end of the run, rather than
 # after each example.
-#
 # @private
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/bisect_drb_formatter.rb:15
 class RSpec::Core::Formatters::BisectDRbFormatter < ::RSpec::Core::Formatters::BaseBisectFormatter
-  # @return [BisectDRbFormatter] a new instance of BisectDRbFormatter
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/bisect_drb_formatter.rb:16
   def initialize(_output); end
 
@@ -5295,8 +4284,8 @@ module RSpec::Core::Formatters::ConsoleCodes
   # only apply the control code if `RSpec.configuration.color_enabled?`
   # returns true.
   #
-  # @param code_or_symbol [Symbol, Fixnum] the desired control code
   # @param text [String] the text to wrap
+  # @param code_or_symbol [Symbol, Fixnum] the desired control code
   # @return [String] the wrapped text
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/console_codes.rb:66
@@ -5321,8 +4310,8 @@ module RSpec::Core::Formatters::ConsoleCodes
     # only apply the control code if `RSpec.configuration.color_enabled?`
     # returns true.
     #
-    # @param code_or_symbol [Symbol, Fixnum] the desired control code
     # @param text [String] the text to wrap
+    # @param code_or_symbol [Symbol, Fixnum] the desired control code
     # @return [String] the wrapped text
     #
     # pkg:gem/rspec-core#lib/rspec/core/formatters/console_codes.rb:66
@@ -5344,13 +4333,9 @@ RSpec::Core::Formatters::ConsoleCodes::VT100_CODE_VALUES = T.let(T.unsafe(nil), 
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:7
 class RSpec::Core::Formatters::DeprecationFormatter
-  # @return [DeprecationFormatter] a new instance of DeprecationFormatter
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:12
   def initialize(deprecation_stream, summary_stream); end
 
-  # Returns the value of attribute count.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:10
   def count; end
 
@@ -5360,24 +4345,18 @@ class RSpec::Core::Formatters::DeprecationFormatter
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:44
   def deprecation_message_for(data); end
 
-  # Returns the value of attribute deprecation_stream.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:10
   def deprecation_stream; end
 
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:40
   def deprecation_summary(_notification); end
 
-  # Returns the value of attribute deprecation_stream.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:18
   def output; end
 
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:20
   def printer; end
 
-  # Returns the value of attribute summary_stream.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:10
   def summary_stream; end
 end
@@ -5389,18 +4368,12 @@ RSpec::Core::Formatters::DeprecationFormatter::DEPRECATION_STREAM_NOTICE = T.let
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:135
 class RSpec::Core::Formatters::DeprecationFormatter::DelayedPrinter
-  # @return [DelayedPrinter] a new instance of DelayedPrinter
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:140
   def initialize(deprecation_stream, summary_stream, deprecation_formatter); end
 
-  # Returns the value of attribute deprecation_formatter.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:138
   def deprecation_formatter; end
 
-  # Returns the value of attribute deprecation_stream.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:138
   def deprecation_stream; end
 
@@ -5416,8 +4389,6 @@ class RSpec::Core::Formatters::DeprecationFormatter::DelayedPrinter
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:155
   def stash_deprecation_message(deprecation_message); end
 
-  # Returns the value of attribute summary_stream.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:138
   def summary_stream; end
 end
@@ -5425,14 +4396,11 @@ end
 # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:136
 RSpec::Core::Formatters::DeprecationFormatter::DelayedPrinter::TOO_MANY_USES_LIMIT = T.let(T.unsafe(nil), Integer)
 
-# Wraps a File object and provides file-specific operations.
-#
 # @private
+# Wraps a File object and provides file-specific operations.
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:196
 class RSpec::Core::Formatters::DeprecationFormatter::FileStream
-  # @return [FileStream] a new instance of FileStream
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:197
   def initialize(file); end
 
@@ -5447,8 +4415,6 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:94
 class RSpec::Core::Formatters::DeprecationFormatter::GeneratedDeprecationMessage < ::Struct
-  # @return [GeneratedDeprecationMessage] a new instance of GeneratedDeprecationMessage
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:95
   def initialize(data); end
 
@@ -5458,18 +4424,9 @@ class RSpec::Core::Formatters::DeprecationFormatter::GeneratedDeprecationMessage
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:107
   def too_many_warnings_message; end
 
-  # Returns the value of attribute type
-  #
-  # @return [Object] the current value of type
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:94
   def type; end
 
-  # Sets the attribute type
-  #
-  # @param value [Object] the value to set the attribute type to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:94
   def type=(_); end
 
@@ -5495,18 +4452,12 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:113
 class RSpec::Core::Formatters::DeprecationFormatter::ImmediatePrinter
-  # @return [ImmediatePrinter] a new instance of ImmediatePrinter
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:116
   def initialize(deprecation_stream, summary_stream, deprecation_formatter); end
 
-  # Returns the value of attribute deprecation_formatter.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:114
   def deprecation_formatter; end
 
-  # Returns the value of attribute deprecation_stream.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:114
   def deprecation_stream; end
 
@@ -5516,8 +4467,6 @@ class RSpec::Core::Formatters::DeprecationFormatter::ImmediatePrinter
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:123
   def print_deprecation_message(data); end
 
-  # Returns the value of attribute summary_stream.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:114
   def summary_stream; end
 end
@@ -5525,14 +4474,11 @@ end
 # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:52
 RSpec::Core::Formatters::DeprecationFormatter::RAISE_ERROR_CONFIG_NOTICE = T.let(T.unsafe(nil), String)
 
-# Not really a stream, but is usable in place of one.
-#
 # @private
+# Not really a stream, but is usable in place of one.
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:184
 class RSpec::Core::Formatters::DeprecationFormatter::RaiseErrorStream
-  # @raise [DeprecationError]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:185
   def puts(message); end
 
@@ -5544,8 +4490,6 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:66
 class RSpec::Core::Formatters::DeprecationFormatter::SpecifiedDeprecationMessage < ::Struct
-  # @return [SpecifiedDeprecationMessage] a new instance of SpecifiedDeprecationMessage
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:67
   def initialize(data); end
 
@@ -5555,18 +4499,9 @@ class RSpec::Core::Formatters::DeprecationFormatter::SpecifiedDeprecationMessage
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:76
   def too_many_warnings_message; end
 
-  # Returns the value of attribute type
-  #
-  # @return [Object] the current value of type
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:66
   def type; end
 
-  # Sets the attribute type
-  #
-  # @param value [Object] the value to set the attribute type to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/deprecation_formatter.rb:66
   def type=(_); end
 
@@ -5603,8 +4538,6 @@ RSpec::Core::Formatters::DeprecationFormatter::TOO_MANY_WARNINGS_NOTICE = T.let(
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/documentation_formatter.rb:8
 class RSpec::Core::Formatters::DocumentationFormatter < ::RSpec::Core::Formatters::BaseTextFormatter
-  # @return [DocumentationFormatter] a new instance of DocumentationFormatter
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/documentation_formatter.rb:12
   def initialize(output); end
 
@@ -5654,8 +4587,6 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:11
 class RSpec::Core::Formatters::ExceptionPresenter
-  # @return [ExceptionPresenter] a new instance of ExceptionPresenter
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:16
   def initialize(exception, example, options = T.unsafe(nil)); end
 
@@ -5665,18 +4596,12 @@ class RSpec::Core::Formatters::ExceptionPresenter
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:33
   def colorized_message_lines(colorizer = T.unsafe(nil)); end
 
-  # Returns the value of attribute description.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:12
   def description; end
 
-  # Returns the value of attribute example.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:12
   def example; end
 
-  # Returns the value of attribute exception.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:12
   def exception; end
 
@@ -5702,16 +4627,13 @@ class RSpec::Core::Formatters::ExceptionPresenter
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:226
   def add_shared_group_lines(lines, colorizer); end
 
-  # Returns the value of attribute backtrace_formatter.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:12
   def backtrace_formatter; end
 
-  # Returns the value of attribute detail_formatter.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:12
   def detail_formatter; end
 
+  # for 1.8.7
   # :nocov:
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:287
@@ -5720,6 +4642,7 @@ class RSpec::Core::Formatters::ExceptionPresenter
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:120
   def encoded_string(string); end
 
+  # for 1.8.7
   # :nocov:
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:116
@@ -5739,8 +4662,6 @@ class RSpec::Core::Formatters::ExceptionPresenter
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:185
   def exception_message_string(exception); end
 
-  # Returns the value of attribute extra_detail_formatter.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:12
   def extra_detail_formatter; end
 
@@ -5765,8 +4686,6 @@ class RSpec::Core::Formatters::ExceptionPresenter
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:134
   def indent_lines(lines, failure_number); end
 
-  # Returns the value of attribute message_color.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:12
   def message_color; end
 
@@ -5774,17 +4693,14 @@ class RSpec::Core::Formatters::ExceptionPresenter
   def read_failed_lines; end
 end
 
+# @private
 # Configuring the `ExceptionPresenter` with the right set of options to handle
 # pending vs failed vs skipped and aggregated (or not) failures is not simple.
 # This class takes care of building an appropriate `ExceptionPresenter` for the
 # provided example.
 #
-# @private
-#
 # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:308
 class RSpec::Core::Formatters::ExceptionPresenter::Factory
-  # @return [Factory] a new instance of Factory
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:315
   def initialize(example); end
 
@@ -5796,8 +4712,6 @@ class RSpec::Core::Formatters::ExceptionPresenter::Factory
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:370
   def multiple_exception_summarizer(exception, prior_detail_formatter, color); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:366
   def multiple_exceptions_error?(exception); end
 
@@ -5818,8 +4732,6 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:424
 class RSpec::Core::Formatters::ExceptionPresenter::Factory::CommonBacktraceTruncater
-  # @return [CommonBacktraceTruncater] a new instance of CommonBacktraceTruncater
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:425
   def initialize(parent); end
 
@@ -5827,10 +4739,9 @@ class RSpec::Core::Formatters::ExceptionPresenter::Factory::CommonBacktraceTrunc
   def with_truncated_backtrace(child); end
 end
 
+# @private
 # Used to prevent a confusing backtrace from showing up from the `aggregate_failures`
 # block declared for `:aggregate_failures` metadata.
-#
-# @private
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:417
 module RSpec::Core::Formatters::ExceptionPresenter::Factory::EmptyBacktraceFormatter
@@ -5864,28 +4775,24 @@ class RSpec::Core::Formatters::FailureListFormatter < ::RSpec::Core::Formatters:
   def message(_message); end
 end
 
+# @api private
 # Formatter for providing message output as a fallback when no other
 # profiler implements #message
 #
-# @api private
-#
 # pkg:gem/rspec-core#lib/rspec/core/formatters/fallback_message_formatter.rb:7
 class RSpec::Core::Formatters::FallbackMessageFormatter
-  # @api private
-  # @return [FallbackMessageFormatter] a new instance of FallbackMessageFormatter
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/fallback_message_formatter.rb:10
   def initialize(output); end
 
+  # @api public
+  #
   # Used by the reporter to send messages to the output stream.
   #
-  # @api public
   # @param notification [MessageNotification] containing message
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/fallback_message_formatter.rb:22
   def message(notification); end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/fallback_message_formatter.rb:15
@@ -5897,47 +4804,52 @@ end
 # pkg:gem/rspec-core#lib/rspec/core/formatters/helpers.rb:7
 module RSpec::Core::Formatters::Helpers
   class << self
+    # @api private
+    #
     # Formats seconds into a human-readable string.
     #
-    # @api private
-    # @example
-    #   format_duration(1) #=>  "1 minute 1 second"
-    #   format_duration(135.14) #=> "2 minutes 15.14 seconds"
     # @param duration [Float, Fixnum] in seconds
     # @return [String] human-readable time
+    #
+    # @example
+    #    format_duration(1) #=>  "1 minute 1 second"
+    #    format_duration(135.14) #=> "2 minutes 15.14 seconds"
     #
     # pkg:gem/rspec-core#lib/rspec/core/formatters/helpers.rb:24
     def format_duration(duration); end
 
+    # @api private
+    #
     # Formats seconds to have 5 digits of precision with trailing zeros
     # removed if the number is less than 1 or with 2 digits of precision if
     # the number is greater than zero.
     #
+    # @param float [Float]
+    # @return [String] formatted float
+    #
+    # @example
+    #    format_seconds(0.000006) #=> "0.00001"
+    #    format_seconds(0.020000) #=> "0.02"
+    #    format_seconds(1.00000000001) #=> "1"
+    #
     # The precision used is set in {Helpers::SUB_SECOND_PRECISION} and
     # {Helpers::DEFAULT_PRECISION}.
     #
-    # @api private
-    # @example
-    #   format_seconds(0.000006) #=> "0.00001"
-    #   format_seconds(0.020000) #=> "0.02"
-    #   format_seconds(1.00000000001) #=> "1"
-    # @param float [Float]
-    # @return [String] formatted float
     # @see #strip_trailing_zeroes
     #
     # pkg:gem/rspec-core#lib/rspec/core/formatters/helpers.rb:60
     def format_seconds(float, precision = T.unsafe(nil)); end
 
-    # Given a list of example ids, organizes them into a compact, ordered list.
-    #
     # @api private
+    # Given a list of example ids, organizes them into a compact, ordered list.
     #
     # pkg:gem/rspec-core#lib/rspec/core/formatters/helpers.rb:102
     def organize_ids(ids); end
 
+    # @api private
+    #
     # Pluralize a word based on a count.
     #
-    # @api private
     # @param count [Fixnum] number of objects
     # @param string [String] word to be pluralized
     # @return [String] pluralized word
@@ -5947,12 +4859,13 @@ module RSpec::Core::Formatters::Helpers
 
     private
 
+    # @api private
+    #
     # Remove trailing zeros from a string.
     #
     # Only remove trailing zeros after a decimal place.
     # see: http://rubular.com/r/ojtTydOgpn
     #
-    # @api private
     # @param string [String] string with trailing zeros
     # @return [String] string with trailing zeros removed
     #
@@ -5975,8 +4888,6 @@ RSpec::Core::Formatters::Helpers::SUB_SECOND_PRECISION = T.let(T.unsafe(nil), In
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/html_formatter.rb:8
 class RSpec::Core::Formatters::HtmlFormatter < ::RSpec::Core::Formatters::BaseFormatter
-  # @return [HtmlFormatter] a new instance of HtmlFormatter
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/html_formatter.rb:13
   def initialize(output); end
 
@@ -6036,7 +4947,7 @@ class RSpec::Core::Formatters::HtmlPrinter
   include ::ActiveSupport::CoreExt::ERBUtil
   include ::ActiveSupport::CoreExt::ERBUtilPrivate
 
-  # @return [HtmlPrinter] a new instance of HtmlPrinter
+  # For the #h method.
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/html_printer.rb:9
   def initialize(output); end
@@ -6102,8 +5013,6 @@ RSpec::Core::Formatters::HtmlPrinter::REPORT_HEADER = T.let(T.unsafe(nil), Strin
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/json_formatter.rb:8
 class RSpec::Core::Formatters::JsonFormatter < ::RSpec::Core::Formatters::BaseFormatter
-  # @return [JsonFormatter] a new instance of JsonFormatter
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/json_formatter.rb:13
   def initialize(output); end
 
@@ -6129,8 +5038,6 @@ class RSpec::Core::Formatters::JsonFormatter < ::RSpec::Core::Formatters::BaseFo
   # pkg:gem/rspec-core#lib/rspec/core/formatters/json_formatter.rb:20
   def message(notification); end
 
-  # Returns the value of attribute output_hash.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/json_formatter.rb:11
   def output_hash; end
 
@@ -6146,58 +5053,50 @@ class RSpec::Core::Formatters::JsonFormatter < ::RSpec::Core::Formatters::BaseFo
   def format_example(example); end
 end
 
+# @api private
+#
 # `RSpec::Core::Formatters::Loader` is an internal class for
 # managing formatters used by a particular configuration. It is
 # not expected to be used directly, but only through the configuration
 # interface.
 #
-# @api private
-#
 # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:96
 class RSpec::Core::Formatters::Loader
   # @api private
-  # @return [Loader] a new instance of Loader
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:105
   def initialize(reporter); end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:144
   def add(formatter_to_use, *paths); end
 
-  # @api private
   # @return [String] the default formatter to setup, defaults to `progress`
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:118
   def default_formatter; end
 
-  # @api private
   # @return [String] the default formatter to setup, defaults to `progress`
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:118
   def default_formatter=(_arg0); end
 
-  # @api private
   # @return [Array] the loaded formatters
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:112
   def formatters; end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:121
   def prepare_default(output_stream, deprecation_stream); end
 
-  # @api private
   # @return [Reporter] the reporter
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:115
   def reporter; end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:126
@@ -6205,110 +5104,76 @@ class RSpec::Core::Formatters::Loader
 
   private
 
-  # @api private
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:211
   def built_in_formatter(key); end
 
-  # @api private
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:234
   def custom_formatter(formatter_ref); end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:195
   def duplicate_formatter_exists?(new_formatter); end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:207
   def existing_formatter_implements?(notification); end
 
-  # @api private
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:181
   def find_formatter(formatter_to_use); end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:202
   def has_matching_output?(formatter, new_formatter); end
 
-  # @api private
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:228
   def notifications_for(formatter_class); end
 
-  # @api private
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:269
   def open_stream(path_or_wrapper); end
 
-  # @api private
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:250
   def path_for(const_ref); end
 
-  # @api private
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:188
   def register(formatter, notifications); end
 
-  # @api private
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:246
   def string_const?(str); end
 
   # activesupport/lib/active_support/inflector/methods.rb, line 48
   #
-  # @api private
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:259
   def underscore(camel_cased_word); end
 
-  # @api private
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:254
   def underscore_with_fix_for_non_standard_rspec_naming(string); end
 
   class << self
-    # Internal formatters are stored here when loaded.
-    #
     # @api private
+    #
+    # Internal formatters are stored here when loaded.
     #
     # pkg:gem/rspec-core#lib/rspec/core/formatters.rb:100
     def formatters; end
   end
 end
 
-# Formatter for providing profile output.
-#
 # @api private
+# Formatter for providing profile output.
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/profile_formatter.rb:8
 class RSpec::Core::Formatters::ProfileFormatter
-  # @api private
-  # @return [ProfileFormatter] a new instance of ProfileFormatter
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/profile_formatter.rb:11
   def initialize(output); end
 
+  # @api public
+  #
   # This method is invoked after the dumping the summary if profiling is
   # enabled.
   #
-  # @api public
   # @param profile [ProfileNotification] containing duration,
   #   slowest_examples and slowest_example_groups
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/profile_formatter.rb:25
   def dump_profile(profile); end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/profile_formatter.rb:16
@@ -6316,23 +5181,15 @@ class RSpec::Core::Formatters::ProfileFormatter
 
   private
 
-  # @api private
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/profile_formatter.rb:62
   def bold(text); end
 
-  # @api private
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/profile_formatter.rb:44
   def dump_profile_slowest_example_groups(profile); end
 
-  # @api private
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/profile_formatter.rb:32
   def dump_profile_slowest_examples(profile); end
 
-  # @api private
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/profile_formatter.rb:57
   def format_caller(caller_info); end
 end
@@ -6358,38 +5215,26 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/snippet_extractor.rb:5
 class RSpec::Core::Formatters::SnippetExtractor
-  # @return [SnippetExtractor] a new instance of SnippetExtractor
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/snippet_extractor.rb:35
   def initialize(source, beginning_line_number, max_line_count = T.unsafe(nil)); end
 
-  # Returns the value of attribute beginning_line_number.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/snippet_extractor.rb:24
   def beginning_line_number; end
 
   # pkg:gem/rspec-core#lib/rspec/core/formatters/snippet_extractor.rb:41
   def expression_lines; end
 
-  # Returns the value of attribute max_line_count.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/snippet_extractor.rb:24
   def max_line_count; end
 
-  # Returns the value of attribute source.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/snippet_extractor.rb:24
   def source; end
 
   private
 
-  # @raise [NoExpressionAtLineError]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/snippet_extractor.rb:95
   def expression_node; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/snippet_extractor.rb:107
   def expression_outmost_node?(node); end
 
@@ -6411,16 +5256,12 @@ class RSpec::Core::Formatters::SnippetExtractor
     # pkg:gem/rspec-core#lib/rspec/core/formatters/snippet_extractor.rb:26
     def extract_expression_lines_at(file_path, beginning_line_number, max_line_count = T.unsafe(nil)); end
 
-    # @raise [NoSuchLineError]
-    #
     # pkg:gem/rspec-core#lib/rspec/core/formatters/snippet_extractor.rb:9
     def extract_line_at(file_path, line_number); end
 
     # pkg:gem/rspec-core#lib/rspec/core/formatters/snippet_extractor.rb:128
     def least_indentation_from(lines); end
 
-    # @raise [NoSuchFileError]
-    #
     # pkg:gem/rspec-core#lib/rspec/core/formatters/snippet_extractor.rb:16
     def source_from_file(path); end
   end
@@ -6435,15 +5276,12 @@ class RSpec::Core::Formatters::SnippetExtractor::NoSuchFileError < ::StandardErr
 # pkg:gem/rspec-core#lib/rspec/core/formatters/snippet_extractor.rb:7
 class RSpec::Core::Formatters::SnippetExtractor::NoSuchLineError < ::StandardError; end
 
+# @private
 # Provides terminal syntax highlighting of code snippets
 # when coderay is available.
 #
-# @private
-#
 # pkg:gem/rspec-core#lib/rspec/core/formatters/syntax_highlighter.rb:7
 class RSpec::Core::Formatters::SyntaxHighlighter
-  # @return [SyntaxHighlighter] a new instance of SyntaxHighlighter
-  #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/syntax_highlighter.rb:8
   def initialize(configuration); end
 
@@ -6489,10 +5327,9 @@ module RSpec::Core::Formatters::SyntaxHighlighter::NoSyntaxHighlightingImplement
   end
 end
 
+# @private
 # Not sure why, but our code above (and/or coderay itself) does not work
 # on Windows, so we disable the feature on Windows.
-#
-# @private
 #
 # pkg:gem/rspec-core#lib/rspec/core/formatters/syntax_highlighter.rb:87
 RSpec::Core::Formatters::SyntaxHighlighter::WindowsImplementation = RSpec::Core::Formatters::SyntaxHighlighter::NoSyntaxHighlightingImplementation
@@ -6500,7 +5337,6 @@ RSpec::Core::Formatters::SyntaxHighlighter::WindowsImplementation = RSpec::Core:
 # Mixin that makes the including class imitate a hash for backwards
 # compatibility. The including class should use `attr_accessor` to
 # declare attributes.
-#
 # @private
 #
 # pkg:gem/rspec-core#lib/rspec/core/metadata.rb:349
@@ -6998,8 +5834,6 @@ module RSpec::Core::HashImitatable
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/metadata.rb:414
   def directly_supports_attribute?(name); end
 
@@ -7019,8 +5853,6 @@ module RSpec::Core::HashImitatable
   def set_value(name, value); end
 
   class << self
-    # @private
-    #
     # pkg:gem/rspec-core#lib/rspec/core/metadata.rb:350
     def included(klass); end
   end
@@ -7046,6 +5878,32 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:9
 module RSpec::Core::Hooks
+  # @api public
+  # @overload after(&block)
+  # @overload after(scope, &block)
+  #   @param scope [Symbol] `:example`, `:context`, or `:suite` (defaults to
+  #     `:example`)
+  # @overload after(scope, *conditions, &block)
+  #   @param scope [Symbol] `:example`, `:context`, or `:suite` (defaults to
+  #     `:example`)
+  #   @param conditions [Array<Symbol>, Hash] constrains this hook to
+  #     examples matching these conditions e.g.
+  #     `after(:example, :ui => true) { ... }` will only run with examples
+  #     or groups declared with `:ui => true`. Symbols will be transformed
+  #     into hash entries with `true` values.
+  # @overload after(conditions, &block)
+  #   @param conditions [Hash]
+  #     constrains this hook to examples matching these conditions e.g.
+  #     `after(:example, :ui => true) { ... }` will only run with examples
+  #     or groups declared with `:ui => true`.
+  #
+  # @see #before
+  # @see #around
+  # @see ExampleGroup
+  # @see SharedContext
+  # @see SharedExampleGroup
+  # @see Configuration
+  #
   # Declare a block of code to be run after each example (using `:example`)
   # or once after all examples n the context (using `:context`). See
   # {#before} for more information about ordering.
@@ -7078,22 +5936,11 @@ module RSpec::Core::Hooks
   # Also `around` hooks will run after any `after` example hooks are
   # invoked but before any `after` context hooks.
   #
-  # @api public
-  # @note The `:suite` scope is only supported for hooks registered on
-  #   `RSpec.configuration` since they exist independently of any
-  #   example or example group.
   # @note The `:example` and `:context` scopes are also available as
-  #   `:each` and `:all`, respectively. Use whichever you prefer.
-  # @overload after
-  # @overload after
-  # @overload after
-  # @overload after
-  # @see #around
-  # @see #before
-  # @see Configuration
-  # @see ExampleGroup
-  # @see SharedContext
-  # @see SharedExampleGroup
+  #       `:each` and `:all`, respectively. Use whichever you prefer.
+  # @note The `:suite` scope is only supported for hooks registered on
+  #       `RSpec.configuration` since they exist independently of any
+  #       example or example group.
   #
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:277
   def after(*args, &block); end
@@ -7106,180 +5953,41 @@ module RSpec::Core::Hooks
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:287
   def append_after(*args, &block); end
 
-  # Declare a block of code to be run before each example (using `:example`)
-  # or once before any example (using `:context`). These are usually
-  # declared directly in the {ExampleGroup} to which they apply, but they
-  # can also be shared across multiple groups.
-  #
-  # You can also use `before(:suite)` to run a block of code before any
-  # example groups are run. This should be declared in {RSpec.configure}.
-  #
-  # Instance variables declared in `before(:example)` or `before(:context)`
-  # are accessible within each example.
-  #
-  # ### Order
-  #
-  # `before` hooks are stored in three scopes, which are run in order:
-  # `:suite`, `:context`, and `:example`. They can also be declared in
-  # several different places: `RSpec.configure`, a parent group, the current
-  # group. They are run in the following order:
-  #
-  #     before(:suite)    # Declared in RSpec.configure.
-  #     before(:context)  # Declared in RSpec.configure.
-  #     before(:context)  # Declared in a parent group.
-  #     before(:context)  # Declared in the current group.
-  #     before(:example)  # Declared in RSpec.configure.
-  #     before(:example)  # Declared in a parent group.
-  #     before(:example)  # Declared in the current group.
-  #
-  # If more than one `before` is declared within any one example group, they
-  # are run in the order in which they are declared. Any `around` hooks will
-  # execute after `before` context hooks but before any `before` example
-  # hook regardless of where they are declared.
-  #
-  # ### Conditions
-  #
-  # When you add a conditions hash to `before(:example)` or
-  # `before(:context)`, RSpec will only apply that hook to groups or
-  # examples that match the conditions. e.g.
-  #
-  #     RSpec.configure do |config|
-  #       config.before(:example, :authorized => true) do
-  #         log_in_as :authorized_user
-  #       end
-  #     end
-  #
-  #     RSpec.describe Something, :authorized => true do
-  #       # The before hook will run in before each example in this group.
-  #     end
-  #
-  #     RSpec.describe SomethingElse do
-  #       it "does something", :authorized => true do
-  #         # The before hook will run before this example.
-  #       end
-  #
-  #       it "does something else" do
-  #         # The hook will not run before this example.
-  #       end
-  #     end
-  #
-  # Note that filtered config `:context` hooks can still be applied
-  # to individual examples that have matching metadata. Just like
-  # Ruby's object model is that every object has a singleton class
-  # which has only a single instance, RSpec's model is that every
-  # example has a singleton example group containing just the one
-  # example.
-  #
-  # ### Warning: `before(:suite, :with => :conditions)`
-  #
-  # The conditions hash is used to match against specific examples. Since
-  # `before(:suite)` is not run in relation to any specific example or
-  # group, conditions passed along with `:suite` are effectively ignored.
-  #
-  # ### Exceptions
-  #
-  # When an exception is raised in a `before` block, RSpec skips any
-  # subsequent `before` blocks and the example, but runs all of the
-  # `after(:example)` and `after(:context)` hooks.
-  #
-  # ### Warning: implicit before blocks
-  #
-  # `before` hooks can also be declared in shared contexts which get
-  # included implicitly either by you or by extension libraries. Since
-  # RSpec runs these in the order in which they are declared within each
-  # scope, load order matters, and can lead to confusing results when one
-  # before block depends on state that is prepared in another before block
-  # that gets run later.
-  #
-  # ### Warning: `before(:context)`
-  #
-  # It is very tempting to use `before(:context)` to speed things up, but we
-  # recommend that you avoid this as there are a number of gotchas, as well
-  # as things that simply don't work.
-  #
-  # #### Context
-  #
-  # `before(:context)` is run in an example that is generated to provide
-  # group context for the block.
-  #
-  # #### Instance variables
-  #
-  # Instance variables declared in `before(:context)` are shared across all
-  # the examples in the group. This means that each example can change the
-  # state of a shared object, resulting in an ordering dependency that can
-  # make it difficult to reason about failures.
-  #
-  # #### Unsupported RSpec constructs
-  #
-  # RSpec has several constructs that reset state between each example
-  # automatically. These are not intended for use from within
-  # `before(:context)`:
-  #
-  #   * `let` declarations
-  #   * `subject` declarations
-  #   * Any mocking, stubbing or test double declaration
-  #
-  # ### other frameworks
-  #
-  # Mock object frameworks and database transaction managers (like
-  # ActiveRecord) are typically designed around the idea of setting up
-  # before an example, running that one example, and then tearing down. This
-  # means that mocks and stubs can (sometimes) be declared in
-  # `before(:context)`, but get torn down before the first real example is
-  # ever run.
-  #
-  # You _can_ create database-backed model objects in a `before(:context)`
-  # in rspec-rails, but it will not be wrapped in a transaction for you, so
-  # you are on your own to clean up in an `after(:context)` block.
-  #
-  # @api public
-  # @example before(:context) declared in an {ExampleGroup}
-  #   RSpec.describe Parser do
-  #   before(:context) do
-  #   File.open(file_to_parse, 'w') do |f|
-  #   f.write <<-CONTENT
-  #   stuff in the file
-  #   CONTENT
-  #   end
-  #   end
-  #
-  #   it "parses the file" do
-  #   Parser.parse(file_to_parse)
-  #   end
-  #
-  #   after(:context) do
-  #   File.delete(file_to_parse)
-  #   end
-  #   end
-  # @example before(:example) declared in an {ExampleGroup}
-  #   RSpec.describe Thing do
-  #   before(:example) do
-  #   @thing = Thing.new
-  #   end
-  #
-  #   it "does something" do
-  #   # Here you can access @thing.
-  #   end
-  #   end
-  # @note The `:example` and `:context` scopes are also available as
-  #   `:each` and `:all`, respectively. Use whichever you prefer.
-  # @note The `:suite` scope is only supported for hooks registered on
-  #   `RSpec.configuration` since they exist independently of any
-  #   example or example group.
-  # @overload before
-  # @overload before
-  # @overload before
-  # @overload before
-  # @see #after
-  # @see #around
-  # @see Configuration
-  # @see ExampleGroup
-  # @see SharedContext
-  # @see SharedExampleGroup
-  #
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:204
   def append_before(*args, &block); end
 
+  # @api public
+  # @overload around(&block)
+  # @overload around(scope, &block)
+  #   @param scope [Symbol] `:example` (defaults to `:example`)
+  #     present for syntax parity with `before` and `after`, but
+  #     `:example`/`:each` is the only supported value.
+  # @overload around(scope, *conditions, &block)
+  #   @param scope [Symbol] `:example` (defaults to `:example`)
+  #     present for syntax parity with `before` and `after`, but
+  #     `:example`/`:each` is the only supported value.
+  #   @param conditions [Array<Symbol>, Hash] constrains this hook to
+  #     examples matching these conditions e.g.
+  #     `around(:example, :ui => true) { ... }` will only run with examples
+  #     or groups declared with `:ui => true`. Symbols will be transformed
+  #     into hash entries with `true` values.
+  # @overload around(conditions, &block)
+  #   @param conditions [Hash] constrains this hook to examples matching
+  #     these conditions e.g. `around(:example, :ui => true) { ... }` will
+  #     only run with examples or groups declared with `:ui => true`.
+  #
+  # @yield [Example] the example to run
+  #
+  # @note the syntax of `around` is similar to that of `before` and `after`
+  #   but the semantics are quite different. `before` and `after` hooks are
+  #   run in the context of the examples with which they are associated,
+  #   whereas `around` hooks are actually responsible for running the
+  #   examples. Consequently, `around` hooks do not have direct access to
+  #   resources that are made available within the examples and their
+  #   associated `before` and `after` hooks.
+  #
+  # @note `:example`/`:each` is the only supported scope.
+  #
   # Declare a block of code, parts of which will be run before and parts
   # after the example. It is your responsibility to run the example:
   #
@@ -7307,24 +6015,36 @@ module RSpec::Core::Hooks
   #
   # They are not a synonym for `before`/`after`.
   #
-  # @api public
-  # @note `:example`/`:each` is the only supported scope.
-  # @note the syntax of `around` is similar to that of `before` and `after`
-  #   but the semantics are quite different. `before` and `after` hooks are
-  #   run in the context of the examples with which they are associated,
-  #   whereas `around` hooks are actually responsible for running the
-  #   examples. Consequently, `around` hooks do not have direct access to
-  #   resources that are made available within the examples and their
-  #   associated `before` and `after` hooks.
-  # @overload around
-  # @overload around
-  # @overload around
-  # @overload around
-  # @yield [Example] the example to run
-  #
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:349
   def around(*args, &block); end
 
+  # @api public
+  #
+  # @overload before(&block)
+  # @overload before(scope, &block)
+  #   @param scope [Symbol] `:example`, `:context`, or `:suite`
+  #     (defaults to `:example`)
+  # @overload before(scope, *conditions, &block)
+  #   @param scope [Symbol] `:example`, `:context`, or `:suite`
+  #     (defaults to `:example`)
+  #   @param conditions [Array<Symbol>, Hash] constrains this hook to
+  #     examples matching these conditions e.g.
+  #     `before(:example, :ui => true) { ... }` will only run with examples
+  #     or groups declared with `:ui => true`. Symbols will be transformed
+  #     into hash entries with `true` values.
+  # @overload before(conditions, &block)
+  #   @param conditions [Hash]
+  #     constrains this hook to examples matching these conditions e.g.
+  #     `before(:example, :ui => true) { ... }` will only run with examples
+  #     or groups declared with `:ui => true`.
+  #
+  # @see #after
+  # @see #around
+  # @see ExampleGroup
+  # @see SharedContext
+  # @see SharedExampleGroup
+  # @see Configuration
+  #
   # Declare a block of code to be run before each example (using `:example`)
   # or once before any example (using `:context`). These are usually
   # declared directly in the {ExampleGroup} to which they apply, but they
@@ -7451,112 +6171,53 @@ module RSpec::Core::Hooks
   # in rspec-rails, but it will not be wrapped in a transaction for you, so
   # you are on your own to clean up in an `after(:context)` block.
   #
-  # @api public
-  # @example before(:context) declared in an {ExampleGroup}
-  #
-  #   RSpec.describe Parser do
-  #   before(:context) do
-  #   File.open(file_to_parse, 'w') do |f|
-  #   f.write <<-CONTENT
-  #   stuff in the file
-  #   CONTENT
-  #   end
-  #   end
-  #
-  #   it "parses the file" do
-  #   Parser.parse(file_to_parse)
-  #   end
-  #
-  #   after(:context) do
-  #   File.delete(file_to_parse)
-  #   end
-  #   end
   # @example before(:example) declared in an {ExampleGroup}
   #
-  #   RSpec.describe Thing do
-  #   before(:example) do
-  #   @thing = Thing.new
-  #   end
+  #     RSpec.describe Thing do
+  #       before(:example) do
+  #         @thing = Thing.new
+  #       end
   #
-  #   it "does something" do
-  #   # Here you can access @thing.
-  #   end
-  #   end
+  #       it "does something" do
+  #         # Here you can access @thing.
+  #       end
+  #     end
+  #
+  # @example before(:context) declared in an {ExampleGroup}
+  #
+  #     RSpec.describe Parser do
+  #       before(:context) do
+  #         File.open(file_to_parse, 'w') do |f|
+  #           f.write <<-CONTENT
+  #             stuff in the file
+  #           CONTENT
+  #         end
+  #       end
+  #
+  #       it "parses the file" do
+  #         Parser.parse(file_to_parse)
+  #       end
+  #
+  #       after(:context) do
+  #         File.delete(file_to_parse)
+  #       end
+  #     end
+  #
   # @note The `:example` and `:context` scopes are also available as
-  #   `:each` and `:all`, respectively. Use whichever you prefer.
+  #       `:each` and `:all`, respectively. Use whichever you prefer.
   # @note The `:suite` scope is only supported for hooks registered on
-  #   `RSpec.configuration` since they exist independently of any
-  #   example or example group.
-  # @overload before
-  # @overload before
-  # @overload before
-  # @overload before
-  # @see #after
-  # @see #around
-  # @see Configuration
-  # @see ExampleGroup
-  # @see SharedContext
-  # @see SharedExampleGroup
+  #       `RSpec.configuration` since they exist independently of any
+  #       example or example group.
   #
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:200
   def before(*args, &block); end
 
-  # Holds the various registered hooks.
-  #
   # @private
+  # Holds the various registered hooks.
   #
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:355
   def hooks; end
 
-  # Declare a block of code to be run after each example (using `:example`)
-  # or once after all examples n the context (using `:context`). See
-  # {#before} for more information about ordering.
-  #
-  # ### Exceptions
-  #
-  # `after` hooks are guaranteed to run even when there are exceptions in
-  # `before` hooks or examples. When an exception is raised in an after
-  # block, the exception is captured for later reporting, and subsequent
-  # `after` blocks are run.
-  #
-  # ### Order
-  #
-  # `after` hooks are stored in three scopes, which are run in order:
-  # `:example`, `:context`, and `:suite`. They can also be declared in
-  # several different places: `RSpec.configure`, a parent group, the current
-  # group. They are run in the following order:
-  #
-  #     after(:example) # Declared in the current group.
-  #     after(:example) # Declared in a parent group.
-  #     after(:example) # Declared in RSpec.configure.
-  #     after(:context) # Declared in the current group.
-  #     after(:context) # Declared in a parent group.
-  #     after(:context) # Declared in RSpec.configure.
-  #     after(:suite)   # Declared in RSpec.configure.
-  #
-  # This is the reverse of the order in which `before` hooks are run.
-  # Similarly, if more than one `after` is declared within any example
-  # group, they are run in reverse order of that in which they are declared.
-  # Also `around` hooks will run after any `after` example hooks are
-  # invoked but before any `after` context hooks.
-  #
-  # @api public
-  # @note The `:suite` scope is only supported for hooks registered on
-  #   `RSpec.configuration` since they exist independently of any
-  #   example or example group.
-  # @note The `:example` and `:context` scopes are also available as
-  #   `:each` and `:all`, respectively. Use whichever you prefer.
-  # @overload after
-  # @overload after
-  # @overload after
-  # @overload after
-  # @see #around
-  # @see #before
-  # @see Configuration
-  # @see ExampleGroup
-  # @see SharedContext
-  # @see SharedExampleGroup
-  #
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:281
   def prepend_after(*args, &block); end
 
@@ -7592,6 +6253,7 @@ class RSpec::Core::Hooks::AroundHook < ::RSpec::Core::Hooks::Hook
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:389
   def execute_with(example, procsy); end
 
+  # for 1.8.7
   # :nocov:
   #
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:397
@@ -7610,33 +6272,15 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:360
 class RSpec::Core::Hooks::Hook < ::Struct
-  # Returns the value of attribute block
-  #
-  # @return [Object] the current value of block
-  #
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:360
   def block; end
 
-  # Sets the attribute block
-  #
-  # @param value [Object] the value to set the attribute block to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:360
   def block=(_); end
 
-  # Returns the value of attribute options
-  #
-  # @return [Object] the current value of options
-  #
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:360
   def options; end
 
-  # Sets the attribute options
-  #
-  # @param value [Object] the value to set the attribute options to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:360
   def options=(_); end
 
@@ -7658,6 +6302,8 @@ class RSpec::Core::Hooks::Hook < ::Struct
   end
 end
 
+# @private
+#
 # This provides the primary API used by other parts of rspec-core. By hiding all
 # implementation details behind this facade, it's allowed us to heavily optimize
 # this, so that, for example, hook collection objects are only instantiated when
@@ -7668,12 +6314,8 @@ end
 # API, so that callers _tell_ this class what to do with the hooks, rather than
 # asking this class for a list of hooks, and then doing something with them.
 #
-# @private
-#
 # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:420
 class RSpec::Core::Hooks::HookCollections
-  # @return [HookCollections] a new instance of HookCollections
-  #
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:421
   def initialize(owner, filterable_item_repo_class); end
 
@@ -7686,10 +6328,10 @@ class RSpec::Core::Hooks::HookCollections
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:431
   def register_globals(host, globals); end
 
+  # @private
+  #
   # Runs all of the blocks stored with the hook in the context of the
   # example. If no example is provided, just calls the hook directly.
-  #
-  # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:475
   def run(position, scope, example_or_group); end
@@ -7719,14 +6361,13 @@ class RSpec::Core::Hooks::HookCollections
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:543
   def hooks_for(position, scope); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:605
   def known_scope?(scope); end
 
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:609
   def normalized_scope_for(scope); end
 
+  # Ruby < 2.1 (see https://bugs.ruby-lang.org/issues/8035)
   # :nocov:
   #
   # pkg:gem/rspec-core#lib/rspec/core/hooks.rb:633
@@ -7767,16 +6408,12 @@ class RSpec::Core::InclusionRules < ::RSpec::Core::FilterRules
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:191
   def add_with_low_priority(*args); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:195
   def include_example?(example); end
 
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:203
   def split_file_scoped_rules; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:199
   def standalone?; end
 
@@ -7785,8 +6422,6 @@ class RSpec::Core::InclusionRules < ::RSpec::Core::FilterRules
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:213
   def apply_standalone_filter(updated); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/filter_manager.rb:226
   def is_standalone_filter?(rules); end
 
@@ -7835,33 +6470,15 @@ class RSpec::Core::Invocations::PrintHelp < ::Struct
   # pkg:gem/rspec-core#lib/rspec/core/invocations.rb:79
   def call(_options, _err, out); end
 
-  # Returns the value of attribute hidden_options
-  #
-  # @return [Object] the current value of hidden_options
-  #
   # pkg:gem/rspec-core#lib/rspec/core/invocations.rb:78
   def hidden_options; end
 
-  # Sets the attribute hidden_options
-  #
-  # @param value [Object] the value to set the attribute hidden_options to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/invocations.rb:78
   def hidden_options=(_); end
 
-  # Returns the value of attribute parser
-  #
-  # @return [Object] the current value of parser
-  #
   # pkg:gem/rspec-core#lib/rspec/core/invocations.rb:78
   def parser; end
 
-  # Sets the attribute parser
-  #
-  # @param value [Object] the value to set the attribute parser to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/invocations.rb:78
   def parser=(_); end
 
@@ -7891,6 +6508,7 @@ class RSpec::Core::Invocations::PrintVersion
   def call(_options, _err, out); end
 end
 
+# @private
 # Together with the example group metadata hash default block,
 # provides backwards compatibility for the old `:example_group`
 # key. In RSpec 2.x, the computed keys of a group's metadata
@@ -7914,15 +6532,11 @@ end
 #   * Exposes the parent group metadata as
 #     `[:example_group][:example_group]`.
 #
-# @private
-#
 # pkg:gem/rspec-core#lib/rspec/core/metadata.rb:470
 class RSpec::Core::LegacyExampleGroupHash
   include ::RSpec::Core::HashImitatable
   extend ::RSpec::Core::HashImitatable::ClassMethods
 
-  # @return [LegacyExampleGroupHash] a new instance of LegacyExampleGroupHash
-  #
   # pkg:gem/rspec-core#lib/rspec/core/metadata.rb:473
   def initialize(metadata); end
 
@@ -7931,8 +6545,6 @@ class RSpec::Core::LegacyExampleGroupHash
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/metadata.rb:485
   def directly_supports_attribute?(name); end
 
@@ -7961,13 +6573,15 @@ module RSpec::Core::MemoizedHelpers
   # @example
   #
   #   describe [1, 2, 3] do
-  #   it { is_expected.to be_an Array }
-  #   it { is_expected.not_to include 4 }
+  #     it { is_expected.to be_an Array }
+  #     it { is_expected.not_to include 4 }
   #   end
-  # @note This only works if you are using rspec-expectations.
+  #
+  # @see #subject
   # @see #should
   # @see #should_not
-  # @see #subject
+  #
+  # @note This only works if you are using rspec-expectations.
   #
   # pkg:gem/rspec-core#lib/rspec/core/memoized_helpers.rb:120
   def is_expected; end
@@ -7979,13 +6593,15 @@ module RSpec::Core::MemoizedHelpers
   # @example
   #
   #   RSpec.describe Person do
-  #   it { should be_eligible_to_vote }
+  #     it { should be_eligible_to_vote }
   #   end
+  #
+  # @see #subject
+  # @see #is_expected
+  #
   # @note This only works if you are using rspec-expectations.
   # @note If you are using RSpec's newer expect-based syntax you may
-  #   want to use `is_expected.to` instead of `should`.
-  # @see #is_expected
-  # @see #subject
+  #       want to use `is_expected.to` instead of `should`.
   #
   # pkg:gem/rspec-core#lib/rspec/core/memoized_helpers.rb:80
   def should(matcher = T.unsafe(nil), message = T.unsafe(nil)); end
@@ -7996,61 +6612,66 @@ module RSpec::Core::MemoizedHelpers
   # @example
   #
   #   RSpec.describe Person do
-  #   it { should_not be_eligible_to_vote }
+  #     it { should_not be_eligible_to_vote }
   #   end
+  #
+  # @see #subject
+  # @see #is_expected
+  #
   # @note This only works if you are using rspec-expectations.
   # @note If you are using RSpec's newer expect-based syntax you may
-  #   want to use `is_expected.to_not` instead of `should_not`.
-  # @see #is_expected
-  # @see #subject
+  #       want to use `is_expected.to_not` instead of `should_not`.
   #
   # pkg:gem/rspec-core#lib/rspec/core/memoized_helpers.rb:100
   def should_not(matcher = T.unsafe(nil), message = T.unsafe(nil)); end
 
-  # @example
-  #
-  #   # Explicit declaration of subject.
-  #   RSpec.describe Person do
-  #   subject { Person.new(:birthdate => 19.years.ago) }
-  #   it "should be eligible to vote" do
-  #   subject.should be_eligible_to_vote
-  #   # ^ ^ explicit reference to subject not recommended
-  #   end
-  #   end
-  #
-  #   # Implicit subject => { Person.new }.
-  #   RSpec.describe Person do
-  #   it "should be eligible to vote" do
-  #   subject.should be_eligible_to_vote
-  #   # ^ ^ explicit reference to subject not recommended
-  #   end
-  #   end
-  #
-  #   # One-liner syntax - expectation is set on the subject.
-  #   RSpec.describe Person do
-  #   it { is_expected.to be_eligible_to_vote }
-  #   # or
-  #   it { should be_eligible_to_vote }
-  #   end
   # @note `subject` was contributed by Joe Ferris to support the one-liner
   #   syntax embraced by shoulda matchers:
   #
-  #   RSpec.describe Widget do
-  #   it { is_expected.to validate_presence_of(:name) }
-  #   # or
-  #   it { should validate_presence_of(:name) }
-  #   end
+  #       RSpec.describe Widget do
+  #         it { is_expected.to validate_presence_of(:name) }
+  #         # or
+  #         it { should validate_presence_of(:name) }
+  #       end
   #
   #   While the examples below demonstrate how to use `subject`
   #   explicitly in examples, we recommend that you define a method with
   #   an intention revealing name instead.
+  #
+  # @example
+  #
+  #   # Explicit declaration of subject.
+  #   RSpec.describe Person do
+  #     subject { Person.new(:birthdate => 19.years.ago) }
+  #     it "should be eligible to vote" do
+  #       subject.should be_eligible_to_vote
+  #       # ^ ^ explicit reference to subject not recommended
+  #     end
+  #   end
+  #
+  #   # Implicit subject => { Person.new }.
+  #   RSpec.describe Person do
+  #     it "should be eligible to vote" do
+  #       subject.should be_eligible_to_vote
+  #       # ^ ^ explicit reference to subject not recommended
+  #     end
+  #   end
+  #
+  #   # One-liner syntax - expectation is set on the subject.
+  #   RSpec.describe Person do
+  #     it { is_expected.to be_eligible_to_vote }
+  #     # or
+  #     it { should be_eligible_to_vote }
+  #   end
+  #
   # @note Because `subject` is designed to create state that is reset
   #   between each example, and `before(:context)` is designed to setup
   #   state that is shared across _all_ examples in an example group,
   #   `subject` is _not_ intended to be used in a `before(:context)` hook.
-  # @see #is_expected
+  #
   # @see #should
   # @see #should_not
+  # @see #is_expected
   #
   # pkg:gem/rspec-core#lib/rspec/core/memoized_helpers.rb:57
   def subject; end
@@ -8062,12 +6683,11 @@ module RSpec::Core::MemoizedHelpers
   # pkg:gem/rspec-core#lib/rspec/core/memoized_helpers.rb:141
   def __init_memoized; end
 
+  # @private
   # should just be placed in private section,
   # but Ruby issues warnings on private attributes.
   # and expanding it to the equivalent method upsets Rubocop,
   # b/c it should obviously be a reader
-  #
-  # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/memoized_helpers.rb:129
   def __memoized; end
@@ -8077,8 +6697,6 @@ module RSpec::Core::MemoizedHelpers
   # pkg:gem/rspec-core#lib/rspec/core/memoized_helpers.rb:150
   def enforce_value_expectation(matcher, method_name); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/memoized_helpers.rb:163
   def matcher_supports_value_expectations?(matcher); end
 
@@ -8088,6 +6706,15 @@ module RSpec::Core::MemoizedHelpers
     # pkg:gem/rspec-core#lib/rspec/core/memoized_helpers.rb:542
     def define_helpers_on(example_group); end
 
+    # for 1.8
+    # @private
+    #
+    # Gets the named constant or yields.
+    # On 1.8, const_defined? / const_get do not take into
+    # account the inheritance hierarchy.
+    # :nocov:
+    # @private
+    #
     # Gets the named constant or yields.
     # On 1.9, const_defined? / const_get take into account the
     # the inheritance by default, and accept an argument to
@@ -8095,11 +6722,11 @@ module RSpec::Core::MemoizedHelpers
     # consider inheritance here; each example group level that
     # uses a `let` should get its own `LetDefinitions` module.
     #
-    # @private
-    #
     # pkg:gem/rspec-core#lib/rspec/core/memoized_helpers.rb:570
     def get_constant_or_yield(example_group, name); end
 
+    # @private
+    #
     # Gets the LetDefinitions module. The module is mixed into
     # the example group and is used to hold all let definitions.
     # This is done so that the block passed to `let` can be
@@ -8110,8 +6737,6 @@ module RSpec::Core::MemoizedHelpers
     # The memoization is provided by a method definition on the
     # example group that supers to the LetDefinitions definition
     # in order to get the value to memoize.
-    #
-    # @private
     #
     # pkg:gem/rspec-core#lib/rspec/core/memoized_helpers.rb:528
     def module_for(example_group); end
@@ -8128,30 +6753,33 @@ module RSpec::Core::MemoizedHelpers::ClassMethods
   # call. Useful for reducing duplication between examples that assign
   # values to the same local variable.
   #
-  # @example
-  #
-  #   RSpec.describe Thing do
-  #   let(:thing) { Thing.new }
-  #
-  #   it "does something" do
-  #   # First invocation, executes block, memoizes and returns result.
-  #   thing.do_something
-  #
-  #   # Second invocation, returns the memoized value.
-  #   thing.should be_something
-  #   end
-  #   end
   # @note `let` _can_ enhance readability when used sparingly (1,2, or
   #   maybe 3 declarations) in any given example group, but that can
   #   quickly degrade with overuse. YMMV.
+  #
   # @note `let` can be configured to be threadsafe or not.
   #   If it is threadsafe, it will take longer to access the value.
   #   If it is not threadsafe, it may behave in surprising ways in examples
   #   that spawn separate threads. Specify this on `RSpec.configure`
+  #
   # @note Because `let` is designed to create state that is reset between
   #   each example, and `before(:context)` is designed to setup state that
   #   is shared across _all_ examples in an example group, `let` is _not_
   #   intended to be used in a `before(:context)` hook.
+  #
+  # @example
+  #
+  #   RSpec.describe Thing do
+  #     let(:thing) { Thing.new }
+  #
+  #     it "does something" do
+  #       # First invocation, executes block, memoizes and returns result.
+  #       thing.do_something
+  #
+  #       # Second invocation, returns the memoized value.
+  #       thing.should be_something
+  #     end
+  #   end
   #
   # pkg:gem/rspec-core#lib/rspec/core/memoized_helpers.rb:306
   def let(name, &block); end
@@ -8163,51 +6791,51 @@ module RSpec::Core::MemoizedHelpers::ClassMethods
   # @example
   #
   #   class Thing
-  #   def self.count
-  #   @count ||= 0
-  #   end
+  #     def self.count
+  #       @count ||= 0
+  #     end
   #
-  #   def self.count=(val)
-  #   @count += val
-  #   end
+  #     def self.count=(val)
+  #       @count += val
+  #     end
   #
-  #   def self.reset_count
-  #   @count = 0
-  #   end
+  #     def self.reset_count
+  #       @count = 0
+  #     end
   #
-  #   def initialize
-  #   self.class.count += 1
-  #   end
+  #     def initialize
+  #       self.class.count += 1
+  #     end
   #   end
   #
   #   RSpec.describe Thing do
-  #   after(:example) { Thing.reset_count }
+  #     after(:example) { Thing.reset_count }
   #
-  #   context "using let" do
-  #   let(:thing) { Thing.new }
+  #     context "using let" do
+  #       let(:thing) { Thing.new }
   #
-  #   it "is not invoked implicitly" do
-  #   Thing.count.should eq(0)
-  #   end
+  #       it "is not invoked implicitly" do
+  #         Thing.count.should eq(0)
+  #       end
   #
-  #   it "can be invoked explicitly" do
-  #   thing
-  #   Thing.count.should eq(1)
-  #   end
-  #   end
+  #       it "can be invoked explicitly" do
+  #         thing
+  #         Thing.count.should eq(1)
+  #       end
+  #     end
   #
-  #   context "using let!" do
-  #   let!(:thing) { Thing.new }
+  #     context "using let!" do
+  #       let!(:thing) { Thing.new }
   #
-  #   it "is invoked implicitly" do
-  #   Thing.count.should eq(1)
-  #   end
+  #       it "is invoked implicitly" do
+  #         Thing.count.should eq(1)
+  #       end
   #
-  #   it "returns memoized version on first invocation" do
-  #   thing
-  #   Thing.count.should eq(1)
-  #   end
-  #   end
+  #       it "returns memoized version on first invocation" do
+  #         thing
+  #         Thing.count.should eq(1)
+  #       end
+  #     end
   #   end
   #
   # pkg:gem/rspec-core#lib/rspec/core/memoized_helpers.rb:400
@@ -8224,31 +6852,34 @@ module RSpec::Core::MemoizedHelpers::ClassMethods
   #
   # When given a `name`, calling `super` in the block is not supported.
   #
-  # @example
-  #
-  #   RSpec.describe CheckingAccount, "with $50" do
-  #   subject { CheckingAccount.new(Money.new(50, :USD)) }
-  #   it { is_expected.to have_a_balance_of(Money.new(50, :USD)) }
-  #   it { is_expected.not_to be_overdrawn }
-  #   end
-  #
-  #   RSpec.describe CheckingAccount, "with a non-zero starting balance" do
-  #   subject(:account) { CheckingAccount.new(Money.new(50, :USD)) }
-  #   it { is_expected.not_to be_overdrawn }
-  #   it "has a balance equal to the starting balance" do
-  #   account.balance.should eq(Money.new(50, :USD))
-  #   end
-  #   end
   # @note `subject` can be configured to be threadsafe or not.
   #   If it is threadsafe, it will take longer to access the value.
   #   If it is not threadsafe, it may behave in surprising ways in examples
   #   that spawn separate threads. Specify this on `RSpec.configure`
-  # @param block defines the value to be returned by `subject` in examples
-  # @param name [String, Symbol] used to define an accessor with an
+  #
+  # @param name [String,Symbol] used to define an accessor with an
   #   intention revealing name
-  # @see MemoizedHelpers#is_expected
+  # @param block defines the value to be returned by `subject` in examples
+  #
+  # @example
+  #
+  #   RSpec.describe CheckingAccount, "with $50" do
+  #     subject { CheckingAccount.new(Money.new(50, :USD)) }
+  #     it { is_expected.to have_a_balance_of(Money.new(50, :USD)) }
+  #     it { is_expected.not_to be_overdrawn }
+  #   end
+  #
+  #   RSpec.describe CheckingAccount, "with a non-zero starting balance" do
+  #     subject(:account) { CheckingAccount.new(Money.new(50, :USD)) }
+  #     it { is_expected.not_to be_overdrawn }
+  #     it "has a balance equal to the starting balance" do
+  #       account.balance.should eq(Money.new(50, :USD))
+  #     end
+  #   end
+  #
   # @see MemoizedHelpers#should
   # @see MemoizedHelpers#should_not
+  # @see MemoizedHelpers#is_expected
   #
   # pkg:gem/rspec-core#lib/rspec/core/memoized_helpers.rb:444
   def subject(name = T.unsafe(nil), &block); end
@@ -8260,51 +6891,51 @@ module RSpec::Core::MemoizedHelpers::ClassMethods
   # @example
   #
   #   class Thing
-  #   def self.count
-  #   @count ||= 0
-  #   end
+  #     def self.count
+  #       @count ||= 0
+  #     end
   #
-  #   def self.count=(val)
-  #   @count += val
-  #   end
+  #     def self.count=(val)
+  #       @count += val
+  #     end
   #
-  #   def self.reset_count
-  #   @count = 0
-  #   end
+  #     def self.reset_count
+  #       @count = 0
+  #     end
   #
-  #   def initialize
-  #   self.class.count += 1
-  #   end
+  #     def initialize
+  #       self.class.count += 1
+  #     end
   #   end
   #
   #   RSpec.describe Thing do
-  #   after(:example) { Thing.reset_count }
+  #     after(:example) { Thing.reset_count }
   #
-  #   context "using subject" do
-  #   subject { Thing.new }
+  #     context "using subject" do
+  #       subject { Thing.new }
   #
-  #   it "is not invoked implicitly" do
-  #   Thing.count.should eq(0)
-  #   end
+  #       it "is not invoked implicitly" do
+  #         Thing.count.should eq(0)
+  #       end
   #
-  #   it "can be invoked explicitly" do
-  #   subject
-  #   Thing.count.should eq(1)
-  #   end
-  #   end
+  #       it "can be invoked explicitly" do
+  #         subject
+  #         Thing.count.should eq(1)
+  #       end
+  #     end
   #
-  #   context "using subject!" do
-  #   subject!(:thing) { Thing.new }
+  #     context "using subject!" do
+  #       subject!(:thing) { Thing.new }
   #
-  #   it "is invoked implicitly" do
-  #   Thing.count.should eq(1)
-  #   end
+  #       it "is invoked implicitly" do
+  #         Thing.count.should eq(1)
+  #       end
   #
-  #   it "returns memoized version on first invocation" do
-  #   subject
-  #   Thing.count.should eq(1)
-  #   end
-  #   end
+  #       it "returns memoized version on first invocation" do
+  #         subject
+  #         Thing.count.should eq(1)
+  #       end
+  #     end
   #   end
   #
   # pkg:gem/rspec-core#lib/rspec/core/memoized_helpers.rb:510
@@ -8363,8 +6994,6 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/memoized_helpers.rb:186
 class RSpec::Core::MemoizedHelpers::NonThreadSafeMemoized
-  # @return [NonThreadSafeMemoized] a new instance of NonThreadSafeMemoized
-  #
   # pkg:gem/rspec-core#lib/rspec/core/memoized_helpers.rb:187
   def initialize; end
 
@@ -8376,8 +7005,6 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/memoized_helpers.rb:170
 class RSpec::Core::MemoizedHelpers::ThreadsafeMemoized
-  # @return [ThreadsafeMemoized] a new instance of ThreadsafeMemoized
-  #
   # pkg:gem/rspec-core#lib/rspec/core/memoized_helpers.rb:171
   def initialize; end
 
@@ -8404,38 +7031,34 @@ end
 # the command line, or several methods on `Configuration` used to filter a
 # run (e.g. `filter_run_including`, `filter_run_excluding`, etc).
 #
-# @see Configuration#filter_run_excluding
-# @see Configuration#filter_run_including
 # @see Example#metadata
 # @see ExampleGroup.metadata
 # @see FilterManager
+# @see Configuration#filter_run_including
+# @see Configuration#filter_run_excluding
 #
 # pkg:gem/rspec-core#lib/rspec/core/metadata.rb:27
 module RSpec::Core::Metadata
   class << self
+    # @private
     # Returns an enumerator that iteratively walks up the given metadata through all
     # example group ancestors, yielding each metadata hash along the way.
-    #
-    # @private
     #
     # pkg:gem/rspec-core#lib/rspec/core/metadata.rb:71
     def ascend(metadata); end
 
+    # @private
     # Iteratively walks up from the given metadata through all
     # example group ancestors, yielding each metadata hash along the way.
-    #
-    # @private
-    # @yield [metadata]
     #
     # pkg:gem/rspec-core#lib/rspec/core/metadata.rb:58
     def ascending(metadata); end
 
+    # @private
     # Used internally to build a hash from an args array.
     # Symbols are converted into hash keys with a value of `true`.
     # This is done to support simple tagging using a symbol, rather
     # than needing to do `:symbol => true`.
-    #
-    # @private
     #
     # pkg:gem/rspec-core#lib/rspec/core/metadata.rb:80
     def build_hash_from(args, warn_about_example_group_filtering = T.unsafe(nil)); end
@@ -8456,6 +7079,7 @@ module RSpec::Core::Metadata
     def location_tuple_from(metadata); end
 
     # @api private
+    #
     # @param line [String] current code line
     # @return [String] relative path to line
     #
@@ -8518,38 +7142,27 @@ class RSpec::Core::Metadata::ExampleHash < ::RSpec::Core::Metadata::HashPopulato
   end
 end
 
+# @private
 # Used internally to populate metadata hashes with computed keys
 # managed by RSpec.
 #
-# @private
-#
 # pkg:gem/rspec-core#lib/rspec/core/metadata.rb:117
 class RSpec::Core::Metadata::HashPopulator
-  # @return [HashPopulator] a new instance of HashPopulator
-  #
   # pkg:gem/rspec-core#lib/rspec/core/metadata.rb:120
   def initialize(metadata, user_metadata, index_provider, description_args, block); end
 
-  # Returns the value of attribute block.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/metadata.rb:118
   def block; end
 
-  # Returns the value of attribute description_args.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/metadata.rb:118
   def description_args; end
 
-  # Returns the value of attribute metadata.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/metadata.rb:118
   def metadata; end
 
   # pkg:gem/rspec-core#lib/rspec/core/metadata.rb:128
   def populate; end
 
-  # Returns the value of attribute user_metadata.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/metadata.rb:118
   def user_metadata; end
 
@@ -8589,13 +7202,11 @@ RSpec::Core::Metadata::RESERVED_KEYS = T.let(T.unsafe(nil), Array)
 module RSpec::Core::MetadataFilter
   class << self
     # @private
-    # @return [Boolean]
     #
     # pkg:gem/rspec-core#lib/rspec/core/metadata_filter.rb:11
     def apply?(predicate, filters, metadata); end
 
     # @private
-    # @return [Boolean]
     #
     # pkg:gem/rspec-core#lib/rspec/core/metadata_filter.rb:16
     def filter_applies?(key, filter_value, metadata); end
@@ -8607,28 +7218,18 @@ module RSpec::Core::MetadataFilter
 
     private
 
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-core#lib/rspec/core/metadata_filter.rb:42
     def filter_applies_to_any_value?(key, value, metadata); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-core#lib/rspec/core/metadata_filter.rb:73
     def filters_apply?(key, value, metadata); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-core#lib/rspec/core/metadata_filter.rb:46
     def id_filter_applies?(rerun_paths_to_scoped_ids, metadata); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-core#lib/rspec/core/metadata_filter.rb:54
     def location_filter_applies?(locations, metadata); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-core#lib/rspec/core/metadata_filter.rb:65
     def proc_filter_applies?(key, proc, metadata); end
   end
@@ -8644,7 +7245,6 @@ class RSpec::Core::MultipleExceptionError < ::StandardError
   include ::RSpec::Core::MultipleExceptionError::InterfaceTag
 
   # @param exceptions [Array<Exception>] The initial list of exceptions.
-  # @return [MultipleExceptionError] a new instance of MultipleExceptionError
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:520
   def initialize(*exceptions); end
@@ -8675,9 +7275,9 @@ class RSpec::Core::MultipleExceptionError < ::StandardError
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:504
   def failures; end
 
+  # @return [String] Combines all the exception messages into a single string.
   # @note RSpec does not actually use this -- instead it formats each exception
   #   individually.
-  # @return [String] Combines all the exception messages into a single string.
   #
   # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:535
   def message; end
@@ -8693,17 +7293,15 @@ class RSpec::Core::MultipleExceptionError < ::StandardError
   def summary; end
 end
 
+# @private
 # Used so there is a common module in the ancestor chain of this class
 # and `RSpec::Expectations::MultipleExpectationsNotMetError`, which allows
 # code to detect exceptions that are instances of either, without first
 # checking to see if rspec-expectations is loaded.
 #
-# @private
-#
 # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:465
 module RSpec::Core::MultipleExceptionError::InterfaceTag
   # Appends the provided exception to the list.
-  #
   # @param exception [Exception] Exception to append to the list.
   # @private
   #
@@ -8714,7 +7312,6 @@ module RSpec::Core::MultipleExceptionError::InterfaceTag
     # Provides a way to force `ex` to be something that satisfies the multiple
     # exception error interface. If it already satisfies it, it will be returned;
     # otherwise it will wrap it in a `MultipleExceptionError`.
-    #
     # @private
     #
     # pkg:gem/rspec-core#lib/rspec/core/formatters/exception_presenter.rb:495
@@ -8735,10 +7332,10 @@ module RSpec::Core::Notifications; end
 # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:512
 class RSpec::Core::Notifications::CustomNotification < ::Struct
   class << self
-    # Build a custom notification based on the supplied option key / values.
-    #
     # @param options [Hash] A hash of method / value pairs to create on this notification
     # @return [CustomNotification]
+    #
+    # Build a custom notification based on the supplied option key / values.
     #
     # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:517
     def for(options = T.unsafe(nil)); end
@@ -8749,76 +7346,36 @@ end
 # part of RSpec is encountered. It represents information about the
 # deprecated call site.
 #
-# @attr call_site [String] An optional call site from which the deprecation
-#   was issued
+# @attr message [String] A custom message about the deprecation
 # @attr deprecated [String] A custom message about the deprecation (alias of
 #   message)
-# @attr message [String] A custom message about the deprecation
 # @attr replacement [String] An optional replacement for the deprecation
+# @attr call_site [String] An optional call site from which the deprecation
+#   was issued
 #
 # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:493
 class RSpec::Core::Notifications::DeprecationNotification < ::Struct
-  # An optional call site from which the deprecation
-  # was issued
-  #
-  # @return [String] the current value of call_site
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:493
   def call_site; end
 
-  # An optional call site from which the deprecation
-  # was issued
-  #
-  # @param value [String] the value to set the attribute call_site to.
-  # @return [String] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:493
   def call_site=(_); end
 
-  # A custom message about the deprecation (alias of
-  # message)
-  #
-  # @return [String] the current value of deprecated
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:493
   def deprecated; end
 
-  # A custom message about the deprecation (alias of
-  # message)
-  #
-  # @param value [String] the value to set the attribute deprecated to.
-  # @return [String] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:493
   def deprecated=(_); end
 
-  # A custom message about the deprecation
-  #
-  # @return [String] the current value of message
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:493
   def message; end
 
-  # A custom message about the deprecation
-  #
-  # @param value [String] the value to set the attribute message to.
-  # @return [String] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:493
   def message=(_); end
 
-  # An optional replacement for the deprecation
-  #
-  # @return [String] the current value of replacement
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:493
   def replacement; end
 
-  # An optional replacement for the deprecation
-  #
-  # @param value [String] the value to set the attribute replacement to.
-  # @return [String] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:493
   def replacement=(_); end
 
@@ -8826,9 +7383,8 @@ class RSpec::Core::Notifications::DeprecationNotification < ::Struct
     # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:493
     def [](*_arg0); end
 
-    # Convenience way to initialize the notification
-    #
     # @api
+    # Convenience way to initialize the notification
     #
     # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:499
     def from_hash(data); end
@@ -8853,26 +7409,18 @@ end
 # which contain information about the current (or soon to be) example.
 # It is used by formatters to access information about that example.
 #
-# @attr example [RSpec::Core::Example] the current example
 # @example
 #   def example_started(notification)
-#   puts "Hey I started #{notification.example.description}"
+#     puts "Hey I started #{notification.example.description}"
 #   end
+#
+# @attr example [RSpec::Core::Example] the current example
 #
 # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:38
 class RSpec::Core::Notifications::ExampleNotification < ::Struct
-  # the current example
-  #
-  # @return [RSpec::Core::Example] the current value of example
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:38
   def example; end
 
-  # the current example
-  #
-  # @param value [RSpec::Core::Example] the value to set the attribute example to.
-  # @return [RSpec::Core::Example] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:38
   def example=(_); end
 
@@ -8906,13 +7454,11 @@ end
 #
 # @example
 #   def stop(notification)
-#   puts "Hey I ran #{notification.examples.size}"
+#     puts "Hey I ran #{notification.examples.size}"
 #   end
 #
 # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:69
 class RSpec::Core::Notifications::ExamplesNotification
-  # @return [ExamplesNotification] a new instance of ExamplesNotification
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:70
   def initialize(reporter); end
 
@@ -8926,7 +7472,8 @@ class RSpec::Core::Notifications::ExamplesNotification
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:80
   def failed_examples; end
 
-  # @return [Array<RSpec::Core::Notifications::FailedExampleNotification>] returns failed examples as notifications
+  # @return [Array<RSpec::Core::Notifications::FailedExampleNotification>]
+  #         returns failed examples as notifications
   #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:97
   def failure_notifications; end
@@ -8943,7 +7490,8 @@ class RSpec::Core::Notifications::ExamplesNotification
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:122
   def fully_formatted_pending_examples(colorizer = T.unsafe(nil)); end
 
-  # @return [Array<RSpec::Core::Notifications::ExampleNotification>] returns examples as notifications
+  # @return [Array<RSpec::Core::Notifications::ExampleNotification>]
+  #         returns examples as notifications
   #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:91
   def notifications; end
@@ -8953,10 +7501,9 @@ class RSpec::Core::Notifications::ExamplesNotification
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:85
   def pending_examples; end
 
-  # returns pending examples as notifications
-  #
   # @return [Array<RSpec::Core::Notifications::SkippedExampleNotification,
-  # RSpec::Core::Notifications::PendingExampleFailedAsExpectedNotification>]
+  #                 RSpec::Core::Notifications::PendingExampleFailedAsExpectedNotification>]
+  #         returns pending examples as notifications
   #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:104
   def pending_notifications; end
@@ -8971,19 +7518,18 @@ end
 # things useful for examples that have failure info -- typically a
 # failed or pending spec.
 #
-# @attr example [RSpec::Core::Example] the current example
 # @example
 #   def example_failed(notification)
-#   puts "Hey I failed :("
-#   puts "Here's my stack trace"
-#   puts notification.exception.backtrace.join("\n")
+#     puts "Hey I failed :("
+#     puts "Here's my stack trace"
+#     puts notification.exception.backtrace.join("\n")
 #   end
+#
+# @attr [RSpec::Core::Example] example the current example
 # @see ExampleNotification
 #
 # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:156
 class RSpec::Core::Notifications::FailedExampleNotification < ::RSpec::Core::Notifications::ExampleNotification
-  # @return [FailedExampleNotification] a new instance of FailedExampleNotification
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:213
   def initialize(example, exception_presenter = T.unsafe(nil)); end
 
@@ -9050,26 +7596,17 @@ end
 # example group. It is used by formatters to access information about that
 # group.
 #
-# @attr group [RSpec::Core::ExampleGroup] the current group
 # @example
 #   def example_group_started(notification)
-#   puts "Hey I started #{notification.group.description}"
+#     puts "Hey I started #{notification.group.description}"
 #   end
+# @attr group [RSpec::Core::ExampleGroup] the current group
 #
 # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:258
 class RSpec::Core::Notifications::GroupNotification < ::Struct
-  # the current group
-  #
-  # @return [RSpec::Core::ExampleGroup] the current value of group
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:258
   def group; end
 
-  # the current group
-  #
-  # @param value [RSpec::Core::ExampleGroup] the value to set the attribute group to.
-  # @return [RSpec::Core::ExampleGroup] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:258
   def group=(_); end
 
@@ -9098,18 +7635,9 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:264
 class RSpec::Core::Notifications::MessageNotification < ::Struct
-  # the message
-  #
-  # @return [String] the current value of message
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:264
   def message; end
 
-  # the message
-  #
-  # @param value [String] the value to set the attribute message to.
-  # @return [String] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:264
   def message=(_); end
 
@@ -9167,35 +7695,21 @@ class RSpec::Core::Notifications::PendingExampleFixedNotification < ::RSpec::Cor
 # information at the end of the test run for profiling information.
 #
 # @attr duration [Float] the time taken (in seconds) to run the suite
-# @attr example_groups [Array<RSpec::Core::Profiler>] example groups run
 # @attr examples [Array<RSpec::Core::Example>] the examples run
 # @attr number_of_examples [Fixnum] the number of examples to profile
+# @attr example_groups [Array<RSpec::Core::Profiler>] example groups run
 #
 # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:429
 class RSpec::Core::Notifications::ProfileNotification
-  # @return [ProfileNotification] a new instance of ProfileNotification
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:430
   def initialize(duration, examples, number_of_examples, example_groups); end
 
-  # the time taken (in seconds) to run the suite
-  #
-  # @return [Float] the current value of duration
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:436
   def duration; end
 
-  # the examples run
-  #
-  # @return [Array<RSpec::Core::Example>] the current value of examples
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:436
   def examples; end
 
-  # the number of examples to profile
-  #
-  # @return [Fixnum] the current value of number_of_examples
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:436
   def number_of_examples; end
 
@@ -9239,18 +7753,9 @@ class RSpec::Core::Notifications::SeedNotification < ::Struct
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:282
   def fully_formatted; end
 
-  # the seed used to randomize ordering
-  #
-  # @return [Fixnum] the current value of seed
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:271
   def seed; end
 
-  # the seed used to randomize ordering
-  #
-  # @param value [Fixnum] the value to set the attribute seed to.
-  # @return [Fixnum] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:271
   def seed=(_); end
 
@@ -9260,20 +7765,11 @@ class RSpec::Core::Notifications::SeedNotification < ::Struct
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:275
   def seed_used?; end
 
-  # whether the seed has been used or not
-  #
-  # @param value [Boolean] the value to set the attribute used to.
-  # @return [Boolean] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:271
   def used=(_); end
 
   private
 
-  # whether the seed has been used or not
-  #
-  # @return [Boolean] the current value of used
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:271
   def used; end
 
@@ -9298,7 +7794,7 @@ end
 # The `SkippedExampleNotification` extends `ExampleNotification` with
 # things useful for specs that are skipped.
 #
-# @attr example [RSpec::Core::Example] the current example
+# @attr [RSpec::Core::Example] example the current example
 # @see ExampleNotification
 #
 # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:230
@@ -9321,39 +7817,19 @@ end
 #
 # @attr count [Fixnum] the number counted
 # @attr load_time [Float] the number of seconds taken to boot RSpec
-#   and load the spec files
+#                         and load the spec files
 #
 # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:26
 class RSpec::Core::Notifications::StartNotification < ::Struct
-  # the number counted
-  #
-  # @return [Fixnum] the current value of count
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:26
   def count; end
 
-  # the number counted
-  #
-  # @param value [Fixnum] the value to set the attribute count to.
-  # @return [Fixnum] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:26
   def count=(_); end
 
-  # the number of seconds taken to boot RSpec
-  # and load the spec files
-  #
-  # @return [Float] the current value of load_time
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:26
   def load_time; end
 
-  # the number of seconds taken to boot RSpec
-  # and load the spec files
-  #
-  # @param value [Float] the value to set the attribute load_time to.
-  # @return [Float] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:26
   def load_time=(_); end
 
@@ -9380,72 +7856,52 @@ end
 # of the test run.
 #
 # @attr duration [Float] the time taken (in seconds) to run the suite
-# @attr errors_outside_of_examples_count [Integer] the number of errors that
-#   have occurred processing
-#   the spec suite
 # @attr examples [Array<RSpec::Core::Example>] the examples run
 # @attr failed_examples [Array<RSpec::Core::Example>] the failed examples
-# @attr load_time [Float] the number of seconds taken to boot RSpec
-#   and load the spec files
 # @attr pending_examples [Array<RSpec::Core::Example>] the pending examples
+# @attr load_time [Float] the number of seconds taken to boot RSpec
+#                         and load the spec files
+# @attr errors_outside_of_examples_count [Integer] the number of errors that
+#                                                  have occurred processing
+#                                                  the spec suite
 #
 # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:300
 class RSpec::Core::Notifications::SummaryNotification < ::Struct
   include ::RSpec::Core::ShellEscape
 
+  # @api public
+  #
   # Formats failures into a rerunable command format.
   #
-  # @api public
   # @param colorizer [#wrap] An object which supports wrapping text with
-  #   specific colors.
+  #                          specific colors.
   # @return [String] A colorized summary line.
   #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:364
   def colorized_rerun_commands(colorizer = T.unsafe(nil)); end
 
+  # @api public
+  #
   # Wraps the results line with colors based on the configured
   # colors for failure, pending, and success. Defaults to red,
   # yellow, green accordingly.
   #
-  # @api public
   # @param colorizer [#wrap] An object which supports wrapping text with
-  #   specific colors.
+  #                          specific colors.
   # @return [String] A colorized results line.
   #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:347
   def colorized_totals_line(colorizer = T.unsafe(nil)); end
 
-  # the time taken (in seconds) to run the suite
-  #
-  # @return [Float] the current value of duration
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:300
   def duration; end
 
-  # the time taken (in seconds) to run the suite
-  #
-  # @param value [Float] the value to set the attribute duration to.
-  # @return [Float] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:300
   def duration=(_); end
 
-  # the number of errors that
-  # have occurred processing
-  # the spec suite
-  #
-  # @return [Integer] the current value of errors_outside_of_examples_count
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:300
   def errors_outside_of_examples_count; end
 
-  # the number of errors that
-  # have occurred processing
-  # the spec suite
-  #
-  # @param value [Integer] the value to set the attribute errors_outside_of_examples_count to.
-  # @return [Integer] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:300
   def errors_outside_of_examples_count=(_); end
 
@@ -9455,33 +7911,15 @@ class RSpec::Core::Notifications::SummaryNotification < ::Struct
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:306
   def example_count; end
 
-  # the examples run
-  #
-  # @return [Array<RSpec::Core::Example>] the current value of examples
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:300
   def examples; end
 
-  # the examples run
-  #
-  # @param value [Array<RSpec::Core::Example>] the value to set the attribute examples to.
-  # @return [Array<RSpec::Core::Example>] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:300
   def examples=(_); end
 
-  # the failed examples
-  #
-  # @return [Array<RSpec::Core::Example>] the current value of failed_examples
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:300
   def failed_examples; end
 
-  # the failed examples
-  #
-  # @param value [Array<RSpec::Core::Example>] the value to set the attribute failed_examples to.
-  # @return [Array<RSpec::Core::Example>] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:300
   def failed_examples=(_); end
 
@@ -9509,20 +7947,9 @@ class RSpec::Core::Notifications::SummaryNotification < ::Struct
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:386
   def fully_formatted(colorizer = T.unsafe(nil)); end
 
-  # the number of seconds taken to boot RSpec
-  # and load the spec files
-  #
-  # @return [Float] the current value of load_time
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:300
   def load_time; end
 
-  # the number of seconds taken to boot RSpec
-  # and load the spec files
-  #
-  # @param value [Float] the value to set the attribute load_time to.
-  # @return [Float] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:300
   def load_time=(_); end
 
@@ -9532,18 +7959,9 @@ class RSpec::Core::Notifications::SummaryNotification < ::Struct
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:318
   def pending_count; end
 
-  # the pending examples
-  #
-  # @return [Array<RSpec::Core::Example>] the current value of pending_examples
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:300
   def pending_examples; end
 
-  # the pending examples
-  #
-  # @param value [Array<RSpec::Core::Example>] the value to set the attribute pending_examples to.
-  # @return [Array<RSpec::Core::Example>] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/notifications.rb:300
   def pending_examples=(_); end
 
@@ -9579,9 +7997,8 @@ class RSpec::Core::Notifications::SummaryNotification < ::Struct
   end
 end
 
-# # Used in place of a {Reporter} for situations where we don't want reporting output.
-#
 # @private
+# # Used in place of a {Reporter} for situations where we don't want reporting output.
 #
 # pkg:gem/rspec-core#lib/rspec/core/reporter.rb:260
 class RSpec::Core::NullReporter
@@ -9598,16 +8015,14 @@ end
 # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:4
 module RSpec::Core::Ordering; end
 
+# @private
 # Manages ordering configuration.
 #
 # @note This is not intended to be used externally. Use
-#   the APIs provided by `RSpec::Core::Configuration` instead.
-# @private
+#       the APIs provided by `RSpec::Core::Configuration` instead.
 #
 # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:144
 class RSpec::Core::Ordering::ConfigurationManager
-  # @return [ConfigurationManager] a new instance of ConfigurationManager
-  #
   # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:147
   def initialize; end
 
@@ -9617,36 +8032,27 @@ class RSpec::Core::Ordering::ConfigurationManager
   # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:164
   def order=(type); end
 
-  # Returns the value of attribute ordering_registry.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:145
   def ordering_registry; end
 
   # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:201
   def register_ordering(name, strategy = T.unsafe(nil)); end
 
-  # Returns the value of attribute seed.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:145
   def seed; end
 
   # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:158
   def seed=(seed); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:154
   def seed_used?; end
 end
 
-# Orders items based on a custom block.
-#
 # @private
+# Orders items based on a custom block.
 #
 # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:71
 class RSpec::Core::Ordering::Custom
-  # @return [Custom] a new instance of Custom
-  #
   # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:72
   def initialize(callable); end
 
@@ -9654,14 +8060,11 @@ class RSpec::Core::Ordering::Custom
   def order(list); end
 end
 
-# A strategy which delays looking up the ordering until needed
-#
 # @private
+# A strategy which delays looking up the ordering until needed
 #
 # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:83
 class RSpec::Core::Ordering::Delayed
-  # @return [Delayed] a new instance of Delayed
-  #
   # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:84
   def initialize(registry, name); end
 
@@ -9677,9 +8080,8 @@ class RSpec::Core::Ordering::Delayed
   def strategy; end
 end
 
-# The default global ordering (defined order).
-#
 # @private
+# The default global ordering (defined order).
 #
 # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:7
 class RSpec::Core::Ordering::Identity
@@ -9687,22 +8089,17 @@ class RSpec::Core::Ordering::Identity
   def order(items); end
 end
 
-# Orders items randomly.
-#
 # @private
+# Orders items randomly.
 #
 # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:15
 class RSpec::Core::Ordering::Random
-  # @return [Random] a new instance of Random
-  #
   # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:16
   def initialize(configuration); end
 
   # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:25
   def order(items); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:21
   def used?; end
 
@@ -9721,9 +8118,8 @@ end
 # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:58
 RSpec::Core::Ordering::Random::MAX_32_BIT = T.let(T.unsafe(nil), Integer)
 
-# Orders items by modification time (most recent modified first).
-#
 # @private
+# Orders items by modification time (most recent modified first).
 #
 # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:63
 class RSpec::Core::Ordering::RecentlyModified
@@ -9731,30 +8127,23 @@ class RSpec::Core::Ordering::RecentlyModified
   def order(list); end
 end
 
-# Stores the different ordering strategies.
-#
 # @private
+# Stores the different ordering strategies.
 #
 # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:107
 class RSpec::Core::Ordering::Registry
-  # @return [Registry] a new instance of Registry
-  #
   # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:108
   def initialize(configuration); end
 
   # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:122
   def fetch(name, &fallback); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:126
   def has_strategy?(name); end
 
   # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:130
   def register(sym, strategy); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/ordering.rb:134
   def used_random_seed?; end
 end
@@ -9764,7 +8153,6 @@ end
 # pkg:gem/rspec-core#lib/rspec/core/output_wrapper.rb:4
 class RSpec::Core::OutputWrapper
   # @private
-  # @return [OutputWrapper] a new instance of OutputWrapper
   #
   # pkg:gem/rspec-core#lib/rspec/core/output_wrapper.rb:9
   def initialize(output); end
@@ -10043,8 +8431,6 @@ class RSpec::Core::OutputWrapper
   # pkg:gem/rspec-core#lib/rspec/core/output_wrapper.rb:23
   def reopen(*args, &block); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/output_wrapper.rb:13
   def respond_to?(name, priv = T.unsafe(nil)); end
 
@@ -10143,13 +8529,9 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/option_parser.rb:6
 class RSpec::Core::Parser
-  # @return [Parser] a new instance of Parser
-  #
   # pkg:gem/rspec-core#lib/rspec/core/option_parser.rb:13
   def initialize(original_args); end
 
-  # Returns the value of attribute original_args.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/option_parser.rb:11
   def original_args; end
 
@@ -10181,24 +8563,30 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/pending.rb:5
 module RSpec::Core::Pending
+  # @overload pending()
+  # @overload pending(message)
+  #
   # Marks an example as pending. The rest of the example will still be
   # executed, and if it passes the example will fail to indicate that the
   # pending can be removed.
   #
-  # @example
-  #   describe "some behaviour" do
-  #   # reported as "Pending: no reason given"
-  #   it "is pending with no message" do
-  #   pending
-  #   raise "broken"
-  #   end
+  # @param message [String] optional message to add to the summary report.
   #
-  #   # reported as "Pending: something else getting finished"
-  #   it "is pending with a custom message" do
-  #   pending("something else getting finished")
-  #   raise "broken"
-  #   end
-  #   end
+  # @example
+  #     describe "some behaviour" do
+  #       # reported as "Pending: no reason given"
+  #       it "is pending with no message" do
+  #         pending
+  #         raise "broken"
+  #       end
+  #
+  #       # reported as "Pending: something else getting finished"
+  #       it "is pending with a custom message" do
+  #         pending("something else getting finished")
+  #         raise "broken"
+  #       end
+  #     end
+  #
   # @note When using `pending` inside an example body using this method
   #   hooks, such as `before(:example)`, have already be run. This means that
   #   a failure from the code in the `before` hook will prevent the example
@@ -10206,58 +8594,59 @@ module RSpec::Core::Pending
   #   executed. If you need to consider hooks as pending as well you can use
   #   the pending metadata as an alternative, e.g.
   #   `it "does something", pending: "message"`.
-  # @overload pending
-  # @overload pending
-  # @param message [String] optional message to add to the summary report.
   #
   # pkg:gem/rspec-core#lib/rspec/core/pending.rb:62
   def pending(message = T.unsafe(nil), &_block); end
 
+  # @overload skip()
+  # @overload skip(message)
+  #
   # Marks an example as pending and skips execution.
   #
-  # @example
-  #   describe "an example" do
-  #   # reported as "Pending: no reason given"
-  #   it "is skipped with no message" do
-  #   skip
-  #   end
-  #
-  #   # reported as "Pending: something else getting finished"
-  #   it "is skipped with a custom message" do
-  #   skip "something else getting finished"
-  #   end
-  #   end
-  # @overload skip
-  # @overload skip
   # @param message [String] optional message to add to the summary report.
-  # @raise [SkipDeclaredInExample]
+  #
+  # @example
+  #     describe "an example" do
+  #       # reported as "Pending: no reason given"
+  #       it "is skipped with no message" do
+  #         skip
+  #       end
+  #
+  #       # reported as "Pending: something else getting finished"
+  #       it "is skipped with a custom message" do
+  #         skip "something else getting finished"
+  #       end
+  #     end
   #
   # pkg:gem/rspec-core#lib/rspec/core/pending.rb:110
   def skip(message = T.unsafe(nil)); end
 
   class << self
+    # @private
+    #
     # Mark example as fixed.
     #
     # @param example [RSpec::Core::Example] the example to mark as fixed
-    # @private
     #
     # pkg:gem/rspec-core#lib/rspec/core/pending.rb:152
     def mark_fixed!(example); end
 
+    # @private
+    #
     # Mark example as pending.
     #
     # @param example [RSpec::Core::Example] the example to mark as pending
     # @param message_or_bool [Boolean, String] the message to use, or true
-    # @private
     #
     # pkg:gem/rspec-core#lib/rspec/core/pending.rb:135
     def mark_pending!(example, message_or_bool); end
 
+    # @private
+    #
     # Mark example as skipped.
     #
     # @param example [RSpec::Core::Example] the example to mark as skipped
     # @param message_or_bool [Boolean, String] the message to use, or true
-    # @private
     #
     # pkg:gem/rspec-core#lib/rspec/core/pending.rb:124
     def mark_skipped!(example, message_or_bool); end
@@ -10282,13 +8671,9 @@ class RSpec::Core::Pending::PendingExampleFixedError < ::StandardError; end
 #
 # pkg:gem/rspec-core#lib/rspec/core/pending.rb:8
 class RSpec::Core::Pending::SkipDeclaredInExample < ::StandardError
-  # @return [SkipDeclaredInExample] a new instance of SkipDeclaredInExample
-  #
   # pkg:gem/rspec-core#lib/rspec/core/pending.rb:11
   def initialize(argument); end
 
-  # Returns the value of attribute argument.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/pending.rb:9
   def argument; end
 end
@@ -10297,8 +8682,6 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/profiler.rb:4
 class RSpec::Core::Profiler
-  # @return [Profiler] a new instance of Profiler
-  #
   # pkg:gem/rspec-core#lib/rspec/core/profiler.rb:7
   def initialize; end
 
@@ -10308,8 +8691,6 @@ class RSpec::Core::Profiler
   # pkg:gem/rspec-core#lib/rspec/core/profiler.rb:13
   def example_group_started(notification); end
 
-  # Returns the value of attribute example_groups.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/profiler.rb:11
   def example_groups; end
 
@@ -10325,8 +8706,6 @@ RSpec::Core::Profiler::NOTIFICATIONS = T.let(T.unsafe(nil), Array)
 #
 # pkg:gem/rspec-core#lib/rspec/core/reporter.rb:4
 class RSpec::Core::Reporter
-  # @return [Reporter] a new instance of Reporter
-  #
   # pkg:gem/rspec-core#lib/rspec/core/reporter.rb:14
   def initialize(configuration); end
 
@@ -10385,15 +8764,14 @@ class RSpec::Core::Reporter
   # pkg:gem/rspec-core#lib/rspec/core/reporter.rb:28
   def examples; end
 
-  # Reports a run that exited early without having run any examples.
-  #
   # @param exit_code [Integer] the exit_code to be return by the reporter
+  #
+  # Reports a run that exited early without having run any examples.
   #
   # pkg:gem/rspec-core#lib/rspec/core/reporter.rb:84
   def exit_early(exit_code); end
 
   # @private
-  # @return [Boolean]
   #
   # pkg:gem/rspec-core#lib/rspec/core/reporter.rb:222
   def fail_fast_limit_met?; end
@@ -10408,9 +8786,9 @@ class RSpec::Core::Reporter
   # pkg:gem/rspec-core#lib/rspec/core/reporter.rb:173
   def finish; end
 
-  # Send a custom message to supporting formatters.
-  #
   # @param message [#to_s] A message object to send to formatters
+  #
+  # Send a custom message to supporting formatters.
   #
   # pkg:gem/rspec-core#lib/rspec/core/reporter.rb:99
   def message(message); end
@@ -10420,11 +8798,10 @@ class RSpec::Core::Reporter
   # pkg:gem/rspec-core#lib/rspec/core/reporter.rb:207
   def notify(event, notification); end
 
+  # @private
   # Provides a way to notify of an exception that is not tied to any
   # particular example (such as an exception encountered in a :suite hook).
   # Exceptions will be formatted the same way they normally are.
-  #
-  # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/reporter.rb:163
   def notify_non_example_exception(exception, context_description); end
@@ -10439,10 +8816,10 @@ class RSpec::Core::Reporter
   # pkg:gem/rspec-core#lib/rspec/core/reporter.rb:45
   def prepare_default(loader, output_stream, deprecation_stream); end
 
-  # Publish a custom event to supporting registered formatters.
-  #
   # @param event [Symbol] Name of the custom event to trigger on formatters
   # @param options [Hash] Hash of arguments to provide via `CustomNotification`
+  #
+  # Publish a custom event to supporting registered formatters.
   # @see RSpec::Core::Notifications::CustomNotification
   #
   # pkg:gem/rspec-core#lib/rspec/core/reporter.rb:108
@@ -10464,19 +8841,20 @@ class RSpec::Core::Reporter
   # pkg:gem/rspec-core#lib/rspec/core/reporter.rb:52
   def registered_listeners(notification); end
 
+  # @overload report(count, &block)
+  # @overload report(count, &block)
+  # @param expected_example_count [Integer] the number of examples being run
+  # @yield [Block] block yields itself for further reporting.
+  #
   # Initializes the report run and yields itself for further reporting. The
   # block is required, so that the reporter can manage cleaning up after the
   # run.
   #
   # @example
   #
-  #   reporter.report(group.examples.size) do |r|
-  #   example_groups.map {|g| g.run(r) }
-  #   end
-  # @overload report
-  # @overload report
-  # @param expected_example_count [Integer] the number of examples being run
-  # @yield [Block] block yields itself for further reporting.
+  #     reporter.report(group.examples.size) do |r|
+  #       example_groups.map {|g| g.run(r) }
+  #     end
   #
   # pkg:gem/rspec-core#lib/rspec/core/reporter.rb:71
   def report(expected_example_count); end
@@ -10499,13 +8877,9 @@ class RSpec::Core::Reporter
   # pkg:gem/rspec-core#lib/rspec/core/reporter.rb:234
   def ensure_listeners_ready; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/reporter.rb:247
   def mute_profile_output?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/reporter.rb:253
   def seed_used?; end
 end
@@ -10564,8 +8938,6 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/runner.rb:4
 class RSpec::Core::Runner
-  # @return [Runner] a new instance of Runner
-  #
   # pkg:gem/rspec-core#lib/rspec/core/runner.rb:75
   def initialize(options, configuration = T.unsafe(nil), world = T.unsafe(nil)); end
 
@@ -10632,16 +9004,15 @@ class RSpec::Core::Runner
     # Register an `at_exit` hook that runs the suite when the process exits.
     #
     # @note This is not generally needed. The `rspec` command takes care
-    #   of running examples for you without involving an `at_exit`
-    #   hook. This is only needed if you are running specs using
-    #   the `ruby` command, and even then, the normal way to invoke
-    #   this is by requiring `rspec/autorun`.
+    #       of running examples for you without involving an `at_exit`
+    #       hook. This is only needed if you are running specs using
+    #       the `ruby` command, and even then, the normal way to invoke
+    #       this is by requiring `rspec/autorun`.
     #
     # pkg:gem/rspec-core#lib/rspec/core/runner.rb:16
     def autorun; end
 
     # @private
-    # @return [Boolean]
     #
     # pkg:gem/rspec-core#lib/rspec/core/runner.rb:141
     def autorun_disabled?; end
@@ -10657,7 +9028,6 @@ class RSpec::Core::Runner
     def handle_interrupt; end
 
     # @private
-    # @return [Boolean]
     #
     # pkg:gem/rspec-core#lib/rspec/core/runner.rb:146
     def installed_at_exit?; end
@@ -10693,7 +9063,6 @@ class RSpec::Core::Runner
     def run(args, err = T.unsafe(nil), out = T.unsafe(nil)); end
 
     # @private
-    # @return [Boolean]
     #
     # pkg:gem/rspec-core#lib/rspec/core/runner.rb:151
     def running_in_drb?; end
@@ -10705,20 +9074,18 @@ class RSpec::Core::Runner
   end
 end
 
+# @private
+#
 # We use this to replace `::Set` so we can have the advantage of
 # constant time key lookups for unique arrays but without the
 # potential to pollute a developers environment with an extra
 # piece of the stdlib. This helps to prevent false positive
 # builds.
 #
-# @private
-#
 # pkg:gem/rspec-core#lib/rspec/core/set.rb:11
 class RSpec::Core::Set
   include ::Enumerable
 
-  # @return [Set] a new instance of Set
-  #
   # pkg:gem/rspec-core#lib/rspec/core/set.rb:14
   def initialize(array = T.unsafe(nil)); end
 
@@ -10734,13 +9101,9 @@ class RSpec::Core::Set
   # pkg:gem/rspec-core#lib/rspec/core/set.rb:32
   def each(&block); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/set.rb:19
   def empty?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/set.rb:37
   def include?(key); end
 
@@ -10753,17 +9116,17 @@ end
 #
 # @example
 #
-#   module LoggedInAsAdmin
-#   extend RSpec::Core::SharedContext
-#   before(:example) do
-#   log_in_as :admin
-#   end
-#   end
+#     module LoggedInAsAdmin
+#       extend RSpec::Core::SharedContext
+#       before(:example) do
+#         log_in_as :admin
+#       end
+#     end
 #
-#   describe "admin section" do
-#   include LoggedInAsAdmin
-#   # ...
-#   end
+#     describe "admin section" do
+#       include LoggedInAsAdmin
+#       # ...
+#     end
 #
 # pkg:gem/rspec-core#lib/rspec/core/shared_context.rb:19
 module RSpec::Core::SharedContext
@@ -10831,48 +9194,21 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/shared_context.rb:33
 class RSpec::Core::SharedContext::Recording < ::Struct
-  # Returns the value of attribute args
-  #
-  # @return [Object] the current value of args
-  #
   # pkg:gem/rspec-core#lib/rspec/core/shared_context.rb:33
   def args; end
 
-  # Sets the attribute args
-  #
-  # @param value [Object] the value to set the attribute args to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/shared_context.rb:33
   def args=(_); end
 
-  # Returns the value of attribute block
-  #
-  # @return [Object] the current value of block
-  #
   # pkg:gem/rspec-core#lib/rspec/core/shared_context.rb:33
   def block; end
 
-  # Sets the attribute block
-  #
-  # @param value [Object] the value to set the attribute block to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/shared_context.rb:33
   def block=(_); end
 
-  # Returns the value of attribute method_name
-  #
-  # @return [Object] the current value of method_name
-  #
   # pkg:gem/rspec-core#lib/rspec/core/shared_context.rb:33
   def method_name; end
 
-  # Sets the attribute method_name
-  #
-  # @param value [Object] the value to set the attribute method_name to.
-  # @return [Object] the newly set value
-  #
   # pkg:gem/rspec-core#lib/rspec/core/shared_context.rb:33
   def method_name=(_); end
 
@@ -10913,78 +9249,45 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/shared_example_group.rb:57
 module RSpec::Core::SharedExampleGroup
-  # Stores the block for later use. The block will be evaluated
-  # in the context of an example group via `include_examples`,
-  # `include_context`, or `it_behaves_like`.
-  #
-  # @example
-  #   shared_examples "auditable" do
-  #   it "stores an audit record on save!" do
-  #   expect { auditable.save! }.to change(Audit, :count).by(1)
-  #   end
-  #   end
-  #
-  #   RSpec.describe Account do
-  #   it_behaves_like "auditable" do
-  #   let(:auditable) { Account.new }
-  #   end
-  #   end
-  # @overload shared_examples
-  # @overload shared_examples
-  # @see ExampleGroup.include_context
-  # @see ExampleGroup.include_examples
-  # @see ExampleGroup.it_behaves_like
-  #
   # pkg:gem/rspec-core#lib/rspec/core/shared_example_group.rb:100
   def shared_context(name, *args, &block); end
 
+  # @overload shared_examples(name, &block)
+  #   @param name [String, Symbol, Module] identifer to use when looking up
+  #     this shared group
+  #   @param block The block to be eval'd
+  # @overload shared_examples(name, metadata, &block)
+  #   @param name [String, Symbol, Module] identifer to use when looking up
+  #     this shared group
+  #   @param metadata [Array<Symbol>, Hash] metadata to attach to this
+  #     group; any example group or example with matching metadata will
+  #     automatically include this shared example group.
+  #   @param block The block to be eval'd
+  #
   # Stores the block for later use. The block will be evaluated
   # in the context of an example group via `include_examples`,
   # `include_context`, or `it_behaves_like`.
   #
   # @example
   #   shared_examples "auditable" do
-  #   it "stores an audit record on save!" do
-  #   expect { auditable.save! }.to change(Audit, :count).by(1)
-  #   end
+  #     it "stores an audit record on save!" do
+  #       expect { auditable.save! }.to change(Audit, :count).by(1)
+  #     end
   #   end
   #
   #   RSpec.describe Account do
-  #   it_behaves_like "auditable" do
-  #   let(:auditable) { Account.new }
+  #     it_behaves_like "auditable" do
+  #       let(:auditable) { Account.new }
+  #     end
   #   end
-  #   end
-  # @overload shared_examples
-  # @overload shared_examples
-  # @see ExampleGroup.include_context
-  # @see ExampleGroup.include_examples
+  #
   # @see ExampleGroup.it_behaves_like
+  # @see ExampleGroup.include_examples
+  # @see ExampleGroup.include_context
   #
   # pkg:gem/rspec-core#lib/rspec/core/shared_example_group.rb:90
   def shared_examples(name, *args, &block); end
 
-  # Stores the block for later use. The block will be evaluated
-  # in the context of an example group via `include_examples`,
-  # `include_context`, or `it_behaves_like`.
-  #
-  # @example
-  #   shared_examples "auditable" do
-  #   it "stores an audit record on save!" do
-  #   expect { auditable.save! }.to change(Audit, :count).by(1)
-  #   end
-  #   end
-  #
-  #   RSpec.describe Account do
-  #   it_behaves_like "auditable" do
-  #   let(:auditable) { Account.new }
-  #   end
-  #   end
-  # @overload shared_examples
-  # @overload shared_examples
-  # @see ExampleGroup.include_context
-  # @see ExampleGroup.include_examples
-  # @see ExampleGroup.it_behaves_like
-  #
   # pkg:gem/rspec-core#lib/rspec/core/shared_example_group.rb:101
   def shared_examples_for(name, *args, &block); end
 end
@@ -11001,11 +9304,13 @@ class RSpec::Core::SharedExampleGroup::Registry
 
   private
 
+  # for 1.8.7
   # :nocov:
   #
   # pkg:gem/rspec-core#lib/rspec/core/shared_example_group.rb:257
   def ensure_block_has_source_location(_block); end
 
+  # 1.8.7
   # :nocov:
   #
   # pkg:gem/rspec-core#lib/rspec/core/shared_example_group.rb:245
@@ -11022,8 +9327,6 @@ class RSpec::Core::SharedExampleGroup::Registry
   # pkg:gem/rspec-core#lib/rspec/core/shared_example_group.rb:204
   def shared_example_groups; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/rspec-core#lib/rspec/core/shared_example_group.rb:208
   def valid_name?(candidate); end
 
@@ -11031,36 +9334,33 @@ class RSpec::Core::SharedExampleGroup::Registry
   def warn_if_key_taken(context, key, new_block); end
 end
 
-# Shared examples top level DSL.
-#
 # @api private
+#
+# Shared examples top level DSL.
 #
 # pkg:gem/rspec-core#lib/rspec/core/shared_example_group.rb:106
 module RSpec::Core::SharedExampleGroup::TopLevelDSL
   class << self
-    # @api private
     # @private
     #
     # pkg:gem/rspec-core#lib/rspec/core/shared_example_group.rb:108
     def definitions; end
 
-    # Adds the top level DSL methods to Module and the top level binding.
-    #
     # @api private
+    #
+    # Adds the top level DSL methods to Module and the top level binding.
     #
     # pkg:gem/rspec-core#lib/rspec/core/shared_example_group.rb:126
     def expose_globally!; end
 
-    # @api private
     # @private
-    # @return [Boolean]
     #
     # pkg:gem/rspec-core#lib/rspec/core/shared_example_group.rb:119
     def exposed_globally?; end
 
-    # Removes the top level DSL methods to Module and the top level binding.
-    #
     # @api private
+    #
+    # Removes the top level DSL methods to Module and the top level binding.
     #
     # pkg:gem/rspec-core#lib/rspec/core/shared_example_group.rb:135
     def remove_globally!; end
@@ -11072,7 +9372,6 @@ end
 # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:789
 class RSpec::Core::SharedExampleGroupInclusionStackFrame
   # @private
-  # @return [SharedExampleGroupInclusionStackFrame] a new instance of SharedExampleGroupInclusionStackFrame
   #
   # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:796
   def initialize(shared_group_name, inclusion_location); end
@@ -11123,8 +9422,6 @@ end
 #
 # pkg:gem/rspec-core#lib/rspec/core/shared_example_group.rb:9
 class RSpec::Core::SharedExampleGroupModule < ::Module
-  # @return [SharedExampleGroupModule] a new instance of SharedExampleGroupModule
-  #
   # pkg:gem/rspec-core#lib/rspec/core/shared_example_group.rb:13
   def initialize(description, definition, metadata); end
 
@@ -11150,15 +9447,12 @@ class RSpec::Core::SharedExampleGroupModule < ::Module
   # pkg:gem/rspec-core#lib/rspec/core/shared_example_group.rb:20
   def inspect; end
 
-  # Provides a human-readable representation of this module.
-  #
   # pkg:gem/rspec-core#lib/rspec/core/shared_example_group.rb:23
   def to_s; end
 end
 
-# Deals with the fact that `shellwords` only works on POSIX systems.
-#
 # @private
+# Deals with the fact that `shellwords` only works on POSIX systems.
 #
 # pkg:gem/rspec-core#lib/rspec/core/shell_escape.rb:5
 module RSpec::Core::ShellEscape
@@ -11188,8 +9482,6 @@ module RSpec::Core::ShellEscape
     # pkg:gem/rspec-core#lib/rspec/core/shell_escape.rb:8
     def quote(argument); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/rspec-core#lib/rspec/core/shell_escape.rb:37
     def shell_allows_unquoted_ids?; end
   end
@@ -11205,14 +9497,11 @@ end
 # pkg:gem/rspec-core#lib/rspec/core/shell_escape.rb:30
 RSpec::Core::ShellEscape::SHELLS_ALLOWING_UNQUOTED_IDS = T.let(T.unsafe(nil), Array)
 
-# Provides an execution context for before/after :suite hooks.
-#
 # @private
+# Provides an execution context for before/after :suite hooks.
 #
 # pkg:gem/rspec-core#lib/rspec/core/example.rb:651
 class RSpec::Core::SuiteHookContext < ::RSpec::Core::Example
-  # @return [SuiteHookContext] a new instance of SuiteHookContext
-  #
   # pkg:gem/rspec-core#lib/rspec/core/example.rb:652
   def initialize(hook_description, reporter); end
 
@@ -11220,11 +9509,10 @@ class RSpec::Core::SuiteHookContext < ::RSpec::Core::Example
   def set_exception(exception); end
 end
 
+# @private
 # This avoids issues with reporting time caused by examples that
 # change the value/meaning of Time.now without properly restoring
 # it.
-#
-# @private
 #
 # pkg:gem/rspec-core#lib/rspec/core.rb:174
 class RSpec::Core::Time
@@ -11248,16 +9536,16 @@ RSpec::Core::Version::STRING = T.let(T.unsafe(nil), String)
 #
 # pkg:gem/rspec-core#lib/rspec/core/warnings.rb:6
 module RSpec::Core::Warnings
-  # Used internally to print deprecation warnings.
-  #
   # @private
+  #
+  # Used internally to print deprecation warnings.
   #
   # pkg:gem/rspec-core#lib/rspec/core/warnings.rb:10
   def deprecate(deprecated, data = T.unsafe(nil)); end
 
-  # Used internally to print deprecation warnings.
-  #
   # @private
+  #
+  # Used internally to print deprecation warnings.
   #
   # pkg:gem/rspec-core#lib/rspec/core/warnings.rb:22
   def warn_deprecation(message, opts = T.unsafe(nil)); end
@@ -11268,95 +9556,83 @@ module RSpec::Core::Warnings
   def warn_with(message, options = T.unsafe(nil)); end
 end
 
-# Internal container for global non-configuration data.
-#
 # @api private
+#
+# Internal container for global non-configuration data.
 #
 # pkg:gem/rspec-core#lib/rspec/core/world.rb:6
 class RSpec::Core::World
-  # @api private
-  # @return [World] a new instance of World
-  #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:26
   def initialize(configuration = T.unsafe(nil)); end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:115
   def all_example_groups; end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:120
   def all_examples; end
 
-  # Add exclusion filters to announcement message.
-  #
   # @api private
+  #
+  # Add exclusion filters to announcement message.
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:226
   def announce_exclusion_filter(announcements); end
 
-  # Notify reporter of filters.
-  #
   # @api private
+  #
+  # Notify reporter of filters.
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:171
   def announce_filters; end
 
-  # Add inclusion filters to announcement message.
-  #
   # @api private
+  #
+  # Add inclusion filters to announcement message.
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:217
   def announce_inclusion_filter(announcements); end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:210
   def everything_filtered_message; end
 
-  # Get count of examples to be run.
-  #
   # @api private
+  #
+  # Get count of examples to be run.
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:109
   def example_count(groups = T.unsafe(nil)); end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:8
   def example_group_counts_by_spec_file; end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:8
   def example_groups; end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:102
   def exclusion_filter; end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:69
   def filter_manager; end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:8
   def filtered_examples; end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:97
@@ -11365,8 +9641,6 @@ class RSpec::Core::World
   # Used internally to signal that a failure outside of an example
   # has occurred, and that therefore the exit status should indicate
   # the run failed.
-  #
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:24
@@ -11375,72 +9649,66 @@ class RSpec::Core::World
   # Used internally to signal that a failure outside of an example
   # has occurred, and that therefore the exit status should indicate
   # the run failed.
-  #
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:24
   def non_example_failure=(_arg0); end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:87
   def num_example_groups_defined_in(file); end
 
-  # Apply ordering strategy from configuration to example groups.
-  #
   # @api private
+  #
+  # Apply ordering strategy from configuration to example groups.
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:52
   def ordered_example_groups; end
 
-  # Find line number of previous declaration.
-  #
   # @api private
+  #
+  # Find line number of previous declaration.
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:140
   def preceding_declaration_line(absolute_file_name, filter_line); end
 
+  # @api public
+  #
   # Prepares filters so that they apply to example groups when they run.
   #
   # This is a separate method so that filters can be modified/replaced and
   # examples refiltered during a process's lifetime, which can be useful for
   # a custom runner.
   #
-  # @api public
-  #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:43
   def prepare_example_filtering; end
 
-  # Records an example group.
-  #
   # @api private
+  #
+  # Records an example group.
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:81
   def record(example_group); end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:74
   def registered_example_group_files; end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:205
   def report_filter_message(message); end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:149
   def reporter; end
 
-  # Reset world to 'scratch' before running suite.
-  #
   # @api private
+  #
+  # Reset world to 'scratch' before running suite.
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:60
   def reset; end
@@ -11449,8 +9717,6 @@ class RSpec::Core::World
   # `Configuration#load_file_handling_errors`, and thus examples cannot
   # be counted accurately. Specifically, we cannot accurately report
   # "No examples found".
-  #
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:18
@@ -11460,31 +9726,27 @@ class RSpec::Core::World
   # `Configuration#load_file_handling_errors`, and thus examples cannot
   # be counted accurately. Specifically, we cannot accurately report
   # "No examples found".
-  #
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:18
   def rspec_is_quitting=(_arg0); end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:92
   def shared_example_group_registry; end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:154
   def source_from_file(path); end
 
-  # @api private
   # @private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:164
   def syntax_highlighter; end
 
+  # @private
   # Traverses the tree of each top level group.
   # For each it yields the group, then the children, recursively.
   # Halts the traversal of a branch of the tree as soon as the passed block returns true.
@@ -11492,85 +9754,60 @@ class RSpec::Core::World
   # This is intended to make it easy to find the top-most group that satisfies some
   # condition.
   #
-  # @api private
-  # @private
-  #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:131
   def traverse_example_group_trees_until(&block); end
 
   # Used internally to determine what to do when a SIGINT is received.
-  #
-  # @api private
   #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:11
   def wants_to_quit; end
 
   # Used internally to determine what to do when a SIGINT is received.
   #
-  # @api private
-  #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:11
   def wants_to_quit=(_arg0); end
 
   private
 
-  # @api private
-  #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:234
   def descending_declaration_line_numbers_by_file; end
 
-  # @api private
-  #
   # pkg:gem/rspec-core#lib/rspec/core/world.rb:252
   def fail_if_config_and_cli_options_invalid; end
 end
 
-# Provides a null implementation for initial use by configuration.
-#
-# @api private
 # @private
+# Provides a null implementation for initial use by configuration.
 #
 # pkg:gem/rspec-core#lib/rspec/core/world.rb:264
 module RSpec::Core::World::Null
   class << self
-    # @api private
-    #
     # pkg:gem/rspec-core#lib/rspec/core/world.rb:280
     def all_example_groups; end
 
     # :nocov:
     #
-    # @api private
-    #
     # pkg:gem/rspec-core#lib/rspec/core/world.rb:276
     def example_groups; end
 
-    # @api private
-    #
     # pkg:gem/rspec-core#lib/rspec/core/world.rb:265
     def non_example_failure; end
 
-    # @api private
-    #
     # pkg:gem/rspec-core#lib/rspec/core/world.rb:266
     def non_example_failure=(_); end
 
-    # @api private
-    #
     # pkg:gem/rspec-core#lib/rspec/core/world.rb:268
     def registered_example_group_files; end
 
-    # @api private
-    #
     # pkg:gem/rspec-core#lib/rspec/core/world.rb:272
     def traverse_example_group_trees_until(&_block); end
   end
 end
 
+# @private
+#
 # Namespace for the example group subclasses generated by top-level
 # `describe`.
-#
-# @private
 #
 # pkg:gem/rspec-core#lib/rspec/core/example_group.rb:846
 module RSpec::ExampleGroups

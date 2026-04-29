@@ -175,8 +175,6 @@ end
 
 # pkg:gem/kamal#lib/kamal/cli/app/assets.rb:1
 class Kamal::Cli::App::Assets
-  # @return [Assets] a new instance of Assets
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/assets.rb:6
   def initialize(host, role, sshkit); end
 
@@ -189,24 +187,18 @@ class Kamal::Cli::App::Assets
   # pkg:gem/kamal#lib/kamal/cli/app/assets.rb:3
   def execute(*_arg0, **_arg1, &_arg2); end
 
-  # Returns the value of attribute host.
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/assets.rb:2
   def host; end
 
   # pkg:gem/kamal#lib/kamal/cli/app/assets.rb:3
   def info(*_arg0, **_arg1, &_arg2); end
 
-  # Returns the value of attribute role.
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/assets.rb:2
   def role; end
 
   # pkg:gem/kamal#lib/kamal/cli/app/assets.rb:12
   def run; end
 
-  # Returns the value of attribute sshkit.
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/assets.rb:2
   def sshkit; end
 
@@ -218,16 +210,12 @@ end
 
 # pkg:gem/kamal#lib/kamal/cli/app/boot.rb:1
 class Kamal::Cli::App::Boot
-  # @return [Boot] a new instance of Boot
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/boot.rb:6
   def initialize(host, role, sshkit, version, barrier); end
 
   # pkg:gem/kamal#lib/kamal/cli/app/boot.rb:4
   def assets?(*_arg0, **_arg1, &_arg2); end
 
-  # Returns the value of attribute barrier.
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/boot.rb:2
   def barrier; end
 
@@ -243,16 +231,12 @@ class Kamal::Cli::App::Boot
   # pkg:gem/kamal#lib/kamal/cli/app/boot.rb:3
   def execute(*_arg0, **_arg1, &_arg2); end
 
-  # Returns the value of attribute host.
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/boot.rb:2
   def host; end
 
   # pkg:gem/kamal#lib/kamal/cli/app/boot.rb:3
   def info(*_arg0, **_arg1, &_arg2); end
 
-  # Returns the value of attribute role.
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/boot.rb:2
   def role; end
 
@@ -262,16 +246,12 @@ class Kamal::Cli::App::Boot
   # pkg:gem/kamal#lib/kamal/cli/app/boot.rb:4
   def running_proxy?(*_arg0, **_arg1, &_arg2); end
 
-  # Returns the value of attribute sshkit.
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/boot.rb:2
   def sshkit; end
 
   # pkg:gem/kamal#lib/kamal/cli/app/boot.rb:3
   def upload!(*_arg0, **_arg1, &_arg2); end
 
-  # Returns the value of attribute version.
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/boot.rb:2
   def version; end
 
@@ -286,24 +266,18 @@ class Kamal::Cli::App::Boot
   # pkg:gem/kamal#lib/kamal/cli/app/boot.rb:111
   def auditor; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/boot.rb:103
   def barrier_role?; end
 
   # pkg:gem/kamal#lib/kamal/cli/app/boot.rb:91
   def close_barrier; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/boot.rb:119
   def gatekeeper?; end
 
   # pkg:gem/kamal#lib/kamal/cli/app/boot.rb:35
   def old_version_renamed_if_clashing; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/boot.rb:123
   def queuer?; end
 
@@ -325,24 +299,18 @@ end
 
 # pkg:gem/kamal#lib/kamal/cli/app/error_pages.rb:1
 class Kamal::Cli::App::ErrorPages
-  # @return [ErrorPages] a new instance of ErrorPages
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/error_pages.rb:7
   def initialize(host, sshkit); end
 
   # pkg:gem/kamal#lib/kamal/cli/app/error_pages.rb:5
   def execute(*_arg0, **_arg1, &_arg2); end
 
-  # Returns the value of attribute host.
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/error_pages.rb:4
   def host; end
 
   # pkg:gem/kamal#lib/kamal/cli/app/error_pages.rb:12
   def run; end
 
-  # Returns the value of attribute sshkit.
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/error_pages.rb:4
   def sshkit; end
 
@@ -360,32 +328,24 @@ Kamal::Cli::App::ErrorPages::ERROR_PAGES_GLOB = T.let(T.unsafe(nil), String)
 
 # pkg:gem/kamal#lib/kamal/cli/app/ssl_certificates.rb:1
 class Kamal::Cli::App::SslCertificates
-  # @return [SslCertificates] a new instance of SslCertificates
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/ssl_certificates.rb:5
   def initialize(host, role, sshkit); end
 
   # pkg:gem/kamal#lib/kamal/cli/app/ssl_certificates.rb:3
   def execute(*_arg0, **_arg1, &_arg2); end
 
-  # Returns the value of attribute host.
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/ssl_certificates.rb:2
   def host; end
 
   # pkg:gem/kamal#lib/kamal/cli/app/ssl_certificates.rb:3
   def info(*_arg0, **_arg1, &_arg2); end
 
-  # Returns the value of attribute role.
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/ssl_certificates.rb:2
   def role; end
 
   # pkg:gem/kamal#lib/kamal/cli/app/ssl_certificates.rb:11
   def run; end
 
-  # Returns the value of attribute sshkit.
-  #
   # pkg:gem/kamal#lib/kamal/cli/app/ssl_certificates.rb:2
   def sshkit; end
 
@@ -403,8 +363,6 @@ class Kamal::Cli::Base < ::Thor
   include ::SSHKit::DSL
   include ::SSHKitDslRoles
 
-  # @return [Base] a new instance of Base
-  #
   # pkg:gem/kamal#lib/kamal/cli/base.rb:27
   def initialize(args = T.unsafe(nil), local_options = T.unsafe(nil), config = T.unsafe(nil)); end
 
@@ -468,8 +426,6 @@ class Kamal::Cli::Base < ::Thor
     # pkg:gem/kamal#lib/kamal/cli/base.rb:11
     def dynamic_command_class; end
 
-    # @return [Boolean]
-    #
     # pkg:gem/kamal#lib/kamal/cli/base.rb:10
     def exit_on_failure?; end
   end
@@ -539,8 +495,6 @@ class Kamal::Cli::Build::BuildError < ::StandardError; end
 
 # pkg:gem/kamal#lib/kamal/cli/build/clone.rb:1
 class Kamal::Cli::Build::Clone
-  # @return [Clone] a new instance of Clone
-  #
   # pkg:gem/kamal#lib/kamal/cli/build/clone.rb:5
   def initialize(sshkit); end
 
@@ -559,8 +513,6 @@ class Kamal::Cli::Build::Clone
   # pkg:gem/kamal#lib/kamal/cli/build/clone.rb:9
   def prepare; end
 
-  # Returns the value of attribute sshkit.
-  #
   # pkg:gem/kamal#lib/kamal/cli/build/clone.rb:2
   def sshkit; end
 
@@ -578,26 +530,18 @@ end
 
 # pkg:gem/kamal#lib/kamal/cli/build/port_forwarding.rb:3
 class Kamal::Cli::Build::PortForwarding
-  # @return [PortForwarding] a new instance of PortForwarding
-  #
   # pkg:gem/kamal#lib/kamal/cli/build/port_forwarding.rb:6
   def initialize(hosts, port, **ssh_options); end
 
   # pkg:gem/kamal#lib/kamal/cli/build/port_forwarding.rb:12
   def forward; end
 
-  # Returns the value of attribute hosts.
-  #
   # pkg:gem/kamal#lib/kamal/cli/build/port_forwarding.rb:4
   def hosts; end
 
-  # Returns the value of attribute port.
-  #
   # pkg:gem/kamal#lib/kamal/cli/build/port_forwarding.rb:4
   def port; end
 
-  # Returns the value of attribute ssh_options.
-  #
   # pkg:gem/kamal#lib/kamal/cli/build/port_forwarding.rb:4
   def ssh_options; end
 
@@ -621,8 +565,6 @@ module Kamal::Cli::Healthcheck; end
 
 # pkg:gem/kamal#lib/kamal/cli/healthcheck/barrier.rb:3
 class Kamal::Cli::Healthcheck::Barrier
-  # @return [Barrier] a new instance of Barrier
-  #
   # pkg:gem/kamal#lib/kamal/cli/healthcheck/barrier.rb:4
   def initialize; end
 
@@ -637,8 +579,6 @@ class Kamal::Cli::Healthcheck::Barrier
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/cli/healthcheck/barrier.rb:23
   def opened?; end
 
@@ -755,8 +695,6 @@ class Kamal::Cli::Main < ::Kamal::Cli::Base
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/cli/main.rb:258
   def container_available?(version); end
 
@@ -810,8 +748,6 @@ class Kamal::Cli::Proxy < ::Kamal::Cli::Base
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/cli/proxy.rb:279
   def removal_allowed?(force); end
 end
@@ -886,8 +822,6 @@ end
 
 # pkg:gem/kamal#lib/kamal/commander.rb:5
 class Kamal::Commander
-  # @return [Commander] a new instance of Commander
-  #
   # pkg:gem/kamal#lib/kamal/commander.rb:10
   def initialize; end
 
@@ -921,45 +855,27 @@ class Kamal::Commander
   # pkg:gem/kamal#lib/kamal/commander.rb:30
   def configure(**kwargs); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/commander.rb:34
   def configured?; end
 
-  # Returns the value of attribute connected.
-  #
   # pkg:gem/kamal#lib/kamal/commander.rb:6
   def connected; end
 
-  # Sets the attribute connected
-  #
-  # @param value the value to set the attribute connected to.
-  #
   # pkg:gem/kamal#lib/kamal/commander.rb:6
   def connected=(_arg0); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/commander.rb:149
   def connected?; end
 
   # pkg:gem/kamal#lib/kamal/commander.rb:92
   def docker; end
 
-  # Returns the value of attribute holding_lock.
-  #
   # pkg:gem/kamal#lib/kamal/commander.rb:6
   def holding_lock; end
 
-  # Sets the attribute holding_lock
-  #
-  # @param value the value to set the attribute holding_lock to.
-  #
   # pkg:gem/kamal#lib/kamal/commander.rb:6
   def holding_lock=(_arg0); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/commander.rb:145
   def holding_lock?; end
 
@@ -1005,8 +921,6 @@ class Kamal::Commander
   # pkg:gem/kamal#lib/kamal/commander.rb:116
   def server; end
 
-  # Returns the value of attribute specific_hosts.
-  #
   # pkg:gem/kamal#lib/kamal/commander.rb:7
   def specific_hosts; end
 
@@ -1016,23 +930,15 @@ class Kamal::Commander
   # pkg:gem/kamal#lib/kamal/commander.rb:38
   def specific_primary!; end
 
-  # Returns the value of attribute specific_roles.
-  #
   # pkg:gem/kamal#lib/kamal/commander.rb:7
   def specific_roles; end
 
   # pkg:gem/kamal#lib/kamal/commander.rb:47
   def specific_roles=(role_names); end
 
-  # Returns the value of attribute verbosity.
-  #
   # pkg:gem/kamal#lib/kamal/commander.rb:6
   def verbosity; end
 
-  # Sets the attribute verbosity
-  #
-  # @param value the value to set the attribute verbosity to.
-  #
   # pkg:gem/kamal#lib/kamal/commander.rb:6
   def verbosity=(_arg0); end
 
@@ -1055,8 +961,6 @@ end
 
 # pkg:gem/kamal#lib/kamal/commander/specifics.rb:1
 class Kamal::Commander::Specifics
-  # @return [Specifics] a new instance of Specifics
-  #
   # pkg:gem/kamal#lib/kamal/commander/specifics.rb:5
   def initialize(config, specific_hosts, specific_roles); end
 
@@ -1066,26 +970,18 @@ class Kamal::Commander::Specifics
   # pkg:gem/kamal#lib/kamal/commander/specifics.rb:21
   def app_hosts; end
 
-  # Returns the value of attribute hosts.
-  #
   # pkg:gem/kamal#lib/kamal/commander/specifics.rb:2
   def hosts; end
 
-  # Returns the value of attribute primary_host.
-  #
   # pkg:gem/kamal#lib/kamal/commander/specifics.rb:2
   def primary_host; end
 
-  # Returns the value of attribute primary_role.
-  #
   # pkg:gem/kamal#lib/kamal/commander/specifics.rb:2
   def primary_role; end
 
   # pkg:gem/kamal#lib/kamal/commander/specifics.rb:25
   def proxy_hosts; end
 
-  # Returns the value of attribute roles.
-  #
   # pkg:gem/kamal#lib/kamal/commander/specifics.rb:2
   def roles; end
 
@@ -1097,8 +993,6 @@ class Kamal::Commander::Specifics
 
   private
 
-  # Returns the value of attribute config.
-  #
   # pkg:gem/kamal#lib/kamal/commander/specifics.rb:34
   def config; end
 
@@ -1111,13 +1005,9 @@ class Kamal::Commander::Specifics
   # pkg:gem/kamal#lib/kamal/commander/specifics.rb:59
   def sort_primary_role_hosts_first!(hosts); end
 
-  # Returns the value of attribute specific_hosts.
-  #
   # pkg:gem/kamal#lib/kamal/commander/specifics.rb:34
   def specific_hosts; end
 
-  # Returns the value of attribute specific_roles.
-  #
   # pkg:gem/kamal#lib/kamal/commander/specifics.rb:34
   def specific_roles; end
 
@@ -1135,13 +1025,9 @@ module Kamal::Commands; end
 class Kamal::Commands::Accessory < ::Kamal::Commands::Base
   include ::Kamal::Commands::Accessory::Proxy
 
-  # @return [Accessory] a new instance of Accessory
-  #
   # pkg:gem/kamal#lib/kamal/commands/accessory.rb:10
   def initialize(config, name:); end
 
-  # Returns the value of attribute accessory_config.
-  #
   # pkg:gem/kamal#lib/kamal/commands/accessory.rb:4
   def accessory_config; end
 
@@ -1286,8 +1172,6 @@ class Kamal::Commands::App < ::Kamal::Commands::Base
   include ::Kamal::Commands::App::Containers
   include ::Kamal::Commands::App::Assets
 
-  # @return [App] a new instance of App
-  #
   # pkg:gem/kamal#lib/kamal/commands/app.rb:10
   def initialize(config, role: T.unsafe(nil), host: T.unsafe(nil)); end
 
@@ -1306,8 +1190,6 @@ class Kamal::Commands::App < ::Kamal::Commands::Base
   # pkg:gem/kamal#lib/kamal/commands/app.rb:76
   def ensure_env_directory; end
 
-  # Returns the value of attribute host.
-  #
   # pkg:gem/kamal#lib/kamal/commands/app.rb:6
   def host; end
 
@@ -1317,8 +1199,6 @@ class Kamal::Commands::App < ::Kamal::Commands::Base
   # pkg:gem/kamal#lib/kamal/commands/app.rb:70
   def list_versions(*docker_args, statuses: T.unsafe(nil)); end
 
-  # Returns the value of attribute role.
-  #
   # pkg:gem/kamal#lib/kamal/commands/app.rb:6
   def role; end
 
@@ -1497,13 +1377,9 @@ end
 
 # pkg:gem/kamal#lib/kamal/commands/auditor.rb:1
 class Kamal::Commands::Auditor < ::Kamal::Commands::Base
-  # @return [Auditor] a new instance of Auditor
-  #
   # pkg:gem/kamal#lib/kamal/commands/auditor.rb:5
   def initialize(config, **details); end
 
-  # Returns the value of attribute details.
-  #
   # pkg:gem/kamal#lib/kamal/commands/auditor.rb:2
   def details; end
 
@@ -1535,23 +1411,15 @@ end
 
 # pkg:gem/kamal#lib/kamal/commands/base.rb:2
 class Kamal::Commands::Base
-  # @return [Base] a new instance of Base
-  #
   # pkg:gem/kamal#lib/kamal/commands/base.rb:9
   def initialize(config); end
 
   # pkg:gem/kamal#lib/kamal/commands/base.rb:3
   def argumentize(*_arg0, **_arg1, &_arg2); end
 
-  # Returns the value of attribute config.
-  #
   # pkg:gem/kamal#lib/kamal/commands/base.rb:7
   def config; end
 
-  # Sets the attribute config
-  #
-  # @param value the value to set the attribute config to.
-  #
   # pkg:gem/kamal#lib/kamal/commands/base.rb:7
   def config=(_arg0); end
 
@@ -1769,8 +1637,6 @@ class Kamal::Commands::Builder::Base < ::Kamal::Commands::Base
   # pkg:gem/kamal#lib/kamal/commands/builder/base.rb:7
   def local_arches(*_arg0, **_arg1, &_arg2); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/commands/builder/base.rb:64
   def login_to_registry_locally?; end
 
@@ -1981,8 +1847,6 @@ class Kamal::Commands::Builder::Remote < ::Kamal::Commands::Builder::Base
   # pkg:gem/kamal#lib/kamal/commands/builder/remote.rb:20
   def inspect_builder; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/commands/builder/remote.rb:27
   def login_to_registry_locally?; end
 
@@ -2030,8 +1894,6 @@ class Kamal::Commands::Docker < ::Kamal::Commands::Base
   # pkg:gem/kamal#lib/kamal/commands/docker.rb:38
   def create_network; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/commands/docker.rb:26
   def in_docker_group?; end
 
@@ -2042,29 +1904,21 @@ class Kamal::Commands::Docker < ::Kamal::Commands::Base
 
   # Checks the Docker client version. Fails if Docker is not installed.
   #
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/commands/docker.rb:8
   def installed?; end
 
   # pkg:gem/kamal#lib/kamal/commands/docker.rb:34
   def refresh_session; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/commands/docker.rb:22
   def root?; end
 
   # Checks the Docker server version. Fails if Docker is not running.
   #
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/commands/docker.rb:13
   def running?; end
 
   # Do we have superuser access to install Docker and start system services?
-  #
-  # @return [Boolean]
   #
   # pkg:gem/kamal#lib/kamal/commands/docker.rb:18
   def superuser?; end
@@ -2080,8 +1934,6 @@ class Kamal::Commands::Hook < ::Kamal::Commands::Base
   # pkg:gem/kamal#lib/kamal/commands/hook.rb:6
   def env(secrets: T.unsafe(nil), **details); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/commands/hook.rb:12
   def hook_exists?(hook); end
 
@@ -2134,8 +1986,6 @@ end
 
 # pkg:gem/kamal#lib/kamal/commands/proxy.rb:1
 class Kamal::Commands::Proxy < ::Kamal::Commands::Base
-  # @return [Proxy] a new instance of Proxy
-  #
   # pkg:gem/kamal#lib/kamal/commands/proxy.rb:5
   def initialize(config, host:); end
 
@@ -2166,8 +2016,6 @@ class Kamal::Commands::Proxy < ::Kamal::Commands::Base
   # pkg:gem/kamal#lib/kamal/commands/proxy.rb:2
   def optionize(*_arg0, **_arg1, &_arg2); end
 
-  # Returns the value of attribute proxy_run_config.
-  #
   # pkg:gem/kamal#lib/kamal/commands/proxy.rb:3
   def proxy_run_config; end
 
@@ -2256,8 +2104,6 @@ end
 
 # pkg:gem/kamal#lib/kamal/commands/registry.rb:1
 class Kamal::Commands::Registry < ::Kamal::Commands::Base
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/commands/registry.rb:35
   def local?; end
 
@@ -2291,8 +2137,6 @@ class Kamal::Configuration
   include ::Kamal::Configuration::Validation
   extend ::Kamal::Configuration::Validation::ClassMethods
 
-  # @return [Configuration] a new instance of Configuration
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:54
   def initialize(raw_config, destination: T.unsafe(nil), version: T.unsafe(nil), validate: T.unsafe(nil)); end
 
@@ -2302,24 +2146,18 @@ class Kamal::Configuration
   # pkg:gem/kamal#lib/kamal/configuration.rb:195
   def absolute_image; end
 
-  # Returns the value of attribute accessories.
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:15
   def accessories; end
 
   # pkg:gem/kamal#lib/kamal/configuration.rb:127
   def accessory(name); end
 
-  # Returns the value of attribute aliases.
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:15
   def aliases; end
 
   # pkg:gem/kamal#lib/kamal/configuration.rb:131
   def all_hosts; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:159
   def allow_empty_roles?; end
 
@@ -2341,29 +2179,21 @@ class Kamal::Configuration
   # pkg:gem/kamal#lib/kamal/configuration.rb:259
   def assets_directory; end
 
-  # Returns the value of attribute boot.
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:15
   def boot; end
 
-  # Returns the value of attribute builder.
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:15
   def builder; end
 
   # pkg:gem/kamal#lib/kamal/configuration.rb:235
   def deploy_timeout; end
 
-  # Returns the value of attribute destination.
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:14
   def destination; end
 
   # pkg:gem/kamal#lib/kamal/configuration.rb:239
   def drain_timeout; end
 
-  # Returns the value of attribute env.
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:15
   def env; end
 
@@ -2403,8 +2233,6 @@ class Kamal::Configuration
   # pkg:gem/kamal#lib/kamal/configuration.rb:203
   def latest_tag; end
 
-  # Returns the value of attribute logging.
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:15
   def logging; end
 
@@ -2426,16 +2254,12 @@ class Kamal::Configuration
   # pkg:gem/kamal#lib/kamal/configuration.rb:151
   def primary_role_name; end
 
-  # Returns the value of attribute proxy.
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:15
   def proxy; end
 
   # pkg:gem/kamal#lib/kamal/configuration.rb:171
   def proxy_accessories; end
 
-  # Returns the value of attribute proxy_boot.
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:15
   def proxy_boot; end
 
@@ -2451,24 +2275,18 @@ class Kamal::Configuration
   # pkg:gem/kamal#lib/kamal/configuration.rb:186
   def proxy_run(host); end
 
-  # Returns the value of attribute raw_config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:14
   def raw_config; end
 
   # pkg:gem/kamal#lib/kamal/configuration.rb:231
   def readiness_delay; end
 
-  # Returns the value of attribute registry.
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:15
   def registry; end
 
   # pkg:gem/kamal#lib/kamal/configuration.rb:191
   def repository; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:211
   def require_destination?; end
 
@@ -2484,16 +2302,12 @@ class Kamal::Configuration
   # pkg:gem/kamal#lib/kamal/configuration.rb:243
   def run_directory; end
 
-  # Returns the value of attribute secrets.
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:14
   def secrets; end
 
   # pkg:gem/kamal#lib/kamal/configuration.rb:267
   def secrets_path; end
 
-  # Returns the value of attribute servers.
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:15
   def servers; end
 
@@ -2506,13 +2320,9 @@ class Kamal::Configuration
   # pkg:gem/kamal#lib/kamal/configuration.rb:207
   def service_with_version; end
 
-  # Returns the value of attribute ssh.
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:15
   def ssh; end
 
-  # Returns the value of attribute sshkit.
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:15
   def sshkit; end
 
@@ -2547,18 +2357,12 @@ class Kamal::Configuration
   # pkg:gem/kamal#lib/kamal/configuration.rb:388
   def ensure_one_host_for_ssl_roles; end
 
-  # @raise [Kamal::ConfigurationError]
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:328
   def ensure_required_keys_present; end
 
-  # @raise [Kamal::ConfigurationError]
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:372
   def ensure_retain_containers_valid; end
 
-  # @raise [Kamal::ConfigurationError]
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:394
   def ensure_unique_hosts_for_ssl_roles; end
 
@@ -2568,8 +2372,6 @@ class Kamal::Configuration
   # pkg:gem/kamal#lib/kamal/configuration.rb:364
   def ensure_valid_kamal_version; end
 
-  # @raise [Kamal::ConfigurationError]
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:358
   def ensure_valid_service_name; end
 
@@ -2582,8 +2384,6 @@ class Kamal::Configuration
   # pkg:gem/kamal#lib/kamal/configuration.rb:426
   def role_names; end
 
-  # @raise [Kamal::ConfigurationError]
-  #
   # pkg:gem/kamal#lib/kamal/configuration.rb:439
   def validate_hooks_output_level!(level, hook = T.unsafe(nil)); end
 
@@ -2612,8 +2412,6 @@ class Kamal::Configuration::Accessory
   include ::Kamal::Configuration::Validation
   extend ::Kamal::Configuration::Validation::ClassMethods
 
-  # @return [Accessory] a new instance of Accessory
-  #
   # pkg:gem/kamal#lib/kamal/configuration/accessory.rb:10
   def initialize(name, config:); end
 
@@ -2626,8 +2424,6 @@ class Kamal::Configuration::Accessory
   # pkg:gem/kamal#lib/kamal/configuration/accessory.rb:88
   def directories; end
 
-  # Returns the value of attribute env.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/accessory.rb:8
   def env; end
 
@@ -2652,8 +2448,6 @@ class Kamal::Configuration::Accessory
   # pkg:gem/kamal#lib/kamal/configuration/accessory.rb:52
   def labels; end
 
-  # Returns the value of attribute name.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/accessory.rb:8
   def name; end
 
@@ -2669,21 +2463,15 @@ class Kamal::Configuration::Accessory
   # pkg:gem/kamal#lib/kamal/configuration/accessory.rb:38
   def port; end
 
-  # Returns the value of attribute proxy.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/accessory.rb:8
   def proxy; end
 
   # pkg:gem/kamal#lib/kamal/configuration/accessory.rb:48
   def publish_args; end
 
-  # Returns the value of attribute registry.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/accessory.rb:8
   def registry; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/accessory.rb:116
   def running_proxy?; end
 
@@ -2701,18 +2489,12 @@ class Kamal::Configuration::Accessory
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/accessory.rb:219
   def absolute_path?(path); end
 
-  # Returns the value of attribute accessory_config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/accessory.rb:121
   def accessory_config; end
 
-  # Returns the value of attribute config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/accessory.rb:121
   def config; end
 
@@ -2788,18 +2570,12 @@ class Kamal::Configuration::Alias
   include ::Kamal::Configuration::Validation
   extend ::Kamal::Configuration::Validation::ClassMethods
 
-  # @return [Alias] a new instance of Alias
-  #
   # pkg:gem/kamal#lib/kamal/configuration/alias.rb:6
   def initialize(name, config:); end
 
-  # Returns the value of attribute command.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/alias.rb:4
   def command; end
 
-  # Returns the value of attribute name.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/alias.rb:4
   def name; end
 end
@@ -2809,18 +2585,12 @@ class Kamal::Configuration::Boot
   include ::Kamal::Configuration::Validation
   extend ::Kamal::Configuration::Validation::ClassMethods
 
-  # @return [Boot] a new instance of Boot
-  #
   # pkg:gem/kamal#lib/kamal/configuration/boot.rb:6
   def initialize(config:); end
 
-  # Returns the value of attribute boot_config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/boot.rb:4
   def boot_config; end
 
-  # Returns the value of attribute host_count.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/boot.rb:4
   def host_count; end
 
@@ -2839,8 +2609,6 @@ class Kamal::Configuration::Builder
   include ::Kamal::Configuration::Validation
   extend ::Kamal::Configuration::Validation::ClassMethods
 
-  # @return [Builder] a new instance of Builder
-  #
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:8
   def initialize(config:); end
 
@@ -2853,8 +2621,6 @@ class Kamal::Configuration::Builder
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:146
   def build_directory; end
 
-  # Returns the value of attribute builder_config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:4
   def builder_config; end
 
@@ -2864,29 +2630,21 @@ class Kamal::Configuration::Builder
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:115
   def cache_to; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:60
   def cached?; end
 
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:142
   def clone_directory; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:56
   def cloud?; end
 
-  # Returns the value of attribute config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:4
   def config; end
 
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:84
   def context; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:155
   def docker_driver?; end
 
@@ -2896,29 +2654,21 @@ class Kamal::Configuration::Builder
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:88
   def driver; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:138
   def git_clone?; end
 
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:5
   def image(*_arg0, **_arg1, &_arg2); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:52
   def local?; end
 
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:30
   def local_arches; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:100
   def local_disabled?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:64
   def pack?; end
 
@@ -2934,8 +2684,6 @@ class Kamal::Configuration::Builder
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:22
   def remote; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:48
   def remote?; end
 
@@ -2998,8 +2746,6 @@ class Kamal::Configuration::Builder
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:207
   def repo_relative_pwd; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/builder.rb:160
   def valid?; end
 end
@@ -3009,37 +2755,27 @@ class Kamal::Configuration::Env
   include ::Kamal::Configuration::Validation
   extend ::Kamal::Configuration::Validation::ClassMethods
 
-  # @return [Env] a new instance of Env
-  #
   # pkg:gem/kamal#lib/kamal/configuration/env.rb:7
   def initialize(config:, secrets:, context: T.unsafe(nil)); end
 
   # pkg:gem/kamal#lib/kamal/configuration/env.rb:5
   def argumentize(*_arg0, **_arg1, &_arg2); end
 
-  # Returns the value of attribute clear.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/env.rb:4
   def clear; end
 
   # pkg:gem/kamal#lib/kamal/configuration/env.rb:15
   def clear_args; end
 
-  # Returns the value of attribute context.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/env.rb:4
   def context; end
 
   # pkg:gem/kamal#lib/kamal/configuration/env.rb:23
   def merge(other); end
 
-  # Returns the value of attribute secret_keys.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/env.rb:4
   def secret_keys; end
 
-  # Returns the value of attribute secrets.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/env.rb:4
   def secrets; end
 
@@ -3060,26 +2796,18 @@ end
 
 # pkg:gem/kamal#lib/kamal/configuration/env/tag.rb:1
 class Kamal::Configuration::Env::Tag
-  # @return [Tag] a new instance of Tag
-  #
   # pkg:gem/kamal#lib/kamal/configuration/env/tag.rb:4
   def initialize(name, config:, secrets:); end
 
-  # Returns the value of attribute config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/env/tag.rb:2
   def config; end
 
   # pkg:gem/kamal#lib/kamal/configuration/env/tag.rb:10
   def env; end
 
-  # Returns the value of attribute name.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/env/tag.rb:2
   def name; end
 
-  # Returns the value of attribute secrets.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/env/tag.rb:2
   def secrets; end
 end
@@ -3092,8 +2820,6 @@ class Kamal::Configuration::Logging
   include ::Kamal::Configuration::Validation
   extend ::Kamal::Configuration::Validation::ClassMethods
 
-  # @return [Logging] a new instance of Logging
-  #
   # pkg:gem/kamal#lib/kamal/configuration/logging.rb:8
   def initialize(logging_config:, context: T.unsafe(nil)); end
 
@@ -3106,8 +2832,6 @@ class Kamal::Configuration::Logging
   # pkg:gem/kamal#lib/kamal/configuration/logging.rb:13
   def driver; end
 
-  # Returns the value of attribute logging_config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/logging.rb:6
   def logging_config; end
 
@@ -3126,8 +2850,6 @@ class Kamal::Configuration::Proxy
   include ::Kamal::Configuration::Validation
   extend ::Kamal::Configuration::Validation::ClassMethods
 
-  # @return [Proxy] a new instance of Proxy
-  #
   # pkg:gem/kamal#lib/kamal/configuration/proxy.rb:10
   def initialize(config:, proxy_config:, secrets:, role_name: T.unsafe(nil), context: T.unsafe(nil)); end
 
@@ -3140,8 +2862,6 @@ class Kamal::Configuration::Proxy
   # pkg:gem/kamal#lib/kamal/configuration/proxy.rb:38
   def certificate_pem_content; end
 
-  # Returns the value of attribute config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/proxy.rb:9
   def config; end
 
@@ -3151,8 +2871,6 @@ class Kamal::Configuration::Proxy
   # pkg:gem/kamal#lib/kamal/configuration/proxy.rb:62
   def container_tls_key; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/proxy.rb:32
   def custom_ssl_certificate?; end
 
@@ -3183,28 +2901,18 @@ class Kamal::Configuration::Proxy
   # pkg:gem/kamal#lib/kamal/configuration/proxy.rb:44
   def private_key_pem_content; end
 
-  # Returns the value of attribute proxy_config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/proxy.rb:9
   def proxy_config; end
 
-  # Returns the value of attribute role_name.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/proxy.rb:9
   def role_name; end
 
-  # Returns the value of attribute run.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/proxy.rb:9
   def run; end
 
-  # Returns the value of attribute secrets.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/proxy.rb:9
   def secrets; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/proxy.rb:24
   def ssl?; end
 
@@ -3228,8 +2936,6 @@ end
 
 # pkg:gem/kamal#lib/kamal/configuration/proxy/boot.rb:1
 class Kamal::Configuration::Proxy::Boot
-  # @return [Boot] a new instance of Boot
-  #
   # pkg:gem/kamal#lib/kamal/configuration/proxy/boot.rb:5
   def initialize(config:); end
 
@@ -3251,8 +2957,6 @@ class Kamal::Configuration::Proxy::Boot
   # pkg:gem/kamal#lib/kamal/configuration/proxy/boot.rb:3
   def argumentize(*_arg0, **_arg1, &_arg2); end
 
-  # Returns the value of attribute config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/proxy/boot.rb:2
   def config; end
 
@@ -3324,8 +3028,6 @@ Kamal::Configuration::Proxy::DEFAULT_LOG_REQUEST_HEADERS = T.let(T.unsafe(nil), 
 
 # pkg:gem/kamal#lib/kamal/configuration/proxy/run.rb:1
 class Kamal::Configuration::Proxy::Run
-  # @return [Run] a new instance of Run
-  #
   # pkg:gem/kamal#lib/kamal/configuration/proxy/run.rb:10
   def initialize(config, run_config:, context: T.unsafe(nil)); end
 
@@ -3353,16 +3055,12 @@ class Kamal::Configuration::Proxy::Run
   # pkg:gem/kamal#lib/kamal/configuration/proxy/run.rb:32
   def bind_ips; end
 
-  # Returns the value of attribute config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/proxy/run.rb:7
   def config; end
 
   # pkg:gem/kamal#lib/kamal/configuration/proxy/run.rb:72
   def container_name; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/proxy/run.rb:16
   def debug?; end
 
@@ -3396,8 +3094,6 @@ class Kamal::Configuration::Proxy::Run
   # pkg:gem/kamal#lib/kamal/configuration/proxy/run.rb:76
   def options_args; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/proxy/run.rb:20
   def publish?; end
 
@@ -3416,8 +3112,6 @@ class Kamal::Configuration::Proxy::Run
   # pkg:gem/kamal#lib/kamal/configuration/proxy/run.rb:90
   def run_command_options; end
 
-  # Returns the value of attribute run_config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/proxy/run.rb:7
   def run_config; end
 
@@ -3447,13 +3141,9 @@ class Kamal::Configuration::Registry
   include ::Kamal::Configuration::Validation
   extend ::Kamal::Configuration::Validation::ClassMethods
 
-  # @return [Registry] a new instance of Registry
-  #
   # pkg:gem/kamal#lib/kamal/configuration/registry.rb:4
   def initialize(config:, secrets:, context: T.unsafe(nil)); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/registry.rb:22
   def local?; end
 
@@ -3474,13 +3164,9 @@ class Kamal::Configuration::Registry
   # pkg:gem/kamal#lib/kamal/configuration/registry.rb:33
   def lookup(key); end
 
-  # Returns the value of attribute registry_config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/registry.rb:31
   def registry_config; end
 
-  # Returns the value of attribute secrets.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/registry.rb:31
   def secrets; end
 end
@@ -3490,8 +3176,6 @@ class Kamal::Configuration::Role
   include ::Kamal::Configuration::Validation
   extend ::Kamal::Configuration::Validation::ClassMethods
 
-  # @return [Role] a new instance of Role
-  #
   # pkg:gem/kamal#lib/kamal/configuration/role.rb:10
   def initialize(name, config:); end
 
@@ -3516,16 +3200,12 @@ class Kamal::Configuration::Role
   # pkg:gem/kamal#lib/kamal/configuration/role.rb:152
   def asset_volume_directory(version = T.unsafe(nil)); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/role.rb:133
   def assets?; end
 
   # pkg:gem/kamal#lib/kamal/configuration/role.rb:42
   def cmd; end
 
-  # Returns the value of attribute config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/role.rb:6
   def config; end
 
@@ -3565,8 +3245,6 @@ class Kamal::Configuration::Role
   # pkg:gem/kamal#lib/kamal/configuration/role.rb:62
   def logging_args; end
 
-  # Returns the value of attribute name.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/role.rb:6
   def name; end
 
@@ -3576,8 +3254,6 @@ class Kamal::Configuration::Role
   # pkg:gem/kamal#lib/kamal/configuration/role.rb:4
   def optionize(*_arg0, **_arg1, &_arg2); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/role.rb:115
   def primary?; end
 
@@ -3587,8 +3263,6 @@ class Kamal::Configuration::Role
   # pkg:gem/kamal#lib/kamal/configuration/role.rb:70
   def proxy; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/role.rb:74
   def running_proxy?; end
 
@@ -3598,31 +3272,21 @@ class Kamal::Configuration::Role
   # pkg:gem/kamal#lib/kamal/configuration/role.rb:106
   def secrets_path; end
 
-  # Returns the value of attribute specialized_env.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/role.rb:6
   def specialized_env; end
 
-  # Returns the value of attribute specialized_logging.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/role.rb:6
   def specialized_logging; end
 
-  # Returns the value of attribute specialized_proxy.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/role.rb:6
   def specialized_proxy; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/role.rb:78
   def ssl?; end
 
   # pkg:gem/kamal#lib/kamal/configuration/role.rb:82
   def stop_args; end
 
-  # Returns the value of attribute name.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/role.rb:8
   def to_s; end
 
@@ -3658,23 +3322,15 @@ class Kamal::Configuration::Servers
   include ::Kamal::Configuration::Validation
   extend ::Kamal::Configuration::Validation::ClassMethods
 
-  # @return [Servers] a new instance of Servers
-  #
   # pkg:gem/kamal#lib/kamal/configuration/servers.rb:6
   def initialize(config:); end
 
-  # Returns the value of attribute config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/servers.rb:4
   def config; end
 
-  # Returns the value of attribute roles.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/servers.rb:4
   def roles; end
 
-  # Returns the value of attribute servers_config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/servers.rb:4
   def servers_config; end
 
@@ -3689,8 +3345,6 @@ class Kamal::Configuration::Ssh
   include ::Kamal::Configuration::Validation
   extend ::Kamal::Configuration::Validation::ClassMethods
 
-  # @return [Ssh] a new instance of Ssh
-  #
   # pkg:gem/kamal#lib/kamal/configuration/ssh.rb:8
   def initialize(config:); end
 
@@ -3715,13 +3369,9 @@ class Kamal::Configuration::Ssh
   # pkg:gem/kamal#lib/kamal/configuration/ssh.rb:22
   def proxy; end
 
-  # Returns the value of attribute secrets.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/ssh.rb:6
   def secrets; end
 
-  # Returns the value of attribute ssh_config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/ssh.rb:6
   def ssh_config; end
 
@@ -3748,8 +3398,6 @@ class Kamal::Configuration::Sshkit
   include ::Kamal::Configuration::Validation
   extend ::Kamal::Configuration::Validation::ClassMethods
 
-  # @return [Sshkit] a new instance of Sshkit
-  #
   # pkg:gem/kamal#lib/kamal/configuration/sshkit.rb:6
   def initialize(config:); end
 
@@ -3762,8 +3410,6 @@ class Kamal::Configuration::Sshkit
   # pkg:gem/kamal#lib/kamal/configuration/sshkit.rb:15
   def pool_idle_timeout; end
 
-  # Returns the value of attribute sshkit_config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/sshkit.rb:4
   def sshkit_config; end
 
@@ -3795,23 +3441,15 @@ end
 
 # pkg:gem/kamal#lib/kamal/configuration/validator.rb:1
 class Kamal::Configuration::Validator
-  # @return [Validator] a new instance of Validator
-  #
   # pkg:gem/kamal#lib/kamal/configuration/validator.rb:4
   def initialize(config, example:, context:); end
 
-  # Returns the value of attribute config.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/validator.rb:2
   def config; end
 
-  # Returns the value of attribute context.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/validator.rb:2
   def context; end
 
-  # Returns the value of attribute example.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/validator.rb:2
   def example; end
 
@@ -3820,34 +3458,24 @@ class Kamal::Configuration::Validator
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/validator.rb:208
   def allow_extensions?; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/validator.rb:80
   def boolean?(type); end
 
   # pkg:gem/kamal#lib/kamal/configuration/validator.rb:216
   def check_unknown_keys!(config, example); end
 
-  # @raise [Kamal::ConfigurationError]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/validator.rb:183
   def error(message); end
 
   # pkg:gem/kamal#lib/kamal/configuration/validator.rb:196
   def error_context; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/validator.rb:212
   def extension?(key); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/validator.rb:84
   def stringish?(value); end
 
@@ -3860,8 +3488,6 @@ class Kamal::Configuration::Validator
   # pkg:gem/kamal#lib/kamal/configuration/validator.rb:192
   def unknown_keys_error(unknown_keys); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/validator.rb:64
   def valid_type?(value, type); end
 
@@ -3924,8 +3550,6 @@ end
 class Kamal::Configuration::Validator::Configuration < ::Kamal::Configuration::Validator
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/configuration/validator/configuration.rb:3
   def allow_extensions?; end
 end
@@ -3995,16 +3619,12 @@ end
 
 # pkg:gem/kamal#lib/kamal/configuration/volume.rb:1
 class Kamal::Configuration::Volume
-  # @return [Volume] a new instance of Volume
-  #
   # pkg:gem/kamal#lib/kamal/configuration/volume.rb:5
   def initialize(host_path:, container_path:, options: T.unsafe(nil)); end
 
   # pkg:gem/kamal#lib/kamal/configuration/volume.rb:3
   def argumentize(*_arg0, **_arg1, &_arg2); end
 
-  # Returns the value of attribute container_path.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/volume.rb:2
   def container_path; end
 
@@ -4014,13 +3634,9 @@ class Kamal::Configuration::Volume
   # pkg:gem/kamal#lib/kamal/configuration/volume.rb:15
   def docker_args_string; end
 
-  # Returns the value of attribute host_path.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/volume.rb:2
   def host_path; end
 
-  # Returns the value of attribute options.
-  #
   # pkg:gem/kamal#lib/kamal/configuration/volume.rb:2
   def options; end
 
@@ -4048,8 +3664,6 @@ Kamal::Docker::BUILD_CHECK_TAG = T.let(T.unsafe(nil), String)
 #
 # pkg:gem/kamal#lib/kamal/env_file.rb:2
 class Kamal::EnvFile
-  # @return [EnvFile] a new instance of EnvFile
-  #
   # pkg:gem/kamal#lib/kamal/env_file.rb:3
   def initialize(env); end
 
@@ -4102,8 +3716,6 @@ module Kamal::Git
   # pkg:gem/kamal#lib/kamal/git.rb:34
   def untracked_files; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/git.rb:4
   def used?; end
 
@@ -4113,16 +3725,12 @@ end
 
 # pkg:gem/kamal#lib/kamal/secrets.rb:3
 class Kamal::Secrets
-  # @return [Secrets] a new instance of Secrets
-  #
   # pkg:gem/kamal#lib/kamal/secrets.rb:6
   def initialize(secrets_path:, destination: T.unsafe(nil)); end
 
   # pkg:gem/kamal#lib/kamal/secrets.rb:12
   def [](key); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets.rb:30
   def key?(key); end
 
@@ -4157,20 +3765,14 @@ end
 
 # pkg:gem/kamal#lib/kamal/secrets/adapters/aws_secrets_manager.rb:1
 class Kamal::Secrets::Adapters::AwsSecretsManager < ::Kamal::Secrets::Adapters::Base
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/aws_secrets_manager.rb:2
   def requires_account?; end
 
   private
 
-  # @raise [RuntimeError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/aws_secrets_manager.rb:43
   def check_dependencies!; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/aws_secrets_manager.rb:47
   def cli_installed?; end
 
@@ -4186,33 +3788,23 @@ end
 
 # pkg:gem/kamal#lib/kamal/secrets/adapters/base.rb:1
 class Kamal::Secrets::Adapters::Base
-  # @raise [RuntimeError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/base.rb:4
   def fetch(secrets, account: T.unsafe(nil), from: T.unsafe(nil)); end
 
   # pkg:gem/kamal#lib/kamal/secrets/adapters/base.rb:2
   def optionize(*_arg0, **_arg1, &_arg2); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/base.rb:13
   def requires_account?; end
 
   private
 
-  # @raise [NotImplementedError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/base.rb:26
   def check_dependencies!; end
 
-  # @raise [NotImplementedError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/base.rb:22
   def fetch_secrets(*_arg0, **_arg1, &_arg2); end
 
-  # @raise [NotImplementedError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/base.rb:18
   def login(*_arg0, **_arg1, &_arg2); end
 
@@ -4224,13 +3816,9 @@ end
 class Kamal::Secrets::Adapters::Bitwarden < ::Kamal::Secrets::Adapters::Base
   private
 
-  # @raise [RuntimeError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/bitwarden.rb:73
   def check_dependencies!; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/bitwarden.rb:77
   def cli_installed?; end
 
@@ -4243,49 +3831,35 @@ class Kamal::Secrets::Adapters::Bitwarden < ::Kamal::Secrets::Adapters::Base
   # pkg:gem/kamal#lib/kamal/secrets/adapters/bitwarden.rb:53
   def items_fields(secrets); end
 
-  # @raise [RuntimeError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/bitwarden.rb:3
   def login(account); end
 
   # pkg:gem/kamal#lib/kamal/secrets/adapters/bitwarden.rb:67
   def run_command(command, session: T.unsafe(nil), raw: T.unsafe(nil)); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/bitwarden.rb:63
   def signedin?(account); end
 end
 
 # pkg:gem/kamal#lib/kamal/secrets/adapters/bitwarden_secrets_manager.rb:1
 class Kamal::Secrets::Adapters::BitwardenSecretsManager < ::Kamal::Secrets::Adapters::Base
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/bitwarden_secrets_manager.rb:2
   def requires_account?; end
 
   private
 
-  # @raise [RuntimeError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/bitwarden_secrets_manager.rb:58
   def check_dependencies!; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/bitwarden_secrets_manager.rb:62
   def cli_installed?; end
 
   # pkg:gem/kamal#lib/kamal/secrets/adapters/bitwarden_secrets_manager.rb:37
   def extract_command_and_project(secrets); end
 
-  # @raise [RuntimeError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/bitwarden_secrets_manager.rb:12
   def fetch_secrets(secrets, from:, account:, session:); end
 
-  # @raise [RuntimeError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/bitwarden_secrets_manager.rb:53
   def login(account); end
 
@@ -4307,30 +3881,20 @@ Kamal::Secrets::Adapters::BitwardenSecretsManager::LIST_COMMAND = T.let(T.unsafe
 
 # pkg:gem/kamal#lib/kamal/secrets/adapters/doppler.rb:1
 class Kamal::Secrets::Adapters::Doppler < ::Kamal::Secrets::Adapters::Base
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/doppler.rb:2
   def requires_account?; end
 
   private
 
-  # @raise [RuntimeError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/doppler.rb:49
   def check_dependencies!; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/doppler.rb:53
   def cli_installed?; end
 
-  # @raise [RuntimeError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/doppler.rb:19
   def fetch_secrets(secrets, from:, **_arg2); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/doppler.rb:14
   def loggedin?; end
 
@@ -4340,8 +3904,6 @@ class Kamal::Secrets::Adapters::Doppler < ::Kamal::Secrets::Adapters::Base
   # pkg:gem/kamal#lib/kamal/secrets/adapters/doppler.rb:33
   def secrets_get_flags(secrets); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/doppler.rb:45
   def service_token_set?; end
 end
@@ -4358,20 +3920,14 @@ end
 #
 # pkg:gem/kamal#lib/kamal/secrets/adapters/enpass.rb:11
 class Kamal::Secrets::Adapters::Enpass < ::Kamal::Secrets::Adapters::Base
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/enpass.rb:12
   def requires_account?; end
 
   private
 
-  # @raise [RuntimeError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/enpass.rb:25
   def check_dependencies!; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/enpass.rb:29
   def cli_installed?; end
 
@@ -4392,13 +3948,9 @@ end
 class Kamal::Secrets::Adapters::GcpSecretManager < ::Kamal::Secrets::Adapters::Base
   private
 
-  # @raise [RuntimeError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/gcp_secret_manager.rb:92
   def check_dependencies!; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/gcp_secret_manager.rb:96
   def cli_installed?; end
 
@@ -4408,13 +3960,9 @@ class Kamal::Secrets::Adapters::GcpSecretManager < ::Kamal::Secrets::Adapters::B
   # pkg:gem/kamal#lib/kamal/secrets/adapters/gcp_secret_manager.rb:29
   def fetch_secrets(secrets, from:, account:, session:); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/gcp_secret_manager.rb:109
   def is_user?(candidate); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/gcp_secret_manager.rb:101
   def logged_in?; end
 
@@ -4451,23 +3999,15 @@ end
 class Kamal::Secrets::Adapters::LastPass < ::Kamal::Secrets::Adapters::Base
   private
 
-  # @raise [RuntimeError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/last_pass.rb:32
   def check_dependencies!; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/last_pass.rb:36
   def cli_installed?; end
 
-  # @raise [RuntimeError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/last_pass.rb:14
   def fetch_secrets(secrets, from:, account:, session:); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/last_pass.rb:10
   def loggedin?(account); end
 
@@ -4482,13 +4022,9 @@ class Kamal::Secrets::Adapters::OnePassword < ::Kamal::Secrets::Adapters::Base
 
   private
 
-  # @raise [RuntimeError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/one_password.rb:96
   def check_dependencies!; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/one_password.rb:100
   def cli_installed?; end
 
@@ -4504,8 +4040,6 @@ class Kamal::Secrets::Adapters::OnePassword < ::Kamal::Secrets::Adapters::Base
   # pkg:gem/kamal#lib/kamal/secrets/adapters/one_password.rb:75
   def fields_map(fields_json); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/one_password.rb:13
   def loggedin?(account); end
 
@@ -4527,38 +4061,26 @@ end
 
 # pkg:gem/kamal#lib/kamal/secrets/adapters/passbolt.rb:1
 class Kamal::Secrets::Adapters::Passbolt < ::Kamal::Secrets::Adapters::Base
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/passbolt.rb:2
   def requires_account?; end
 
   private
 
-  # @raise [RuntimeError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/passbolt.rb:121
   def check_dependencies!; end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/passbolt.rb:125
   def cli_installed?; end
 
-  # @raise [ArgumentError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/passbolt.rb:13
   def fetch_secrets(secrets, from:, **_arg2); end
 
   # pkg:gem/kamal#lib/kamal/secrets/adapters/passbolt.rb:111
   def get_folder_path(folder, all_folders, path = T.unsafe(nil)); end
 
-  # @raise [RuntimeError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/passbolt.rb:8
   def login(*_arg0); end
 
-  # @raise [RuntimeError]
-  #
   # pkg:gem/kamal#lib/kamal/secrets/adapters/passbolt.rb:60
   def secrets_get_folders(secrets); end
 end
@@ -4602,13 +4124,9 @@ Kamal::Secrets::Dotenv::InlineCommandSubstitution::INTERPOLATED_SHELL_COMMAND = 
 
 # pkg:gem/kamal#lib/kamal/tags.rb:3
 class Kamal::Tags
-  # @return [Tags] a new instance of Tags
-  #
   # pkg:gem/kamal#lib/kamal/tags.rb:25
   def initialize(**tags); end
 
-  # Returns the value of attribute config.
-  #
   # pkg:gem/kamal#lib/kamal/tags.rb:4
   def config; end
 
@@ -4618,8 +4136,6 @@ class Kamal::Tags
   # pkg:gem/kamal#lib/kamal/tags.rb:37
   def except(*tags); end
 
-  # Returns the value of attribute tags.
-  #
   # pkg:gem/kamal#lib/kamal/tags.rb:4
   def tags; end
 
@@ -4671,8 +4187,6 @@ module Kamal::Utils
   # pkg:gem/kamal#lib/kamal/utils.rb:91
   def join_commands(commands); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/utils.rb:107
   def older_version?(version, other_version); end
 
@@ -4702,8 +4216,6 @@ Kamal::Utils::DOLLAR_SIGN_WITHOUT_SHELL_EXPANSION_REGEX = T.let(T.unsafe(nil), R
 class Kamal::Utils::Sensitive
   include ::SSHKit::Redaction
 
-  # @return [Sensitive] a new instance of Sensitive
-  #
   # pkg:gem/kamal#lib/kamal/utils/sensitive.rb:12
   def initialize(value, redaction: T.unsafe(nil)); end
 
@@ -4715,16 +4227,12 @@ class Kamal::Utils::Sensitive
   # pkg:gem/kamal#lib/kamal/utils/sensitive.rb:10
   def inspect(*_arg0, **_arg1, &_arg2); end
 
-  # Returns the value of attribute redaction.
-  #
   # pkg:gem/kamal#lib/kamal/utils/sensitive.rb:8
   def redaction; end
 
   # pkg:gem/kamal#lib/kamal/utils/sensitive.rb:9
   def to_s(*_arg0, **_arg1, &_arg2); end
 
-  # Returns the value of attribute unredacted.
-  #
   # pkg:gem/kamal#lib/kamal/utils/sensitive.rb:8
   def unredacted; end
 end
@@ -4801,27 +4309,15 @@ end
 
 # pkg:gem/kamal#lib/kamal/sshkit_with_ext.rb:64
 class SSHKit::Backend::Netssh::Configuration
-  # Returns the value of attribute dns_retries.
-  #
   # pkg:gem/kamal#lib/kamal/sshkit_with_ext.rb:65
   def dns_retries; end
 
-  # Sets the attribute dns_retries
-  #
-  # @param value the value to set the attribute dns_retries to.
-  #
   # pkg:gem/kamal#lib/kamal/sshkit_with_ext.rb:65
   def dns_retries=(_arg0); end
 
-  # Returns the value of attribute max_concurrent_starts.
-  #
   # pkg:gem/kamal#lib/kamal/sshkit_with_ext.rb:65
   def max_concurrent_starts; end
 
-  # Sets the attribute max_concurrent_starts
-  #
-  # @param value the value to set the attribute max_concurrent_starts to.
-  #
   # pkg:gem/kamal#lib/kamal/sshkit_with_ext.rb:65
   def max_concurrent_starts=(_arg0); end
 end
@@ -4844,8 +4340,6 @@ module SSHKit::Backend::Netssh::DnsRetriable
   # pkg:gem/kamal#lib/kamal/sshkit_with_ext.rb:102
   def dns_retry_sleep(attempt, base:, jitter:, max_sleep:); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/kamal#lib/kamal/sshkit_with_ext.rb:91
   def retryable_dns_error?(error); end
 end
@@ -4875,8 +4369,6 @@ module SSHKit::Backend::Netssh::LimitConcurrentStartsClass
   # pkg:gem/kamal#lib/kamal/sshkit_with_ext.rb:112
   def configure(&block); end
 
-  # Returns the value of attribute start_semaphore.
-  #
   # pkg:gem/kamal#lib/kamal/sshkit_with_ext.rb:110
   def start_semaphore; end
 end

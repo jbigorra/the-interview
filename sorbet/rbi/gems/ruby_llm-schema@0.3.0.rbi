@@ -23,16 +23,12 @@ class RubyLLM::Schema
   extend ::RubyLLM::Schema::DSL::Utilities
   extend ::RubyLLM::Schema::DSL
 
-  # @return [Schema] a new instance of Schema
-  #
   # pkg:gem/ruby_llm-schema#lib/ruby_llm/schema.rb:73
   def initialize(name = T.unsafe(nil), description: T.unsafe(nil)); end
 
   # pkg:gem/ruby_llm-schema#lib/ruby_llm/schema.rb:86
   def method_missing(method_name, *_arg1, **_arg2, &_arg3); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm-schema#lib/ruby_llm/schema.rb:82
   def valid?; end
 
@@ -41,8 +37,6 @@ class RubyLLM::Schema
 
   private
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm-schema#lib/ruby_llm/schema.rb:94
   def respond_to_missing?(method_name, include_private = T.unsafe(nil)); end
 
@@ -71,8 +65,6 @@ class RubyLLM::Schema
     # pkg:gem/ruby_llm-schema#lib/ruby_llm/schema.rb:54
     def strict(*args); end
 
-    # @return [Boolean]
-    #
     # pkg:gem/ruby_llm-schema#lib/ruby_llm/schema.rb:67
     def valid?; end
 
@@ -159,8 +151,6 @@ module RubyLLM::Schema::DSL::SchemaBuilders
   # pkg:gem/ruby_llm-schema#lib/ruby_llm/schema/dsl/schema_builders.rb:140
   def collect_schemas_from_block(&block); end
 
-  # @raise [InvalidArrayTypeError]
-  #
   # pkg:gem/ruby_llm-schema#lib/ruby_llm/schema/dsl/schema_builders.rb:110
   def determine_array_items(of, &_arg1); end
 
@@ -186,13 +176,9 @@ module RubyLLM::Schema::DSL::Utilities
   # pkg:gem/ruby_llm-schema#lib/ruby_llm/schema/dsl/utilities.rb:30
   def add_property(name, definition, required:); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm-schema#lib/ruby_llm/schema/dsl/utilities.rb:35
   def primitive_type?(type); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm-schema#lib/ruby_llm/schema/dsl/utilities.rb:39
   def schema_class?(type); end
 end
@@ -206,8 +192,6 @@ class RubyLLM::Schema::Error < ::StandardError; end
 #
 # pkg:gem/ruby_llm-schema#lib/ruby_llm/schema/errors.rb:16
 class RubyLLM::Schema::InvalidArrayTypeError < ::RubyLLM::Schema::Error
-  # @return [InvalidArrayTypeError] a new instance of InvalidArrayTypeError
-  #
   # pkg:gem/ruby_llm-schema#lib/ruby_llm/schema/errors.rb:17
   def initialize(message); end
 end
@@ -216,8 +200,6 @@ end
 #
 # pkg:gem/ruby_llm-schema#lib/ruby_llm/schema/errors.rb:23
 class RubyLLM::Schema::InvalidObjectTypeError < ::RubyLLM::Schema::Error
-  # @return [InvalidObjectTypeError] a new instance of InvalidObjectTypeError
-  #
   # pkg:gem/ruby_llm-schema#lib/ruby_llm/schema/errors.rb:24
   def initialize(message); end
 end
@@ -231,8 +213,6 @@ class RubyLLM::Schema::InvalidSchemaError < ::RubyLLM::Schema::Error; end
 #
 # pkg:gem/ruby_llm-schema#lib/ruby_llm/schema/errors.rb:9
 class RubyLLM::Schema::InvalidSchemaTypeError < ::RubyLLM::Schema::Error
-  # @return [InvalidSchemaTypeError] a new instance of InvalidSchemaTypeError
-  #
   # pkg:gem/ruby_llm-schema#lib/ruby_llm/schema/errors.rb:10
   def initialize(type); end
 end
@@ -263,13 +243,9 @@ class RubyLLM::Schema::ValidationError < ::RubyLLM::Schema::Error; end
 class RubyLLM::Schema::Validator
   # Permanent mark (completely processed)
   #
-  # @return [Validator] a new instance of Validator
-  #
   # pkg:gem/ruby_llm-schema#lib/ruby_llm/schema/validator.rb:11
   def initialize(schema_class); end
 
-  # @return [Boolean]
-  #
   # pkg:gem/ruby_llm-schema#lib/ruby_llm/schema/validator.rb:20
   def valid?; end
 
