@@ -1,4 +1,5 @@
 # typed: false
+
 class SearchQueriesController < ApplicationController
   before_action :set_profile
   before_action :set_search_query, only: %i[edit update destroy run]

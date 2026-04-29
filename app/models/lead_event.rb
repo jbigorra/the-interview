@@ -1,4 +1,5 @@
 # typed: false
+
 class LeadEvent < ApplicationRecord
   belongs_to :lead
 

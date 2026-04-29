@@ -1,4 +1,5 @@
 # typed: false
+
 class DashboardController < ApplicationController
   def show
     @profile = Profile.first_or_create!(

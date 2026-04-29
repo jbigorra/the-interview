@@ -1,4 +1,5 @@
 # typed: false
+
 class SearchQuery < ApplicationRecord
   belongs_to :profile
 
