@@ -4,23 +4,45 @@
 module Apply
   # ATS adapter for Greenhouse job postings.
   #
-  # MVP implementation: returns standard profile fields for extraction and
-  # payload building. Full form-scraping logic is deferred to T16.
+  # Returns structured field definitions for the Greenhouse application form.
+  # Each field includes label, type, required flag, and the pre-filled value
+  # sourced from the user's profile. Payload uses separate symbol keys for
+  # standard fields and merges string-keyed common answers on top.
   class GreenhouseAdapter < BaseAdapter
-    # Extracts Greenhouse-specific application form fields from the profile.
+    STANDARD_FIELDS = [
+      { id: "first_name",   label: "First Name",    type: "text",     required: true },
+      { id: "last_name",    label: "Last Name",     type: "text",     required: true },
+      { id: "email",        label: "Email",         type: "email",    required: true },
+      { id: "phone",        label: "Phone",         type: "tel",      required: false },
+      { id: "resume",       label: "Resume",        type: "file",     required: true },
+      { id: "cover_letter", label: "Cover Letter",  type: "textarea", required: false }
+    ].freeze
+
+    # Extracts Greenhouse-specific application form fields with pre-filled values.
     #
-    # @return [Hash] { success: true, response: { fields: Hash, apply_url: String } }
+    # @return [Hash] { success: true, response: { fields: Array<Hash>, apply_url: String } }
     def extract_fields
-      { success: true, response: { fields: standard_fields, apply_url: apply_url } }
+      fields = STANDARD_FIELDS.map do |field|
+        field.merge(value: standard_fields[field[:id].to_sym])
+      end
+
+      { success: true, response: { fields: fields, apply_url: apply_url } }
     end
 
     # Builds the Greenhouse application form payload from profile data.
-    # Merges standard fields with any stored common answers.
+    # Merges standard profile fields with any stored common answers.
     #
-    # @return [Hash] { success: true, response: { payload: Hash } }
+    # @return [Hash] { success: true, response: { payload: Hash, apply_url: String } }
     def build_payload
-      payload = standard_fields.merge(common_answers)
-      { success: true, response: { payload: payload } }
+      payload = {
+        first_name:   profile.personal_info&.dig("first_name"),
+        last_name:    profile.personal_info&.dig("last_name"),
+        email:        profile.email,
+        phone:        profile.personal_info&.dig("phone"),
+        cover_letter: profile.cover_letter_template
+      }.merge(common_answers).compact
+
+      { success: true, response: { payload: payload, apply_url: apply_url } }
     end
 
     # Returns the Greenhouse application URL.

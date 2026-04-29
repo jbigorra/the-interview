@@ -34,6 +34,51 @@ class LeadsController < ApplicationController
     end
   end
 
+  def apply
+    @lead = Lead.find(params[:id])
+    @profile = @lead.profile
+
+    result = Apply::Orchestrator.call(lead: @lead, profile: @profile)
+
+    @apply_url = result[:response][:apply_url]
+
+    if result[:success]
+      @adapter        = result[:response][:adapter]
+      @fields_result  = @adapter.extract_fields
+      @payload_result = @adapter.build_payload
+    else
+      @fallback         = true
+      @fallback_message = result[:response].dig(:error, :message) ||
+                          "This ATS is not yet supported. Please apply manually."
+    end
+
+    @application = @lead.application || @lead.build_application(
+      ats_type: @lead.ats_type || "unknown",
+      status:   :draft
+    )
+    @application.apply_url    = @apply_url
+    @application.form_payload = @payload_result&.dig(:response, :payload) || {}
+    @application.save!
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
+  end
+
+  def submit_application
+    @lead        = Lead.find(params[:id])
+    @application = @lead.application
+
+    if @application
+      @application.update!(status: :submitted, submitted_at: Time.current)
+      @lead.update!(stage: :applied)
+      redirect_to lead_path(@lead), notice: "Application marked as submitted. Good luck!"
+    else
+      redirect_to lead_path(@lead), alert: "No application draft found."
+    end
+  end
+
   def destroy
     @lead = Lead.find(params[:id])
     @lead.destroy

@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   resources :leads, only: %i[index show destroy] do
     member do
       patch :move
+      get :apply
+      post :submit_application
     end
     resources :notes, only: [ :create ]
   end

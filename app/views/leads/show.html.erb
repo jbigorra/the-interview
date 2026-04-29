@@ -13,7 +13,8 @@
       </p>
     <% end %>
 
-    <div class="mt-4 flex flex-wrap gap-2">
+    <div class="mt-4 flex flex-wrap gap-2 items-center">
+      <%= link_to "Apply", apply_lead_path(@lead), class: "px-3 py-1 bg-green-600 text-white rounded text-sm hover:bg-green-700" %>
       <span class="px-2 py-1 bg-gray-100 rounded text-sm"><%= @lead.stage.to_s.humanize %></span>
       <% if @lead.match_score %>
         <span class="px-2 py-1 bg-gray-100 rounded text-sm">Score: <%= @lead.match_score %>%</span>

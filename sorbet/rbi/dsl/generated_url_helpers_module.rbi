@@ -10,6 +10,9 @@ module GeneratedUrlHelpersModule
   include ::ActionDispatch::Routing::PolymorphicRoutes
 
   sig { params(args: T.untyped).returns(String) }
+  def apply_lead_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_search_query_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -128,6 +131,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def search_query_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def submit_application_lead_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def turbo_recede_historical_location_url(*args); end

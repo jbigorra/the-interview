@@ -1,0 +1,52 @@
+<% content_for :title, "Apply: #{@lead.title}" %>
+
+<div class="max-w-3xl mx-auto p-6">
+  <%= link_to "← Back to Lead", lead_path(@lead), class: "text-blue-600 hover:underline mb-4 inline-block" %>
+
+  <h1 class="text-2xl font-bold mb-2">Apply to <%= @lead.company %></h1>
+  <p class="text-gray-600 mb-6"><%= @lead.title %></p>
+
+  <% if @fallback %>
+    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+      <p class="text-yellow-800"><%= @fallback_message %></p>
+      <p class="mt-2">
+        <%= link_to "Open Application Form", @apply_url, target: "_blank", rel: "noopener", class: "text-blue-600 hover:underline" %>
+      </p>
+    </div>
+
+    <div class="flex gap-3">
+      <%= button_to "Mark as Applied", submit_application_lead_path(@lead), method: :post, class: "px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" %>
+    </div>
+  <% else %>
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <h2 class="text-lg font-semibold mb-4">Pre-filled Application</h2>
+
+      <% if @fields_result[:success] %>
+        <div class="space-y-3">
+          <% @fields_result[:response][:fields].each do |field| %>
+            <div class="flex items-start gap-3">
+              <div class="flex-1">
+                <label class="block text-sm font-medium text-gray-700">
+                  <%= field[:label] %>
+                  <% if field[:required] %><span class="text-red-500">*</span><% end %>
+                </label>
+                <% if field[:type] == "textarea" %>
+                  <div class="mt-1 p-2 bg-gray-50 rounded text-sm whitespace-pre-wrap"><%= field[:value] || "—" %></div>
+                <% elsif field[:type] == "file" %>
+                  <div class="mt-1 p-2 bg-gray-50 rounded text-sm text-gray-500">Upload required</div>
+                <% else %>
+                  <div class="mt-1 p-2 bg-gray-50 rounded text-sm"><%= field[:value] || "—" %></div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="flex gap-3">
+      <%= link_to "Open Form in Browser", @apply_url, target: "_blank", rel: "noopener", class: "px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300" %>
+      <%= button_to "Mark as Applied", submit_application_lead_path(@lead), method: :post, class: "px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" %>
+    </div>
+  <% end %>
+</div>
