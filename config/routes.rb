@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     member do
       patch :move
     end
-    resources :notes, only: [:create]
+    resources :notes, only: [ :create ]
   end
 
   resources :search_queries do

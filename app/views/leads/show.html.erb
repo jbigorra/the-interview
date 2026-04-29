@@ -6,9 +6,10 @@
   <div class="bg-white rounded-lg shadow p-6 mb-6">
     <h1 class="text-xl font-bold"><%= @lead.title %></h1>
     <p class="text-gray-600"><%= @lead.company %> • <%= @lead.location %></p>
-    <% if @lead.url.present? %>
+    <% safe_url = safe_external_url(@lead.url) %>
+    <% if safe_url %>
       <p class="text-sm text-gray-400 mt-1">
-        <%= link_to @lead.url, @lead.url, target: "_blank", rel: "noopener", class: "hover:underline" %>
+        <%= link_to safe_url, safe_url, target: "_blank", rel: "noopener", class: "hover:underline" %>
       </p>
     <% end %>
 
