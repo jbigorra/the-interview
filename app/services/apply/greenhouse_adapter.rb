@@ -4,23 +4,23 @@
 module Apply
   # ATS adapter for Greenhouse job postings.
   #
-  # Stub implementation — field extraction and payload building are not yet
-  # implemented. Provides +apply_url+ by returning the lead URL directly.
+  # MVP implementation: returns standard profile fields for extraction and
+  # payload building. Full form-scraping logic is deferred to T16.
   class GreenhouseAdapter < BaseAdapter
-    NOT_IMPLEMENTED = "Greenhouse adapter not yet implemented"
-
-    # Extracts Greenhouse-specific application form fields.
+    # Extracts Greenhouse-specific application form fields from the profile.
     #
-    # @return [Hash] { success: false, response: { error: { message: String } } } (stub)
+    # @return [Hash] { success: true, response: { fields: Hash, apply_url: String } }
     def extract_fields
-      { success: false, response: { error: { message: NOT_IMPLEMENTED } } }
+      { success: true, response: { fields: standard_fields, apply_url: apply_url } }
     end
 
     # Builds the Greenhouse application form payload from profile data.
+    # Merges standard fields with any stored common answers.
     #
-    # @return [Hash] { success: false, response: { error: { message: String } } } (stub)
+    # @return [Hash] { success: true, response: { payload: Hash } }
     def build_payload
-      { success: false, response: { error: { message: NOT_IMPLEMENTED } } }
+      payload = standard_fields.merge(common_answers)
+      { success: true, response: { payload: payload } }
     end
 
     # Returns the Greenhouse application URL.

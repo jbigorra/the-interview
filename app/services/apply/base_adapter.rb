@@ -6,6 +6,8 @@ module Apply
   #
   # Concrete adapters (GreenhouseAdapter, LeverAdapter, AshbyAdapter) inherit
   # from this class and implement the three abstract methods below.
+  # Protected helpers +standard_fields+ and +common_answers+ provide
+  # profile-to-application-field mapping reusable across all adapters.
   class BaseAdapter
     NOT_IMPLEMENTED = "Subclasses must implement this method"
 
@@ -40,8 +42,30 @@ module Apply
       raise NotImplementedError, NOT_IMPLEMENTED
     end
 
-    private
+    protected
 
     attr_reader :lead, :profile
+
+    # Maps profile fields to standard application form fields.
+    # Only includes keys with non-nil values.
+    #
+    # @return [Hash] field name => value pairs sourced from the profile
+    def standard_fields
+      {
+        first_name:    profile.personal_info&.dig("first_name"),
+        last_name:     profile.personal_info&.dig("last_name"),
+        email:         profile.email,
+        phone:         profile.personal_info&.dig("phone"),
+        resume:        profile.resume_text,
+        cover_letter:  profile.cover_letter_template
+      }.compact
+    end
+
+    # Returns the profile's stored common answers for supplemental questions.
+    #
+    # @return [Hash] question key => answer value
+    def common_answers
+      profile.common_answers || {}
+    end
   end
 end
