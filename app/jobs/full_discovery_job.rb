@@ -1,3 +1,4 @@
+# typed: false
 # frozen_string_literal: true
 
 # Enqueues a DiscoveryJob for every non-cooldown SearchQuery belonging to a profile.

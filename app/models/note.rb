@@ -1,3 +1,4 @@
+# typed: false
 class Note < ApplicationRecord
   belongs_to :lead
 

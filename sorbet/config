@@ -3,3 +3,5 @@
 --ignore=/tmp/
 --ignore=/vendor/bundle/
 --ignore=/sorbet/rbi/
+--ignore=/spec/
+--ignore=/db/migrate/

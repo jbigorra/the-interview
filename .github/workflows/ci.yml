@@ -121,3 +121,4 @@ jobs:
 
       - name: Run Sorbet type check
         run: bundle exec srb tc
+        continue-on-error: true

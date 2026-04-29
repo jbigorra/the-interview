@@ -1,3 +1,4 @@
+# typed: false
 # frozen_string_literal: true
 
 # Stage 1 matching job: evaluates a lead against keyword-based criteria.

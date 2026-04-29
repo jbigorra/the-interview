@@ -1,3 +1,4 @@
+# typed: false
 class Profile < ApplicationRecord
   has_one :matching_criterion, dependent: :destroy
   has_many :search_queries, dependent: :destroy

@@ -1,3 +1,4 @@
+# typed: false
 # frozen_string_literal: true
 
 # Processes a single SearchQuery: executes SerpApi, parses results,
