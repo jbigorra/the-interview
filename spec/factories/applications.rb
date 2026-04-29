@@ -1,7 +1,9 @@
 FactoryBot.define do
   factory :application do
-    lead { nil }
-    status { 1 }
-    ats_type { "MyString" }
+    association :lead
+    ats_type { "greenhouse" }
+    status { "draft" }
+    form_payload { {} }
+    ats_response { {} }
   end
 end

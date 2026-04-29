@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :note do
-    lead { nil }
-    content { "MyText" }
+    association :lead
+    body { "Great opportunity, matches my skills." }
+    author { "user" }
   end
 end

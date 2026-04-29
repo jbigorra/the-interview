@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :lead_event do
-    lead { nil }
-    from_stage { "MyString" }
-    to_stage { "MyString" }
-    trigger { "MyString" }
+    association :lead
+    from_stage { 0 }
+    to_stage { 1 }
+    trigger { "manual" }
   end
 end

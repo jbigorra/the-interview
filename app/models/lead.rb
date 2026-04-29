@@ -32,9 +32,10 @@ class Lead < ApplicationRecord
   # @param new_stage [Symbol, String] the target stage
   # @return [Lead] self after update
   def move_to!(new_stage)
-    old_stage = stage
+    old_stage_value = self.class.stages[stage]
     update!(stage: new_stage)
-    lead_events.create!(from_stage: old_stage, to_stage: new_stage.to_s, trigger: "manual")
+    new_stage_value = self.class.stages[stage]
+    lead_events.create!(from_stage: old_stage_value, to_stage: new_stage_value, trigger: "manual")
     self
   end
 

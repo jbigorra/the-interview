@@ -107,8 +107,8 @@ RSpec.describe Lead, type: :model do
       expect { lead.move_to!(:applied) }.to change(LeadEvent, :count).by(1)
 
       event = LeadEvent.last
-      expect(event.from_stage).to eq("fresh")
-      expect(event.to_stage).to eq("applied")
+      expect(event.from_stage).to eq(Lead.stages["fresh"])
+      expect(event.to_stage).to eq(Lead.stages["applied"])
       expect(event.trigger).to eq("manual")
     end
 
