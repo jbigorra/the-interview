@@ -14,7 +14,7 @@ RSpec.describe Stage2MatchingJob, type: :job do
         score:          score,
         recommendation: recommendation,
         reasoning:      reasoning,
-        strengths:      ["Rails experience"],
+        strengths:      [ "Rails experience" ],
         concerns:       []
       }
     }

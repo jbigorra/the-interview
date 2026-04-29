@@ -16,8 +16,8 @@ RSpec.describe Matching::LlmEvaluator, type: :service do
       score: 85,
       recommendation: "apply",
       reasoning: "Strong keyword match and remote-friendly.",
-      strengths: ["Rails", "PostgreSQL"],
-      concerns: ["No mention of salary"]
+      strengths: [ "Rails", "PostgreSQL" ],
+      concerns: [ "No mention of salary" ]
     )
   end
 
@@ -54,12 +54,12 @@ RSpec.describe Matching::LlmEvaluator, type: :service do
 
       it "returns the parsed strengths array" do
         result = described_class.call(lead: lead, criterion: criterion)
-        expect(result[:response][:strengths]).to eq(["Rails", "PostgreSQL"])
+        expect(result[:response][:strengths]).to eq([ "Rails", "PostgreSQL" ])
       end
 
       it "returns the parsed concerns array" do
         result = described_class.call(lead: lead, criterion: criterion)
-        expect(result[:response][:concerns]).to eq(["No mention of salary"])
+        expect(result[:response][:concerns]).to eq([ "No mention of salary" ])
       end
     end
 
