@@ -21,8 +21,8 @@ class CreateLeads < ActiveRecord::Migration[8.1]
     end
 
     add_index :leads, :fingerprint, unique: true
-    add_index :leads, [:profile_id, :stage, :stage_position]
-    add_index :leads, [:profile_id, :stage, :match_score],
+    add_index :leads, [ :profile_id, :stage, :stage_position ]
+    add_index :leads, [ :profile_id, :stage, :match_score ],
               name: "idx_leads_for_board_sort"
   end
 end

@@ -11,6 +11,6 @@ class FixLeadEventsSchema < ActiveRecord::Migration[8.1]
     change_column :lead_events, :trigger, :string, null: false, default: "manual"
 
     # Add composite index for timeline queries
-    add_index :lead_events, [:lead_id, :created_at]
+    add_index :lead_events, [ :lead_id, :created_at ]
   end
 end

@@ -19,7 +19,7 @@ RSpec.describe Matching::KeywordEvaluator, type: :service do
     context "when excluded keywords are present in the lead" do
       let(:criterion) do
         create(:matching_criterion, profile: profile,
-               excluded_keywords: ["intern", "junior"],
+               excluded_keywords: [ "intern", "junior" ],
                required_keywords: [])
       end
 
@@ -53,7 +53,7 @@ RSpec.describe Matching::KeywordEvaluator, type: :service do
     context "when required keywords are not present in the lead" do
       let(:criterion) do
         create(:matching_criterion, profile: profile,
-               required_keywords: ["rails", "postgresql"],
+               required_keywords: [ "rails", "postgresql" ],
                excluded_keywords: [])
       end
 
@@ -87,8 +87,8 @@ RSpec.describe Matching::KeywordEvaluator, type: :service do
     context "when the lead passes all keyword checks" do
       let(:criterion) do
         create(:matching_criterion, profile: profile,
-               required_keywords: ["ruby", "rails"],
-               excluded_keywords: ["intern"])
+               required_keywords: [ "ruby", "rails" ],
+               excluded_keywords: [ "intern" ])
       end
 
       it "passes the lead with 'All keyword checks passed' reason" do
@@ -119,8 +119,8 @@ RSpec.describe Matching::KeywordEvaluator, type: :service do
     context "when the lead has nil title or description" do
       let(:criterion) do
         create(:matching_criterion, profile: profile,
-               required_keywords: ["rails"],
-               excluded_keywords: ["intern"])
+               required_keywords: [ "rails" ],
+               excluded_keywords: [ "intern" ])
       end
 
       it "handles nil title gracefully" do

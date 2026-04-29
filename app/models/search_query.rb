@@ -13,7 +13,7 @@ class SearchQuery < ApplicationRecord
 
   # @return [String] the full Google dork query string
   def to_google_query
-    parts = ["site:#{portal}"]
+    parts = [ "site:#{portal}" ]
     parts << "\"#{title}\"" if title.present?
     parts << additional_filters if additional_filters.present?
     parts.join(" ")

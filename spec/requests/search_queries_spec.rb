@@ -86,22 +86,32 @@ RSpec.describe "SearchQueries", type: :request do
   describe "POST /search_queries/:id/run" do
     let!(:query) { create(:search_query, profile: profile, run_count: 0, last_run_at: nil) }
 
-    it "updates last_run_at and run_count, then redirects to root" do
-      freeze_time = Time.current
-      travel_to freeze_time do
-        post run_search_query_path(query)
-      end
+    it "enqueues a DiscoveryJob and redirects to root" do
+      expect { post run_search_query_path(query) }
+        .to have_enqueued_job(DiscoveryJob).with(query)
 
-      query.reload
-      expect(query.last_run_at).to be_within(1.second).of(freeze_time)
-      expect(query.run_count).to eq(1)
       expect(response).to redirect_to(root_path)
     end
 
-    it "shows a notice about the discovery pipeline" do
+    it "shows a notice that the discovery job was enqueued" do
       post run_search_query_path(query)
       follow_redirect!
-      expect(response.body).to include("Search query executed")
+      expect(response.body).to include("Discovery job enqueued")
+    end
+
+    context "when the query was recently run" do
+      before { query.update!(last_run_at: 1.hour.ago) }
+
+      it "does not enqueue a DiscoveryJob" do
+        expect { post run_search_query_path(query) }
+          .not_to have_enqueued_job(DiscoveryJob)
+      end
+
+      it "shows an alert about the cooldown" do
+        post run_search_query_path(query)
+        follow_redirect!
+        expect(response.body).to include("recently run")
+      end
     end
   end
 end

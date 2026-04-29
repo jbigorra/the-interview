@@ -32,8 +32,13 @@ class SearchQueriesController < ApplicationController
   end
 
   def run
-    @search_query.update(last_run_at: Time.current, run_count: @search_query.run_count + 1)
-    redirect_to root_path, notice: "Search query executed (discovery pipeline not yet implemented)."
+    if @search_query.recently_run?
+      redirect_to root_path, alert: "This query was recently run. Please wait before running again."
+      return
+    end
+
+    DiscoveryJob.perform_later(@search_query)
+    redirect_to root_path, notice: "Discovery job enqueued for #{@search_query.title}."
   end
 
   private

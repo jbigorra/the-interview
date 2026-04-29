@@ -51,7 +51,7 @@ RSpec.describe Discovery::ResultParser, type: :service do
     end
 
     it "filters out results with no URL" do
-      results_with_nil_link = organic_results + [{ title: "No URL result", snippet: "nothing" }]
+      results_with_nil_link = organic_results + [ { title: "No URL result", snippet: "nothing" } ]
       result = described_class.call(results_with_nil_link)
       expect(result[:response][:leads].size).to eq(2)
     end

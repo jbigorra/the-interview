@@ -11,6 +11,6 @@ class CreateSearchQueries < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :search_queries, [:profile_id, :last_run_at]
+    add_index :search_queries, [ :profile_id, :last_run_at ]
   end
 end

@@ -126,7 +126,7 @@ RSpec.describe Lead, type: :model do
       lead_a = create(:lead, profile: profile, stage_position: 1)
       lead_c = create(:lead, profile: profile, stage_position: 3)
 
-      expect(Lead.by_stage_position.to_a).to eq([lead_a, lead_b, lead_c])
+      expect(Lead.by_stage_position.to_a).to eq([ lead_a, lead_b, lead_c ])
     end
   end
 
